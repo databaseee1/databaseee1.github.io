@@ -4,6 +4,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <!-- Untuk Android Chrome -->
 <meta name="theme-color" content="#ffffff">
 
@@ -594,21 +596,23 @@ input:focus, select:focus{
 
 
 
-#logoDeposit {
-  position: absolute;
-  top: 15px;
-  right: 9px;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  border-radius: 8px;
-  transition: 0.2s;
+#logoDeposit{
+  position:absolute;
+  top:15px;
+  right:15px;
+  font-size:22px;
+  color:#1a73e8;
+  cursor:pointer;
+  transition:.2s;
 }
 
-#logoDeposit:hover {
-  transform: scale(1.1);
+#logoDeposit:hover{
+  transform:scale(1.08);
 }
 
+#logoDeposit:active{
+  transform:scale(.95);
+}
 
 
 
@@ -773,7 +777,7 @@ input:focus, select:focus{
 <div id="waModal" style="
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.5);
+  background:rgb(219 219 219);
   display:flex;
   justify-content:center;
   align-items:center;
@@ -861,7 +865,79 @@ input:focus, select:focus{
 
 
 
+<div id="logoDeposit" onclick="openDeposit()" style="
+  position:sticky;
+  top:0;
+  z-index:999;
+  background:#efefef;
 
+  padding:14px 16px;
+  margin-bottom:10px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  cursor:pointer;
+">
+
+  <div style="
+    display:flex;
+    align-items:center;
+    gap:12px;
+  ">
+    <div style="
+      width:45px;
+      height:45px;
+      border-radius:12px;
+      background:#f3f6fb;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    ">
+      <i class="fas fa-user-shield" style="
+        font-size:20px;
+        color:#1a73e8;
+      "></i>
+    </div>
+
+    <div>
+      <div style="
+        font-size:12px;
+        color:#888;
+        text-transform:uppercase;
+        letter-spacing:.5px;
+      ">
+        Identitas Akun
+      </div>
+
+      <div id="namaUserDeposit" style="
+        font-size:17px;
+        font-weight:700;
+        color:#6d6d6d;
+        text-transform:uppercase;
+      ">
+        MEMUAT...
+      </div>
+    </div>
+  </div>
+
+<div style="
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:#666;
+  font-size:14px;
+  font-weight:600;
+">
+  <span>Mutasi</span>
+
+  <i class="fas fa-chevron-right" style="
+    color:#bbb;
+    font-size:14px;
+  "></i>
+</div>
+
+</div>
 
 
 
@@ -871,10 +947,6 @@ input:focus, select:focus{
 
 
 <div class="container">
-
-  <!-- 🔥 LOGO TOP RIGHT -->
-  <img src="order-history.png" id="logoDeposit" onclick="openDeposit()" />
-
 
 
 
@@ -951,28 +1023,35 @@ input:focus, select:focus{
 
 <label>BANK / E-WALLET</label>
 <select id="bank">
-  <option value="">Pilih</option>
-  <option value="DANA">DANA</option>
-  <option value="QRIS">QRIS</option>
-  <option value="OVO">OVO</option>
-  <option value="BCA">BCA</option>
-    <option value="GOPAY">GOPAY</option>
-  <option value="BRI">BRI</option>
-  <option value="BNI">BNI</option>
-    <option value="SHOPEEPAY">SHOPEEPAY</option>
-  <option value="LINKAJA">LINKAJA</option>
-  <option value="BANKDKI">DANK DKI</option>
-  <option value="BANKJAGO">BANK JAGO</option>
-    <!-- 🏦 OCBC -->
-  <option value="OCBC_SINGAPORE">OCBC Singapore</option>
-  <option value="OCBC_MALAYSIA">OCBC Malaysia</option>
-  <option value="OCBC_BUSINESS">OCBC Business</option>
-  <option value="OCBC_HK">OCBC HK/Macau Business Mobile</option>
 
-  <!-- 🏦 BANK CHINA -->
-  <option value="BANK_OF_CHINA">BANK OF CHINA</option>
-  <option value="CCB">China Construction Bank (CCB)</option>
-  <option value="ICBC">Industrial & Commercial Bank (ICBC)</option>
+  <!-- AKTIF -->
+  <option value=""disabled>Pilih Metode Pembayaran</option>
+  <option value="BRI">BRI</option>
+  <option value="SPEEDCASH">SPEEDCASH</option>
+  <option value="GOPAY">GOPAY</option>
+ 
+ 
+
+  <!-- NONAKTIF -->
+  <option disabled>──────────</option>
+    <option value="DANA"disabled>DANA (Limit)</option>
+  <option value="OVO"disabled>OVO (Limit)</option>
+  <option value="LINKAJA"disabled>LINKAJA (Limit)</option>
+  <option value="HOTELMURAH"disabled>HOTEL MURAH (Limit)</option>
+  <option value="QRIS" disabled>QRIS (Maintenance)</option>
+  <option value="BCA" disabled>BCA  (Limit)</option>
+  <option value="BNI" disabled>BNI (Maintenance)</option>
+  <option value="SHOPEEPAY" disabled>SHOPEEPAY  (Limit)</option>
+  <option value="BANKDKI" disabled>BANK DKI (Maintenance)</option>
+  <option value="BANKJAGO" disabled>BANK JAGO  (Limit)</option>
+  <option value="OCBC_SINGAPORE" disabled>OCBC Singapore (Maintenance)</option>
+  <option value="OCBC_MALAYSIA" disabled>OCBC Malaysia (Maintenance)</option>
+  <option value="OCBC_BUSINESS" disabled>OCBC Business (tidak tersedia)</option>
+  <option value="OCBC_HK" disabled>OCBC HK (Maintenance)</option>
+  <option value="BANK_OF_CHINA" disabled>BANK OF CHINA (Maintenance)</option>
+  <option value="CCB" disabled>China Construction Bank (Maintenance)</option>
+  <option value="ICBC" disabled>ICBC (Maintenance)</option>
+
 </select>
 
 <label>NAMA REKENING</label>
@@ -988,9 +1067,16 @@ input:focus, select:focus{
   Minimal deposit Rp 500.000
 </div>
 <button class="btn" onclick="bayar()">BAYAR SEKARANG</button>
-```
+
 
   </div>
+
+
+
+
+
+
+
 
 
 
@@ -1032,6 +1118,8 @@ input:focus, select:focus{
     background:#e0e0e0;
     margin:0 12px;
   "></div>
+
+
 
   <!-- RIGHT -->
   <div style="text-align:right; flex:1;">
@@ -1081,7 +1169,7 @@ input:focus, select:focus{
   <div class="qris-card">
 
     <div class="qris-header">
-      Pembayaran QRIS
+      Pembayaran
     </div>
 
     <div class="qris-method">
@@ -1089,20 +1177,55 @@ input:focus, select:focus{
       <b id="bankShow"></b>
     </div>
 
-    <!-- QRIS IMAGE (FOCUS UTAMA) -->
-    <img src="c3f4854b-1df1-415b-a155-d5e6b1853499.jpg" class="qris-img">
+    <!-- QRIS -->
+    <img
+      id="paymentImage"
+      src="c3f4854b-1df1-415b-a155-d5e6b1853499.jpg"
+      class="qris-img"
+    >
+
+    <!-- REKENING TUJUAN -->
+    <div id="rekeningTujuan" style="
+      display:none;
+      text-align:center;
+      margin:20px;
+      padding:15px;
+      border:1px dashed #ddd;
+      border-radius:12px;
+      background:#fafafa;
+    ">
+
+      <div id="tujuanBank" style="
+        font-size:14px;
+        font-weight:bold;
+        margin-bottom:8px;
+      "></div>
+
+      <div id="tujuanRekening" style="
+        font-size:22px;
+        font-weight:bold;
+        color:#005eff;
+      "></div>
+
+      <div id="tujuanNama" style="
+        margin-top:6px;
+        color:#666;
+      "></div>
+
+    </div>
 
     <div class="qris-status" id="statusText">
-  ⏳ Menunggu pembayaran...
-</div>
+      ⏳ Menunggu pembayaran...
+    </div>
 
-<div class="qris-timer" style="
-  font-size:12px;
-  font-weight:500;
-  color:#111;
-">Waktu tersisa:
-  <span id="timer">10:00</span>
-</div>
+    <div class="qris-timer" style="
+      font-size:12px;
+      font-weight:500;
+      color:#111;
+    ">
+      Waktu tersisa:
+      <span id="timer">10:00</span>
+    </div>
 
     <div class="qris-line">---------------------</div>
 
@@ -1225,6 +1348,19 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ================= GLOBAL =================
 let timerInterval;
 const DURATION = 500;
@@ -1266,6 +1402,23 @@ window.cekWA = async function () {
 
     const snap = await getDocs(q);
 
+
+if (!snap.empty) {
+
+  const data = snap.docs[0].data();
+
+  const namaUserEl = document.getElementById("namaUserDeposit");
+
+  if (namaUserEl) {
+    namaUserEl.innerText = data.namaRek || data.nama || "-";
+  }
+
+}
+
+
+
+
+
     // ================= RESET ERROR =================
     if (error) {
       error.style.display = "none";
@@ -1295,7 +1448,7 @@ window.cekWA = async function () {
     window.userSession.id = snap.docs[0].id;
 
     // 🔥 START PRESENCE SYSTEM
-    setUserOnline();
+
 
     const modal = document.getElementById("waModal");
     if (modal) modal.style.display = "none";
@@ -1304,62 +1457,13 @@ window.cekWA = async function () {
     if (form) form.style.display = "block";
 
     // 🔥 WAJIB: START PRESENCE TRACKING SETELAH LOGIN
-    setUserPresence();
+  
 
   } catch (e) {
     console.log("cekWA ERROR:", e);
   }
 };
 
-
-// ================= USER PRESENCE (REALTIME FIX FINAL) =================
-// ================= USER PRESENCE FIX FINAL =================
-function setUserOnline() {
-
-  const id = window.userSession?.id;
-  if (!id) return;
-
-  const userRef = doc(db, "pendaftaran", id);
-
-  // helper update
-  const setStatus = (data) => {
-    updateDoc(userRef, data).catch(() => {});
-  };
-
-  // login
-  setStatus({
-    online: true,
-    status: "online",
-    lastSeen: serverTimestamp()
-  });
-
-  // heartbeat
-  setInterval(() => {
-    setStatus({
-      online: true,
-      status: "online",
-      lastSeen: serverTimestamp()
-    });
-  }, 10000);
-
-  // tab visibility
-  document.addEventListener("visibilitychange", () => {
-    setStatus({
-      online: !document.hidden,
-      status: document.hidden ? "idle" : "online",
-      lastSeen: serverTimestamp()
-    });
-  });
-
-  // keluar tab
-  window.addEventListener("beforeunload", () => {
-    setStatus({
-      online: false,
-      status: "offline",
-      lastSeen: serverTimestamp()
-    });
-  });
-}
 
 
 /* =========================================================
@@ -1462,7 +1566,6 @@ function startQRIS(bank, nama, rek, nominal, codeRef, trxId) {
   const loading = document.getElementById("loading");
   if (loading) loading.classList.add("active");
 
-  // 🔥 RANDOM LOADING 1 - 3 DETIK
   const delay = Math.floor(Math.random() * 2000) + 1000;
 
   setTimeout(() => {
@@ -1480,33 +1583,123 @@ function startQRIS(bank, nama, rek, nominal, codeRef, trxId) {
     if (bank === "SHOPEEPAY") logo = "ShopeePay.png";
     if (bank === "LINKAJA") logo = "link-aja-logo.png";
     if (bank === "QRIS") logo = "qrssss.jpg";
+    if (bank === "SPEEDCASH") logo = "speedcash.webp";
+     if (bank === "HOTELMURAH") logo = "3518b332-396e-4897-bb6a-08a7465cb37c";
 
+    if (bank === "BANKDKI") logo = "bankdki.webp";
+    if (bank === "BANKJAGO") logo = "bankjago.png";
 
-if (bank === "BANKDKI") logo = "bankdki.webp";
-if (bank === "BANKJAGO") logo = "bankjago.png";
+    if (bank === "OCBC_SINGAPORE") logo = "OCBC Singapore.webp";
+    if (bank === "OCBC_MALAYSIA") logo = "OCBC MALAYSIA.webp";
+    if (bank === "OCBC_BUSINESS") logo = "OCBC Business.webp";
+    if (bank === "OCBC_HK") logo = "OCBC HK.webp";
 
-/* ================= OCBC ================= */
-if (bank === "OCBC_SINGAPORE") logo = "OCBC Singapore.webp";
-if (bank === "OCBC_MALAYSIA") logo = "OCBC MALAYSIA.webp";
-if (bank === "OCBC_BUSINESS") logo = "OCBC Business.webp";
-if (bank === "OCBC_HK") logo = "OCBC HK.webp";
-
-/* ================= BANK CHINA ================= */
-if (bank === "BANK_OF_CHINA") logo = "bank-of-china.png";
-if (bank === "CCB") logo = "icbc.jpg";
-if (bank === "ICBC") logo = "ICBC_Bank_logo.png";
-
-
-
-
+    if (bank === "BANK_OF_CHINA") logo = "bank-of-china.png";
+    if (bank === "CCB") logo = "icbc.jpg";
+    if (bank === "ICBC") logo = "ICBC_Bank_logo.png";
 
     const set = (id, val) => {
       const el = document.getElementById(id);
       if (el) el.innerText = val;
     };
 
-    const img = document.getElementById("logo");
-    if (img) img.src = logo;
+    const logoImg = document.getElementById("logo");
+    if (logoImg) logoImg.src = logo;
+
+    // ================= AREA PEMBAYARAN =================
+    const paymentImage = document.getElementById("paymentImage");
+
+    const rekeningBox = document.getElementById("rekeningTujuan");
+    const tujuanBank = document.getElementById("tujuanBank");
+    const tujuanRekening = document.getElementById("tujuanRekening");
+    const tujuanNama = document.getElementById("tujuanNama");
+
+    // QRIS = tampil gambar
+    if (bank === "QRIS") {
+
+      if (paymentImage) {
+        paymentImage.style.display = "block";
+        paymentImage.src = "c3f4854b-1df1-415b-a155-d5e6b1853499.jpg";
+      }
+
+      if (rekeningBox) {
+        rekeningBox.style.display = "none";
+      }
+
+    } else {
+
+      // selain QRIS = sembunyikan gambar
+      if (paymentImage) {
+        paymentImage.style.display = "none";
+      }
+
+      if (rekeningBox) {
+        rekeningBox.style.display = "block";
+      }
+
+    let norek = "";
+let namaRek = "";
+
+if (bank === "BCA") {
+  norek = "1234567890";
+  namaRek = "PT AGENCY TIGOHOST INDONESIA";
+}
+
+else if (bank === "BRI") {
+  norek = "327601077658531";
+  namaRek = "IL**** ******O";
+}
+
+else if (bank === "BNI") {
+  norek = "1234567892";
+  namaRek = "PT AGENCY TIGOHOST INDONESIA";
+}
+
+else if (bank === "DANA") {
+  norek = "081234567890";
+  namaRek = "IL**** ******O";
+}
+
+else if (bank === "OVO") {
+  norek = "081234567891";
+  namaRek = "IL**** ******O";
+}
+
+else if (bank === "GOPAY") {
+  norek = "083140478081";
+  namaRek = "PT AGENCY TIGOHOST INDONESIA";
+}
+
+else if (bank === "SHOPEEPAY") {
+  norek = "Limit";
+  namaRek = "IL**** ******O";
+}
+
+else if (bank === "HOTELMURAH") {
+  norek = "Tidak tersedia";
+  namaRek = "HOTELMURAH";
+}
+
+else if (bank === "BANKDKI") {
+  norek = "1181891811";
+  namaRek = "IL**** ******O";
+}
+
+else if (bank === "BANKJAGO") {
+  norek = "108833627038";
+  namaRek = "IL**** ******O";
+}
+
+else if (bank === "SPEEDCASH") {
+  norek = "6283175745023";
+  namaRek = "IL**** ******O";
+}
+
+
+      if (tujuanBank) tujuanBank.innerText = bank;
+      if (tujuanRekening) tujuanRekening.innerText = norek;
+      if (tujuanNama) tujuanNama.innerText = "A/N " + namaRek;
+    }
 
     set("bankShow", bank);
     set("namaShow", nama);
@@ -1521,7 +1714,6 @@ if (bank === "ICBC") logo = "ICBC_Bank_logo.png";
 
   }, delay);
 }
-
 
 /* =========================================================
    FIREBASE TIMER (10 MENIT REALTIME)
@@ -1863,56 +2055,234 @@ window.openTrx = function (d) {
 
   // ================= LOGO BANK (FIXED) =================
   let bank = d.bank || "";
-  let logo = "";
+let logo = "";
+let tujuanImg = "";
 
-  if (bank === "DANA") logo = "dana.png";
-  if (bank === "OVO") logo = "ovo.png";
-  if (bank === "BCA") logo = "bca.png";
-  if (bank === "GOPAY") logo = "gopay.png";
-  if (bank === "BNI") logo = "bank-bni-logo-png.png";
-  if (bank === "BRI") logo = "bank-bri-logo-png_.png";
-  if (bank === "SHOPEEPAY") logo = "ShopeePay.png";
-  if (bank === "LINKAJA") logo = "link-aja-logo.png";
-  if (bank === "QRIS") logo = "qrssss.jpg";
 
-  if (bank === "BANKDKI") logo = "bankdki.webp";
-  if (bank === "BANKJAGO") logo = "bankjago.png";
 
-  if (bank === "OCBC_SINGAPORE") logo = "OCBC Singapore.webp";
-  if (bank === "OCBC_MALAYSIA") logo = "OCBC MALAYSIA.webp";
-  if (bank === "OCBC_BUSINESS") logo = "OCBC Business.webp";
-  if (bank === "OCBC_HK") logo = "OCBC HK.webp";
+if (bank === "DANA") {
+  logo = "dana.png";
+  tujuanImg = "rekening-dana.jpg";
+}
 
-  if (bank === "BANK_OF_CHINA") logo = "bank-of-china.png";
-  if (bank === "CCB") logo = "icbc.jpg";
-  if (bank === "ICBC") logo = "ICBC_Bank_logo.png";
+if (bank === "OVO") {
+  logo = "ovo.png";
+  tujuanImg = "rekening-ovo.jpg";
+}
+
+if (bank === "BCA") {
+  logo = "bca.png";
+  tujuanImg = "rekening-bca.jpg";
+}
+
+if (bank === "GOPAY") {
+  logo = "gopay.png";
+  tujuanImg = "rekening-gopay.jpg";
+}
+
+if (bank === "BNI") {
+  logo = "bank-bni-logo-png.png";
+  tujuanImg = "rekening-bni.jpg";
+}
+
+if (bank === "BRI") {
+  logo = "bank-bri-logo-png_.png";
+  tujuanImg = "rekening-bri.jpg";
+}
+
+if (bank === "SHOPEEPAY") {
+  logo = "ShopeePay.png";
+  tujuanImg = "rekening-shopeepay.jpg";
+}
+
+if (bank === "LINKAJA") {
+  logo = "link-aja-logo.png";
+  tujuanImg = "rekening-linkaja.jpg";
+}
+
+if (bank === "QRIS") {
+  logo = "qrssss.jpg";
+  tujuanImg = "c3f4854b-1df1-415b-a155-d5e6b1853499.jpg";
+}
+
+if (bank === "SPEEDCASH") {
+  logo = "speedcash.webp";
+  tujuanImg = "rekening-speedcash.webp";
+}
+
+
+if (bank === "HOTELMURAH") {
+  logo = "3518b332-396e-4897-bb6a-08a7465cb37c";
+  tujuanImg = "rekening-3518b332-396e-4897-bb6a-08a7465cb37c";
+}
+
+
+let norek = "";
+let namaRek = "";
+
+if (bank === "BCA") {
+  norek = "1234567890";
+  namaRek = "PT AGENCY TIGOHOST INDONESIA";
+}
+
+else if (bank === "BRI") {
+  norek = "1234567891";
+  namaRek = "PT AGENCY TIGOHOST INDONESIA";
+}
+
+else if (bank === "BNI") {
+  norek = "1234567892";
+  namaRek = "PT AGENCY TIGOHOST INDONESIA";
+}
+
+else if (bank === "DANA") {
+  norek = "081234567890";
+  namaRek = "PT AGENCY TIGOHOST INDONESIA";
+}
+
+else if (bank === "OVO") {
+  norek = "081234567891";
+  namaRek = "PT AGENCY TIGOHOST INDONESIA";
+}
+
+else if (bank === "GOPAY") {
+  norek = "081234567892";
+  namaRek = "PT AGENCY TIGOHOST INDONESIA";
+}
+
+else if (bank === "SHOPEEPAY") {
+  norek = "081234567893";
+  namaRek = "PT AGENCY TIGOHOST INDONESIA";
+}
+
+else if (bank === "LINKAJA") {
+  norek = "081234567894";
+  namaRek = "PT AGENCY TIGOHOST INDONESIA";
+}
+
+else if (bank === "BANKDKI") {
+  norek = "1234567893";
+  namaRek = "PT AGENCY TIGOHOST INDONESIA";
+}
+
+else if (bank === "BANKJAGO") {
+  norek = "1234567894";
+  namaRek = "PT AGENCY TIGOHOST INDONESIA";
+}
+
+else if (bank === "SPEEDCASH") {
+  norek = "6283175745023";
+  namaRek = "IL**** ******O";
+}
+
+
+
+// isi if bank disini...
+
+
+
 
   // ================= RENDER UI =================
-  content.innerHTML = `
-    <div style="font-family:sans-serif;font-size:13px;color:#333;">
+ // ================= KONTEN PEMBAYARAN =================
+let paymentContent = "";
 
-      <!-- ================= QRIS ================= -->
-      <div style="text-align:center;margin-bottom:12px;">
-        <img id="qrisImg" src="c3f4854b-1df1-415b-a155-d5e6b1853499.jpg"
-          style="width:170px;height:170px;object-fit:contain;border-radius:10px;">
+// QRIS = tampil gambar
+if (bank === "QRIS") {
 
-        <div id="qrisStatus" style="margin-top:5px;font-size:12px;color:orange;">
-          Menunggu pembayaran...
-        </div>
+  paymentContent = `
+    <div style="text-align:center;margin-bottom:12px;">
+      <img
+        id="qrisImg"
+        src="c3f4854b-1df1-415b-a155-d5e6b1853499.jpg"
+        style="
+          width:170px;
+          height:170px;
+          object-fit:contain;
+          border-radius:10px;
+        "
+      >
 
-        <div id="qrisTimer" style="margin-top:6px;font-size:12px;font-weight:bold;color:#333;">
-          Menghitung waktu...
-        </div>
+      <div id="qrisStatus"
+        style="margin-top:5px;font-size:12px;color:orange;">
+        Menunggu pembayaran...
       </div>
 
-      <!-- ================= BANK + LOGO ================= -->
-     
+      <div id="qrisTimer"
+        style="margin-top:6px;font-size:12px;font-weight:bold;color:#333;">
+        Menghitung waktu...
+      </div>
+    </div>
+  `;
 
+} else {
 
+  // BANK / E-WALLET = tampil rekening tujuan
+  paymentContent = `
+    <div style="
+      background:#f8f9fb;
+      border:1px solid #eee;
+      border-radius:12px;
+      padding:15px;
+      margin-bottom:15px;
+    ">
 
-      <div style="font-family:sans-serif;font-size:13px;color:#333;">
+      <div style="
+        text-align:center;
+        font-size:12px;
+        color:#666;
+        margin-bottom:10px;
+      ">
+        Tujuan Pembayaran
+      </div>
 
-  <!-- BANK -->
+      <div style="
+        text-align:center;
+        font-size:22px;
+        font-weight:bold;
+        color:#111;
+      ">
+        ${norek}
+      </div>
+
+      <div style="
+        text-align:center;
+        font-size:13px;
+        color:#666;
+        margin-top:5px;
+      ">
+        A/N ${namaRek}
+      </div>
+
+      <div id="qrisStatus"
+        style="
+          margin-top:15px;
+          text-align:center;
+          font-size:12px;
+          color:orange;
+        ">
+        Menunggu pembayaran...
+      </div>
+
+      <div id="qrisTimer"
+        style="
+          margin-top:6px;
+          text-align:center;
+          font-size:12px;
+          font-weight:bold;
+          color:#333;
+        ">
+        Menghitung waktu...
+      </div>
+
+    </div>
+  `;
+}
+
+content.innerHTML = `
+<div style="font-family:sans-serif;font-size:13px;color:#333;">
+
+  ${paymentContent}
+
   <div style="display:flex;justify-content:space-between;align-items:center;">
     <span>Bank</span>
 
@@ -1927,79 +2297,46 @@ window.openTrx = function (d) {
     </div>
   </div>
 
+  <div style="border-top:1px dashed #ddd;margin:10px 0;"></div>
 
+  <div style="display:flex;justify-content:space-between;">
+    <span>Nama</span>
+    <b>${d.nama || "-"}</b>
+  </div>
 
+  <div style="display:flex;justify-content:space-between;">
+    <span>Rekening</span>
+    <b>${d.rekening || "-"}</b>
+  </div>
 
+  <div style="border-top:1px dashed #ddd;margin:10px 0;"></div>
 
+  <div style="display:flex;justify-content:space-between;">
+    <span>Nominal</span>
+    <b>IDR ${Number(d.nominal || 0).toLocaleString("en-US")}</b>
+  </div>
 
-      <div style="border-top:1px dashed #ddd;margin:10px 0;"></div>
+  <div style="display:flex;justify-content:space-between;margin-top:5px;">
+    <span>Status</span>
+    <b id="trxStatus" style="color:${statusColor}">
+      ${statusText}
+    </b>
+  </div>
 
-      <div style="display:flex;justify-content:space-between;">
-        <span>Nama</span><b>${d.nama || "-"}</b>
-      </div>
+  <div style="border-top:1px dashed #ddd;margin:10px 0;"></div>
 
-      <div style="display:flex;justify-content:space-between;">
-        <span>Rekening</span>
-        <b style="
-        color:#949494;
-         font-family: 'Inter', 'Roboto', 'Segoe UI', Arial, sans-serif;
-         font-weight:500;
-         letter-spacing:0.2px;
-         ">
-          ${d.rekening || "-"}
-      </b>
-      </div>
+  <div style="display:flex;justify-content:space-between;">
+    <span>Code Ref</span>
+    <b>${d.codeRef || "-"}</b>
+  </div>
 
-      <div style="border-top:1px dashed #ddd;margin:10px 0;"></div>
+  <div style="display:flex;justify-content:space-between;">
+    <span>Resi</span>
+    <b>${d.resi || "-"}</b>
+  </div>
 
-      <div style="display:flex;justify-content:space-between;">
-        <span>Nominal</span>
-        <b>IDR ${Number(d.nominal || 0).toLocaleString("en-US")}</b>
-      </div>
-
-      <div style="display:flex;justify-content:space-between;margin-top:5px;">
-        <span>Status</span>
-        <b id="trxStatus" style="color:${statusColor}; display:flex;align-items:center;gap:6px;">
-
-  ${statusText}
-
-  ${
-    d.status === "pending"
-      ? `<span style="display:flex;gap:3px;align-items:center;">
-          <span class="dot"></span>
-          <span class="dot"></span>
-          <span class="dot"></span>
-        </span>`
-      : ""
-  }
-
-</b>
-      </div>
-
-      <div style="border-top:1px dashed #ddd;margin:10px 0;"></div>
-
-      <div style="display:flex;justify-content:space-between;">
-        <span>Code Ref</span>
-           <b style="color:#949494;">${d.codeRef || "-"}</b>
-      </div>
-
-      <div style="display:flex;justify-content:space-between;">
-        <span>Resi</span>
-          <b style="color:#949494;">${d.resi || "-"}</b>
-      </div>
-
-      <div style="border-top:1px dashed #ddd;margin:10px 0;"></div>
-
-      <div style="display:flex;justify-content:space-between;">
-        <span>Waktu</span>
-        <b style="color:#949494;">
-           ${d.createdAt?.toDate ? d.createdAt.toDate().toLocaleString("id-ID") : "-"}
-        </b>
-      </div>
-
-    </div>
-  `;
-
+</div>
+`;
 
   // ================= REALTIME SYNC FIREBASE =================
   const ref = doc(db, "deposit", d._id || d.id);
@@ -2083,7 +2420,7 @@ window.openTrx = function (d) {
   setTimeout(() => {
 
     // ganti gambar setelah fade out
-    img.src = "c3f4854b-1df1-415b-a155-d5e6b1853499.jpg";
+    img.src = tujuanImg;
 
     // fade in lagi
     setTimeout(() => {
