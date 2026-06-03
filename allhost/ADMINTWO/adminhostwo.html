@@ -29,16 +29,6 @@ min-height:100vh;
 LOGIN CHECK SCREEN
 ========================== */
 
-.loading{
-position:fixed;
-inset:0;
-background:#0f172a;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:18px;
-z-index:9999;
-}
 
 /* ==========================
 SIDEBAR
@@ -294,9 +284,7 @@ grid-template-columns:1fr;
 </head>
 <body>
 
-<div class="loading" id="loading">
-Memeriksa Login...
-</div>
+
 
 <div class="sidebar">
 
@@ -330,11 +318,7 @@ HOST ADMIN
 <div class="header">
 <h1>Dashboard Host</h1>
 
-<button
-class="logout"
-onclick="logout()">
-Logout
-</button>
+
 
 </div>
 
@@ -551,36 +535,6 @@ getDatabase(app);
 AUTH CHECK
 ========================== */
 
-const session =
-localStorage.getItem("adminLogin");
-
-if(!session){
-
-window.location.replace(
-"loginadminlord.html"
-);
-
-}
-
-document
-.getElementById("loading")
-.style.display="none";
-
-/* ==========================
-LOGOUT
-========================== */
-
-window.logout = ()=>{
-
-localStorage.removeItem(
-"adminLogin"
-);
-
-window.location.replace(
-"loginadminlord.html"
-);
-
-};
 
 /* ==========================
 GLOBAL
