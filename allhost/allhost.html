@@ -2,6 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>All Host</title>
 
@@ -9,11 +10,10 @@
 body{
   margin:0;
   font-family:Arial;
-  background:#0b0b0f;
+  background:#ffffff;
   color:#fff;
 }
 
-/* HEADER */
 .header{
   padding:15px;
   font-size:18px;
@@ -21,9 +21,38 @@ body{
   background:#ffffff;
   position:sticky;
   top:0;
-  z-index:10;
+  z-index:999;
   color:#000;
+  text-align:center;
+  display:flex;
+  align-items:center;
 }
+
+/* tombol kanan */
+.btn-peraturan{
+  position:absolute;
+  right:10px;
+  top:50%;
+  transform:translateY(-50%);
+
+  width:35px;
+  height:35px;
+  border-radius:50%;
+
+  background:#025394bd; 
+  border:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
+
+/* icon FA */
+.btn-peraturan i{
+  color:#fff;   /* warna icon */
+  font-size:16px;
+}
+
 
 /* GRID */
 .container{
@@ -101,7 +130,14 @@ body{
 
 <body>
 
-<div class="header">TOP HOST</div>
+<div class="header">
+  TOP HOST
+
+  <button onclick="window.location.href='peraturan-peringkat.html'" class="btn-peraturan">
+    <i class="fa fa-exclamation-circle"></i>
+  </button>
+</div>
+
 <div class="container" id="list"></div>
 
 <!-- FIREBASE -->
