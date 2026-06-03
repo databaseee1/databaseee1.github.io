@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Host</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#0b0b0f;
+  color:#fff;
+}
+
+/* HEADER */
+.header{
+  padding:15px;
+  font-size:18px;
+  font-weight:bold;
+  background:#ffffff;
+  position:sticky;
+  top:0;
+  z-index:10;
+  color:#000;
+}
+
+/* GRID */
+.container{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  padding:10px;
+  background:#fff;
+}
+
+/* CARD */
+.card{
+  position:relative;
+  height:260px;
+  border-radius:15px;
+  overflow:hidden;
+  cursor:pointer;
+  background:#111;
+}
+
+/* IMAGE */
+.bg{
+  position:absolute;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* OVERLAY */
+.overlay{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:linear-gradient(
+    to top,
+    rgba(0,0,0,0.85),
+    rgba(60,0,120,0.35),
+    rgba(0,0,0,0.1)
+  );
+}
+
+/* CONTENT */
+.content{
+  position:absolute;
+  bottom:10px;
+  left:10px;
+  right:10px;
+}
+
+.name{
+  font-size:14px;
+  font-weight:bold;
+  color:#fff;
+}
+
+.info{
+  font-size:11px;
+  opacity:0.85;
+  margin-top:3px;
+  color:#ddd;
+}
+
+.badge{
+  display:inline-block;
+  margin-top:6px;
+  padding:3px 8px;
+  font-size:10px;
+  background:linear-gradient(90deg,#ff0000,#ff0000);
+  color:#fff;
+  border-radius:6px;
+  font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">TOP HOST</div>
+<div class="container" id="list"></div>
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  get,
+  set,
+  update,
+  onValue
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* CONFIG */
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+  storageBucket: "users-96dc5.firebasestorage.app",
+  messagingSenderId: "483322415863",
+  appId: "1:483322415863:web:1397a8f2e808e66ad9e1f2",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* RANDOM */
+const apps = ["TIGO","MACO","MEEGO","AYAR","BLING","CHATO","TENDERU"];
+const bios = [
+  "Love life ✨",
+  "Stay humble 🤍",
+  "Chill vibes 😎",
+  "Work hard 💪",
+  "Enjoy moment 🔥"
+];
+
+const rand = (arr)=>arr[Math.floor(Math.random()*arr.length)];
+const rint = (a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+
+
+
+const appIconMap = {
+  TIGO: "https://cdn-icons-png.flaticon.com/512/732/732200.png",
+  MACO: "https://cdn-icons-png.flaticon.com/512/732/732212.png",
+  MEEGO: "https://cdn-icons-png.flaticon.com/512/5968/5968705.png",
+  AYAR: "https://cdn-icons-png.flaticon.com/512/732/732223.png",
+  BLING: "https://cdn-icons-png.flaticon.com/512/5968/5968764.png",
+  CHATO: "https://cdn-icons-png.flaticon.com/512/2111/2111463.png",
+  TENDERU: "https://cdn-icons-png.flaticon.com/512/5968/5968756.png"
+};
+
+
+
+
+
+
+
+
+
+
+/* ===============================
+   1. AUTO CREATE / FIX DATA
+================================*/
+get(ref(db,"allhost")).then((snap)=>{
+
+  if(!snap.exists()){
+    console.log("🚀 CREATE DUMMY DATA...");
+
+for(let i=1;i<=20;i++){
+
+  const app = rand(apps);
+
+set(ref(db,"allhost/"+i),{
+  profil:"User "+i,
+  foto:`https://i.pravatar.cc/400?img=${i+10}`,
+  gambarNegara:
+  "https://cdn-icons-png.flaticon.com/512/555/555526.png",
+  umur:rint(18,45),
+  negara:"Indonesia",
+  aplikasi:app,
+  status:"HOST",
+  bio:rand(bios),
+
+  gambarAplikasi: appIconMap[app],
+
+  // DATA BARU
+  gambarIconAplikasi: appIconMap[app],
+  penghasilanMingguIni: rint(50000,5000000),
+
+  like:rint(100,99999),
+  comment:rint(10,5000),
+  share:rint(5,2000),
+  bookmark:rint(1,3000)
+});
+}
+
+  } else {
+    console.log("✔ Data sudah ada, update stats...");
+
+    snap.forEach(child=>{
+      const id = child.key;
+
+     const app = child.val().aplikasi || rand(apps);
+
+update(ref(db,"allhost/"+id),{
+
+  gambarIconAplikasi:
+  child.val().gambarIconAplikasi ||
+  appIconMap[app],
+
+  penghasilanMingguIni:
+  child.val().penghasilanMingguIni ||
+  rint(50000,5000000),
+
+  gambarNegara:
+  child.val().gambarNegara ||
+  "https://cdn-icons-png.flaticon.com/512/555/555526.png",
+
+  like:rint(100,99999),
+  comment:rint(10,5000),
+  share:rint(5,2000),
+  bookmark:rint(1,3000)
+
+});
+    });
+  }
+});
+
+/* ===============================
+   2. RENDER DATA
+================================*/
+const list = document.getElementById("list");
+
+onValue(ref(db,"allhost"),(snap)=>{
+
+  list.innerHTML="";
+
+  let hosts = [];
+
+  snap.forEach(child=>{
+    hosts.push({
+      id: child.key,
+      ...child.val()
+    });
+  });
+
+  /* URUTKAN DARI GAJI TERBESAR */
+  hosts.sort((a,b)=>
+    (b.penghasilanMingguIni || 0) -
+    (a.penghasilanMingguIni || 0)
+  );
+
+  hosts.forEach((d,index)=>{
+
+    const id = d.id;
+
+    const card = document.createElement("div");
+    card.className="card";
+
+const rank = index + 1;
+
+let rankBadge = "";
+
+if(rank === 1){
+  rankBadge = "🥇 TOP 1";
+}
+else if(rank === 2){
+  rankBadge = "🥈 TOP 2";
+}
+else if(rank === 3){
+  rankBadge = "🥉 TOP 3";
+}
+
+
+    
+    card.innerHTML=`
+      <img src="${d.foto}" class="bg">
+      <div class="overlay"></div>
+
+${
+rankBadge
+?
+`
+<div style="
+position:absolute;
+top:8px;
+right:8px;
+z-index:5;
+padding:5px 10px;
+border-radius:999px;
+background:rgba(255,215,0,.95);
+color:#000;
+font-size:11px;
+font-weight:bold;
+box-shadow:0 2px 8px rgba(0,0,0,.3);
+">
+${rankBadge}
+</div>
+`
+: ""
+}
+
+
+
+
+
+
+
+
+      <div class="content">
+
+        <div class="name">
+          ${d.profil}
+        </div>
+
+        <div class="info"
+        style="
+        display:flex;
+        align-items:center;
+        gap:6px;
+        margin-top:3px;
+        ">
+          <span>${d.umur} Tahun</span>
+
+          <img
+          src="${d.gambarNegara || ''}"
+          style="
+          width:14px;
+          height:14px;
+          border-radius:50%;
+          object-fit:cover;
+          ">
+
+          <span>${d.negara}</span>
+        </div>
+
+        <div class="info"
+        style="
+        display:flex;
+        align-items:center;
+        gap:6px;
+        margin-top:4px;
+        ">
+
+          <img
+          src="${
+          (() => {
+
+            let url =
+            d.gambarIconAplikasi ||
+            d.gambarAplikasi ||
+            'https://via.placeholder.com/50';
+
+            if(url.includes('google.com/imgres')){
+              const match = url.match(/[?&]imgurl=([^&]+)/);
+              if(match){
+                url = decodeURIComponent(match[1]);
+              }
+            }
+
+            if(url.includes('drive.google.com/file/d/')){
+              const fileId = url.split('/d/')[1]?.split('/')[0];
+              if(fileId){
+                url = 'https://drive.google.com/thumbnail?id=' + fileId;
+              }
+            }
+
+            return url;
+
+          })()
+          }"
+          style="
+          width:16px;
+          height:16px;
+          border-radius:50%;
+          object-fit:cover;
+          background:#fff;
+          "
+          onerror="this.src='https://via.placeholder.com/50';">
+
+          <span>${d.aplikasi}</span>
+
+        </div>
+
+     <div style="
+display:flex;
+gap:5px;
+margin-top:6px;
+flex-wrap:wrap;
+">
+
+  <div class="badge">
+    ${d.status}
+  </div>
+
+
+
+</div>
+    `;
+
+    card.onclick=()=>{
+      window.location.href="detailhost.html?id="+id;
+    };
+
+    list.appendChild(card);
+
+  });
+
+});
+</script>
+
+</body>
+</html>
