@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Panduan Gabung Agency</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+background:#070d19;
+color:#fff;
+overflow-x:hidden;
+}
+
+/* BACKGROUND */
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+z-index:-2;
+
+background:
+radial-gradient(circle at top left,
+rgba(37,99,235,.25),
+transparent 35%),
+
+radial-gradient(circle at bottom right,
+rgba(0,255,170,.15),
+transparent 35%),
+
+linear-gradient(
+180deg,
+#070d19,
+#050814,
+#04070f);
+
+}
+
+/* FLOATING */
+
+.glow1,
+.glow2{
+position:fixed;
+border-radius:50%;
+filter:blur(90px);
+z-index:-1;
+}
+
+.glow1{
+width:300px;
+height:300px;
+background:#2563eb;
+top:-100px;
+left:-100px;
+opacity:.25;
+}
+
+.glow2{
+width:350px;
+height:350px;
+background:#00ffaa;
+bottom:-120px;
+right:-120px;
+opacity:.12;
+}
+
+.container{
+width:100%;
+max-width:1200px;
+margin:auto;
+padding:0 25px;
+}
+
+/* HERO */
+
+.hero{
+padding:100px 0 80px;
+text-align:center;
+}
+
+.badge{
+display:inline-flex;
+align-items:center;
+gap:10px;
+
+padding:12px 22px;
+
+border-radius:50px;
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
+
+backdrop-filter:blur(15px);
+
+margin-bottom:30px;
+}
+
+.badge i{
+color:#00ff9d;
+}
+
+.hero h1{
+font-size:70px;
+font-weight:900;
+line-height:1.1;
+margin-bottom:20px;
+}
+
+.hero h1 span{
+background:linear-gradient(
+90deg,
+#3b82f6,
+#00ffb3);
+
+}
+
+.hero p{
+max-width:850px;
+margin:auto;
+color:#b7c3d8;
+line-height:2;
+font-size:17px;
+}
+
+.hero-buttons{
+margin-top:40px;
+
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.btn{
+padding:15px 30px;
+border-radius:14px;
+text-decoration:none;
+font-weight:600;
+transition:.3s;
+}
+
+.btn-primary{
+background:linear-gradient(
+135deg,
+#2563eb,
+#00d084);
+
+color:#fff;
+}
+
+.btn-primary:hover{
+transform:translateY(-4px);
+}
+
+.btn-secondary{
+border:1px solid rgba(255,255,255,.1);
+background:rgba(255,255,255,.05);
+color:#fff;
+}
+
+.btn-secondary:hover{
+background:rgba(255,255,255,.08);
+}
+
+/* STATS */
+
+.stats{
+margin-top:70px;
+
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+
+gap:20px;
+}
+
+.stat-card{
+background:rgba(255,255,255,.04);
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:24px;
+
+padding:30px;
+
+backdrop-filter:blur(15px);
+
+transition:.3s;
+}
+
+.stat-card:hover{
+transform:translateY(-6px);
+}
+
+.stat-card i{
+font-size:35px;
+margin-bottom:15px;
+color:#00ffb3;
+}
+
+.stat-card h2{
+font-size:34px;
+margin-bottom:8px;
+}
+
+.stat-card p{
+color:#b6c0d2;
+}
+
+/* SECTION */
+
+.section{
+padding:90px 0;
+}
+
+.section-title{
+text-align:center;
+margin-bottom:60px;
+}
+
+.section-title span{
+color:#00ffb3;
+font-weight:600;
+letter-spacing:1px;
+}
+
+.section-title h2{
+font-size:45px;
+margin-top:10px;
+}
+
+.section-title p{
+max-width:750px;
+margin:15px auto 0;
+color:#b6c0d2;
+line-height:1.9;
+}
+
+/* GLASS CARD */
+
+.glass{
+background:rgba(255,255,255,.04);
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:28px;
+
+padding:35px;
+
+backdrop-filter:blur(20px);
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.hero{
+padding:70px 0 50px;
+}
+
+.hero h1{
+font-size:42px;
+}
+
+.section-title h2{
+font-size:32px;
+}
+
+.hero p{
+font-size:15px;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="glow1"></div>
+<div class="glow2"></div>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="container">
+
+<div class="badge">
+<i class="fa-solid fa-shield-halved"></i>
+Agency Resmi PT. Agency Tigohost Indonesia
+</div>
+
+<h1>
+Gabung Bersama
+<span>Agency Profesional</span>
+</h1>
+
+<p>
+
+Bergabung bersama PT. Agency Tigohost Indonesia
+memberikan kesempatan untuk berkembang lebih cepat,
+mendapatkan bimbingan profesional, mengikuti event
+eksklusif, memperluas relasi, serta meningkatkan
+potensi penghasilan melalui ekosistem agency yang
+terstruktur dan terpercaya.
+
+</p>
+
+<div class="hero-buttons">
+
+<a href="#cara-gabung" class="btn btn-primary">
+<i class="fa-solid fa-user-plus"></i>
+Gabung Sekarang
+</a>
+
+<a href="#benefit" class="btn btn-secondary">
+<i class="fa-solid fa-circle-info"></i>
+Pelajari Lebih Lanjut
+</a>
+
+</div>
+
+<div class="stats">
+
+<div class="stat-card">
+<i class="fa-solid fa-users"></i>
+<h2>1000+</h2>
+<p>Anggota Aktif</p>
+</div>
+
+<div class="stat-card">
+<i class="fa-solid fa-trophy"></i>
+<h2>500+</h2>
+<p>Host Berkembang</p>
+</div>
+
+<div class="stat-card">
+<i class="fa-solid fa-medal"></i>
+<h2>24/7</h2>
+<p>Dukungan Agency</p>
+</div>
+
+<div class="stat-card">
+<i class="fa-solid fa-chart-line"></i>
+<h2>100%</h2>
+<p>Pembinaan Profesional</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Panduan Gabung Agency</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+background:#070d19;
+color:#fff;
+overflow-x:hidden;
+}
+
+/* BACKGROUND */
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+z-index:-2;
+
+background:
+radial-gradient(circle at top left,
+rgba(37,99,235,.25),
+transparent 35%),
+
+radial-gradient(circle at bottom right,
+rgba(0,255,170,.15),
+transparent 35%),
+
+linear-gradient(
+180deg,
+#070d19,
+#050814,
+#04070f);
+
+}
+
+/* FLOATING */
+
+.glow1,
+.glow2{
+position:fixed;
+border-radius:50%;
+filter:blur(90px);
+z-index:-1;
+}
+
+.glow1{
+width:300px;
+height:300px;
+background:#2563eb;
+top:-100px;
+left:-100px;
+opacity:.25;
+}
+
+.glow2{
+width:350px;
+height:350px;
+background:#00ffaa;
+bottom:-120px;
+right:-120px;
+opacity:.12;
+}
+
+.container{
+width:100%;
+max-width:1200px;
+margin:auto;
+padding:0 25px;
+}
+
+/* HERO */
+
+.hero{
+padding:100px 0 80px;
+text-align:center;
+}
+
+.badge{
+display:inline-flex;
+align-items:center;
+gap:10px;
+
+padding:12px 22px;
+
+border-radius:50px;
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
+
+backdrop-filter:blur(15px);
+
+margin-bottom:30px;
+}
+
+.badge i{
+color:#00ff9d;
+}
+
+.hero h1{
+font-size:70px;
+font-weight:900;
+line-height:1.1;
+margin-bottom:20px;
+}
+
+.hero h1 span{
+background:linear-gradient(
+90deg,
+#3b82f6,
+#00ffb3);
+
+}
+
+.hero p{
+max-width:850px;
+margin:auto;
+color:#b7c3d8;
+line-height:2;
+font-size:17px;
+}
+
+.hero-buttons{
+margin-top:40px;
+
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.btn{
+padding:15px 30px;
+border-radius:14px;
+text-decoration:none;
+font-weight:600;
+transition:.3s;
+}
+
+.btn-primary{
+background:linear-gradient(
+135deg,
+#2563eb,
+#00d084);
+
+color:#fff;
+}
+
+.btn-primary:hover{
+transform:translateY(-4px);
+}
+
+.btn-secondary{
+border:1px solid rgba(255,255,255,.1);
+background:rgba(255,255,255,.05);
+color:#fff;
+}
+
+.btn-secondary:hover{
+background:rgba(255,255,255,.08);
+}
+
+/* STATS */
+
+.stats{
+margin-top:70px;
+
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+
+gap:20px;
+}
+
+.stat-card{
+background:rgba(255,255,255,.04);
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:24px;
+
+padding:30px;
+
+backdrop-filter:blur(15px);
+
+transition:.3s;
+}
+
+.stat-card:hover{
+transform:translateY(-6px);
+}
+
+.stat-card i{
+font-size:35px;
+margin-bottom:15px;
+color:#00ffb3;
+}
+
+.stat-card h2{
+font-size:34px;
+margin-bottom:8px;
+}
+
+.stat-card p{
+color:#b6c0d2;
+}
+
+/* SECTION */
+
+.section{
+padding:90px 0;
+}
+
+.section-title{
+text-align:center;
+margin-bottom:60px;
+}
+
+.section-title span{
+color:#00ffb3;
+font-weight:600;
+letter-spacing:1px;
+}
+
+.section-title h2{
+font-size:45px;
+margin-top:10px;
+}
+
+.section-title p{
+max-width:750px;
+margin:15px auto 0;
+color:#b6c0d2;
+line-height:1.9;
+}
+
+/* GLASS CARD */
+
+.glass{
+background:rgba(255,255,255,.04);
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:28px;
+
+padding:35px;
+
+backdrop-filter:blur(20px);
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.hero{
+padding:70px 0 50px;
+}
+
+.hero h1{
+font-size:42px;
+}
+
+.section-title h2{
+font-size:32px;
+}
+
+.hero p{
+font-size:15px;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="glow1"></div>
+<div class="glow2"></div>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="container">
+
+<div class="badge">
+<i class="fa-solid fa-shield-halved"></i>
+Agency Resmi PT. Agency Tigohost Indonesia
+</div>
+
+<h1>
+Gabung Bersama
+<span>Agency Profesional</span>
+</h1>
+
+<p>
+
+Bergabung bersama PT. Agency Tigohost Indonesia
+memberikan kesempatan untuk berkembang lebih cepat,
+mendapatkan bimbingan profesional, mengikuti event
+eksklusif, memperluas relasi, serta meningkatkan
+potensi penghasilan melalui ekosistem agency yang
+terstruktur dan terpercaya.
+
+</p>
+
+<div class="hero-buttons">
+
+<a href="#cara-gabung" class="btn btn-primary">
+<i class="fa-solid fa-user-plus"></i>
+Gabung Sekarang
+</a>
+
+<a href="#benefit" class="btn btn-secondary">
+<i class="fa-solid fa-circle-info"></i>
+Pelajari Lebih Lanjut
+</a>
+
+</div>
+
+<div class="stats">
+
+<div class="stat-card">
+<i class="fa-solid fa-users"></i>
+<h2>1000+</h2>
+<p>Anggota Aktif</p>
+</div>
+
+<div class="stat-card">
+<i class="fa-solid fa-trophy"></i>
+<h2>500+</h2>
+<p>Host Berkembang</p>
+</div>
+
+<div class="stat-card">
+<i class="fa-solid fa-medal"></i>
+<h2>24/7</h2>
+<p>Dukungan Agency</p>
+</div>
+
+<div class="stat-card">
+<i class="fa-solid fa-chart-line"></i>
+<h2>100%</h2>
+<p>Pembinaan Profesional</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- TENTANG AGENCY -->
+
+<section class="section">
+
+<div class="container">
+
+<div class="section-title">
+<span>TENTANG AGENCY</span>
+<h2>Mengapa Bergabung Bersama Kami?</h2>
+
+<p>
+PT. Agency Tigohost Indonesia hadir sebagai wadah
+pengembangan host dan talent digital yang ingin
+bertumbuh secara profesional dengan dukungan
+tim management yang berpengalaman.
+</p>
+
+</div>
+
+<div class="glass">
+
+<div style="
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px;
+">
+
+<div>
+
+<div style="
+width:70px;
+height:70px;
+border-radius:20px;
+background:linear-gradient(135deg,#2563eb,#00d084);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+margin-bottom:20px;
+">
+
+<i class="fa-solid fa-handshake"></i>
+
+</div>
+
+<h3 style="margin-bottom:15px;">
+Dukungan Penuh Agency
+</h3>
+
+<p style="
+color:#b7c3d8;
+line-height:1.9;
+">
+
+Kami memberikan pendampingan langsung kepada
+anggota agency agar dapat berkembang lebih cepat
+dan memahami strategi yang tepat dalam membangun akun.
+
+</p>
+
+</div>
+
+<div>
+
+<div style="
+width:70px;
+height:70px;
+border-radius:20px;
+background:linear-gradient(135deg,#2563eb,#00d084);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+margin-bottom:20px;
+">
+
+<i class="fa-solid fa-graduation-cap"></i>
+
+</div>
+
+<h3 style="margin-bottom:15px;">
+Pelatihan Profesional
+</h3>
+
+<p style="
+color:#b7c3d8;
+line-height:1.9;
+">
+
+Setiap anggota akan memperoleh pelatihan,
+panduan, serta materi pengembangan yang
+membantu meningkatkan performa secara berkelanjutan.
+
+</p>
+
+</div>
+
+<div>
+
+<div style="
+width:70px;
+height:70px;
+border-radius:20px;
+background:linear-gradient(135deg,#2563eb,#00d084);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+margin-bottom:20px;
+">
+
+<i class="fa-solid fa-rocket"></i>
+
+</div>
+
+<h3 style="margin-bottom:15px;">
+Peluang Berkembang
+</h3>
+
+<p style="
+color:#b7c3d8;
+line-height:1.9;
+">
+
+Agency membantu anggota untuk mencapai
+potensi maksimal melalui program pembinaan,
+evaluasi, dan pengembangan berkala.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- CARA BERGABUNG -->
+
+<section class="section" id="cara-gabung">
+
+<div class="container">
+
+<div class="section-title">
+
+<span>PROSES PENDAFTARAN</span>
+
+<h2>Langkah Bergabung Dengan Agency</h2>
+
+<p>
+Ikuti tahapan berikut untuk menjadi bagian dari
+komunitas resmi PT. Agency Tigohost Indonesia.
+</p>
+
+</div>
+
+<div class="glass">
+
+<div style="
+display:flex;
+flex-direction:column;
+gap:25px;
+">
+
+<!-- STEP 1 -->
+
+<div style="
+display:flex;
+gap:20px;
+align-items:flex-start;
+">
+
+<div style="
+min-width:60px;
+height:60px;
+border-radius:18px;
+background:linear-gradient(135deg,#2563eb,#00d084);
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:700;
+font-size:22px;
+">
+
+1
+
+</div>
+
+<div>
+
+<h3 style="margin-bottom:10px;">
+Hubungi Admin Agency
+</h3>
+
+<p style="
+color:#b7c3d8;
+line-height:1.9;
+">
+
+Silakan menghubungi admin resmi melalui
+WhatsApp atau kontak resmi yang tersedia
+untuk mendapatkan informasi pendaftaran.
+
+</p>
+
+</div>
+
+</div>
+
+<!-- STEP 2 -->
+
+<div style="
+display:flex;
+gap:20px;
+align-items:flex-start;
+">
+
+<div style="
+min-width:60px;
+height:60px;
+border-radius:18px;
+background:linear-gradient(135deg,#2563eb,#00d084);
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:700;
+font-size:22px;
+">
+
+2
+
+</div>
+
+<div>
+
+<h3 style="margin-bottom:10px;">
+Lengkapi Data Diri
+</h3>
+
+<p style="
+color:#b7c3d8;
+line-height:1.9;
+">
+
+Kirimkan data yang dibutuhkan agar proses
+verifikasi dapat dilakukan oleh tim agency.
+
+</p>
+
+</div>
+
+</div>
+
+<!-- STEP 3 -->
+
+<div style="
+display:flex;
+gap:20px;
+align-items:flex-start;
+">
+
+<div style="
+min-width:60px;
+height:60px;
+border-radius:18px;
+background:linear-gradient(135deg,#2563eb,#00d084);
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:700;
+font-size:22px;
+">
+
+3
+
+</div>
+
+<div>
+
+<h3 style="margin-bottom:10px;">
+Proses Verifikasi
+</h3>
+
+<p style="
+color:#b7c3d8;
+line-height:1.9;
+">
+
+Tim agency akan melakukan pemeriksaan data
+untuk memastikan seluruh informasi telah sesuai.
+
+</p>
+
+</div>
+
+</div>
+
+<!-- STEP 4 -->
+
+<div style="
+display:flex;
+gap:20px;
+align-items:flex-start;
+">
+
+<div style="
+min-width:60px;
+height:60px;
+border-radius:18px;
+background:linear-gradient(135deg,#2563eb,#00d084);
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:700;
+font-size:22px;
+">
+
+4
+
+</div>
+
+<div>
+
+<h3 style="margin-bottom:10px;">
+Masuk Grup Resmi
+</h3>
+
+<p style="
+color:#b7c3d8;
+line-height:1.9;
+">
+
+Setelah disetujui, Anda akan diundang
+ke grup resmi agency untuk mendapatkan
+informasi dan bimbingan lebih lanjut.
+
+</p>
+
+</div>
+
+</div>
+
+<!-- STEP 5 -->
+
+<div style="
+display:flex;
+gap:20px;
+align-items:flex-start;
+">
+
+<div style="
+min-width:60px;
+height:60px;
+border-radius:18px;
+background:linear-gradient(135deg,#2563eb,#00d084);
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:700;
+font-size:22px;
+">
+
+5
+
+</div>
+
+<div>
+
+<h3 style="margin-bottom:10px;">
+Mulai Berkembang
+</h3>
+
+<p style="
+color:#b7c3d8;
+line-height:1.9;
+">
+
+Ikuti pelatihan, event, serta program pembinaan
+untuk meningkatkan performa dan kemampuan Anda.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- DATA PENDAFTARAN -->
+
+<section class="section">
+
+<div class="container">
+
+<div class="section-title">
+
+<span>DATA YANG DIBUTUHKAN</span>
+
+<h2>Persiapkan Informasi Berikut</h2>
+
+</div>
+
+<div style="
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+">
+
+<div class="glass">
+<i class="fa-solid fa-user"
+style="font-size:30px;color:#00ffb3;"></i>
+
+<h3 style="margin:20px 0 10px;">
+Nama Lengkap
+</h3>
+
+<p style="color:#b7c3d8;">
+Nama lengkap sesuai identitas yang digunakan.
+</p>
+
+</div>
+
+<div class="glass">
+<i class="fa-brands fa-whatsapp"
+style="font-size:30px;color:#00ffb3;"></i>
+
+<h3 style="margin:20px 0 10px;">
+Nomor WhatsApp
+</h3>
+
+<p style="color:#b7c3d8;">
+Gunakan nomor aktif untuk proses komunikasi.
+</p>
+
+</div>
+
+<div class="glass">
+<i class="fa-solid fa-id-card"
+style="font-size:30px;color:#00ffb3;"></i>
+
+<h3 style="margin:20px 0 10px;">
+ID Akun
+</h3>
+
+<p style="color:#b7c3d8;">
+Masukkan ID akun atau username aplikasi.
+</p>
+
+</div>
+
+<div class="glass">
+<i class="fa-solid fa-location-dot"
+style="font-size:30px;color:#00ffb3;"></i>
+
+<h3 style="margin:20px 0 10px;">
+Kota Domisili
+</h3>
+
+<p style="color:#b7c3d8;">
+Informasi lokasi untuk kebutuhan administrasi.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- BENEFIT -->
+
+<section class="section" id="benefit">
+
+<div class="container">
+
+<div class="section-title">
+
+<span>KEUNTUNGAN BERGABUNG</span>
+
+<h2>Benefit Eksklusif Agency</h2>
+
+<p>
+Nikmati berbagai keuntungan yang hanya
+didapatkan oleh anggota agency resmi.
+</p>
+
+</div>
+
+<div style="
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:20px;
+">
+
+<div class="glass">
+<i class="fa-solid fa-award"
+style="font-size:40px;color:#00ffb3;"></i>
+
+<h3 style="margin:20px 0 10px;">
+Program Pengembangan
+</h3>
+
+<p style="color:#b7c3d8;line-height:1.9;">
+Mendapatkan bimbingan dan evaluasi rutin
+untuk meningkatkan performa akun.
+</p>
+
+</div>
+
+<div class="glass">
+<i class="fa-solid fa-users"
+style="font-size:40px;color:#00ffb3;"></i>
+
+<h3 style="margin:20px 0 10px;">
+Komunitas Aktif
+</h3>
+
+<p style="color:#b7c3d8;line-height:1.9;">
+Bergabung dengan komunitas yang saling
+mendukung dan berkembang bersama.
+</p>
+
+</div>
+
+<div class="glass">
+<i class="fa-solid fa-trophy"
+style="font-size:40px;color:#00ffb3;"></i>
+
+<h3 style="margin:20px 0 10px;">
+Event Eksklusif
+</h3>
+
+<p style="color:#b7c3d8;line-height:1.9;">
+Kesempatan mengikuti berbagai program,
+kompetisi, dan event khusus agency.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- FAQ SECTION -->
+
+<section class="section">
+
+<div class="container">
+
+<div class="section-title">
+
+<span>FAQ</span>
+
+<h2>Pertanyaan Yang Sering Diajukan</h2>
+
+<p>
+Berikut beberapa pertanyaan yang paling sering
+ditanyakan oleh calon anggota agency.
+</p>
+
+</div>
+
+<div style="
+display:flex;
+flex-direction:column;
+gap:20px;
+">
+
+<div class="glass">
+<h3 style="margin-bottom:12px;">
+<i class="fa-solid fa-circle-question"
+style="color:#00ffb3;margin-right:10px;"></i>
+Apakah bergabung dengan agency dikenakan biaya?
+</h3>
+
+<p style="color:#b7c3d8;line-height:1.9;">
+Tidak. Proses pendaftaran agency dilakukan sesuai
+ketentuan yang berlaku dan akan diinformasikan oleh
+admin resmi apabila terdapat persyaratan tambahan.
+</p>
+</div>
+
+<div class="glass">
+<h3 style="margin-bottom:12px;">
+<i class="fa-solid fa-circle-question"
+style="color:#00ffb3;margin-right:10px;"></i>
+Berapa lama proses verifikasi?
+</h3>
+
+<p style="color:#b7c3d8;line-height:1.9;">
+Proses verifikasi biasanya memerlukan waktu hingga
+1 x 24 jam kerja tergantung jumlah pengajuan yang masuk.
+</p>
+</div>
+
+<div class="glass">
+<h3 style="margin-bottom:12px;">
+<i class="fa-solid fa-circle-question"
+style="color:#00ffb3;margin-right:10px;"></i>
+Apa keuntungan bergabung dengan agency?
+</h3>
+
+<p style="color:#b7c3d8;line-height:1.9;">
+Anggota agency memperoleh dukungan profesional,
+akses event eksklusif, komunitas aktif, pelatihan,
+serta berbagai program pengembangan akun.
+</p>
+</div>
+
+<div class="glass">
+<h3 style="margin-bottom:12px;">
+<i class="fa-solid fa-circle-question"
+style="color:#00ffb3;margin-right:10px;"></i>
+Bagaimana jika pengajuan ditolak?
+</h3>
+
+<p style="color:#b7c3d8;line-height:1.9;">
+Tim agency akan memberikan informasi terkait
+alasan penolakan dan langkah yang dapat dilakukan
+untuk mengajukan kembali pendaftaran.
+</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- CTA -->
+
+<section class="section">
+
+<div class="container">
+
+<div style="
+background:
+linear-gradient(
+135deg,
+rgba(37,99,235,.18),
+rgba(0,255,170,.10)
+);
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:35px;
+
+padding:60px 40px;
+
+text-align:center;
+
+backdrop-filter:blur(20px);
+">
+
+<div style="
+width:90px;
+height:90px;
+margin:auto;
+margin-bottom:25px;
+
+border-radius:24px;
+
+background:
+linear-gradient(
+135deg,
+#2563eb,
+#00d084);
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:38px;
+">
+
+<i class="fa-solid fa-user-plus"></i>
+
+</div>
+
+<h2 style="
+font-size:25px;
+margin-bottom:20px;
+">
+
+Siap Menjadi Bagian Dari Agency?
+
+</h2>
+
+<p style="
+max-width:800px;
+margin:auto;
+color:#c1cbdb;
+line-height:2;
+">
+
+Jangan lewatkan kesempatan untuk berkembang
+bersama komunitas yang aktif dan profesional.
+Bergabunglah sekarang dan dapatkan berbagai
+program pembinaan, pelatihan, serta dukungan
+langsung dari tim PT. Agency Tigohost Indonesia.
+
+</p>
+
+<div style="
+margin-top:35px;
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
+">
+
+<a href="#"
+style="
+padding:16px 32px;
+border-radius:16px;
+text-decoration:none;
+font-weight:600;
+color:#fff;
+
+background:
+linear-gradient(
+135deg,
+#25d366,
+#00b85c);
+">
+
+<i class="fa-brands fa-whatsapp"></i>
+ Hubungi Admin
+
+</a>
+
+<a href="#cara-gabung"
+style="
+padding:16px 32px;
+border-radius:16px;
+text-decoration:none;
+font-weight:600;
+
+background:
+rgba(255,255,255,.06);
+
+border:1px solid rgba(255,255,255,.08);
+
+color:#fff;
+">
+
+<i class="fa-solid fa-arrow-up"></i>
+ Lihat Panduan
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- MOTIVATION -->
+
+<section class="section">
+
+<div class="container">
+
+<div class="glass">
+
+<div style="
+text-align:center;
+">
+
+<i class="fa-solid fa-medal"
+style="
+font-size:60px;
+color:#00ffb3;
+margin-bottom:20px;
+"></i>
+
+<h2 style="
+font-size:40px;
+margin-bottom:20px;
+">
+
+Bersama Kita Bertumbuh
+
+</h2>
+
+<p style="
+max-width:900px;
+margin:auto;
+color:#c1cbdb;
+line-height:2;
+">
+
+PT. Agency Tigohost Indonesia berkomitmen untuk
+memberikan lingkungan yang positif, profesional,
+dan mendukung setiap anggota dalam mencapai
+potensi terbaiknya. Dengan sistem pembinaan yang
+terstruktur dan komunitas yang solid, kami percaya
+setiap individu memiliki kesempatan untuk berkembang
+dan mencapai tujuan yang lebih besar.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer style="
+padding:50px 20px;
+border-top:1px solid rgba(255,255,255,.08);
+">
+
+<div class="container">
+
+<div style="
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(250px,1fr));
+gap:30px;
+">
+
+<div>
+
+<h3 style="margin-bottom:15px;">
+<i class="fa-solid fa-building"></i>
+ Agency Tigohost
+</h3>
+
+<p style="
+color:#9fb0c7;
+line-height:1.9;
+">
+
+Agency profesional yang berfokus pada
+pengembangan talent digital melalui
+dukungan, pembinaan, dan komunitas aktif.
+
+</p>
+
+</div>
+
+<div>
+
+<h3 style="margin-bottom:15px;">
+<i class="fa-solid fa-link"></i>
+ Menu Cepat
+</h3>
+
+<p style="color:#9fb0c7;">Panduan Deposit</p>
+<p style="color:#9fb0c7;">Top Up Coin</p>
+<p style="color:#9fb0c7;">Gabung Agency</p>
+
+</div>
+
+<div>
+
+<h3 style="margin-bottom:15px;">
+<i class="fa-solid fa-headset"></i>
+ Bantuan
+</h3>
+
+<p style="color:#9fb0c7;">
+WhatsApp Support
+</p>
+
+<p style="color:#9fb0c7;">
+Customer Service
+</p>
+
+<p style="color:#9fb0c7;">
+Verifikasi Agency
+</p>
+
+</div>
+
+</div>
+
+<div style="
+margin-top:40px;
+padding-top:30px;
+border-top:1px solid rgba(255,255,255,.08);
+text-align:center;
+color:#7f8ea5;
+">
+
+© 2026 PT. Agency Tigohost Indonesia
+<br>
+All Rights Reserved
+
+</div>
+
+</div>
+
+</footer>
+
+<!-- SCROLL ANIMATION -->
+
+<script>
+
+const observer = new IntersectionObserver((entries)=>{
+
+entries.forEach((entry)=>{
+
+if(entry.isIntersecting){
+
+entry.target.animate([
+{
+opacity:0,
+transform:'translateY(40px)'
+},
+{
+opacity:1,
+transform:'translateY(0)'
+}
+],{
+duration:700,
+fill:'forwards'
+});
+
+observer.unobserve(entry.target);
+
+}
+
+});
+
+});
+
+document.querySelectorAll(
+'.glass,.stat-card,.section-title'
+).forEach(el=>{
+
+observer.observe(el);
+
+});
+
+</script>
+
+</body>
+</html>

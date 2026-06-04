@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Panduan Lapor Agency</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- Font Awesome Tanpa Kit -->
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+background:#070d19;
+color:#fff;
+overflow-x:hidden;
+}
+
+/* BACKGROUND */
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+z-index:-2;
+
+background:
+radial-gradient(circle at top left,
+rgba(220,38,38,.22),
+transparent 35%),
+
+radial-gradient(circle at bottom right,
+rgba(37,99,235,.18),
+transparent 35%),
+
+linear-gradient(
+180deg,
+#070d19,
+#050814,
+#04070f);
+
+}
+
+.glow1,
+.glow2{
+position:fixed;
+border-radius:50%;
+filter:blur(90px);
+z-index:-1;
+}
+
+.glow1{
+width:320px;
+height:320px;
+background:#dc2626;
+top:-120px;
+left:-120px;
+opacity:.20;
+}
+
+.glow2{
+width:350px;
+height:350px;
+background:#2563eb;
+bottom:-120px;
+right:-120px;
+opacity:.15;
+}
+
+.container{
+width:100%;
+max-width:1200px;
+margin:auto;
+padding:0 25px;
+}
+
+/* HERO */
+
+.hero{
+padding:100px 0 80px;
+text-align:center;
+}
+
+.badge{
+display:inline-flex;
+align-items:center;
+gap:10px;
+
+padding:12px 22px;
+
+border-radius:50px;
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
+
+backdrop-filter:blur(15px);
+
+margin-bottom:30px;
+}
+
+.badge i{
+color:#ff5757;
+}
+
+.hero h1{
+font-size:68px;
+font-weight:900;
+line-height:1.1;
+margin-bottom:20px;
+}
+
+.hero h1 span{
+background:linear-gradient(
+90deg,
+#ff5757,
+#ff9b54);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.hero p{
+max-width:850px;
+margin:auto;
+color:#b7c3d8;
+line-height:2;
+font-size:17px;
+}
+
+.hero-buttons{
+margin-top:40px;
+
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.btn{
+padding:15px 30px;
+border-radius:15px;
+text-decoration:none;
+font-weight:600;
+transition:.3s;
+}
+
+.btn-primary{
+background:linear-gradient(
+135deg,
+#dc2626,
+#ff7b00);
+
+color:#fff;
+}
+
+.btn-primary:hover{
+transform:translateY(-5px);
+}
+
+.btn-secondary{
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+color:#fff;
+}
+
+.stats{
+margin-top:70px;
+
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+
+gap:20px;
+}
+
+.stat-card{
+background:rgba(255,255,255,.04);
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:24px;
+
+padding:30px;
+
+backdrop-filter:blur(15px);
+}
+
+.stat-card i{
+font-size:35px;
+color:#ff5757;
+margin-bottom:15px;
+}
+
+.stat-card h2{
+font-size:34px;
+margin-bottom:8px;
+}
+
+.stat-card p{
+color:#b7c3d8;
+}
+
+.section{
+padding:90px 0;
+}
+
+.section-title{
+text-align:center;
+margin-bottom:60px;
+}
+
+.section-title span{
+color:#ff7575;
+font-weight:600;
+}
+
+.section-title h2{
+font-size:45px;
+margin-top:10px;
+}
+
+.section-title p{
+max-width:800px;
+margin:auto;
+margin-top:15px;
+color:#b7c3d8;
+line-height:1.9;
+}
+
+.glass{
+background:rgba(255,255,255,.04);
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:28px;
+
+padding:35px;
+
+backdrop-filter:blur(20px);
+}
+
+@media(max-width:768px){
+
+.hero h1{
+font-size:42px;
+}
+
+.section-title h2{
+font-size:32px;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="glow1"></div>
+<div class="glow2"></div>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="container">
+
+<div class="badge">
+<i class="fa-solid fa-shield-halved"></i>
+Sistem Laporan Resmi Agency
+</div>
+
+<h1>
+Laporkan Agency
+<span>Secara Aman</span>
+</h1>
+
+<p>
+
+PT. Agency Tigohost Indonesia menyediakan
+jalur pelaporan resmi yang aman, profesional,
+dan terverifikasi untuk membantu menjaga
+ekosistem hiburan digital tetap sehat,
+nyaman, dan terpercaya bagi seluruh pengguna.
+
+</p>
+
+<div class="hero-buttons">
+
+<a href="#lapor"
+class="btn btn-primary">
+
+<i class="fa-solid fa-flag"></i>
+Cara Melapor
+
+</a>
+
+<a href="#faq"
+class="btn btn-secondary">
+
+<i class="fa-solid fa-circle-info"></i>
+Informasi
+
+</a>
+
+</div>
+
+<div class="stats">
+
+<div class="stat-card">
+<i class="fa-solid fa-user-shield"></i>
+<h2>100%</h2>
+<p>Kerahasiaan Terjaga</p>
+</div>
+
+<div class="stat-card">
+<i class="fa-solid fa-clock"></i>
+<h2>2x24</h2>
+<p>Jam Maksimal Verifikasi</p>
+</div>
+
+<div class="stat-card">
+<i class="fa-solid fa-scale-balanced"></i>
+<h2>Fair</h2>
+<p>Penanganan Objektif</p>
+</div>
+
+<div class="stat-card">
+<i class="fa-solid fa-lock"></i>
+<h2>Secure</h2>
+<p>Data Terlindungi</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- LANGKAH LAPOR -->
+
+<section class="section" id="lapor">
+
+<div class="container">
+
+<div class="section-title">
+
+<span>PROSEDUR PELAPORAN</span>
+
+<h2>Cara Melaporkan Agency</h2>
+
+<p>
+Ikuti langkah-langkah berikut untuk mengirimkan laporan
+secara resmi kepada tim PT. Agency Tigohost Indonesia.
+Seluruh laporan akan ditinjau oleh tim internal yang
+berwenang sesuai dengan kebijakan yang berlaku.
+</p>
+
+</div>
+
+<div class="glass">
+
+<div style="display:flex;flex-direction:column;gap:30px;">
+
+<!-- STEP 1 -->
+
+<div style="display:flex;gap:20px;align-items:flex-start;">
+
+<div style="
+min-width:65px;
+height:65px;
+border-radius:18px;
+background:linear-gradient(135deg,#dc2626,#ff7b00);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+font-weight:700;
+">
+1
+</div>
+
+<div>
+
+<h3 style="margin-bottom:10px;">
+Hubungi Kontak Resmi Agency
+</h3>
+
+<p style="
+color:#b7c3d8;
+line-height:1.9;
+">
+Buka menu Kontak Resmi Agency pada website atau aplikasi,
+kemudian pilih jalur komunikasi resmi yang tersedia untuk
+mengirimkan laporan.
+</p>
+
+</div>
+
+</div>
+
+<!-- STEP 2 -->
+
+<div style="display:flex;gap:20px;align-items:flex-start;">
+
+<div style="
+min-width:65px;
+height:65px;
+border-radius:18px;
+background:linear-gradient(135deg,#dc2626,#ff7b00);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+font-weight:700;
+">
+2
+</div>
+
+<div>
+
+<h3 style="margin-bottom:10px;">
+Kirim Laporan
+</h3>
+
+<p style="
+color:#b7c3d8;
+line-height:1.9;
+">
+Laporan dapat dikirim melalui Email resmi ataupun
+WhatsApp Call yang telah disediakan oleh tim agency.
+</p>
+
+</div>
+
+</div>
+
+<!-- STEP 3 -->
+
+<div style="display:flex;gap:20px;align-items:flex-start;">
+
+<div style="
+min-width:65px;
+height:65px;
+border-radius:18px;
+background:linear-gradient(135deg,#dc2626,#ff7b00);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+font-weight:700;
+">
+3
+</div>
+
+<div>
+
+<h3 style="margin-bottom:10px;">
+Lengkapi Detail Laporan
+</h3>
+
+<p style="
+color:#b7c3d8;
+line-height:1.9;
+">
+Pastikan seluruh informasi yang disampaikan lengkap
+dan jelas agar proses verifikasi dapat dilakukan
+lebih cepat dan akurat.
+</p>
+
+</div>
+
+</div>
+
+<!-- STEP 4 -->
+
+<div style="display:flex;gap:20px;align-items:flex-start;">
+
+<div style="
+min-width:65px;
+height:65px;
+border-radius:18px;
+background:linear-gradient(135deg,#dc2626,#ff7b00);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+font-weight:700;
+">
+4
+</div>
+
+<div>
+
+<h3 style="margin-bottom:10px;">
+Menunggu Verifikasi
+</h3>
+
+<p style="
+color:#b7c3d8;
+line-height:1.9;
+">
+Tim verifikasi akan melakukan pemeriksaan laporan
+dengan estimasi waktu maksimal 2 x 24 jam kerja.
+</p>
+
+</div>
+
+</div>
+
+<!-- STEP 5 -->
+
+<div style="display:flex;gap:20px;align-items:flex-start;">
+
+<div style="
+min-width:65px;
+height:65px;
+border-radius:18px;
+background:linear-gradient(135deg,#dc2626,#ff7b00);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+font-weight:700;
+">
+5
+</div>
+
+<div>
+
+<h3 style="margin-bottom:10px;">
+Tindakan Tim Agency
+</h3>
+
+<p style="
+color:#b7c3d8;
+line-height:1.9;
+">
+Apabila laporan dinyatakan valid, tim akan mengambil
+tindakan sesuai dengan kebijakan, aturan, dan ketentuan
+yang berlaku.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- DATA YANG HARUS DILAMPIRKAN -->
+
+<section class="section">
+
+<div class="container">
+
+<div class="section-title">
+
+<span>DETAIL LAPORAN</span>
+
+<h2>Informasi Yang Wajib Disertakan</h2>
+
+<p>
+Agar laporan dapat diproses dengan cepat,
+pastikan Anda menyertakan informasi berikut.
+</p>
+
+</div>
+
+<div style="
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+">
+
+<div class="glass">
+
+<i class="fa-solid fa-building"
+style="font-size:40px;color:#ff5757;"></i>
+
+<h3 style="margin:20px 0 10px;">
+Nama Agency
+</h3>
+
+<p style="color:#b7c3d8;line-height:1.9;">
+Cantumkan nama agency yang ingin dilaporkan.
+</p>
+
+</div>
+
+<div class="glass">
+
+<i class="fa-solid fa-id-card"
+style="font-size:40px;color:#ff5757;"></i>
+
+<h3 style="margin:20px 0 10px;">
+ID Akun / Username
+</h3>
+
+<p style="color:#b7c3d8;line-height:1.9;">
+Sertakan akun yang berkaitan dengan laporan.
+</p>
+
+</div>
+
+<div class="glass">
+
+<i class="fa-solid fa-file-circle-check"
+style="font-size:40px;color:#ff5757;"></i>
+
+<h3 style="margin:20px 0 10px;">
+Kronologi Kejadian
+</h3>
+
+<p style="color:#b7c3d8;line-height:1.9;">
+Jelaskan kejadian secara lengkap dan jelas.
+</p>
+
+</div>
+
+<div class="glass">
+
+<i class="fa-solid fa-camera"
+style="font-size:40px;color:#ff5757;"></i>
+
+<h3 style="margin:20px 0 10px;">
+Bukti Pendukung
+</h3>
+
+<p style="color:#b7c3d8;line-height:1.9;">
+Screenshot, rekaman layar, atau dokumen lainnya.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- KEAMANAN -->
+
+<section class="section">
+
+<div class="container">
+
+<div class="glass">
+
+<div style="text-align:center;">
+
+<i class="fa-solid fa-user-shield"
+style="
+font-size:65px;
+color:#ff5757;
+margin-bottom:20px;
+"></i>
+
+<h2 style="
+font-size:40px;
+margin-bottom:20px;
+">
+
+Kerahasiaan Laporan Dijamin
+
+</h2>
+
+<p style="
+max-width:850px;
+margin:auto;
+line-height:2;
+color:#c2cfdf;
+">
+
+Seluruh laporan yang masuk hanya dapat diakses oleh
+tim internal resmi PT. Agency Tigohost Indonesia.
+Data pelapor tidak akan dibagikan kepada pihak lain
+tanpa izin dan akan diproses sesuai standar keamanan
+yang berlaku.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- FAQ -->
+
+<section class="section" id="faq">
+
+<div class="container">
+
+<div class="section-title">
+
+<span>FAQ</span>
+
+<h2>Pertanyaan Yang Sering Ditanyakan</h2>
+
+</div>
+
+<div style="
+display:flex;
+flex-direction:column;
+gap:20px;
+">
+
+<div class="glass">
+<h3>
+<i class="fa-solid fa-circle-question"
+style="color:#ff5757;margin-right:10px;"></i>
+Apakah laporan saya akan diketahui pihak yang dilaporkan?
+</h3>
+
+<p style="
+margin-top:15px;
+color:#b7c3d8;
+line-height:1.9;
+">
+Tidak. Identitas pelapor dijaga kerahasiaannya.
+</p>
+</div>
+
+<div class="glass">
+<h3>
+<i class="fa-solid fa-circle-question"
+style="color:#ff5757;margin-right:10px;"></i>
+Berapa lama proses peninjauan laporan?
+</h3>
+
+<p style="
+margin-top:15px;
+color:#b7c3d8;
+line-height:1.9;
+">
+Maksimal 2 x 24 jam kerja sejak laporan diterima.
+</p>
+</div>
+
+<div class="glass">
+<h3>
+<i class="fa-solid fa-circle-question"
+style="color:#ff5757;margin-right:10px;"></i>
+Apa yang terjadi jika laporan terbukti valid?
+</h3>
+
+<p style="
+margin-top:15px;
+color:#b7c3d8;
+line-height:1.9;
+">
+Tim akan mengambil tindakan sesuai kebijakan
+dan ketentuan yang berlaku.
+</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- CTA -->
+
+<section class="section">
+
+<div class="container">
+
+<div style="
+background:linear-gradient(
+135deg,
+rgba(220,38,38,.18),
+rgba(255,123,0,.12)
+);
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:35px;
+
+padding:60px 35px;
+
+text-align:center;
+">
+
+<i class="fa-solid fa-flag"
+style="
+font-size:65px;
+margin-bottom:20px;
+color:#ff5757;
+"></i>
+
+<h2 style="
+font-size:45px;
+margin-bottom:20px;
+">
+
+Laporkan Sekarang
+
+</h2>
+
+<p style="
+max-width:800px;
+margin:auto;
+line-height:2;
+color:#c4cfdf;
+">
+
+Partisipasi Anda membantu menciptakan lingkungan
+yang lebih aman, profesional, dan terpercaya
+bagi seluruh pengguna.
+
+</p>
+
+<div style="
+margin-top:35px;
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
+">
+
+<a href="#"
+style="
+padding:16px 30px;
+border-radius:15px;
+text-decoration:none;
+font-weight:600;
+background:#25d366;
+color:#fff;
+">
+
+<i class="fa-brands fa-whatsapp"></i>
+ Hubungi WhatsApp
+
+</a>
+
+<a href="#"
+style="
+padding:16px 30px;
+border-radius:15px;
+text-decoration:none;
+font-weight:600;
+background:#2563eb;
+color:#fff;
+">
+
+<i class="fa-solid fa-envelope"></i>
+ Kirim Email
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<footer style="
+padding:40px;
+text-align:center;
+color:#7f8ea5;
+border-top:1px solid rgba(255,255,255,.08);
+">
+
+© 2026 PT. Agency Tigohost Indonesia
+<br>
+Official Reporting Center
+
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Refund Coin - PT. Agency Tigohost Indonesia</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Segoe UI,Arial,sans-serif;
+}
+
+body{
+    background:#f4f7fb;
+    color:#222;
+}
+
+.refund-container{
+    max-width:1200px;
+    margin:auto;
+    padding:70px 20px;
+}
+
+.refund-header{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+.refund-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:#eaf3ff;
+    color:#0066ff;
+    padding:10px 20px;
+    border-radius:50px;
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:20px;
+}
+
+.refund-header h1{
+    font-size:42px;
+    margin-bottom:15px;
+    color:#111827;
+}
+
+.refund-header p{
+    max-width:850px;
+    margin:auto;
+    color:#6b7280;
+    line-height:1.8;
+    font-size:17px;
+}
+
+.refund-grid{
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    gap:30px;
+}
+
+.refund-card{
+    background:#fff;
+    border-radius:20px;
+    padding:35px;
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+}
+
+.section-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:30px;
+    font-size:24px;
+    font-weight:700;
+}
+
+.section-title i{
+    color:#0066ff;
+}
+
+.step{
+    display:flex;
+    gap:20px;
+    margin-bottom:25px;
+}
+
+.step-number{
+    min-width:55px;
+    height:55px;
+    background:#0066ff;
+    color:#fff;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    font-size:20px;
+}
+
+.step-content h3{
+    margin-bottom:8px;
+    color:#111827;
+}
+
+.step-content p{
+    color:#6b7280;
+    line-height:1.7;
+}
+
+.data-list{
+    display:grid;
+    gap:15px;
+}
+
+.data-item{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    background:#f8fafc;
+    padding:16px;
+    border-radius:12px;
+}
+
+.data-item i{
+    width:45px;
+    height:45px;
+    border-radius:10px;
+    background:#0066ff;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.data-item span{
+    font-weight:600;
+}
+
+.info-box{
+    margin-top:25px;
+    background:#fff8e7;
+    border-left:5px solid #ffb400;
+    padding:20px;
+    border-radius:12px;
+}
+
+.info-box h4{
+    margin-bottom:10px;
+    color:#b7791f;
+}
+
+.info-box p{
+    color:#7c5b16;
+    line-height:1.7;
+}
+
+.contact-box{
+    margin-top:30px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.contact-btn{
+    text-decoration:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:16px;
+    border-radius:12px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.whatsapp{
+    background:#25D366;
+    color:#fff;
+}
+
+.email{
+    background:#0066ff;
+    color:#fff;
+}
+
+.contact-btn:hover{
+    transform:translateY(-3px);
+}
+
+.policy-card{
+    background:#0f172a;
+    color:#fff;
+    border-radius:20px;
+    padding:35px;
+    height:100%;
+}
+
+.policy-card h2{
+    margin-bottom:25px;
+}
+
+.policy-item{
+    display:flex;
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.policy-item i{
+    color:#22c55e;
+    font-size:22px;
+    margin-top:3px;
+}
+
+.policy-item h4{
+    margin-bottom:8px;
+}
+
+.policy-item p{
+    color:#cbd5e1;
+    line-height:1.7;
+}
+
+.footer-note{
+    margin-top:30px;
+    padding:20px;
+    background:rgba(255,255,255,.08);
+    border-radius:15px;
+    line-height:1.8;
+    color:#e2e8f0;
+}
+
+@media(max-width:900px){
+
+.refund-header h1{
+    font-size:32px;
+}
+
+.refund-grid{
+    grid-template-columns:1fr;
+}
+
+.contact-box{
+    grid-template-columns:1fr;
+}
+
+}
+</style>
+</head>
+<body>
+
+<section class="refund-container">
+
+<div class="refund-header">
+
+<div class="refund-badge">
+<i class="fa-solid fa-shield-halved"></i>
+Refund Coin Resmi
+</div>
+
+<h1>Cara Refund Coin</h1>
+
+<p>
+Refund coin adalah proses pengembalian coin yang telah dibeli apabila terjadi kesalahan transaksi, kendala teknis, atau kondisi lain yang memenuhi syarat refund. PT. Agency Tigohost Indonesia menyediakan layanan refund resmi, aman, dan transparan untuk menjaga kenyamanan seluruh pengguna.
+</p>
+
+</div>
+
+<div class="refund-grid">
+
+<div class="refund-card">
+
+<div class="section-title">
+<i class="fa-solid fa-list-check"></i>
+<span>Langkah-Langkah Refund Coin</span>
+</div>
+
+<div class="step">
+<div class="step-number">1</div>
+<div class="step-content">
+<h3>Hubungi Customer Support</h3>
+<p>
+Silakan menghubungi tim Customer Support melalui WhatsApp atau Email resmi yang tersedia pada website.
+</p>
+</div>
+</div>
+
+<div class="step">
+<div class="step-number">2</div>
+<div class="step-content">
+<h3>Siapkan Data Transaksi</h3>
+<p>
+Pastikan seluruh data transaksi telah disiapkan untuk mempercepat proses verifikasi refund.
+</p>
+</div>
+</div>
+
+<div class="data-list">
+
+<div class="data-item">
+<i class="fa-solid fa-id-card"></i>
+<span>ID Akun</span>
+</div>
+
+<div class="data-item">
+<i class="fa-solid fa-user"></i>
+<span>Nama Akun</span>
+</div>
+
+<div class="data-item">
+<i class="fa-solid fa-receipt"></i>
+<span>Bukti Pembayaran</span>
+</div>
+
+<div class="data-item">
+<i class="fa-solid fa-coins"></i>
+<span>Jumlah Coin yang Dibeli</span>
+</div>
+
+</div>
+
+<div class="step" style="margin-top:30px;">
+<div class="step-number">3</div>
+<div class="step-content">
+<h3>Kirim Bukti Transaksi</h3>
+<p>
+Kirimkan screenshot pembayaran atau invoice transaksi sebagai bukti pendukung pengajuan refund.
+</p>
+</div>
+</div>
+
+<div class="step">
+<div class="step-number">4</div>
+<div class="step-content">
+<h3>Proses Verifikasi</h3>
+<p>
+Tim kami akan melakukan pemeriksaan dan verifikasi data dalam waktu maksimal 2 x 24 jam kerja.
+</p>
+</div>
+</div>
+
+<div class="step">
+<div class="step-number">5</div>
+<div class="step-content">
+<h3>Refund Diproses</h3>
+<p>
+Apabila pengajuan disetujui, coin akan dikembalikan dalam bentuk saldo aplikasi atau transfer sesuai ketentuan yang berlaku.
+</p>
+</div>
+</div>
+
+<div class="info-box">
+<h4>
+<i class="fa-solid fa-circle-info"></i>
+ Informasi Penting
+</h4>
+<p>
+Refund hanya berlaku untuk transaksi yang valid dan dilakukan melalui jalur resmi PT. Agency Tigohost Indonesia. Pengajuan refund yang tidak memenuhi syarat dapat ditolak sesuai kebijakan perusahaan.
+</p>
+</div>
+
+<div class="contact-box">
+
+<a href="https://wa.me/6281234567890" class="contact-btn whatsapp">
+<i class="fa-brands fa-whatsapp"></i>
+Hubungi WhatsApp
+</a>
+
+<a href="mailto:support@tigohost.co.id" class="contact-btn email">
+<i class="fa-solid fa-envelope"></i>
+Kirim Email
+</a>
+
+</div>
+
+</div>
+
+<div class="policy-card">
+
+<h2>
+<i class="fa-solid fa-shield-check"></i>
+ Kebijakan Refund
+</h2>
+
+<div class="policy-item">
+<i class="fa-solid fa-circle-check"></i>
+<div>
+<h4>Verifikasi Aman</h4>
+<p>
+Setiap pengajuan refund akan diverifikasi secara menyeluruh untuk memastikan keamanan transaksi.
+</p>
+</div>
+</div>
+
+<div class="policy-item">
+<i class="fa-solid fa-circle-check"></i>
+<div>
+<h4>Proses Transparan</h4>
+<p>
+Seluruh proses refund dilakukan secara terbuka dan dapat dipantau melalui Customer Support resmi.
+</p>
+</div>
+</div>
+
+<div class="policy-item">
+<i class="fa-solid fa-circle-check"></i>
+<div>
+<h4>Perlindungan Pengguna</h4>
+<p>
+Kami berkomitmen menjaga hak pengguna dan memberikan solusi terbaik atas setiap kendala transaksi.
+</p>
+</div>
+</div>
+
+<div class="policy-item">
+<i class="fa-solid fa-circle-check"></i>
+<div>
+<h4>Jalur Resmi</h4>
+<p>
+Pastikan pembelian coin dilakukan melalui PT. Agency Tigohost Indonesia agar hak refund dapat diproses tanpa hambatan.
+</p>
+</div>
+</div>
+
+<div class="footer-note">
+<i class="fa-solid fa-lock"></i>
+ Seluruh data yang dikirimkan selama proses refund akan dijaga kerahasiaannya dan digunakan hanya untuk keperluan verifikasi transaksi.
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+</body>
+</html>

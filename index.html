@@ -4061,18 +4061,7 @@ select option:disabled {
     <div class="hdr">
       <img src="agencylogo.png" alt="Logo" class="logo" style="width:44px; height:44px; border-radius:12px;">
       <div class="title">PT. AGENCY TIGOHOST INDONESIA 
-<img src="servant_icon.png" 
-     alt="Official" 
-     id="officialIcon"
-     style="width:20px; height:20px; cursor:pointer;">
 
-<!-- Popup -->
-<div id="popupOfficial">
-  <div id="popupContent">
-    <span id="popupClose">&times;</span>
-    <p>Untuk fitur ini hanya dapat diakses oleh host terdaftar.</p>
-  </div>
-</div>
 
 </div>
       <!-- HAMBURGER -->
@@ -4185,182 +4174,41 @@ select option:disabled {
           <ul class="menu-liist">
 
 
-<li id="btn-deposit">Cara Deposit Akun Host</li>
+<li onclick="window.location.href='panduan-deposit.html'">
+    Cara Deposit Akun Host
+</li>
 
-
-<div id="caraDepositPopup" class="popup-topup">
-  <div class="popup-box">
-    <span class="popup-close" id="btn-close-deposit">✕</span>
-
-    <h2 style="color: black;">Cara Deposit Akun</h2>
-
-    <div class="popup-content">
-
-<div class="cara-deposit">
-  <div class="step">
-    <p><b>Langkah 1.</b><br>
-    Masuk ke halaman deposit pada akun host Anda. klik pada menu tanda (+)</p>
-    <img src="cara1.jpeg">
-  </div>
-
-  <div class="step">
-    <p><b>Langkah 2.</b><br>
-    Periksa minimal Nominal deposit Dan Masukkan nominal deposit sesuai ketentuan sistem.</p>
-    <p>hilangkan tanda titik pada input nominal , contoh 430000.</p>
-    <img src="cara2.jpeg">
-  </div>
-
-<div class="step step-highlight">
-  <p><b>Penjelasan.</b></p>
-
-  <p>
-    Setiap akun memiliki ketentuan minimal deposit yang berbeda-beda sesuai dengan sistem yang berlaku. 
-    Nominal minimal deposit telah ditentukan secara otomatis berdasarkan data dan status akun masing-masing.
-  </p>
-
-  <p>
-    Oleh karena itu, pengguna diharapkan untuk memeriksa terlebih dahulu jumlah minimal deposit yang tertera 
-    pada akun sebelum melakukan pembayaran, agar proses aktivasi dapat berjalan dengan lancar.
-  </p>
-
-  <img src="rate_app_light.png">
-</div>
-    </div>
-  </div>
-</div>
-</div>
 
 
             
-  <li onclick="openCaraTopup()">Cara Top Up</li>
+<li onclick="window.location.href='panduan-topup-coin.html'">
+    Cara Top Up Coin
+</li>
+
+
+<ul class="menu-liist">
+  <li onclick="window.location.href='panduan-gabung-agency.html'">
+    Cara Gabung Agency
+  </li>
 </ul>
 
-<!-- POPUP CARA TOP UP -->
-<div id="caraTopupPopup" class="popup-topup">
-  <div class="popup-box">
-    <span class="popup-close" onclick="closeCaraTopup()">✕</span>
-    <h2>Cara Top Up Coin</h2>
-    <div class="popup-content">
-      <p>
-        Untuk melakukan top up coin, ikuti langkah-langkah berikut:
-      </p>
-      <ol>
-        <li>Buka aplikasi resmi yang sudah bekerja sama dengan PT. Agency Tigohost Indonesia.</li>
-        <li>Pilih menu <b>Top Up</b> pada halaman utama.</li>
-        <li>Masukkan jumlah coin yang ingin dibeli.</li>
-        <li>Isi data pembelian dengan benar: <br> 
-            - Nama Akun <br>
-            - ID Akun <br>
-            - Nomor WhatsApp aktif</li>
-        <li>Pilih metode pembayaran (Transfer Bank, E-Wallet, dll).</li>
-        <li>Setelah pembayaran berhasil, coin akan otomatis masuk ke akun Anda.</li>
-      </ol>
-      <p>
-        Keuntungan top up melalui <b>PT. Agency Tigohost Indonesia</b> adalah harga lebih murah, tanpa potongan, dan pelayanan yang cepat.
-      </p>
-    </div>
-  </div>
-</div>
-          <ul class="menu-liist">
-  <li onclick="openGabungAgency()">Cara Gabung Agency</li>
+
+<ul class="menu-liist">
+  <li onclick="window.location.href='panduan-lapor-agency.html'">
+    Cara Lapor Agency
+  </li>
 </ul>
 
-<!-- POPUP CARA GABUNG AGENCY -->
-<div id="gabungAgencyPopup" class="popup-gabung">
-  <div class="popup-box">
-    <span class="popup-close" onclick="closeGabungAgency()">✕</span>
-    <h2>Cara Gabung Agency</h2>
-    <div class="popup-content">
-      <p>
-        Bergabung dengan agency resmi PT. Agency Tigohost Indonesia adalah langkah terbaik untuk mendapatkan dukungan profesional, akses event eksklusif, serta peluang penghasilan tambahan. 
-      </p>
-      <ol>
-        <li>Hubungi admin resmi agency melalui WhatsApp atau email yang tersedia.</li>
-        <li>Lengkapi data pendaftaran seperti: <br>
-            - Nama Lengkap <br>
-            - Nomor WhatsApp aktif <br>
-            - ID Akun / Username aplikasi <br>
-            - Kota Domisili</li>
-        <li>Tunggu proses verifikasi dari tim agency (1x24 jam kerja).</li>
-        <li>Jika lolos verifikasi, Anda akan diundang ke grup resmi agency.</li>
-        <li>Setelah resmi tergabung, Anda akan mendapatkan panduan & pelatihan agar bisa berkembang maksimal.</li>
-      </ol>
-      <p>
-        Dengan bergabung bersama <b>PT. Agency Tigohost Indonesia</b>, Anda tidak hanya menjadi bagian dari komunitas besar, tetapi juga mendapatkan dukungan penuh untuk meningkatkan performa di dunia hiburan digital.
-      </p>
-    </div>
-  </div>
-</div>
-          <ul class="menu-liist">
-  <li onclick="openLaporAgency()">Cara Lapor Agency</li>
+
+
+<ul class="menu-liist">
+  <li onclick="window.location.href='refund-coin.html'">
+    Cara Refund Coin
+  </li>
 </ul>
 
-<!-- POPUP CARA LAPOR AGENCY -->
-<div id="laporAgencyPopup" class="popup-lapor">
-  <div class="popup-box">
-    <span class="popup-close" onclick="closeLaporAgency()">✕</span>
-    <h2>Cara Lapor Agency</h2>
-    <div class="popup-content">
-      <p>
-        Melaporkan agency yang bermasalah atau melanggar aturan sangat penting agar ekosistem hiburan digital tetap sehat. 
-        PT. Agency Tigohost Indonesia menyediakan jalur laporan resmi yang aman dan terverifikasi.
-      </p>
 
-      <ol>
-        <li>Buka menu <b>Kontak Resmi Agency</b> di website/aplikasi.</li>
-        <li>Kirim laporan melalui <b>Email</b> atau <b>WhatsApp Call</b> yang telah disediakan.</li>
-        <li>Cantumkan detail laporan seperti: <br>
-            - Nama Agency yang dilaporkan <br>
-            - ID Akun / Username yang terkait <br>
-            - Bukti pendukung (screenshot, rekaman, dll)</li>
-        <li>Tunggu respon tim verifikasi (maksimal 2x24 jam kerja).</li>
-        <li>Jika laporan valid, tim akan melakukan tindakan sesuai kebijakan & ketentuan yang berlaku.</li>
-      </ol>
 
-      <p>
-        Semua laporan dijamin <b>rahasia</b> dan hanya diproses oleh tim internal resmi. 
-        Dengan melaporkan, Anda ikut menjaga kepercayaan dan kenyamanan seluruh pengguna.
-      </p>
-    </div>
-  </div>
-</div>
-          <ul class="menu-liist">
-  <li onclick="openRefundCoin()">Cara Refund Coin</li>
-</ul>
-
-<!-- POPUP CARA REFUND COIN -->
-<div id="refundCoinPopup" class="popup-refund">
-  <div class="popup-box">
-    <span class="popup-close" onclick="closeRefundCoin()">✕</span>
-    <h2>Cara Refund Coin</h2>
-    <div class="popup-content">
-      <p>
-        Refund coin adalah proses pengembalian koin yang sudah dibeli apabila terjadi kesalahan 
-        transaksi atau masalah teknis lainnya. PT. Agency Tigohost Indonesia menyediakan layanan refund 
-        resmi dan transparan agar pengguna tetap merasa aman.
-      </p>
-
-      <h3>Langkah-langkah Refund Coin:</h3>
-      <ol>
-        <li>Hubungi layanan <b>Customer Support</b> melalui WhatsApp atau Email resmi.</li>
-        <li>Siapkan data transaksi yang ingin direfund, meliputi: <br>
-            - ID Akun <br>
-            - Nama Akun <br>
-            - Bukti pembayaran <br>
-            - Jumlah coin yang dibeli</li>
-        <li>Kirimkan bukti transaksi (screenshot atau invoice pembayaran).</li>
-        <li>Tunggu proses verifikasi dari tim kami (maksimal 2x24 jam kerja).</li>
-        <li>Jika disetujui, coin akan dikembalikan dalam bentuk saldo aplikasi atau transfer sesuai ketentuan.</li>
-      </ol>
-
-      <p>
-        Refund hanya berlaku untuk transaksi yang <b>valid dan resmi</b> melalui 
-        PT. Agency Tigohost Indonesia. Pastikan Anda melakukan pembelian melalui jalur resmi 
-        agar hak refund dapat diproses tanpa hambatan.
-      </p>
-    </div>
-  </div>
-</div>
         </ul>
       </li>
     </ul>
@@ -5864,14 +5712,6 @@ Fitur Utama
 
 
 
-<div id="chatBox" class="wa-chat"></div>
-
-<div class="wa-input">
-  <input id="userInput" placeholder="Ketik pesan">
-  <button onclick="sendChat()">Kirim</button>
-</div>
-
-
 
 
 
@@ -6981,18 +6821,6 @@ function closeKontak(){
 
 
 
-function openCaraTopup(){
-  const popup = document.getElementById("caraTopupPopup");
-  popup.style.display = "block";
-  setTimeout(()=>popup.classList.add("active"),10); 
-}
-
-function closeCaraTopup(){
-  const popup = document.getElementById("caraTopupPopup");
-  popup.classList.remove("active");
-  setTimeout(()=>popup.style.display = "none",400);
-}
-
 function openGabungAgency(){
   const popup = document.getElementById("gabungAgencyPopup");
   popup.style.display = "block";
@@ -7006,29 +6834,7 @@ function closeGabungAgency(){
 }
 
 
-function openLaporAgency(){
-  const popup = document.getElementById("laporAgencyPopup");
-  popup.style.display = "block";
-  setTimeout(()=>popup.classList.add("active"),10); 
-}
 
-function closeLaporAgency(){
-  const popup = document.getElementById("laporAgencyPopup");
-  popup.classList.remove("active");
-  setTimeout(()=>popup.style.display = "none",400);
-}
-
-function openRefundCoin(){
-  const popup = document.getElementById("refundCoinPopup");
-  popup.style.display = "block";
-  setTimeout(()=>popup.classList.add("active"),10); 
-}
-
-function closeRefundCoin(){
-  const popup = document.getElementById("refundCoinPopup");
-  popup.classList.remove("active");
-  setTimeout(()=>popup.style.display = "none",400);
-}
 
 
 const profiles = [
@@ -7248,28 +7054,7 @@ tampilkanPopup("❌ Gagal Mendaftar, pendaftaran kami tolak!");    }
   };
 
 
-document.addEventListener("DOMContentLoaded", function () {
-  const popup = document.getElementById("popupOfficial");
-  const icon = document.getElementById("officialIcon");
-  const closeBtn = document.getElementById("popupClose");
 
-  // buka popup
-  icon.onclick = function () {
-    popup.style.display = "block";
-  };
-
-  // tutup popup
-  closeBtn.onclick = function () {
-    popup.style.display = "none";
-  };
-
-  // klik luar area popup -> close
-  window.onclick = function (event)  {
-    if (event.target === popup) {
-      popup.style.display = "none";
-    }
-  };
-});
 
   document.addEventListener("DOMContentLoaded", function() {
     const bankImgs = document.querySelectorAll("#conbank img");
@@ -8414,172 +8199,6 @@ document.getElementById("btnBeliKoin").addEventListener("click", function (e) {
 
 
 
-const badWords = [
-  "anjing", "babi", "kontol", "memek", "bangsat", "tolol", "goblok", "ngentot"
-];
-function containsBadWord(text) {
-  return badWords.some(word => text.includes(word));
-}
-
-
-const botData = [
-  {
-    keywords: ["halo", "hai","malam","selamat malam","mlm", "assalamualaikum"],
-    replies: [
-      "Halo 👋 ada yang bisa dibantu?",
-      "Hai! Silakan tanyakan ya 😊",
-      "Halo kak.ada yang bisa saya bantu?"
-    ]
-  },
-  {
-    keywords: ["harga", "biaya", "tarif"],
-    replies: [
-      "Untuk biaya bisa dilihat di menu syarat & ketentuan pada host ya.",
-      "Info biaya lengkap ada di halaman utama.",
-      "Harga menyesuaikan paket yang dipilih."
-    ]
-  },
-    {
-    keywords: ["kontol", "pepek", "bangsat","kontol kau","binatang kau", "binatang","anjing", "babi", "jancuk", "jancok", "memek", "ngentot"],
-    replies: [
-      "⚠️ Mohon gunakan bahasa yang sopan ya kak 🙏."
-    ]
-  },
-  {
-    keywords: ["tigo", "tenderu", "tenderu", "weelive", "ayar", "bling", "chato", "maco"],
-    replies: [
-      "Bisa ya kak,silakan periksa pada bagian paling atas dan isi formulir pendaftaran anda untuk melakukan pendaftaran agency ya kak."
-    ]
-  },
-
- {
-    keywords: ["alamat", "lokasi", "tempat tinggal","cabangnya dimana", "cabang nya dimana rupanya", "kantornya dimana", "kantor", "cabang", "kantor pusat", "pusatnya dimana"],
-    replies: [
-      "Anda dapat melihat alamat cabang dan pusat pada menu garis 3 pojok kanan bagian atas, lalu klik MENU *KONTAK*."
-    ]
-  },
-
-  {
-    keywords: ["daftar","cara jadi host","cara jadi agency", "register", "gabung,cara daftarnya"],
-    replies: [
-      "Untuk daftar, klik tombol *Daftar* lalu isi data.",
-      "Proses pendaftaran sangat mudah dan cepat.",
-      "Silakan registrasi lewat menu Daftar ya.",
-      "Cara daftar silakan lihat pada bagian atas ya kak."
-    ]
-  },
-
-
-  {
-    keywords: ["mahal banget", "mahal", "kok besar biayanya"],
-    replies: [
-      "besar, klik  *w* w isi w.",
-      "Maaf kak,sudah salah satu syarat dan ketentuan yang dijanjikan ya kak.",
-      "Maaf kak,sudah salah satu syarat dan ketentuan yang dijanjikan ya kak."
-    ]
-  },
-
-
-  {
-    keywords: ["admin", "cs","minta tolong", "bantuan"],
-    replies: [
-      "CS kami aktif setiap hari 😊",
-      "Admin siap membantu kamu.",
-      "Silakan sampaikan kendala kamu."
-    ]
-  }
-];
-
-// ================== AMBIL BALASAN BOT ==================
-function getBotReply(text) {
-  for (let item of botData) {
-    if (item.keywords.some(k => text.includes(k))) {
-      return {
-        type: "text",
-        message: item.replies[Math.floor(Math.random() * item.replies.length)]
-      };
-    }
-  }
-
-  return {
-    type: "contact",
-    message: "Maaf, pertanyaan anda sedang dalam antrian atau bahasa yang sulit dimengerti oleh bots.\nSilakan hubungi admin kami untuk informasi lebih lanjut tanpa antrian.",
-    totalHost: 320,
-    wa: "905016624646" // ganti nomor admin
-  };
-}
-
-// ================== SEND CHAT ==================
-window.sendChat = function () {
-  const input = document.getElementById("userInput");
-  const chatBox = document.getElementById("chatBox");
-  const text = input.value.trim().toLowerCase();
-  if (!text) return;
-
-  // bubble kamu
-  const me = document.createElement("div");
-  me.className = "bubble me";
-  me.innerText = text;
-  chatBox.appendChild(me);
-
-  input.value = "";
-  chatBox.scrollTop = chatBox.scrollHeight;
-
-  // 🚫 CEK KATA KOTOR (LANGSUNG BALAS, TANPA TYPING)
-  if (containsBadWord(text)) {
-    const bot = document.createElement("div");
-    bot.className = "bubble bot";
-    bot.innerText = "⚠️ Mohon gunakan bahasa yang sopan ya kak 🙏";
-    chatBox.appendChild(bot);
-    chatBox.scrollTop = chatBox.scrollHeight;
-    return;
-  }
-
-  // indikator mengetik
-  const typing = document.createElement("div");
-  typing.className = "bubble bot";
-  typing.innerText = "Mengetik...";
-  chatBox.appendChild(typing);
-  chatBox.scrollTop = chatBox.scrollHeight;
-
-  // balasan bot (delay)
-  setTimeout(() => {
-    typing.remove();
-
-    const reply = getBotReply(text);
-    const bot = document.createElement("div");
-    bot.className = "bubble bot";
-
-    if (reply.type === "contact") {
-      bot.innerHTML = `
-        <div>${reply.message}</div>
-        <div style="margin-top:4px;font-size:12px;color:#555">
-          📊 Total host aktif: ${reply.totalHost}
-        </div>
-        <a href="https://wa.me/${reply.wa}" target="_blank"
-           style="
-             display:inline-block;
-             margin-top:6px;
-             padding:6px 12px;
-             background:#25D366;
-             color:#fff;
-             border-radius:16px;
-             text-decoration:none;
-             font-size:13px;
-           ">
-          Hubungi
-        </a>
-      `;
-    } else {
-      bot.innerText = reply.message;
-    }
-
-    chatBox.appendChild(bot);
-    chatBox.scrollTop = chatBox.scrollHeight;
-  }, 1200);
-};
-
-
 
 function tutupPopup() {
   document.getElementById("popup-status").style.display = "none";
@@ -8589,12 +8208,6 @@ function tutupPopup() {
 
 
 
-document.getElementById("btn-deposit").addEventListener("click", function() {
-  document.getElementById("caraDepositPopup").style.display = "flex";
-});
-function closeCaraDeposit() {
-  document.getElementById("caraDepositPopup").style.display = "none";
-}
 
 document.getElementById("btn-close-deposit").addEventListener("click", closeCaraDeposit);
 
