@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peraturan & Peringkat Host</title>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f5f6fa;
+  color:#2c3e50;
+}
+
+/* HEADER */
+.header{
+  background:#ffffff;
+  padding:15px;
+  font-size:16px;
+  font-weight:bold;
+  text-align:center;
+  position:sticky;
+  top:0;
+  z-index:10;
+
+}
+
+/* CONTAINER */
+.container{
+  padding:15px;
+}
+
+/* CARD */
+.card{
+  background:#fff;
+  border-radius:12px;
+  padding:15px;
+  margin-bottom:12px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* TITLE */
+.card-title{
+  font-size:14px;
+  font-weight:bold;
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+/* ICON BOX */
+.icon-box{
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  background:#00b894;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:14px;
+}
+
+/* LIST */
+ul{
+  padding-left:18px;
+  margin:0;
+}
+
+li{
+  margin-bottom:8px;
+  font-size:13px;
+  line-height:1.5;
+}
+
+/* HIGHLIGHT BOX */
+.highlight{
+  background:#f1f2f6;
+  padding:10px;
+  border-radius:10px;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.badge{
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:6px;
+  font-size:12px;
+  font-weight:bold;
+  color:#fff;
+}
+
+.gold{ background:#f1c40f; }
+.silver{ background:#95a5a6; }
+.bronze{ background:#cd6133; }
+
+
+
+
+
+/* LIST BASE */
+.shine-list li{
+  position:relative;
+  overflow:hidden;
+  padding:10px;
+  border-radius:10px;
+  margin-bottom:10px;
+  background:#fff;
+}
+
+/* EFFECT CAHAYA */
+.shine-list li::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:100%;
+
+  background:linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.6),
+    transparent
+  );
+
+  animation:shineMove 2.5s infinite;
+}
+
+/* ANIMASI KIRI -> KANAN */
+@keyframes shineMove{
+  0%{
+    left:-100%;
+  }
+  50%{
+    left:100%;
+  }
+  100%{
+    left:-100%;
+  }
+}
+
+
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <i class="fa fa-gavel"></i> PERATURAN & PERINGKAT HOST
+</div>
+
+<div class="container">
+
+  <!-- SISTEM RANK -->
+  <div class="card">
+    <div class="card-title">
+      <div class="icon-box"><i class="fa fa-chart-line"></i></div>
+      Sistem Perhitungan Peringkat
+    </div>
+
+    <div class="highlight">
+      Peringkat host ditentukan berdasarkan total <b>jam tayang harian</b> yang akan diakumulasikan menjadi perhitungan <b>mingguan</b>.
+      Semakin tinggi jam tayang, semakin tinggi posisi peringkat host.
+    </div>
+
+    <ul>
+      <li>Jam tayang dihitung setiap hari secara otomatis</li>
+      <li>Akumulasi akan direset setiap minggu untuk perhitungan baru</li>
+      <li>Penghasilan utama berasal dari total jam tayang</li>
+      <li>Data ranking diperbarui berdasarkan performa aktif host</li>
+    </ul>
+  </div>
+
+  <!-- GIFT RULE -->
+  <div class="card">
+    <div class="card-title">
+      <div class="icon-box"><i class="fa fa-gift"></i></div>
+      Sistem Gift & Bonus
+    </div>
+
+    <div class="highlight">
+      Gift tidak termasuk dalam perhitungan peringkat utama. Gift hanya digunakan sebagai <b>bonus tambahan harian</b> dan tidak mempengaruhi posisi ranking host.
+    </div>
+
+    <ul>
+      <li>Gift hanya dihitung sebagai bonus harian</li>
+      <li>Tidak mempengaruhi jam tayang atau ranking</li>
+      <li>Fokus utama tetap pada durasi live streaming</li>
+    </ul>
+  </div>
+
+  <!-- BONUS RANK -->
+  <div class="card">
+    <div class="card-title">
+      <div class="icon-box"><i class="fa fa-trophy"></i></div>
+      Bonus Peringkat Mingguan
+    </div>
+
+<ul class="shine-list">
+  <li><span class="badge gold">TOP 1</span> Rp 6.212.000</li>
+  <li><span class="badge silver">TOP 2</span> Rp 5.000.000</li>
+  <li><span class="badge bronze">TOP 3</span> Rp 3.200.000</li>
+</ul>
+  </div>
+
+  <!-- PAJAK -->
+  <div class="card">
+    <div class="card-title">
+      <div class="icon-box"><i class="fa fa-bank"></i></div>
+      Ketentuan Pajak Pencairan
+    </div>
+
+    <div class="highlight">
+      Setiap pencairan dana akan dikenakan potongan pajak sesuai kebijakan masing-masing bank di Indonesia.
+    </div>
+
+    <ul>
+      <li>Potongan pajak berkisar antara Rp 32.000 – Rp 70.000</li>
+      <li>Besaran pajak tergantung bank tujuan pencairan</li>
+      <li>Potongan dilakukan langsung oleh sistem bank</li>
+      <li>Host menerima dana bersih setelah potongan pajak</li>
+    </ul>
+  </div>
+
+  <!-- CATATAN -->
+  <div class="card">
+    <div class="card-title">
+      <div class="icon-box"><i class="fa fa-circle-info"></i></div>
+      Catatan Penting
+    </div>
+
+    <div class="highlight">
+      Sistem ini dirancang untuk memastikan transparansi perhitungan, meningkatkan kualitas live streaming, dan memberikan reward berdasarkan performa nyata host.
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>

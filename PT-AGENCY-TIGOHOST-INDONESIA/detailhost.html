@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<title>Detail Host</title>
+
+<style>
+body{
+  margin:0;
+  background:#000;
+  font-family:Arial;
+  overflow:hidden;
+}
+
+/* FULL BACKGROUND */
+.bg{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* DARK OVERLAY */
+.overlay{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:linear-gradient(
+    to top,
+    rgba(0,0,0,0.9),
+    rgba(0,0,0,0.3),
+    rgba(0,0,0,0.2)
+  );
+}
+
+/* INFO LEFT */
+.infoBox{
+  position:fixed;
+  bottom:80px;
+  left:15px;
+  color:#fff;
+  max-width:70%;
+}
+
+.name{
+  font-size:20px;
+  font-weight:bold;
+}
+
+.sub{
+  font-size:12px;
+  opacity:0.8;
+  margin-top:4px;
+}
+
+.bio{
+  font-size:11px;
+  opacity:0.7;
+  margin-top:6px;
+  white-space: pre-line; /* 🔥 INI KUNCINYA */
+}
+
+/* ACTION RIGHT */
+.actions{
+  position:fixed;
+  right:12px;
+  bottom:90px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+.action{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  color:white;
+  font-size:11px;
+  gap:4px;
+}
+
+.action i{
+  font-size:22px;
+  background:rgba(255,255,255,0.08);
+  padding:12px;
+  border-radius:50%;
+  backdrop-filter: blur(6px);
+  border:1px solid rgba(255,255,255,0.1);
+  transition:.2s;
+}
+
+.action i:hover{
+  transform:scale(1.15);
+  background:rgba(122,60,255,0.3);
+  color:#b06cff;
+}
+
+.action span{
+  opacity:0.8;
+  font-size:10px;
+}
+
+/* TAG */
+.tag{
+  position:fixed;
+  top:20px;
+  left:15px;
+  padding:5px 10px;
+  font-size:10px;
+  border-radius:6px;
+  background:linear-gradient(90deg,#7a3cff,#b06cff);
+  color:#fff;
+  font-weight:bold;
+}
+
+
+#penghasilan{
+display:flex;
+align-items:center;
+gap:8px;
+margin-top:10px;
+padding:10px 14px;
+background:rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.12);
+border-radius:12px;
+font-size:13px;
+font-weight:500;
+backdrop-filter:blur(10px);
+width:max-content;
+max-width:100%;
+}
+
+#penghasilan i{
+font-size:16px;
+color:#ffffff;
+}
+
+#penghasilan b{
+color:#22c55e;
+font-weight:700;
+}
+
+.like-active{
+background:#666 !important;
+color:#ccc !important;
+transform:none !important;
+}
+
+
+
+.like-active,
+.bookmark-active{
+background:#666 !important;
+color:#d1d5db !important;
+}
+
+.toast-error{
+background:#dc2626 !important;
+}
+
+#toast{
+position:fixed;
+left:50%;
+bottom:-100px;
+transform:translateX(-50%);
+background:#111;
+color:#fff;
+padding:12px 20px;
+border-radius:12px;
+font-size:13px;
+z-index:9999;
+transition:.3s;
+border:1px solid rgba(255,255,255,.15);
+}
+
+#toast.show{
+bottom:30px;
+}
+
+</style>
+</head>
+
+<body>
+
+
+
+<img id="bg" class="bg" src="">
+<div class="overlay"></div>
+
+<div class="infoBox">
+
+  <div class="name" id="name">
+    Loading...
+  </div>
+
+  <!-- UMUR + NEGARA -->
+  <div
+  style="
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:6px;
+  font-size:12px;
+  ">
+
+    <span id="umur"></span>
+
+    <img
+    id="gambarNegara"
+    src=""
+    style="
+    width:16px;
+    height:16px;
+    border-radius:50%;
+    object-fit:cover;
+    "><div class="tag">HOST LIVE</div>
+
+    <span id="negara"></span>
+
+  </div>
+
+  <!-- APLIKASI -->
+  <div
+  style="
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:6px;
+  font-size:12px;
+  ">
+
+    <img
+    id="gambarAplikasi"
+    src=""
+    style="
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    background:#fff;
+    padding:2px;
+    object-fit:contain;
+    ">
+
+    <span id="aplikasi"></span>
+
+  </div>
+
+  <!-- PENGHASILAN -->
+  <div
+  id="penghasilan"
+  style="
+  margin-top:8px;
+  color:#ffd700;
+  font-size:13px;
+  font-weight:bold;
+  ">
+  </div>
+
+  <div
+  class="bio"
+  id="bio">
+  </div>
+
+</div>
+
+<div class="actions">
+<div class="action">
+  <i id="likeBtn" class="fa-solid fa-heart"></i>
+  <span id="like">0</span>
+</div>
+
+<div class="action">
+  <i id="commentBtn" class="fa-solid fa-comment"></i>
+  <span id="comment">0</span>
+</div>
+
+<div class="action">
+  <i id="shareBtn" class="fa-solid fa-share"></i>
+  <span id="share">0</span>
+</div>
+
+<div class="action">
+  <i id="bookmarkBtn" class="fa-solid fa-bookmark"></i>
+  <span id="bookmark">0</span>
+</div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+getDatabase,
+ref,
+get,
+set,
+update
+}
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+  storageBucket: "users-96dc5.firebasestorage.app",
+  messagingSenderId: "483322415863",
+  appId: "1:483322415863:web:1397a8f2e808e66ad9e1f2",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* FORMAT ANGKA 1.2K */
+function formatNumber(num){
+  if(num >= 1000000) return (num/1000000).toFixed(1) + "M";
+  if(num >= 1000) return (num/1000).toFixed(1) + "K";
+  return num;
+}
+
+/* AMBIL ID */
+const id = new URLSearchParams(window.location.search).get("id");
+
+
+let deviceId =
+localStorage.getItem("deviceId");
+
+if(!deviceId){
+
+deviceId =
+"DEV_" +
+Date.now() +
+Math.random()
+.toString(36)
+.substring(2);
+
+localStorage.setItem(
+"deviceId",
+deviceId
+);
+
+}
+
+function showToast(text,type="success"){
+
+const toast =
+document.getElementById("toast");
+
+toast.innerText = text;
+
+toast.className = "";
+
+if(type==="error"){
+toast.classList.add("toast-error");
+}
+
+toast.classList.add("show");
+
+setTimeout(()=>{
+toast.classList.remove("show");
+},2500);
+
+}
+
+
+
+if (!id) {
+  alert("ID tidak ditemukan");
+}
+
+/* AMBIL DATA */
+const snapshot = await get(
+  ref(db, "allhost/" + id)
+);
+
+if (!snapshot.exists()) {
+  alert("Host tidak ditemukan");
+  throw new Error("Host tidak ditemukan");
+}
+
+const d = snapshot.val();
+
+/* CEK SUDAH LIKE ATAU BELUM */
+const likeRef = ref(
+  db,
+  `allhost/${id}/likesByDevice/${deviceId}`
+);
+
+const likeCheck = await get(likeRef);
+
+if (likeCheck.exists()) {
+
+  document
+  .getElementById("likeBtn")
+  .classList
+  .add("like-active");
+
+}
+
+
+document
+.getElementById("bookmarkBtn")
+.onclick = async ()=>{
+
+const cek =
+await get(bookmarkRef);
+
+if(cek.exists()){
+
+showToast(
+"Host sudah tersimpan"
+);
+
+return;
+}
+
+const totalBookmark =
+Number(d.bookmark || 0) + 1;
+
+await update(
+ref(db,"allhost/"+id),
+{
+bookmark:totalBookmark
+}
+);
+
+await set(
+bookmarkRef,
+true
+);
+
+document
+.getElementById("bookmarkBtn")
+.classList.add(
+"bookmark-active"
+);
+
+document
+.getElementById("bookmark")
+.innerText =
+formatNumber(
+totalBookmark
+);
+
+d.bookmark =
+totalBookmark;
+
+showToast(
+"Host berhasil disimpan"
+);
+
+};
+
+const bookmarkRef = ref(
+db,
+`allhost/${id}/bookmarkByDevice/${deviceId}`
+);
+
+const bookmarkCheck =
+await get(bookmarkRef);
+
+if(bookmarkCheck.exists()){
+
+document
+.getElementById("bookmarkBtn")
+.classList.add(
+"bookmark-active"
+);
+
+}
+
+
+
+
+/* TAMPILKAN DATA */
+document.getElementById("name").innerText =
+  d.profil;
+
+document.getElementById("umur").innerText =
+  d.umur + " Tahun";
+
+document.getElementById("negara").innerText =
+  d.negara || "-";
+
+document.getElementById("gambarNegara").src =
+  d.gambarNegara ||
+  "https://cdn-icons-png.flaticon.com/512/555/555526.png";
+
+document.getElementById("aplikasi").innerText =
+  d.aplikasi || "-";
+
+document.getElementById("gambarAplikasi").src =
+  d.gambarIconAplikasi || "";
+
+document.getElementById("penghasilan").innerHTML = `
+<i class="fa-solid fa-wallet"></i>
+<span>Minggu Ini</span>
+<b>Rp ${Number(
+  d.penghasilanMingguIni || 0
+).toLocaleString("id-ID")}</b>
+`;
+
+document.getElementById("bio").innerText =
+  d.bio || "";
+
+document.getElementById("bg").src =
+  d.foto || "";
+
+/* FORMAT ANGKA */
+document.getElementById("like").innerText =
+  formatNumber(d.like || 0);
+
+document.getElementById("comment").innerText =
+  formatNumber(d.comment || 0);
+
+document.getElementById("share").innerText =
+  formatNumber(d.share || 0);
+
+document.getElementById("bookmark").innerText =
+  formatNumber(d.bookmark || 0);
+
+/* =========================
+LIKE BUTTON
+========================= */
+
+document
+.getElementById("likeBtn")
+.onclick = async () => {
+
+  const cek = await get(likeRef);
+
+  if (cek.exists()) {
+
+    showToast(
+      "Anda sudah menyukai host ini"
+    );
+
+    return;
+  }
+
+  const totalLike =
+    Number(d.like || 0) + 1;
+
+  await update(
+    ref(db, "allhost/" + id),
+    {
+      like: totalLike
+    }
+  );
+
+  await set(
+    likeRef,
+    true
+  );
+
+  document
+  .getElementById("likeBtn")
+  .classList
+  .add("like-active");
+
+  document
+  .getElementById("like")
+  .innerText =
+  formatNumber(totalLike);
+
+  d.like = totalLike;
+
+  showToast(
+    "Berhasil menyukai host"
+  );
+
+};
+
+
+
+document
+.getElementById("commentBtn")
+.onclick = ()=>{
+
+showToast(
+"Pengunjung tidak dapat memberikan komentar",
+"error"
+);
+
+};
+
+
+document
+.getElementById("shareBtn")
+.onclick = ()=>{
+
+showToast(
+"Fitur share tidak tersedia untuk pengunjung",
+"error"
+);
+
+};
+
+
+
+</script>
+
+
+
+
+
+
+
+
+<div id="toast"></div>
+
+
+
+
+
+</body>
+</html>
