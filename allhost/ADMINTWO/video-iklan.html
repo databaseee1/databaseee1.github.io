@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Admin Upload Video</title>
+
+<style>
+body{
+font-family:Arial,sans-serif;
+background:#f5f5f5;
+padding:20px;
+}
+
+.box{
+max-width:600px;
+margin:auto;
+background:#fff;
+padding:20px;
+border-radius:12px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+input,button{
+width:100%;
+padding:12px;
+margin-top:10px;
+box-sizing:border-box;
+}
+
+button{
+background:#007bff;
+color:#fff;
+border:none;
+cursor:pointer;
+border-radius:8px;
+}
+
+button:hover{
+opacity:.9;
+}
+
+#status{
+margin-top:15px;
+font-weight:bold;
+}
+
+.progress{
+width:100%;
+height:12px;
+background:#ddd;
+border-radius:20px;
+overflow:hidden;
+margin-top:10px;
+}
+
+.progress-bar{
+height:100%;
+width:0%;
+background:#28a745;
+transition:.3s;
+}
+
+
+
+
+#videoList{
+margin-top:20px;
+display:grid;
+gap:15px;
+}
+
+.video-card{
+background:#fff;
+border-radius:12px;
+padding:15px;
+box-shadow:0 4px 12px rgba(0,0,0,.1);
+}
+
+.video-card video{
+width:100%;
+border-radius:10px;
+margin-bottom:10px;
+}
+
+.video-info h4{
+margin:0 0 10px;
+}
+
+.video-info p{
+margin:5px 0;
+font-size:14px;
+color:#666;
+}
+
+.video-info a{
+display:inline-block;
+margin-top:10px;
+text-decoration:none;
+background:#007bff;
+color:white;
+padding:8px 12px;
+border-radius:8px;
+}
+
+
+
+</style>
+</head>
+<body>
+
+<div class="box">
+
+<h2>Upload Video Admin</h2>
+
+<input type="text" id="judul" placeholder="Judul Video">
+
+<input type="file" id="videoFile" accept="video/*">
+
+<button onclick="uploadVideo()">
+Upload Video
+</button>
+
+<div class="progress">
+<div class="progress-bar" id="bar"></div>
+</div>
+
+<div id="status"></div>
+
+</div>
+
+
+<h3>Daftar Video</h3>
+
+<div id="videoList"></div>
+
+
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import {
+getDatabase,
+ref,
+push,
+set,
+onValue
+}
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+authDomain: "users-96dc5.firebaseapp.com",
+databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId: "users-96dc5",
+storageBucket: "users-96dc5.firebasestorage.app",
+messagingSenderId: "483322415863",
+appId: "1:483322415863:web:1397a8f2e808e66ad9e1f2"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+
+
+const videoList = document.getElementById("videoList");
+
+onValue(ref(db,"Videos"),(snapshot)=>{
+
+const data = snapshot.val();
+
+if(!data){
+videoList.innerHTML = "<p>Belum ada video</p>";
+return;
+}
+
+videoList.innerHTML = "";
+
+Object.entries(data).reverse().forEach(([id,v])=>{
+
+const sizeMB = (v.size / 1024 / 1024).toFixed(2);
+
+videoList.innerHTML += `
+
+<div class="video-card">
+
+<video controls preload="metadata">
+<source src="${v.videoUrl}" type="video/mp4">
+</video>
+
+<div class="video-info">
+
+<h4>${v.judul}</h4>
+
+<p>ID : ${id}</p>
+
+<p>Ukuran : ${sizeMB} MB</p>
+
+<p>
+Upload :
+${new Date(v.createdAt).toLocaleString()}
+</p>
+
+<a href="${v.videoUrl}" target="_blank">
+Buka Video
+</a>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+});
+
+
+
+
+window.uploadVideo = async function(){
+
+const file =
+document.getElementById("videoFile").files[0];
+
+const judul =
+document.getElementById("judul").value.trim();
+
+if(!file){
+alert("Pilih video dulu");
+return;
+}
+
+if(!judul){
+alert("Masukkan judul");
+return;
+}
+
+const status =
+document.getElementById("status");
+
+const bar =
+document.getElementById("bar");
+
+status.innerHTML = "Upload ke Cloudinary...";
+
+const formData = new FormData();
+
+formData.append("file", file);
+formData.append("upload_preset", "videouploadagency");
+
+const xhr = new XMLHttpRequest();
+
+xhr.upload.onprogress = (e)=>{
+
+if(e.lengthComputable){
+
+const percent =
+Math.round((e.loaded/e.total)*100);
+
+bar.style.width = percent+"%";
+
+status.innerHTML =
+"Upload "+percent+"%";
+
+}
+
+};
+
+xhr.onload = async ()=>{
+
+const data = JSON.parse(xhr.responseText);
+
+if(!data.secure_url){
+
+status.innerHTML =
+"Gagal upload";
+
+return;
+}
+
+const newRef =
+push(ref(db,"Videos"));
+
+await set(newRef,{
+judul,
+videoUrl:data.secure_url,
+thumbnail:data.thumbnail_url || "",
+size:file.size,
+createdAt:Date.now()
+});
+
+status.innerHTML =
+"Upload berhasil";
+
+bar.style.width="100%";
+
+document.getElementById("judul").value="";
+document.getElementById("videoFile").value="";
+
+};
+
+xhr.open(
+"POST",
+"https://api.cloudinary.com/v1_1/dowoq4a0i/video/upload"
+);
+
+xhr.send(formData);
+
+};
+
+</script>
+
+</body>
+</html>

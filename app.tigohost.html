@@ -825,19 +825,11 @@ PT. Agency TigoHost Indonesia merupakan perusahaan agency digital yang berfokus 
 </section>
 <div class="video-card"> <div class="video-header"> <h2>Mari berkenalan dengan orang-orang berbakat di sini!</h2> 
   <p>Di Tigo, Anda akan terhubung dengan orang-orang berbakat dari seluruh dunia.</p> 
-</div> <div class="video-wrapper">
-   <video controls controlsList="nodownload"> 
-    <source src="https://www.tigodating.com/video/video.mp4" type="video/mp4">
-     Browser Anda tidak mendukung video. 
-    </video>
 
-       <video controls controlsList="nodownload"> 
-    <source src="https://res.cloudinary.com/dowoq4a0i/video/upload/v1781116623/1781113151859_h2zo9j.mp4" type="video/mp4">
-     Browser Anda tidak mendukung video. 
-    </video>
 
 
      </div> 
+     <div class="video-wrapper" id="videoWrapper"></div>
      <div class="video-footer"> 
          </div>
         </div>
@@ -978,6 +970,64 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+
+
+
+
+
+
+const videoWrapper = document.getElementById("videoWrapper");
+
+onValue(ref(db,"Videos"),(snap)=>{
+
+const data = snap.val();
+
+if(!data){
+videoWrapper.innerHTML = `
+<p>Tidak ada video tersedia</p>
+`;
+return;
+}
+
+videoWrapper.innerHTML = "";
+
+Object.values(data)
+.reverse()
+.forEach(video=>{
+
+videoWrapper.innerHTML += `
+
+<div class="video-item">
+
+<video
+controls
+controlsList="nodownload"
+preload="metadata">
+
+<source
+src="${video.videoUrl}"
+type="video/mp4">
+
+Browser Anda tidak mendukung video.
+
+</video>
+
+<h4>${video.judul || "Video"}</h4>
+
+</div>
+
+`;
+
+});
+
+});
+
+
+
+
+
+
+
 
 /* RANDOM */
 const apps = ["TIGO","MACO","MEEGO","AYAR","BLING","CHATO","TENDERU"];
