@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perjanjian Pembayaran Akun</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #ffffff;
+    color: #fff;
+}
+
+.header {
+    padding: 20px;
+    text-align: center;
+    background: linear-gradient(135deg, #6a00bc, #6a00bc);
+    border-bottom: 1px solid #333;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.card {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    padding-bottom: 15px;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background: #631198;
+    border-bottom: 1px solid #2a2a2a;
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.download {
+    background: #00c853;
+    color: #fff;
+}
+
+.download:hover {
+    background: #00a043;
+}
+
+.info {
+    font-size: 13px;
+    color: #aaa;
+}
+
+/* PDF WRAPPER */
+.pdf-wrapper {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+}
+
+/* masing-masing viewer */
+iframe {
+    width: 100%;
+    height: 650px;
+    border: none;
+    background: #fff;
+    border-radius: 6px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .pdf-wrapper {
+        flex-direction: column;
+    }
+
+    iframe {
+        height: 500px;
+    }
+}
+
+.footer {
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+    margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>PERJANJIAN PEMBAYARAN & PENGGUNAAN AKUN</h1>
+</div>
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="actions">
+            <div class="info">Preview 2 dokumen PDF resmi</div>
+            <a href="perjanjian_pembayaran_akun.pdf" download>
+                
+                <button class="download">Download PDF</button>
+            </a>
+        </div>
+
+        <!-- 2 PDF VIEW -->
+        <div class="pdf-wrapper">
+            <iframe src="perjanjian_pembayaran_akun.pdf"></iframe>
+            <iframe src="bergabung_pt_agency_tigohost_indonesia.pdf"></iframe>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        © Sistem Informasi Perjanjian Akun - All Rights Reserved
+    </div>
+
+</div>
+
+</body>
+</html>
