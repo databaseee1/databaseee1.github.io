@@ -13,6 +13,7 @@
 <!-- Tambahan -->
 <meta name="description" content="Diskusi seputar agency, coin, dan sistem digital terbaru.">
 <meta name="theme-color" content="#7c3aed">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
 
@@ -564,10 +565,226 @@ input{
   to {opacity:1; transform:translate(-50%,0);}
 }
 
+
+
+
+
+
+/* =========================
+   FOTO GRID (TOP HOST)
+========================= */
+
+#fotoGrid{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding:15px;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+}
+
+#fotoGrid::-webkit-scrollbar{
+  display:none;
+}
+
+.foto-box{
+  flex:0 0 auto;
+  width:120px;
+  height:120px;
+  border-radius:14px;
+  overflow:hidden;
+  cursor:pointer;
+  border:2px solid #e5e7eb;
+  transition:.3s;
+  scroll-snap-align:start;
+  background:#fff;
+}
+
+.foto-box:hover{
+  transform:scale(1.05);
+  box-shadow:0 6px 18px rgba(0,0,0,.15);
+}
+
+.foto-box img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.empty{
+  padding:20px;
+  text-align:center;
+  color:#888;
+  font-size:14px;
+}
+
+
+/* =========================
+   POST LIST WRAPPER
+========================= */
+
+#listPostingan{
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+  padding:15px;
+}
+
+
+/* =========================
+   POST CARD
+========================= */
+
+#mp_post_card{
+  background:#fff;
+  border-radius:18px;
+  padding:16px;
+  box-shadow:0 4px 15px rgba(0,0,0,.08);
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+#mp_post_header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:12px;
+}
+
+#mp_avatar{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#6c3cff,#4d7dff);
+  color:#fff;
+  font-weight:bold;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+#mp_nama{
+  font-weight:700;
+  font-size:15px;
+}
+
+#mp_tanggal{
+  font-size:12px;
+  color:#777;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+#mp_judul{
+  font-size:18px;
+  font-weight:700;
+  margin-bottom:8px;
+}
+
+#mp_deskripsi{
+  color:#555;
+  line-height:1.6;
+  margin-bottom:15px;
+}
+
+
+/* =========================
+   FOOTER ACTION
+========================= */
+
+#mp_post_footer{
+  display:flex;
+  gap:20px;
+  align-items:center;
+  border-top:1px solid #eee;
+  padding-top:12px;
+}
+
+#mp_post_footer span{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:#64748b;
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  user-select:none;
+  transition:.2s;
+}
+
+#mp_post_footer span:hover{
+  opacity:.7;
+}
+
+
+/* ICON COLORS */
+#mp_action_like i{
+  color:#ff3b5c;
+}
+
+#mp_action_comment i{
+  color:#4d7dff;
+}
+
+#mp_action_share i{
+  color:#64748b;
+}
+
+
+/* =========================
+   GUEST NOTIF
+========================= */
+
+.guest-notif{
+  position:fixed;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%) translateY(-100px);
+  background:#111827;
+  color:#fff;
+  padding:14px 20px;
+  border-radius:12px;
+  font-size:14px;
+  font-weight:600;
+  z-index:99999;
+  opacity:0;
+  transition:.35s;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+.guest-notif.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+li{
+  font-size:13px;
+  margin-bottom:8px;
+  line-height:1.5;
+      margin-top: 20px;
+}
+
 </style>
 </head>
 
 <body>
+  <div id="guestNotif" class="guest-notif">
+    Pengunjung tidak dapat memberikan aksi ini
+</div>
+
+
+
 
 <div class="header-container">
     <img src="ulasan2.png" alt="Logo" class="logo">
@@ -578,6 +795,17 @@ input{
 <div class="sticky-header">
     Forum Host & Coin
 </div>
+
+
+
+<li>TOP PENGHASILAN MINGGU INI</li>
+<!-- GRID FOTO -->
+<div class="foto-grid" id="fotoGrid"></div>
+</div>
+
+
+
+
 
 <div class="container" id="feed"></div>
 
@@ -699,6 +927,109 @@ input{
 </footer>
 
 
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+addDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+getStorage,
+ref as storageRef,
+uploadBytes,
+getDownloadURL
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+import {
+getDatabase,
+ref,
+onValue
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSy....",
+  authDomain: "users-96dc5.firebaseapp.com",
+  projectId: "users-96dc5",
+  storageBucket: "users-96dc5.appspot.com",
+  messagingSenderId: "483322415863",
+  appId: "1:483322415863:web:xxxxxx",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app"
+};
+
+const app = initializeApp(firebaseConfig);
+
+const firestore = getFirestore(app);
+const storage = getStorage(app);
+const realtimeDb = getDatabase(app);
+
+
+/* =======================
+   FOTO GRID (TOP HOST)
+======================= */
+
+const fotoGrid = document.getElementById("fotoGrid");
+
+if (fotoGrid) {
+
+onValue(ref(realtimeDb, "allhost"), (snap) => {
+
+    const data = snap.val();
+
+    fotoGrid.innerHTML = "";
+
+    if (!data) {
+        fotoGrid.innerHTML = `<div class="empty">Belum ada host</div>`;
+        return;
+    }
+
+    const items = Object.entries(data)
+        .sort((a, b) => (b[1].penghasilanMingguIni || 0) - (a[1].penghasilanMingguIni || 0))
+        .slice(0, 10);
+
+    fotoGrid.innerHTML = items.map(([id, val]) => `
+        <div class="foto-box"
+        onclick="window.location.href='https://www.tigohost.asia/allhost/allhost.html?id=${id}'">
+
+            <img src="${val.foto || 'https://via.placeholder.com/300'}" alt="${val.profil || 'host'}">
+
+        </div>
+    `).join("");
+
+});
+
+}
+
+
+
+
+
+/* =======================
+   NOTIF GUEST
+======================= */
+
+window.showGuestNotif = function(e){
+
+    if (e) e.stopPropagation();
+
+    const notif = document.getElementById("guestNotif");
+
+    if (!notif) return;
+
+    notif.classList.add("show");
+
+    clearTimeout(window.notifTimer);
+
+    window.notifTimer = setTimeout(() => {
+        notif.classList.remove("show");
+    }, 2500);
+
+};
+
+</script>
 
 
 <script>

@@ -128,7 +128,7 @@ Creator Economy Indonesia
 
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
 
 *{
@@ -720,10 +720,150 @@ font-size:14px !important;
 .video-card{ width:100%; max-width:900px; background:#72809547; border-radius:24px; overflow:hidden; border:1px solid rgba(255,255,255,.08); } .video-header{ padding:18px 24px; background:linear-gradient(135deg,#6c3cff,#4f46e5); color:#fff; } .video-header h2{ font-size:22px; font-weight:700; } .video-header p{ margin-top:4px; opacity:.9; font-size:14px; } .video-wrapper{ padding:15px; } video{ width:100%; border-radius:18px; background:#000; } .video-footer{ padding:20px; display:flex; justify-content:center; } .download-btn{ text-decoration:none; background:linear-gradient(135deg,#6c3cff,#4f46e5); color:#fff; padding:14px 28px; border-radius:14px; font-weight:600; transition:.3s; } .download-btn:hover{ transform:translateY(-2px); }
 .tg-footer{ margin-top:80px; background:#0f172a; color:#fff; border-top:1px solid rgba(255,255,255,.08); } .tg-footer-container{ max-width:1200px; margin:auto; padding:40px 20px; text-align:center; } .tg-footer-logo h3{ font-size:22px; font-weight:700; margin-bottom:8px; } .tg-footer-logo p{ color:rgba(255,255,255,.7); font-size:14px; margin-bottom:25px; } .tg-footer-info h4{ font-size:16px; margin-bottom:10px; color:#fff; } .tg-footer-info p{ color:rgba(255,255,255,.75); line-height:1.8; font-size:14px; } .tg-footer-copy{ margin-top:30px; padding-top:20px; border-top:1px solid rgba(255,255,255,.08); color:rgba(255,255,255,.6); font-size:13px; }
 
+#listPostingan{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+    padding:15px;
+}
+
+.post-card{
+    background:#fff;
+    border-radius:18px;
+    padding:16px;
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+}
+
+.post-header{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:12px;
+}
+
+.avatar{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#6c3cff,#4d7dff);
+    color:#fff;
+    font-weight:bold;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.nama{
+    font-weight:700;
+    font-size:15px;
+}
+
+.tanggal{
+    font-size:12px;
+    color:#777;
+}
+
+.judul{
+    font-size:18px;
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+.deskripsi{
+    color:#555;
+    line-height:1.6;
+    margin-bottom:15px;
+}
+
+.post-footer{
+    display:flex;
+    gap:25px;
+    align-items:center;
+    border-top:1px solid #eee;
+    padding-top:12px;
+}
+
+.post-footer span{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:#64748b;
+    font-size:14px;
+    font-weight:600;
+}
+
+.post-footer .fa-heart{
+    color:#ff3b5c;
+}
+
+.post-footer .fa-comment{
+    color:#4d7dff;
+}
+
+
+.action{
+    flex:1;
+    justify-content:center;
+    padding:10px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.action:hover{
+    background:#f1f5f9;
+}
+
+.action i{
+    font-size:16px;
+}
+
+
+
+
+.guest-notif{
+    position:fixed;
+    top:20px;
+    left:50%;
+    transform:translateX(-50%) translateY(-100px);
+    background:#111827;
+    color:#fff;
+    padding:14px 20px;
+    border-radius:12px;
+    font-size:14px;
+    font-weight:600;
+    z-index:99999;
+    opacity:0;
+    transition:.35s;
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+.guest-notif.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+}
+
+.action{
+    cursor:pointer;
+    user-select:none;
+}
+
+.action:hover{
+    opacity:.8;
+}
+
+
 
 </style>
 </head>
 <body>
+
+
+
+<div id="guestNotif" class="guest-notif">
+    Pengunjung tidak dapat memberikan aksi ini
+</div>
+
 
 <header>
 <div class="navbar">
@@ -851,7 +991,7 @@ PT. Agency TigoHost Indonesia merupakan perusahaan agency digital yang berfokus 
 
 
 
-
+<div id="listPostingan"></div>
 
 
 <section class="tgagency-services-section">
@@ -954,7 +1094,8 @@ import {
   get,
   set,
   update,
-  onValue
+  onValue,
+  push
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 /* CONFIG */
@@ -970,6 +1111,110 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+
+
+
+
+
+
+
+
+const listPostingan = document.getElementById("listPostingan");
+
+onValue(ref(db,"Mypostingan"),(snap)=>{
+
+    const data = snap.val();
+
+    if(!data){
+        listPostingan.innerHTML = `
+        <div class="empty">
+            Belum ada postingan
+        </div>
+        `;
+        return;
+    }
+
+    let posts = [];
+
+    Object.entries(data).forEach(([id,val])=>{
+        posts.push({
+            id,
+            ...val
+        });
+    });
+
+    // urut terbaru
+posts.sort((a,b)=>{
+    return Number(b.timestamp || 0) - Number(a.timestamp || 0);
+});
+
+    listPostingan.innerHTML = "";
+
+    posts.forEach(post=>{
+
+        listPostingan.innerHTML += `
+
+        <div class="post-card">
+
+            <div class="post-header">
+
+                <div class="avatar">
+                    ${post.namaPemosting?.charAt(0) || "A"}
+                </div>
+
+                <div>
+                    <div class="nama">
+                        ${post.namaPemosting}
+                    </div>
+
+                    <div class="tanggal">
+                        ${post.tanggal}
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="judul">
+                ${post.judul}
+            </div>
+
+            <div class="deskripsi">
+                ${post.deskripsi}
+            </div>
+
+<div class="post-footer">
+
+    <span class="action" onclick="showGuestNotif(event)">
+        <i class="fa-regular fa-heart"></i>
+        ${post.like || 0}
+    </span>
+
+    <span class="action" onclick="showGuestNotif(event)">
+        <i class="fa-regular fa-comment"></i>
+        ${post.komentar || 0}
+    </span>
+
+    <span class="action" onclick="showGuestNotif(event)">
+        <i class="fa-regular fa-share-from-square"></i>
+        Bagikan
+    </span>
+
+</div>
+
+        </div>
+
+        `;
+    });
+
+});
+
+
+
+
+
+
+
+
 
 
 
@@ -1312,6 +1557,26 @@ flex-wrap:wrap;
   });
 
 });
+
+
+
+
+
+window.showGuestNotif = function(e){
+
+    e.stopPropagation();
+
+    const notif = document.getElementById("guestNotif");
+
+    notif.classList.add("show");
+
+    clearTimeout(window.notifTimer);
+
+    window.notifTimer = setTimeout(()=>{
+        notif.classList.remove("show");
+    },2500);
+
+}
 </script>
 
 

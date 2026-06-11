@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <title>PT. Agency Tigohost Indonesia</title>
 
@@ -4053,9 +4054,60 @@ select option:disabled {
   border-radius: 12px;
 }
 
+
+
+
+.guest-notif{
+    position:fixed;
+    top:20px;
+    left:50%;
+    transform:translateX(-50%) translateY(-100px);
+    background:#111827;
+    color:#fff;
+    padding:14px 20px;
+    border-radius:12px;
+    font-size:14px;
+    font-weight:600;
+    z-index:99999;
+    opacity:0;
+    transition:.35s;
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+.guest-notif.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+}
+
+.action{
+    cursor:pointer;
+    user-select:none;
+}
+
+.action:hover{
+    opacity:.8;
+}
+
+#mp_action_like i{
+    color:#ff0000;
+    transition:0.2s;
+}
+
+#mp_action_like:hover i{
+    color:red;
+}
+
   </style>
 </head>
 <body>
+
+
+  <div id="guestNotif" class="guest-notif">
+    Pengunjung tidak dapat memberikan aksi ini
+</div>
+
+
+
   <!-- ===== Header ===== -->
   <header>
     <div class="hdr">
@@ -4243,6 +4295,127 @@ select option:disabled {
     text-align:center;
     letter-spacing:.2px;
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* container kosong */
+#mp_empty{
+    text-align:center;
+    padding:20px;
+    color:#888;
+    font-size:14px;
+}
+
+/* card postingan */
+#mp_post_card{
+    background:#fff;
+    border-radius:12px;
+    padding:12px;
+    margin:10px 0;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* header */
+#mp_post_header{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:8px;
+}
+
+/* avatar */
+#mp_avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:#4f46e5;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+    font-size:16px;
+}
+
+/* user info */
+#mp_user_info{
+    display:flex;
+    flex-direction:column;
+}
+
+#mp_nama{
+    font-weight:600;
+    font-size:14px;
+    color:#111;
+}
+
+#mp_tanggal{
+    font-size:12px;
+    color:#777;
+}
+
+/* judul */
+#mp_judul{
+    font-size:15px;
+    font-weight:600;
+    margin:8px 0 4px;
+    color:#111;
+}
+
+/* deskripsi */
+#mp_deskripsi{
+    font-size:14px;
+    color:#444;
+    line-height:1.4;
+}
+
+/* footer */
+#mp_post_footer{
+    display:flex;
+    justify-content:space-between;
+    margin-top:10px;
+    padding-top:8px;
+    border-top:1px solid #eee;
+}
+
+/* action button */
+#mp_action_like,
+#mp_action_comment,
+#mp_action_share{
+    font-size:13px;
+    color:#555;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:5px;
+    transition:0.2s;
+}
+
+#mp_action_like:hover,
+#mp_action_comment:hover,
+#mp_action_share:hover{
+    color:#111;
+}
+
+
+
+
+
+
+
 </style>
 
 <div class="title-box">
@@ -4399,32 +4572,8 @@ select option:disabled {
 
 
 <!-- GRID FOTO -->
-<div class="foto-grid">
+<div class="foto-grid" id="fotoGrid"></div>
 
-  <div class="foto-box"
-  onclick="window.location.href='https://www.tigohost.asia/allhost/allhost.html'">
-    <img src="k1.jpg" alt="Host 1">
-  </div>
-
-  <div class="foto-box"
-  onclick="window.location.href='https://www.tigohost.asia/allhost/allhost.html'">
-    <img src="k6.jpg" alt="Host 2">
-  </div>
-
-  <div class="foto-box"
-  onclick="window.location.href='https://www.tigohost.asia/allhost/allhost.html'">
-    <img src="k3.jpg" alt="Host 3">
-  </div>
-
-  <div class="foto-box"
-  onclick="window.location.href='https://www.tigohost.asia/allhost/allhost.html'">
-    <img src="k4.jpg" alt="Host 4">
-  </div>
-
-  <div class="foto-box"
-  onclick="window.location.href='https://www.tigohost.asia/allhost/allhost.html'">
-    <img src="k5.jpg" alt="Host 5">
-  </div>
 
 </div>
 
@@ -5692,6 +5841,9 @@ Fitur Utama
     <p>Untuk melihat komentar lainnya, mohon login akun host terlebih dahulu.</p>
   </div>
 </div>
+
+
+<div id="listPostingan"></div>
 
 
 
@@ -6979,57 +7131,224 @@ document.addEventListener('keydown', e => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </script>
 
 
 
 
 
+
+
+
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, query, where 
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSy....",
-    authDomain: "users-96dc5.firebaseapp.com",
-    projectId: "users-96dc5",
-    storageBucket: "users-96dc5.appspot.com",
-    messagingSenderId: "483322415863",
-    appId: "1:483322415863:web:xxxxxx"
-  };
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const storage = getStorage(app);
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+addDoc,
+getDocs,
+query,
+where
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+getStorage,
+ref as storageRef,
+uploadBytes,
+getDownloadURL
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+import {
+getDatabase,
+ref,
+set,
+push,
+update,
+remove,
+get,
+onValue
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSy....",
+  authDomain: "users-96dc5.firebaseapp.com",
+  projectId: "users-96dc5",
+  storageBucket: "users-96dc5.appspot.com",
+  messagingSenderId: "483322415863",
+  appId: "1:483322415863:web:xxxxxx",
+
+  databaseURL:
+  "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app"
+};
+
+const app = initializeApp(firebaseConfig);
+
+const firestore = getFirestore(app);
+
+const storage = getStorage(app);
+
+const realtimeDb = getDatabase(app);
+
+
+
+
+
+
+const fotoGrid = document.getElementById("fotoGrid");
+
+onValue(ref(realtimeDb, "allhost"), (snap) => {
+    const data = snap.val();
+
+    fotoGrid.innerHTML = "";
+
+    if (!data) {
+        fotoGrid.innerHTML = `<div class="empty">Belum ada host</div>`;
+        return;
+    }
+
+    const items = Object.entries(data)
+        .sort((a, b) => {
+            return (b[1].penghasilanMingguIni || 0) - (a[1].penghasilanMingguIni || 0);
+        })
+        .slice(0, 10); // 🔥 top 10
+
+    items.forEach(([id, val]) => {
+
+        fotoGrid.innerHTML += `
+        <div class="foto-box"
+        onclick="window.location.href='https://www.tigohost.asia/allhost/allhost.html?id=${id}'">
+
+            <img src="${val.foto || 'https://via.placeholder.com/300'}" alt="${val.profil || 'host'}">
+
+        </div>
+        `;
+    });
+});
+
+
+
+const listPostingan = document.getElementById("listPostingan");
+
+onValue(ref(realtimeDb,"Mypostingan"),(snap)=>{
+
+    const data = snap.val();
+
+    if(!data){
+        listPostingan.innerHTML = `
+        <div id="mp_empty">
+            Belum ada postingan
+        </div>
+        `;
+        return;
+    }
+
+    let posts = [];
+
+    Object.entries(data).forEach(([id,val])=>{
+        posts.push({
+            id,
+            ...val
+        });
+    });
+
+    // urut terbaru
+    posts.sort((a,b)=>{
+        return Number(b.timestamp || 0) - Number(a.timestamp || 0);
+    });
+
+    listPostingan.innerHTML = "";
+
+    posts.forEach(post=>{
+
+        listPostingan.innerHTML += `
+
+        <div id="mp_post_card">
+
+            <div id="mp_post_header">
+
+                <div id="mp_avatar">
+                    ${post.namaPemosting?.charAt(0) || "A"}
+                </div>
+
+                <div id="mp_user_info">
+                    <div id="mp_nama">
+                        ${post.namaPemosting}
+                    </div>
+
+                    <div id="mp_tanggal">
+                        ${post.tanggal}
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="mp_judul">
+                ${post.judul}
+            </div>
+
+            <div id="mp_deskripsi">
+                ${post.deskripsi}
+            </div>
+
+            <div id="mp_post_footer">
+
+                <span id="mp_action_like" onclick="showGuestNotif(event)">
+                    <i class="fa-regular fa-heart"></i>
+                    ${post.like || 0}
+                </span>
+
+                <span id="mp_action_comment" onclick="showGuestNotif(event)">
+                    <i class="fa-regular fa-comment"></i>
+                    ${post.komentar || 0}
+                </span>
+
+                <span id="mp_action_share" onclick="showGuestNotif(event)">
+                    <i class="fa-regular fa-share-from-square"></i>
+                    Bagikan
+                </span>
+
+            </div>
+
+        </div>
+
+        `;
+    });
+
+});
+
+
+
+
+
+window.showGuestNotif = function(e){
+
+    e.stopPropagation();
+
+    const notif = document.getElementById("guestNotif");
+
+    notif.classList.add("show");
+
+    clearTimeout(window.notifTimer);
+
+    window.notifTimer = setTimeout(()=>{
+        notif.classList.remove("show");
+    },2500);
+
+}
+
+
+
+  
 
   async function handleDaftar(event) {
     event.preventDefault();
@@ -7054,7 +7373,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstati
     }
 
     try {
-      await addDoc(collection(db, "pendaftaran"), {
+      await addDoc(collection(firestore, "pendaftaran"), {
         nama, umur, jk, wa, email,
         app: appName,
         bank, namaRek, noRek,
@@ -8380,7 +8699,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 });
-
 
 
 
