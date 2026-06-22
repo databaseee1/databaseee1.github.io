@@ -1,4 +1,4 @@
-const CACHE_NAME = "Tigoapp.v4";
+const CACHE_NAME = "Tigoapp.v5"; // 🔥 naikkan versi tiap update
 
 const urlsToCache = [
   "/New_agency/Login.html",
@@ -14,21 +14,32 @@ self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(urlsToCache))
   );
+
+  // langsung aktif tanpa nunggu lama
   self.skipWaiting();
 });
 
-// FETCH
+// FETCH (lebih aman + tetap support offline)
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
 
   event.respondWith(
     fetch(event.request)
       .then((response) => {
+        // update cache versi baru
         const clone = response.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(event.request, clone);
+        });
+
         return response;
       })
-      .catch(() => caches.match(event.request))
+      .catch(() => {
+        // fallback offline
+        return caches.match(event.request).then((res) => {
+          return res || caches.match("/New_agency/offline.html");
+        });
+      })
   );
 });
 
@@ -44,5 +55,14 @@ self.addEventListener("activate", (event) => {
     )
   );
 
+  // ambil kontrol langsung
   self.clients.claim();
+});
+
+
+// 🔥 AUTO UPDATE TRIGGER (WAJIB)
+self.addEventListener("message", (event) => {
+  if (event.data === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
 });

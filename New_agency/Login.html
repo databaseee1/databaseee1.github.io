@@ -710,13 +710,34 @@ document.addEventListener("gestureend", function (e) {
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
+
     navigator.serviceWorker.register("/New_agency/service-worker.js")
       .then((reg) => {
         console.log("SW registered:", reg.scope);
+
+        // 🔥 CEK UPDATE
+        reg.addEventListener("updatefound", () => {
+          const newWorker = reg.installing;
+
+          newWorker.addEventListener("statechange", () => {
+            if (
+              newWorker.state === "installed" &&
+              navigator.serviceWorker.controller
+            ) {
+              // 🔥 paksa aktif SW baru
+              newWorker.postMessage("SKIP_WAITING");
+
+              // 🔥 reload biar versi baru tampil
+              window.location.reload();
+            }
+          });
+        });
+
       })
       .catch((err) => {
         console.log("SW failed:", err);
       });
+
   });
 }
 </script>
