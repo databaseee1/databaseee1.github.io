@@ -12,7 +12,7 @@
 
 <title>Tigohost - Login</title>
 
-<link rel="manifest" href="/New_agency/assets/images/manifest.json">
+<link rel="manifest" href="/New_agency/manifest.json">
 
 <style>
 
@@ -709,7 +709,15 @@ document.addEventListener("gestureend", function (e) {
 /* ================= (NO zoom) ================= */
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/New_agency/service-worker.js");
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/New_agency/service-worker.js")
+      .then((reg) => {
+        console.log("SW registered:", reg.scope);
+      })
+      .catch((err) => {
+        console.log("SW failed:", err);
+      });
+  });
 }
 </script>
 </body>
