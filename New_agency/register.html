@@ -1823,17 +1823,6 @@ document.addEventListener("gestureend", function (e) {
 });
 /* ================= (NO zoom) ================= */
 
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.getRegistrations().then(function(registrations) {
-    for (let registration of registrations) {
-      registration.unregister();
-    }
-  }).then(() => {
-    navigator.serviceWorker.register("/New_agency/service-worker.js?v=2")
-      .then(() => console.log("SW terbaru aktif"))
-      .catch(err => console.log(err));
-  });
-}
 
 
 </script>
