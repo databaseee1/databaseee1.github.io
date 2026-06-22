@@ -708,7 +708,9 @@ document.addEventListener("gestureend", function (e) {
 });
 /* ================= (NO zoom) ================= */
 
-
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/New_agency/service-worker.js");
+}
 </script>
 </body>
 </html>

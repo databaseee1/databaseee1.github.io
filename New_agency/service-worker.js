@@ -1,49 +1,70 @@
-const CACHE_NAME = "Tigoapp.v3";
+const CACHE_NAME = "Tigoapp.v4";
+
+// semua pakai root /New_agency/
+const BASE_PATH = "/New_agency/";
+
 const urlsToCache = [
-  "./",
-  "./index.html",
-  "./style.css",
-  "./app.js",
-  "./192x192.png",
-  "./512x512.png",
-  "./offline.html"
+  BASE_PATH,
+  BASE_PATH + "Login.html",
+  BASE_PATH + "register.html",
+  BASE_PATH + "style.css",
+  BASE_PATH + "app.js",
+  BASE_PATH + "launchericon-192x192.png",
+  BASE_PATH + "launchericon-512x512.png",
+  BASE_PATH + "offline.html"
 ];
 
-// Install Service Worker
+// INSTALL
 self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(urlsToCache))
-  );
+  console.log("SW installing...");
   self.skipWaiting();
+
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(urlsToCache);
+    })
+  );
 });
 
-// Fetch dengan fallback ke offline.html
+// FETCH (cache first + update)
 self.addEventListener("fetch", (event) => {
-  if (!event.request.url.startsWith("http")) return;
   if (event.request.method !== "GET") return;
 
   event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        const clone = response.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-        return response;
-      })
-      .catch(() =>
-        caches.match(event.request).then((res) => res || caches.match("./offline.html"))
-      )
+    caches.match(event.request).then((cached) => {
+      const fetchPromise = fetch(event.request)
+        .then((networkResponse) => {
+          if (!networkResponse || networkResponse.status !== 200) return networkResponse;
+
+          const responseClone = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseClone);
+          });
+
+          return networkResponse;
+        })
+        .catch(() => cached);
+
+      return cached || fetchPromise;
+    })
   );
 });
 
-// Hapus cache lama
+// ACTIVATE (hapus cache lama)
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then((cacheNames) =>
-      Promise.all(
-        cacheNames.filter((name) => name !== CACHE_NAME).map((name) => caches.delete(name))
-      )
-    )
+    caches.keys().then((keys) => {
+      return Promise.all(
+        keys.map((key) => {
+          if (key !== CACHE_NAME) {
+            console.log("Deleting old cache:", key);
+            return caches.delete(key);
+          }
+        })
+      );
+    })
   );
-  console.log("✅ Service Worker: Activated");
+
   self.clients.claim();
+  console.log("SW activated");
 });
