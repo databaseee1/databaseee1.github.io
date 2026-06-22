@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+
+<title>People</title>
+
+<style>
+
+
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none !important;
+}
+
+/* hilangkan highlight saat klik/focus */
+button, a, div, span, img {
+  outline: none !important;
+}
+
+
+img {
+  
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+
+
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+
+
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#fff;
+padding-bottom:90px;
+padding-top:80px;
+}
+
+/* HEADER */
+
+.header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    padding: 20px;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    background: #fff;
+    z-index: 999;
+}
+
+.tabs{
+display:flex;
+gap:15px;
+}
+
+.tab{
+font-size:18px;
+color:#aaa;
+cursor:pointer;
+}
+
+.tab.active{
+color:#000;
+font-weight:700;
+}
+
+.filter{
+  margin-left:auto;
+  cursor:pointer;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* kalau pakai gambar */
+.filter img{
+  width:28px;
+  height:28px;
+  object-fit:contain;
+}
+
+/* GRID */
+
+.people-grid{
+padding:10px;
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:6px;
+}
+
+.card{
+height:290px;
+border-radius:24px;
+overflow:hidden;
+position:relative;
+background:#ddd;
+}
+
+.card img{
+
+
+object-fit:cover;
+}
+
+.avatar-letter{
+width:100%;
+height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:120px;
+color:white;
+font-weight:bold;
+}
+
+.blue{background:#5a6bd0;}
+.green{background:#005f48;}
+.purple{background:#6730c7;}
+.pink{background:#e40069;}
+.darkblue{background:#0f61ab;}
+
+.card-info{
+position:absolute;
+bottom:14px;
+left:8px;
+color:white;
+}
+
+.name{
+font-size:14px;
+font-weight:400;
+display:flex;
+align-items:center;
+gap:8px;
+}
+
+.online{
+width:12px;
+height:12px;
+background:#00e5d1;
+border-radius:50%;
+}
+
+
+
+.chat-btn{
+  position:absolute;
+  bottom:9px;
+  right:14px;
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.2);
+}
+
+.chat-icon{
+  width:28px;
+  height:28px;
+  object-fit:contain;
+}
+.flag{
+  width:14px;
+  height:14px;
+  object-fit:contain;
+  margin-right:4px;
+  border-radius:40px;
+}
+
+.country{
+  display:flex;
+  align-items:center;
+  font-size: 13px;
+  position:relative;
+  top:8px;
+}
+
+
+.profile-photo{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:16px;
+  display:block;
+}
+
+/* NAVIGASI BAWAH */
+ .nav-item.active {
+    color:#000; /* teks hitam */
+    font-weight:bold;
+  }
+
+/* Pastikan Swal selalu di paling depan */
+.swal2-container {
+  z-index: 99999 !important;
+  
+}
+
+
+#bottomNav .nav-item {
+  outline: none;        /* hilangkan outline default */
+  background: none;     /* pastikan background default kosong */
+  border: none;         /* hapus border jika ada */
+  user-select: none;    /* hilangkan highlight teks */
+}
+
+#bottomNav .nav-item:focus,
+#bottomNav .nav-item:active {
+  outline: none;        /* hilangkan titik blok hitam */
+  box-shadow: none;
+  background: none;     /* hilangkan background hitam saat klik */
+}
+
+
+ /* Navigasi bawah */
+#bottomNav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 0;
+  z-index: 9999; /* biar selalu di atas konten */
+  border-top: 1px solid #ffffff;
+}
+
+#bottomNav img {
+  width: 38px; /* sesuai permintaan kamu */
+}
+
+#bottomNav .nav-item {
+  text-align: center;
+  flex: 1;
+}
+
+
+.badge{
+position:absolute;
+background:red;
+color:white;
+font-size:12px;
+padding:2px 6px;
+border-radius:30px;
+margin-left:8px;
+margin-top:-5px;
+}
+
+.nav-item.active .nav-icon{
+  transform: scale(1.1);
+  transition: 0.2s;
+}
+
+.toast{
+  position:fixed;
+  bottom:80px; 
+  left:50%;
+  transform:translateX(-50%) translateY(20px);
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:#fff;
+  color:#000;
+  padding:10px 14px;
+  border-radius:12px;
+  z-index:99999;
+
+  opacity:0;
+  pointer-events:none;
+}
+
+/* animasi aktif */
+.toast.show{
+  animation:toastIn 0.25s ease forwards, toastOut 0.25s ease forwards 1.8s;
+}
+
+@keyframes toastIn{
+  from{
+    opacity:0;
+    transform:translateX(-50%) translateY(20px);
+  }
+  to{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes toastOut{
+  from{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+  }
+  to{
+    opacity:0;
+    transform:translateX(-50%) translateY(20px);
+  }
+}
+
+.toast-icon{
+  width:18px;
+  height:18px;
+}
+
+#loadingScreen{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:999999;
+}
+
+.spinner{
+  width:24px;
+  height:24px;
+  border:3px solid #eee;
+  border-top:3px solid #8a00ff;
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+  from{transform:rotate(0deg);}
+  to{transform:rotate(360deg);}
+}
+</style>
+</head>
+<body>
+
+    <div id="loadingScreen" class="loading-screen">
+  <div class="spinner"></div>
+  <div class="loading-text"></div>
+</div>
+
+<div class="header">
+<div class="tabs">
+<div class="tab active">Orang</div>
+<div class="tab">Pesta</div>
+</div>
+
+<div class="filter" onclick="showToast('tidak dapat memilih negara saat ini', 'flag_other_country.png')">
+  <img src="country_filter_icon.png" class="filter-icon">
+</div>
+</div>
+
+
+
+
+<div class="people-grid" id="peopleGrid"></div>
+
+
+
+
+
+
+<!-- NAV BAWAH -->
+<!-- NAVIGASI BAWAH (selalu tampil) -->
+<div id="bottomNav">
+
+  <div class="nav-item" onclick="window.location.href='home.html'">
+    <img class="nav-icon"
+         src="destiny_icon_normal.png"
+         data-default="destiny_icon_normal.png"
+         data-active="destiny_icon_selected.png">
+  </div>
+
+  <div class="nav-item" onclick="window.location.href='dunia.html'">
+    <img class="nav-icon"
+         src="match_icon_normal.png"
+         data-default="match_icon_normal.png"
+         data-active="match_icon_selected.png">
+  </div>
+
+  <div class="nav-item" onclick="window.location.href='inbox.html'">
+    <img class="nav-icon"
+         src="msg_icon_normal.png"
+         data-default="msg_icon_normal.png"
+         data-active="msg_icon_selected.png">
+  </div>
+
+  <div class="nav-item" onclick="window.location.href='my_akun.html'">
+    <img class="nav-icon"
+         src="mine_icon_normal.png"
+         data-default="mine_icon_normal.png"
+         data-active="mine_icon_selected.png">
+  </div>
+
+</div>
+
+
+
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  get,
+  set,
+  push,
+  update,
+  remove,
+  onValue
+}
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+  storageBucket: "users-96dc5.firebasestorage.app",
+  messagingSenderId: "483322415863",
+  appId: "1:483322415863:web:1397a8f2e808e66ad9e1f2",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+
+
+
+
+
+
+/* WAJIB LOGIN */
+
+const userLogin =
+JSON.parse(localStorage.getItem("user"));
+
+if(
+  !userLogin ||
+  !userLogin.email ||
+  !userLogin.wa
+){
+  window.location.href = "login.html";
+  throw new Error("Belum login");
+}
+
+console.log(
+  "Login:",
+  userLogin.nama
+);
+
+
+
+
+
+function updateLastActive(page = "Home") {
+
+  const login = JSON.parse(localStorage.getItem("user"));
+  if (!login?.userId) return;
+
+  update(ref(db, "users2/" + login.userId), {
+    lastActive: Date.now(),
+    currentPage: page
+  });
+
+}
+
+["click", "touchstart", "keydown"].forEach(evt => {
+  document.addEventListener(evt, () => {
+    updateLastActive("Home");
+  }, { passive: true });
+});
+
+updateLastActive("Home");
+
+
+
+
+
+
+
+
+const loadingScreen = document.getElementById("loadingScreen");
+const peopleGrid = document.getElementById("peopleGrid");
+
+onValue(ref(db, "Users"), (snapshot) => {
+
+  peopleGrid.innerHTML = "";
+
+  if (!snapshot.exists()) {
+    loadingScreen.style.display = "none";
+    return;
+  }
+
+  let users = [];
+
+  snapshot.forEach((child) => {
+    users.push({
+      id: child.key,
+      data: child.val()
+    });
+  });
+
+  // random
+  users.sort(() => Math.random() - 0.5);
+
+  users.forEach((item) => {
+
+    const user = item.data;
+
+    const foto =
+      user.foto && user.foto.length
+        ? user.foto[0]
+        : "https://via.placeholder.com/400x600";
+
+    peopleGrid.innerHTML += `
+      <div class="card"
+           onclick="window.location.href='Profil_users.html?id=${item.id}'">
+
+        <img src="${foto}" class="profile-photo">
+
+        <div class="card-info">
+
+          <div class="name">
+            <div class="online"></div>
+            ${user.nama || "User"}
+          </div>
+
+          <div class="country">
+            <img src="${user.negaraLogo || 'indonesialogo.png'}" class="flag">
+            ${user.negara || "Indonesia"}
+          </div>
+
+        </div>
+
+        <div class="chat-btn">
+          <img src="destiny_icon_video_call.png" class="chat-icon">
+        </div>
+
+      </div>
+    `;
+  });
+
+  // 🔥 HILANGKAN LOADING SETELAH SEMUA RENDER SELESAI
+  loadingScreen.style.display = "none";
+});
+
+
+
+
+function setActiveNav(el) {
+
+  // Reset semua nav ke icon normal
+  document.querySelectorAll('#bottomNav .nav-item').forEach(item => {
+    item.classList.remove('active');
+
+    const img = item.querySelector('.nav-icon');
+    if(img){
+      img.src = img.dataset.default;
+    }
+  });
+
+  // Aktifkan nav yang diklik
+  el.classList.add('active');
+
+  const activeImg = el.querySelector('.nav-icon');
+  if(activeImg){
+    activeImg.src = activeImg.dataset.active;
+  }
+}
+
+// Aktif pertama kali (Play)
+window.onload = function(){
+  const firstNav = document.querySelector('#bottomNav .nav-item');
+  if(firstNav){
+    setActiveNav(firstNav);
+  }
+}
+
+
+
+
+window.showToast = (text, icon = "logo.png") => {
+
+  const toast = document.getElementById("toast");
+  const toastText = document.getElementById("toastText");
+  const toastIcon = document.querySelector(".toast-icon");
+
+  if(!toast || !toastText || !toastIcon) return;
+
+  toastText.textContent = text;
+  toastIcon.src = icon;
+
+  // restart animasi
+  toast.classList.remove("show");
+  void toast.offsetWidth; // force reflow
+  toast.classList.add("show");
+};
+
+
+document.querySelectorAll(".tab").forEach(el => {
+  if (el.textContent.trim() === "Pesta") {
+    el.addEventListener("click", () => {
+      showToast("Menu pesta belum tersedia untuk anda", "match_locked_icon.png");
+    });
+  }
+});
+
+
+
+
+/* ================= (NO zoom) ================= */
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
+document.addEventListener("selectstart", e => e.preventDefault());
+
+/* ❌ BLOCK ZOOM KEYBOARD (Ctrl + / - / 0) */
+document.addEventListener("keydown", function (e) {
+  if (
+    (e.ctrlKey && e.key === "+") ||
+    (e.ctrlKey && e.key === "-") ||
+    (e.ctrlKey && e.key === "0") ||
+    (e.ctrlKey && e.key === "=")
+  ) {
+    e.preventDefault();
+  }
+});
+
+/* BLOCK PINCH ZOOM (mobile) */
+document.addEventListener("gesturestart", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gesturechange", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gestureend", function (e) {
+  e.preventDefault();
+});
+/* ================= (NO zoom) ================= */
+
+
+
+</script>
+<div id="toast" class="toast hidden">
+  <img src="logo.png" class="toast-icon">
+  <span id="toastText"></span>
+</div>
+</body>
+</html>

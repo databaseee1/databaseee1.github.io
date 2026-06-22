@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atur Lokasi Match</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f5f5f5;
+  color:#111;
+}
+
+/* HEADER BEKU */
+.header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:55px;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:600;
+  z-index:1000;
+}
+
+/* BACK BUTTON */
+.back-btn{
+  position:absolute;
+  left:15px;
+  font-size:18px;
+  cursor:pointer;
+  color:#111;
+}
+
+/* KONTEN TENGAH */
+.container{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding-top:60px;
+}
+
+.box{
+  max-width:300px;
+  font-size:14px;
+  color:#111;
+  line-height:1.5;
+}
+</style>
+</head>
+                 
+<body>
+
+<div class="header">
+  <div class="back-btn" onclick="history.back()">
+    <i class="fa-solid fa-angle-left"></i>
+  </div>
+
+  Atur Lokasi Match
+</div>
+
+<div class="container">
+  <div class="box" id="msg">
+    Memeriksa akses...
+  </div>
+</div>
+
+<script>
+/* ================= LOGIN CHECK ================= */
+const loginRaw = localStorage.getItem("user");
+
+if (!loginRaw || loginRaw === "null") {
+  window.location.replace("login.html");
+}
+
+const login = JSON.parse(loginRaw);
+
+if (!login?.userId) {
+  localStorage.clear();
+  sessionStorage.clear();
+  window.location.replace("login.html");
+}
+
+/* ================= ACCESS CHECK ================= */
+function checkAccess(user) {
+
+  const allowed = user?.verified === true;
+
+  const msg = document.getElementById("msg");
+
+  if (!allowed) {
+    msg.innerHTML =
+      "Gagal memuat halaman.<br><br>" +
+      "Akun Anda belum memenuhi syarat akses ke sesi ini.";
+    return;
+  }
+
+  msg.innerHTML = "Akses diterima...";
+}
+
+checkAccess(login);
+</script>
+
+</body>
+</html>

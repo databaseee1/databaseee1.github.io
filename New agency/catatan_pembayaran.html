@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Catatan Pembayaran</title>
+
+<style>
+
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none !important;
+}
+
+/* hilangkan highlight saat klik/focus */
+button, a, div, span, img {
+  outline: none !important;
+}
+
+
+img {
+
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+
+
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+
+
+
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+font-family:'Poppins',sans-serif;
+background:#ffffff;
+-webkit-font-smoothing:antialiased;
+-moz-osx-font-smoothing:grayscale;
+}
+
+/* LOADING */
+#loadingScreen{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#fff;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:999999;
+transition:.3s;
+}
+
+.spinner{
+width:22px;
+height:22px;
+border:3px solid #eee;
+border-top:3px solid #8a00ff;
+border-radius:50%;
+animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+from{transform:rotate(0deg);}
+to{transform:rotate(360deg);}
+}
+
+.header{
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:15px;
+}
+
+.back{
+font-size:22px;
+cursor:pointer;
+}
+
+.title{
+font-size:20px;
+font-weight:bold;
+}
+
+#historyList{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.item{
+background:#fff;
+border-radius:16px;
+padding:15px;
+box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.nominal{
+font-size:18px;
+font-weight:bold;
+color:#111;
+}
+
+.date{
+font-size:12px;
+color:#888;
+margin-top:5px;
+}
+
+.status{
+padding:6px 12px;
+border-radius:30px;
+font-size:12px;
+font-weight:bold;
+text-transform:capitalize;
+}
+
+.bottom{
+margin-top:12px;
+font-size:13px;
+color:#666;
+line-height:1.8;
+}
+
+.empty{
+background:#fff;
+padding:50px 20px;
+border-radius:16px;
+text-align:center;
+color:#888;
+}
+
+
+
+
+.history-page{
+width:100%;
+max-width:450px;
+margin:auto;
+background:#fff;
+min-height:100vh;
+}
+
+.history-top{
+background:#f7f7f7;
+display:flex;
+align-items:center;
+padding:10px;
+border-bottom:1px solid #eee;
+position:sticky;
+top:0;
+z-index:10;
+}
+
+.back-btn{
+background:none;
+border:none;
+cursor:pointer;
+margin-right:10px;
+}
+
+.head-info{
+flex:1;
+}
+
+#historyHeader{
+font-size:14px;
+font-weight:600;
+color:#666;
+}
+
+#historyTotal{
+font-size:13px;
+color:#888;
+margin-top:2px;
+}
+
+.tx-item{
+display:flex;
+justify-content:space-between;
+padding:14px;
+border-bottom:1px solid #f3f3f3;
+}
+
+.tx-main{
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'Poppins', sans-serif;
+    color: #858585;
+}
+
+.tx-sub{
+font-size:12px;
+color:#999;
+font-weight:400;
+font-family:'Poppins',sans-serif;
+}
+
+.tx-amount{
+font-size:14px;
+font-weight:600;
+font-family:'Poppins',sans-serif;
+}
+
+.status{
+font-size:11px;
+margin-top:4px;
+}
+
+.pending{
+color:#ff9800;
+}
+
+.success{
+color:#00b894;
+}
+
+.reject{
+color:#ff3b30;
+}
+
+
+
+</style>
+
+</head>
+<body>
+
+<div id="loadingScreen">
+<div class="spinner"></div>
+</div>
+
+<div class="history-page">
+<button
+onclick="history.back()"
+class="back-btn"
+style="
+background:none;
+border:none;
+padding: 11px 16px;
+margin-top:10px;
+margin-bottom:10px;
+margin-left:4px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+top:6px;
+">
+  <img src="back_black.png" width="22">
+</button>
+
+
+  <div class="history-top">
+
+
+
+    <div class="head-info">
+      <div id="historyHeader">Riwayat Withdraw</div>
+      <div id="historyTotal">Total: Rp 0</div>
+    </div>
+
+<img
+id="filterBtn"
+src="task_icon.png"
+width="28"
+style="
+cursor:pointer;
+filter: invert(19%) sepia(97%) saturate(7478%) hue-rotate(256deg) brightness(96%) contrast(103%);
+">
+
+  </div>
+
+  <div id="txList">
+
+    <div class="tx-item">
+      <div>
+        <div class="tx-main">Memuat data...</div>
+        <div class="tx-sub">Loading</div>
+      </div>
+
+      <div class="tx-amount">
+        Rp 0
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import {
+getDatabase,
+ref,
+get,
+update
+}
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* FIREBASE */
+const firebaseConfig = {
+apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+authDomain:"users-96dc5.firebaseapp.com",
+databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId:"users-96dc5",
+storageBucket:"users-96dc5.appspot.com",
+messagingSenderId:"483322415863",
+appId:"1:483322415863:web:1397a8f2e808e66ad9e1f2"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* LOGIN WAJIB */
+const login =
+JSON.parse(localStorage.getItem("user"));
+
+if(!login){
+window.location.href = "login.html";
+}
+
+
+
+
+
+
+
+function updateLastActive(page = "Catatan_Pembayaran") {
+
+  const login = JSON.parse(localStorage.getItem("user"));
+  if (!login?.userId) return;
+
+  update(ref(db, "users2/" + login.userId), {
+    lastActive: Date.now(),
+    currentPage: page
+  });
+
+}
+
+["click", "touchstart", "keydown"].forEach(evt => {
+  document.addEventListener(evt, () => {
+    updateLastActive("Catatan_Pembayaran");
+  }, { passive: true });
+});
+
+updateLastActive("Catatan_Pembayaran");
+
+
+
+
+
+
+
+
+/* FORMAT RUPIAH */
+function rupiah(nominal){
+
+return "Rp " +
+Number(nominal || 0)
+.toLocaleString("id-ID");
+
+}
+
+/* FORMAT TANGGAL */
+function formatTanggal(timestamp){
+
+if(!timestamp) return "-";
+
+const d = new Date(timestamp);
+
+return d.toLocaleDateString("id-ID",{
+day:"2-digit",
+month:"2-digit",
+year:"numeric"
+})
++
+" "
++
+d.toLocaleTimeString("id-ID",{
+hour:"2-digit",
+minute:"2-digit"
+});
+
+}
+
+/* SPINNER */
+function hideLoading(){
+
+const loading =
+document.getElementById("loadingScreen");
+
+if(!loading) return;
+
+loading.style.opacity = "0";
+
+setTimeout(()=>{
+
+loading.style.display = "none";
+
+},300);
+
+}
+
+
+
+let selectedYear = null;
+let selectedMonth = null;
+/* LOAD HISTORY */
+async function loadHistory(){
+
+const list =
+document.getElementById("txList");
+
+try{
+
+const snap =
+await get(ref(db,"historyWithdraw"));
+
+if(!snap.exists()){
+
+list.innerHTML = `
+<div class="tx-item">
+<div>
+<div class="tx-main">
+Belum ada riwayat penarikan
+</div>
+</div>
+</div>
+`;
+
+hideLoading();
+return;
+
+}
+
+let histories = [];
+
+snap.forEach(child=>{
+
+const data = child.val();
+
+const cocokUser =
+data.userId &&
+login.userId &&
+String(data.userId) === String(login.userId);
+
+if(cocokUser){
+
+const tgl =
+new Date(data.createdAt || 0);
+
+const itemYear =
+String(tgl.getFullYear());
+
+const itemMonth =
+String(tgl.getMonth() + 1).padStart(2,"0");
+
+
+
+
+/* FILTER BULAN TAHUN */
+if(
+selectedYear &&
+selectedMonth &&
+(
+itemYear !== selectedYear ||
+itemMonth !== selectedMonth
+)
+){
+
+return;
+}
+
+histories.push({
+id: child.key,
+...data
+});
+
+}
+
+});
+
+histories.sort((a,b)=>
+(b.createdAt || 0)
+-
+(a.createdAt || 0)
+);
+
+if(histories.length === 0){
+
+  document.getElementById("historyTotal").innerText =
+  "Total: $ 0.00";
+
+  if(selectedYear && selectedMonth){
+
+    document.getElementById("historyHeader").innerText =
+    Number(selectedMonth) + "/" + selectedYear;
+
+  }else{
+
+    const now = new Date();
+
+    document.getElementById("historyHeader").innerText =
+    (now.getMonth() + 1) + "/" + now.getFullYear();
+
+  }
+
+  list.innerHTML = `
+  <div class="tx-item">
+    <div>
+      <div class="tx-main">
+        Belum ada riwayat penarikan
+      </div>
+    </div>
+  </div>
+  `;
+
+  hideLoading();
+  return;
+
+}
+
+let totalWithdraw = 0;
+let html = "";
+
+histories.forEach(item=>{
+
+let warna = "#7749f8";
+let judul = "Dalam ulasan";
+
+if(item.status === "approved"){
+
+warna = "#6d6d6d";
+judul = "Punya uang";
+
+/* HANYA APPROVED DIHITUNG */
+totalWithdraw += Number(item.nominal || 0);
+
+}
+
+if(item.status === "rejected"){
+
+warna = "#ff3d00";
+judul = "Tidak disetujui";
+
+}
+
+html += `
+
+<div class="tx-item">
+
+  <div class="tx-left">
+
+  <div
+class="tx-main"
+style="
+  color:${warna};
+  font-weight:500;
+  margin-bottom:8px;
+">
+  ${judul}
+</div>
+
+    <div class="tx-sub">
+      ${formatTanggal(item.createdAt)}
+    </div>
+
+  </div>
+
+  <div
+  class="tx-amount"
+  style="
+    color:#868686;
+    font-weight:500;
+  ">
+    ${formatSaldoK(item.nominal)}
+  </div>
+
+</div>
+
+`;
+
+});
+
+function formatTanggal(timestamp){
+
+if(!timestamp) return "-";
+
+const d = new Date(timestamp);
+
+const bulan = d.getMonth() + 1;
+const tanggal = d.getDate();
+
+const jam = String(d.getHours()).padStart(2,"0");
+const menit = String(d.getMinutes()).padStart(2,"0");
+const detik = String(d.getSeconds()).padStart(2,"0");
+
+return `${bulan}/${tanggal} ${jam}:${menit}:${detik}`;
+
+}
+
+function formatSaldoK(nominal){
+
+nominal = Number(nominal || 0);
+
+if(nominal >= 1000000){
+
+return "Rp " +
+(nominal / 1000000)
+.toFixed(3)
+.replace(/\.?0+$/,'')
++ "JT";
+
+}
+
+return "Rp " +
+(nominal / 1000)
+.toFixed(2)
++ "K";
+
+}
+
+
+
+
+
+
+
+/* TOTAL HANYA APPROVED */
+/* TOTAL HANYA APPROVED */
+const usdRate = 15500;
+const totalUSD = (totalWithdraw / usdRate).toFixed(2);
+
+document.getElementById("historyTotal").innerText =
+"Total: $ " + totalUSD;
+
+/* HEADER SESUAI FILTER */
+if(selectedYear && selectedMonth){
+
+  document.getElementById("historyHeader").innerText =
+  Number(selectedMonth) + "/" + selectedYear;
+
+}else{
+
+  const now = new Date();
+
+  document.getElementById("historyHeader").innerText =
+  (now.getMonth() + 1) + "/" + now.getFullYear();
+
+}
+
+
+
+
+
+list.innerHTML = html;
+
+hideLoading();
+
+}catch(err){
+
+console.log(err);
+
+document.getElementById(
+"txList"
+).innerHTML = `
+
+<div class="tx-item">
+
+<div>
+<div class="tx-main">
+Gagal memuat data
+</div>
+</div>
+
+</div>
+
+`;
+
+hideLoading();
+
+}
+
+}
+
+
+loadHistory();
+
+
+
+
+
+
+const filterBtn =
+document.getElementById("filterBtn");
+
+const filterSheet =
+document.getElementById("filterSheet");
+
+/* BUKA FILTER */
+filterBtn.onclick = ()=>{
+
+  filterSheet.style.bottom = "0";
+
+};
+
+/* TUTUP FILTER */
+document
+.getElementById("cancelFilter")
+.onclick = ()=>{
+
+  filterSheet.style.bottom = "-100%";
+
+};
+
+/* KONFIRMASI FILTER */
+document
+.getElementById("confirmFilter")
+.onclick = ()=>{
+
+  const tahun =
+  document.getElementById("pickerYear").value;
+
+  const bulan =
+  document.getElementById("pickerMonth").value;
+
+  selectedYear = String(tahun);
+selectedMonth = String(bulan).padStart(2,"0");
+
+loadHistory();
+
+  filterSheet.style.bottom = "-100%";
+
+};
+
+
+
+/* FILTER */
+window.applyFilter = function(year, month){
+
+  selectedYear = year;
+  selectedMonth = month;
+
+  
+
+  loadHistory();
+
+};
+
+const now = new Date();
+
+document.getElementById("pickerYear").value =
+String(now.getFullYear());
+
+document.getElementById("pickerMonth").value =
+String(now.getMonth() + 1).padStart(2,"0");
+
+
+
+
+
+
+
+/* ================= (NO zoom) ================= */
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
+document.addEventListener("selectstart", e => e.preventDefault());
+
+/* ❌ BLOCK ZOOM KEYBOARD (Ctrl + / - / 0) */
+document.addEventListener("keydown", function (e) {
+  if (
+    (e.ctrlKey && e.key === "+") ||
+    (e.ctrlKey && e.key === "-") ||
+    (e.ctrlKey && e.key === "0") ||
+    (e.ctrlKey && e.key === "=")
+  ) {
+    e.preventDefault();
+  }
+});
+
+/* BLOCK PINCH ZOOM (mobile) */
+document.addEventListener("gesturestart", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gesturechange", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gestureend", function (e) {
+  e.preventDefault();
+});
+/* ================= (NO zoom) ================= */
+
+
+
+</script>
+
+
+<div id="filterSheet" style="
+position:fixed;
+left:0;
+bottom:-100%;
+width:100%;
+height:30vh;
+background:#fff;
+border-radius:20px 20px 0 0;
+transition:.3s;
+z-index:999999;
+box-shadow:0 -5px 20px rgba(0,0,0,.15);
+">
+
+<div style="
+display:flex;
+justify-content:space-between;
+padding:14px 18px;
+border-bottom:1px solid #eee;
+">
+
+<span
+id="cancelFilter"
+style="
+color:#666;
+font-size:15px;
+cursor:pointer;
+">
+Membatalkan
+</span>
+
+<span
+id="confirmFilter"
+style="
+color:#8a00ff;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+">
+Mengonfirmasi
+</span>
+
+</div>
+
+<div style="
+display:flex;
+height:calc(100% - 55px);
+">
+
+<select
+id="pickerYear"
+size="5"
+style="
+flex:1;
+border:none;
+outline:none;
+font-size:18px;
+text-align:center;
+">
+
+<option>2025</option>
+<option selected>2026</option>
+<option>2027</option>
+<option>2028</option>
+
+</select>
+
+<select
+id="pickerMonth"
+size="5"
+style="
+flex:1;
+border:none;
+outline:none;
+font-size:18px;
+text-align:center;
+">
+
+<option>01</option>
+<option>02</option>
+<option>03</option>
+<option>04</option>
+<option>05</option>
+<option>06</option>
+<option>07</option>
+<option>08</option>
+<option>09</option>
+<option>10</option>
+<option>11</option>
+<option>12</option>
+
+</select>
+
+</div>
+
+</div>
+
+</body>
+</html>

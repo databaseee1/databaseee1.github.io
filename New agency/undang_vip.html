@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Undang VIP</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none !important;
+}
+
+/* hilangkan highlight saat klik/focus */
+button, a, div, span, img {
+  outline: none !important;
+}
+
+
+img {
+ 
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+
+
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+
+
+
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins', sans-serif;
+}
+
+body{
+  background:
+  linear-gradient(
+    180deg,
+    #ff0050 0%,
+    #ff2d6f 35%,
+    #f5f5f5 35%,
+    #f5f5f5 100%
+  );
+  min-height:100vh;
+  padding-top:90px;
+}
+
+/* overlay gelap biar teks jelas */
+body::before{
+  content:"";
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgb(92 92 92 / 21%);
+  z-index:-1;
+}
+
+.header{
+  background:#fff;
+  height:80px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+
+  z-index:9999;
+
+  font-weight:600;
+  font-size:18px;
+
+  box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+
+.header img{
+  width:22px;
+  position:absolute;
+  left:15px;
+  cursor:pointer;
+}
+/* CONTAINER */
+.container{
+  padding:20px;
+}
+
+/* CARD */
+.card{
+  background:#fff;
+  border-radius:24px;
+  padding:20px;
+  margin-bottom:18px;
+
+  box-shadow:
+  0 10px 30px rgba(0,0,0,.08);
+}
+
+/* TEXT */
+.title{
+  font-size:16px;
+  font-weight:600;
+}
+
+.desc{
+  font-size:13px;
+  color:#666;
+  margin-top:5px;
+}
+
+/* INPUT */
+.input-box{
+  margin-top:15px;
+  display:flex;
+  gap:10px;
+}
+
+input{
+  height:52px;
+  border-radius:16px;
+  border:2px solid #eee;
+  padding:0 16px;
+  font-size:15px;
+}
+
+/* BUTTON */
+button{
+  height:52px;
+  padding:0 22px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #ff0050,
+    #ff3f7d
+  );
+
+  border:none;
+  border-radius:16px;
+
+  color:#fff;
+  font-weight:700;
+
+  box-shadow:
+  0 10px 20px rgba(255,0,80,.25);
+}
+.share-box-wrapper{
+  margin-top:15px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+/* LINK BOX */
+.share-box{
+  background:#fafafa;
+  border:2px dashed #ff0050;
+  color:#111;
+  font-weight:600;
+}
+
+/* COPY BUTTON INLINE */
+.copy-inline-btn{
+  background:#111;
+  color:#fff;
+  border-radius:16px;
+  font-weight:700;
+}
+
+.copy-inline-btn:hover{
+  background:#000;
+  transform:none;
+}
+
+.copy-inline-btn i{
+  margin-right:6px;
+}
+
+
+.copy-inline-btn:active{
+  transform:scale(0.98);
+}
+
+
+.ref-header{
+  margin:15px;
+  padding:25px;
+  border-radius:28px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #111,
+    #2b2b2b
+  );
+
+  color:#fff;
+  box-shadow:
+  0 20px 40px rgba(0,0,0,.25);
+}
+
+.ref-title{
+  font-size:24px;
+  font-weight:700;
+}
+
+.ref-subtitle{
+  margin-top:10px;
+  font-size:14px;
+  line-height:1.6;
+  opacity:.9;
+}
+
+
+.reward-big{
+  margin-top:18px;
+  font-size:28px;
+  font-weight:700;
+  color:#ffd54f;
+}
+
+
+.popup-overlay{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.5);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:99999;
+}
+
+.popup-box{
+  width:85%;
+  max-width:320px;
+  background:#fff;
+  border-radius:16px;
+  padding:20px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+  animation:pop .2s ease;
+}
+
+@keyframes pop{
+  from{transform:scale(0.8); opacity:0;}
+  to{transform:scale(1); opacity:1;}
+}
+
+.popup-icon{
+  font-size:40px;
+  color:#7b2ff7;
+  margin-bottom:10px;
+}
+
+.popup-title{
+  font-size:16px;
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+.popup-desc{
+  font-size:13px;
+  color:#555;
+  line-height:1.5;
+  margin-bottom:15px;
+}
+
+.popup-btn{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  background:#7b2ff7;
+  color:#fff;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.referral-card{
+  text-align:center;
+  padding:25px;
+}
+
+.referral-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 14px;
+  border-radius:999px;
+  background:#fff0f4;
+  color:#ff0050;
+  font-size:12px;
+  font-weight:700;
+  margin-bottom:15px;
+}
+
+.referral-card .title{
+  font-size:22px;
+  font-weight:700;
+  color:#111;
+  margin-bottom:8px;
+}
+
+.referral-card .desc{
+  font-size:13px;
+  color:#777;
+  line-height:1.6;
+  margin-bottom:20px;
+}
+
+.referral-card .input-box{
+  margin-bottom:15px;
+}
+
+.referral-card input{
+  width:100%;
+  height:52px;
+  border-radius:14px;
+  border:1px solid #e5e5e5;
+  padding:0 15px;
+  font-size:14px;
+}
+
+.generate-btn{
+  width:100%;
+  height:52px;
+  border:none;
+  border-radius:14px;
+  background:linear-gradient(90deg,#ff0050,#ff4d7d);
+  color:#fff;
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer;
+  margin-bottom:15px;
+}
+
+.generate-btn i{
+  margin-right:8px;
+}
+
+.share-box{
+  width:100%;
+  background:#f8f8f8;
+  border:1px dashed #ee9fff;
+  border-radius:14px;
+  padding:14px;
+  font-size:13px;
+  color:#444;
+  word-break:break-all;
+  margin-bottom:12px;
+}
+
+.copy-inline-btn{
+  width:100%;
+  height:50px;
+  border:none;
+  border-radius:14px;
+  background:#111;
+  color:#fff;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.copy-inline-btn i{
+  margin-right:8px;
+}
+
+
+
+
+.back-btn{
+  width:22px;
+  position:absolute;
+  left:15px;
+  cursor:pointer;
+}
+
+.header-history{
+  position:absolute;
+  right:15px;
+  font-size:22px;
+  color:#666;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+
+    <div id="popupModal" class="popup-overlay" style="display:none;">
+  <div class="popup-box">
+
+    <div class="popup-icon">
+      <i class="fa-solid fa-circle-info"></i>
+    </div>
+
+    <div class="popup-title">
+      Peringatan Sistem Referral
+    </div>
+
+    <div class="popup-desc">
+      Link undangan hanya dapat dibuat <b>1 kali saja</b> per akun.<br><br>
+
+      Pastikan data yang kamu masukkan sudah benar sebelum melanjutkan.<br><br>
+
+      Setelah link dibuat, sistem akan mengunci fitur pembuatan link untuk menjaga keamanan dan validasi referral.
+    </div>
+
+    <button class="popup-btn" onclick="closePopup()">
+      Mengerti
+    </button>
+
+  </div>
+</div>
+
+
+
+
+<div class="header">
+  <img src="back_black.png" class="back-btn" onclick="history.back()">
+
+  <span>Undang VIP</span>
+
+  <i class="fa-solid fa-clock-rotate-left header-history"
+   onclick="location.href='riwayat_referral.html'"></i>
+</div>
+
+
+
+
+<div class="ref-header">
+
+<div class="reward-big">
+  Rp 321.000 - Rp 420.000
+</div>
+
+  <div class="ref-title">Program Referral VIP</div>
+  <div class="ref-subtitle">
+    Undang teman menggunakan link pribadi kamu dan dapatkan reward otomatis dari setiap pendaftaran yang valid.
+  </div>
+</div>
+
+
+
+<div class="container">
+
+
+<!-- INPUT -->
+<div class="card referral-card">
+
+  <div class="referral-badge">
+    <i class="fa-solid fa-gift"></i>
+    Program Referral VIP
+  </div>
+
+  <div class="title">
+    Buat Link Undangan Kamu
+  </div>
+
+  <div class="desc">
+    Masukkan nama referral dan bagikan link untuk mendapatkan komisi otomatis dari setiap pendaftaran yang valid.
+  </div>
+
+  <div class="input-box">
+    <input
+      type="text"
+      id="username"
+      placeholder="Masukkan nama kamu">
+  </div>
+
+  <button class="generate-btn" onclick="generateLink()">
+    <i class="fa-solid fa-wand-magic-sparkles"></i>
+    Buat Link Referral
+  </button>
+
+  <div class="share-box" id="linkBox">
+    Link akan muncul di sini...
+  </div>
+
+  <button class="copy-inline-btn" onclick="copyLink()">
+    <i class="fa-solid fa-copy"></i>
+    Salin Link
+  </button>
+
+</div>
+
+
+
+
+  <!-- INFO -->
+<div class="card">
+  <div class="title">Program Referral VIP</div>
+  <div class="desc">
+    Undang teman melalui link personal kamu dan bangun jaringan VIP. Setiap pendaftaran yang tervalidasi oleh sistem akan memberikan <b>insentif otomatis</b> ke saldo akun host.
+    <br><br>
+    Nilai reward ditentukan berdasarkan sistem evaluasi dan aktivitas pengguna, dengan estimasi bonus antara <b>Rp 300.000 – Rp 1.000.000</b> per referral valid.
+    <br><br>
+    Program ini dirancang untuk memberikan apresiasi lebih besar bagi pengguna aktif yang berhasil mengembangkan jaringan undangan secara konsisten.
+  </div>
+</div>
+
+
+
+
+
+<!-- BOTTOM NAV -->
+<div style="
+  bottom:40px;
+  left:0;
+  width:100%;
+  padding:10px 0;
+  display:flex;
+  justify-content:center;
+  z-index:9999;
+">
+
+<footer class="app-footer">
+
+  <div style="margin-bottom:10px;">
+    <div onclick="
+      localStorage.setItem('pesanId','customer_service');
+      window.location.href='pesan_lengkap.html';
+    " style="
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      color:orange;
+      font-weight:600;
+      font-size:14px;
+      cursor:pointer;
+      text-decoration:underline;
+      text-underline-offset:3px;
+    ">
+      <img src="customer_service_icon.png" style="width:20px;height:20px;">
+      Layanan Pelanggan
+    </div>
+  </div>
+
+</div>
+<div style="height:80px;"></div>
+
+
+
+
+</div>
+
+
+
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  set,
+  get,
+  update
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* ================= FIREBASE ================= */
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* ================= LOGIN (FIX FINAL) ================= */
+const loginRaw = localStorage.getItem("user");
+
+if (!loginRaw || loginRaw === "null") {
+  location.href = "login.html";
+}
+
+const login = JSON.parse(loginRaw);
+
+/* 🔥 ONLY USE USERID (WAJIB) */
+const userId = login.userId;
+
+if (!userId) {
+  localStorage.clear();
+  sessionStorage.clear();
+  location.href = "login.html";
+}
+
+
+
+
+
+
+
+
+function updateLastActive(page = "Undang_vip") {
+
+  const login = JSON.parse(localStorage.getItem("user"));
+  if (!login?.userId) return;
+
+  update(ref(db, "users2/" + login.userId), {
+    lastActive: Date.now(),
+    currentPage: page
+  });
+
+}
+
+["click", "touchstart", "keydown"].forEach(evt => {
+  document.addEventListener(evt, () => {
+    updateLastActive("Undang_vip");
+  }, { passive: true });
+});
+
+updateLastActive("Undang_vip");
+
+
+
+
+
+
+
+/* ================= GLOBAL ================= */
+let existingData = null;
+let generatedLink = "";
+let generatedCode = "";
+
+/* ================= RANDOM CODE ================= */
+function makeCode(len = 6){
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let code = "";
+  for(let i = 0; i < len; i++){
+    code += chars[Math.floor(Math.random() * chars.length)];
+  }
+  return code;
+}
+
+/* ================= DISABLE FORM ================= */
+function disableForm(){
+  const input = document.getElementById("username");
+  const btn = document.querySelector(".input-box button");
+
+  if(input) input.disabled = true;
+
+  if(btn){
+    btn.disabled = true;
+    btn.style.opacity = "0.5";
+    btn.style.cursor = "not-allowed";
+    btn.innerText = "Sudah Dibuat";
+  }
+}
+
+/* ================= SHORT LINK ================= */
+function getShortLink(link){
+  try {
+    const url = new URL(link);
+    const file = url.pathname.split("/").pop();
+
+    return `${url.origin}/${file}${url.search}`;
+  } catch (e) {
+    return link.length > 30
+      ? link.substring(0, 30) + "..."
+      : link;
+  }
+}
+
+/* ================= LOAD UNDANGAN (PER USER ONLY) ================= */
+async function loadUndangan(){
+
+  const snap = await get(ref(db, "undanganhost/" + userId));
+
+  if(snap.exists()){
+    existingData = snap.val();
+
+    generatedLink = existingData.link;
+    generatedCode = existingData.code;
+
+    const box = document.getElementById("linkBox");
+    if(box) box.innerText = getShortLink(generatedLink);
+
+    disableForm();
+    return;
+  }
+
+  showPopup();
+}
+
+/* ================= GENERATE LINK ================= */
+window.generateLink = async function(){
+
+  if(existingData){
+    alert("Kamu sudah membuat undangan!");
+    return;
+  }
+
+  const name = document.getElementById("username").value;
+
+  if(!name){
+    alert("Masukkan nama dulu!");
+    return;
+  }
+
+  generatedCode = makeCode();
+
+  /* 🔥 FIX URL CLEAN */
+  generatedLink = new URL(
+    "/register.html?ref=" + generatedCode,
+    window.location.origin
+  ).href;
+
+  const box = document.getElementById("linkBox");
+  if(box) box.innerText = getShortLink(generatedLink);
+
+  /* ================= SAVE PER USER ================= */
+  await set(ref(db, "undanganhost/" + userId), {
+    name,
+    code: generatedCode,
+    link: generatedLink,
+    createdAt: Date.now()
+  });
+
+  /* ================= SAVE REF CODE ================= */
+  await set(ref(db, "refcodes/" + generatedCode), {
+    hostId: userId
+  });
+
+  existingData = {
+    name,
+    code: generatedCode,
+    link: generatedLink
+  };
+
+  disableForm();
+
+  alert("Undangan berhasil dibuat!");
+};
+
+/* ================= COPY ================= */
+window.copyLink = function(){
+
+  if(!generatedLink){
+    alert("Belum ada link!");
+    return;
+  }
+
+  navigator.clipboard.writeText(generatedLink);
+  alert("Link berhasil dicopy!");
+};
+
+/* ================= AUTO LOAD ================= */
+loadUndangan();
+
+/* ================= POPUP ================= */
+function showPopup(){
+  const el = document.getElementById("popupModal");
+  if(el) el.style.display = "flex";
+}
+
+window.closePopup = function(){
+  const el = document.getElementById("popupModal");
+  if(el) el.style.display = "none";
+};
+
+
+
+
+
+
+/* ================= (NO zoom) ================= */
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
+document.addEventListener("selectstart", e => e.preventDefault());
+
+/* ❌ BLOCK ZOOM KEYBOARD (Ctrl + / - / 0) */
+document.addEventListener("keydown", function (e) {
+  if (
+    (e.ctrlKey && e.key === "+") ||
+    (e.ctrlKey && e.key === "-") ||
+    (e.ctrlKey && e.key === "0") ||
+    (e.ctrlKey && e.key === "=")
+  ) {
+    e.preventDefault();
+  }
+});
+
+/* BLOCK PINCH ZOOM (mobile) */
+document.addEventListener("gesturestart", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gesturechange", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gestureend", function (e) {
+  e.preventDefault();
+});
+/* ================= (NO zoom) ================= */
+
+
+</script>
+
+</body>
+</html>

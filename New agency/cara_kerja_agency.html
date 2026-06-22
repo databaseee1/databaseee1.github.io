@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cara Kerja Agency</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins', sans-serif;
+}
+
+body{
+  background:#fff;
+}
+
+/* HEADER */
+.header{
+  background:#fff;
+  padding:15px;
+  text-align:center;
+  font-weight:600;
+  font-size:18px;
+  position:sticky;
+  top:0;
+  z-index:999;
+}
+
+/* CONTAINER */
+.container{
+  padding:15px;
+}
+
+/* CARD */
+.card{
+  background:#fff;
+  padding:18px;
+  border-radius:16px;
+  box-shadow:0 6px 18px rgb(0 0 0 / 3%);
+  margin-top:15px;
+}
+
+/* TITLE */
+.title{
+  font-size:16px;
+  font-weight:700;
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:#7b2ff7;
+}
+
+/* CONTENT */
+.content{
+  font-size:13px;
+  color:#333;
+  line-height:1.8;
+  white-space:pre-line;
+}
+
+/* BOX */
+.box{
+  margin-top:10px;
+  padding:12px;
+  background:#f3f0ff;
+  border-left:4px solid #7b2ff7;
+  border-radius:10px;
+  font-size:13px;
+  line-height:1.6;
+}
+
+/* FOOTER */
+.app-footer{
+  margin-top:30px;
+  padding:20px 10px;
+  text-align:center;
+  color:#777;
+  font-size:12.5px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  Cara Kerja Agency
+</div>
+
+<div class="container">
+
+  <div class="card">
+    <div class="title">
+      <i class="fa-solid fa-gears"></i>
+      Sistem Cara Kerja Agency
+    </div>
+
+    <div id="content" class="content">
+      Memuat data...
+    </div>
+  </div>
+
+</div>
+
+<footer class="app-footer">
+
+  <div style="margin-bottom:10px;">
+    <div onclick="location.href='Layanan_pelanggan.html'" style="
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      color:orange;
+      font-weight:600;
+      font-size:14px;
+      cursor:pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    ">
+      <img src="customer_service_icon.png" style="width:20px;height:20px;">
+      Layanan Pelanggan
+    </div>
+  </div>
+
+  <div class="footer-text">
+    © 2026 Agency System. All Rights Reserved.
+  </div>
+
+</footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  set,
+  get
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* FIREBASE */
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* LOGIN CHECK */
+const login = JSON.parse(localStorage.getItem("user"));
+if (!login) window.location.href = "login.html";
+
+/* KEY */
+const key = "cara_kerja_agency";
+
+/* DUMMY DATA */
+const dummyText = `
+CARA KERJA AGENCY SYSTEM
+
+1. PENDAFTARAN
+User wajib melakukan pendaftaran melalui sistem resmi dengan data yang benar, lengkap, dan dapat dipertanggungjawabkan.
+
+2. VERIFIKASI DATA
+Sistem berhak melakukan verifikasi terhadap data pendaftaran untuk memastikan keaslian dan validitas akun.
+
+3. AKTIVASI AKUN
+Setelah pendaftaran disetujui, akun agency akan aktif dan dapat digunakan untuk menjalankan sistem referral.
+
+4. KEPATUHAN ATURAN
+Setiap agency wajib mematuhi seluruh ketentuan sistem yang berlaku tanpa pengecualian.
+
+5. SISTEM REFERRAL
+Setiap agency mendapatkan link referral unik yang digunakan untuk mengajak pengguna baru bergabung.
+
+6. VALIDASI REFERRAL
+Referral hanya dihitung jika pengguna baru melakukan pendaftaran valid dan terverifikasi oleh sistem.
+
+7. PERHITUNGAN AKTIVITAS
+Semua aktivitas agency dicatat secara otomatis oleh sistem untuk menentukan performa dan kontribusi.
+
+8. JAM AKTIF HARIAN
+Setiap agency diwajibkan aktif minimal 1 jam setiap hari sebagai bentuk aktivitas minimum sistem.
+
+9. JAM TAYANG (WATCH TIME)
+Semakin lama agency aktif dalam sistem, semakin besar total jam tayang yang diperoleh.
+
+10. PENGARUH JAM TAYANG
+Jam tayang akan mempengaruhi peningkatan pendapatan baik dari sistem agency maupun penukaran coin.
+
+11. PENINGKATAN PENDAPATAN
+Semakin tinggi aktivitas dan jam tayang, semakin besar potensi penghasilan yang dapat diperoleh agency.
+
+12. SISTEM BONUS REFERRAL
+Bonus diberikan berdasarkan jumlah referral aktif dan valid sesuai perhitungan sistem.
+
+13. KUALITAS REFERRAL
+Referral dengan aktivitas tinggi akan memberikan kontribusi lebih besar terhadap pendapatan agency.
+
+14. AKTIVITAS HARIAN
+Sistem mencatat aktivitas harian untuk menentukan tingkat produktivitas setiap agency.
+
+15. PENILAIAN PERFORMA
+Performa agency dinilai berdasarkan aktivitas, jam tayang, dan kontribusi referral.
+
+16. SISTEM OTOMATIS
+Seluruh perhitungan dilakukan secara otomatis oleh sistem tanpa intervensi manual.
+
+17. TRANSPARANSI DATA
+Semua data aktivitas dapat dipantau melalui sistem sesuai hak akses yang diberikan.
+
+18. KEBIJAKAN BONUS
+Bonus dapat berubah sewaktu-waktu mengikuti kebijakan sistem tanpa pemberitahuan terlebih dahulu.
+
+19. BATASAN SISTEM
+Sistem memiliki batasan operasional yang dapat disesuaikan demi menjaga stabilitas layanan.
+
+20. LARANGAN MANIPULASI
+Segala bentuk manipulasi data, traffic, atau referral akan dianggap pelanggaran berat.
+
+21. SANKSI PELANGGARAN
+Akun yang terbukti melakukan pelanggaran dapat dibekukan atau dihapus secara permanen.
+
+22. KEBIJAKAN PEMBEKUAN
+Pembekuan akun dapat dilakukan tanpa pemberitahuan apabila ditemukan aktivitas mencurigakan.
+
+23. TANGGUNG JAWAB PENGGUNA
+Pengguna bertanggung jawab penuh atas keamanan akun dan seluruh aktivitas yang dilakukan.
+
+24. KETIDAKLANJUTAN AKUN
+Sistem tidak bertanggung jawab atas akun yang tidak dapat digunakan kembali akibat pelanggaran atau pemblokiran.
+
+25. PENGHAPUSAN AKUN
+Akun yang tidak aktif dalam jangka waktu tertentu dapat dihapus dari sistem secara otomatis.
+
+26. PENARIKAN SALDO
+Penarikan saldo mengikuti ketentuan minimum dan maksimum yang telah ditentukan sistem.
+
+27. PROSES WITHDRAW
+Setiap proses penarikan akan melalui validasi sistem sebelum dana diproses.
+
+28. PERUBAHAN KEBIJAKAN
+Sistem berhak mengubah aturan, skema bonus, dan mekanisme kerja kapan saja.
+
+29. KETENTUAN FINAL
+Segala keputusan sistem bersifat final, mengikat, dan tidak dapat diganggu gugat.
+
+30. PENUTUP
+Sistem agency ini dirancang untuk memberikan peluang pendapatan berbasis aktivitas, jam tayang, dan performa referral secara adil, transparan, dan berkelanjutan.
+`;
+
+/* LOAD DATA */
+async function load(){
+  const snap = await get(ref(db, key));
+
+  if(!snap.exists()){
+    await set(ref(db, key), dummyText);
+    document.getElementById("content").innerHTML = format(dummyText);
+  } else {
+    document.getElementById("content").innerHTML = format(snap.val());
+  }
+}
+
+/* FORMAT */
+function format(text){
+  let lines = text.split("\n");
+  let html = "";
+
+  lines.forEach(l => {
+    l = l.trim();
+    if(!l){
+      html += "<br>";
+      return;
+    }
+
+    if(l.includes("CARA KERJA") || l.includes("SYSTEM")){
+      html += `<div class="box"><b>${l}</b></div>`;
+    }
+    else if(/^\d+\./.test(l)){
+      html += `<div style="margin-top:8px;"><b>${l}</b></div>`;
+    }
+    else{
+      html += `<div>${l}</div>`;
+    }
+  });
+
+  return html;
+}
+
+load();
+</script>
+
+</body>
+</html>

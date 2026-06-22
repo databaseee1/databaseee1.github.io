@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<title>My Credits</title>
+
+<style>
+
+
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none !important;
+}
+
+/* hilangkan highlight saat klik/focus */
+button, a, div, span, img {
+  outline: none !important;
+}
+
+
+img {
+
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+
+
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+
+
+
+body{
+  margin:0;
+  font-family:'Poppins', sans-serif;
+  background:#ffffff;
+}
+
+*{
+  font-family:'Poppins', sans-serif;
+}
+
+/* CONTAINER */
+.container{
+  padding:8px;
+  max-width:450px;
+  margin:auto;
+}
+
+/* BOX UTAMA */
+.box{
+  background:#fff;
+  padding:20px;
+  border-radius:12px;
+}
+
+/* HEADER */
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+}
+
+.header h2{
+  font-size:18px;
+  margin:0;
+}
+
+/* INFO BOX */
+.info-box{
+  background:#efefef;
+  padding:15px;
+  border-radius:10px;
+  margin:15px 0;
+}
+
+/* ROW */
+.row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin:20px 0;
+}
+
+.row-left{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.row img{
+  width:20px;
+  height:20px;
+}
+
+/* SALDO */
+#saldo,
+#jumlahTagihan{
+  color:#e91e63;
+  font-weight:bold;
+}
+
+#saldoCoin{
+  color:#323232;
+  font-weight:550;
+}
+
+#coinConversion{
+  font-size:13px;
+  color:#333;
+  margin-left:10px;
+  border-left:2px solid #aaa;
+  padding-left:10px;
+}
+
+/* BUTTON */
+.btn{
+  width:100%;
+  padding:12px;
+  background:#8100ff;
+  color:#fff;
+  border:none;
+  border-radius:20px;
+  font-size:16px;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+.btn:active{
+  transform:scale(0.98);
+}
+
+/* HISTORY TABLE */
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:12px;
+}
+
+th{
+  background:#d1d1d1;
+  text-align:left;
+  padding:6px;
+}
+
+td{
+  padding:6px;
+}
+
+.instruction{
+  margin:20px 12px; 
+  padding:15px;
+  background:#fff;
+  border-radius:12px;
+}
+
+.instruction h3{
+  font-size:15px;
+  margin-bottom:10px;
+  color:#000;
+}
+
+.instruction ol{
+  padding-left:18px;
+  margin:0;
+  font-size:14px;
+  line-height:1.8; 
+  color:#333;
+}
+
+.instruction li{
+  margin-bottom:6px; 
+}
+
+
+.menu-list{
+  margin:12px;         
+  display:flex;
+  flex-direction:column;
+  gap:10px;             
+}
+
+.menu-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 16px;
+  background:#fff;
+  border-radius:12px;
+  cursor:pointer;
+}
+
+.menu-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:15px;
+  font-weight:500;
+}
+
+.menu-left img{
+  width:20px;
+  height:20px;
+}
+
+.arrow{
+  font-size:16px;
+  color:#888;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="box">
+
+    <!-- HEADER -->
+    <div class="header">
+      <h2>Saldo & Riwayat Penarikan</h2>
+      <img src="match_his_icon.png"
+     style="width:24px;height:24px;cursor:pointer;"
+     onclick="window.location.href='catatan_pembayaran.html'">
+    </div>
+
+    <!-- SALDO INFO -->
+    <div class="info-box">
+
+      <div class="row">
+        <div class="row-left">
+          <img src="score_icon_wrap.png">
+          <b>Saldo Host:</b>
+        </div>
+        <span id="saldo">Rp 0</span>
+      </div>
+
+      <div class="row">
+        <div class="row-left">
+          <img src="assets/images/credit.png">
+          <b>Credits</b>
+        </div>
+
+        <div style="display:flex; align-items:center;">
+          <span id="saldoCoin">0</span>
+          <span id="coinConversion">≈IDR 0</span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-left">
+          <img src="certification_award_icon_0_female.png" style="width:30px;height:30px;">
+          <b>Jumlah Tagihan:</b>
+        </div>
+        <span id="jumlahTagihan">Rp 0</span>
+      </div>
+
+<button class="btn"
+  onclick="window.location.href='Whithdraw.html'">
+  Kas Keluar
+</button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<div class="menu-list">
+
+  <div class="menu-item"
+       onclick="window.location.href='akun_uang_tunai.html'">
+    <span class="menu-left">
+      <img src="mine_rucksack_icon.png">
+      Akun Uang Tunai
+    </span>
+    <span class="arrow">›</span>
+  </div>
+
+  <div class="menu-item"
+       onclick="window.location.href='catatan_pembayaran.html'">
+    <span class="menu-left">
+      <img src="match_his_icon.png">
+      Catatan Pembayaran
+    </span>
+    <span class="arrow">›</span>
+  </div>
+
+  <div class="menu-item"
+       onclick="window.location.href='tukar_token.html'">
+    <span class="menu-left">
+      <img src="reset_rtc_icon.png">
+      Menukarkan
+    </span>
+    <span class="arrow">›</span>
+  </div>
+
+</div>
+
+<div class="instruction">
+  <h3>instruksi</h3>
+
+  <ol>
+    <li>Akun dengan 2000+ Credits dapat diuangkan.</li>
+    <li>Jumlah penarikan akan bervariasi sesuai dengan nilai tukar.</li>
+    <li>Permintaan akan ditangani dalam 2 hari kerja.</li>
+    <li>Jika Anda memiliki pertanyaan, silahkan hubungi kami.</li>
+  </ol>
+</div>
+
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  get,
+  child,
+  onValue,
+  update
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* FIREBASE CONFIG */
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+  storageBucket: "users-96dc5.firebasestorage.app",
+  messagingSenderId: "483322415863",
+  appId: "1:483322415863:web:1397a8f2e808e66ad9e1f2",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* LOGIN CHECK */
+const login = JSON.parse(localStorage.getItem("user"));
+
+if (!login) {
+  window.location.href = "login.html";
+}
+
+
+
+
+onValue(ref(db, "Statusakun_host/" + login.userId), (snap) => {
+
+  if (!snap.exists()) return;
+
+  const status = snap.val().status;
+
+  if (status === "banned" || status === "suspend") {
+
+    localStorage.removeItem("user");
+    window.location.replace("status_akun.html");
+  }
+
+});
+
+
+function updateLastActive(page = "MY_CREDITS") {
+
+  const login = JSON.parse(localStorage.getItem("user"));
+  if (!login?.userId) return;
+
+  update(ref(db, "users2/" + login.userId), {
+    lastActive: Date.now(),
+    currentPage: page
+  });
+
+}
+
+["click", "touchstart", "keydown"].forEach(evt => {
+  document.addEventListener(evt, () => {
+    updateLastActive("MY_CREDITS");
+  }, { passive: true });
+});
+
+updateLastActive("MY_CREDITS");
+
+
+
+/* FORMAT RUPIAH */
+function formatRupiah(angka){
+  return "Rp " + Number(angka || 0).toLocaleString("id-ID");
+}
+
+
+
+
+function formatSaldoCoin(saldo){
+  saldo = Number(saldo || 0);
+
+  // 🔥 juta → M
+  if (saldo >= 1000000) {
+    const juta = saldo / 1000000;
+
+    return Number.isInteger(juta)
+      ? juta + "M"
+      : juta.toFixed(1) + "M";
+  }
+
+  // 🔥 kecil → credits (DESIMAL, bukan bulat)
+  const credits = saldo / 171.1;
+
+  return credits.toFixed(1);
+}
+
+
+
+/* LOAD DATA */
+async function loadData() {
+  try {
+
+    // 🔥 ambil user langsung berdasarkan userId (WAJIB)
+    const userId = login.userId;
+
+    const snap = await get(ref(db, "users2/" + userId));
+
+    if (!snap.exists()) return;
+
+    const found = snap.val();
+
+    /* FORMAT RUPIAH */
+    function formatRupiah(angka){
+      return "Rp " + Number(angka || 0).toLocaleString("id-ID");
+    }
+
+    /* SALDO */
+    const saldoEl = document.getElementById("saldo");
+    if (saldoEl) {
+      saldoEl.innerText = formatRupiah(found.saldo);
+    }
+
+    /* TAGIHAN */
+    const tagihanEl = document.getElementById("jumlahTagihan");
+    if (tagihanEl) {
+      tagihanEl.innerText = formatRupiah(found.jumlahTagihan);
+    }
+
+    /* SALDO HOST */
+    const hostEl = document.getElementById("saldoHost");
+    if (hostEl) {
+      hostEl.innerText = formatRupiah(found.saldoHost);
+    }
+
+    /* COIN */
+    const CREDIT_RATE = 171.1;
+    const saldoRupiah = Number(found.saldo || 0);
+
+    const coinEl = document.getElementById("saldoCoin");
+    if (coinEl) {
+      const credits = saldoRupiah / CREDIT_RATE;
+      coinEl.innerText = credits.toFixed(1);
+    }
+
+    /* CONVERSION */
+    const convEl = document.getElementById("coinConversion");
+    if (convEl) {
+      convEl.innerText =
+        "≈ IDR " + saldoRupiah.toLocaleString("id-ID");
+    }
+
+  } catch (err) {
+    console.log("ERROR LOAD DATA:", err);
+  }
+}
+
+loadData();
+
+
+/* ================= (NO zoom) ================= */
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
+document.addEventListener("selectstart", e => e.preventDefault());
+
+/* ❌ BLOCK ZOOM KEYBOARD (Ctrl + / - / 0) */
+document.addEventListener("keydown", function (e) {
+  if (
+    (e.ctrlKey && e.key === "+") ||
+    (e.ctrlKey && e.key === "-") ||
+    (e.ctrlKey && e.key === "0") ||
+    (e.ctrlKey && e.key === "=")
+  ) {
+    e.preventDefault();
+  }
+});
+
+/* BLOCK PINCH ZOOM (mobile) */
+document.addEventListener("gesturestart", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gesturechange", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gestureend", function (e) {
+  e.preventDefault();
+});
+/* ================= (NO zoom) ================= */
+
+
+</script>
+
+</body>
+</html>

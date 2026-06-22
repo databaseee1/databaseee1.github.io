@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Admin Host Dashboard</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#0f172a;
+color:#fff;
+display:flex;
+min-height:100vh;
+}
+
+/* ==========================
+LOGIN CHECK SCREEN
+========================== */
+
+
+/* ==========================
+SIDEBAR
+========================== */
+
+.sidebar{
+width:260px;
+background:#111827;
+border-right:1px solid rgba(255,255,255,.08);
+position:fixed;
+left:0;
+top:0;
+bottom:0;
+padding:20px;
+overflow:auto;
+}
+
+.logo{
+font-size:24px;
+font-weight:bold;
+text-align:center;
+margin-bottom:25px;
+color:#facc15;
+}
+
+.menu{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.menu button{
+background:#1f2937;
+border:none;
+padding:14px;
+border-radius:12px;
+color:#fff;
+cursor:pointer;
+text-align:left;
+font-size:14px;
+}
+
+.menu button:hover{
+background:#374151;
+}
+
+/* ==========================
+MAIN
+========================== */
+
+.main{
+margin-left:260px;
+padding:25px;
+width:100%;
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.header h1{
+font-size:26px;
+}
+
+.logout{
+background:#ef4444;
+border:none;
+padding:12px 20px;
+border-radius:10px;
+color:white;
+cursor:pointer;
+font-weight:bold;
+}
+
+/* ==========================
+STAT CARD
+========================== */
+
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+margin-bottom:20px;
+}
+
+.card-stat{
+background:#1e293b;
+padding:20px;
+border-radius:16px;
+}
+
+.card-stat .title{
+font-size:13px;
+opacity:.8;
+}
+
+.card-stat .value{
+font-size:30px;
+font-weight:bold;
+margin-top:8px;
+}
+
+/* ==========================
+SECTION
+========================== */
+
+.section{
+background:#1e293b;
+padding:20px;
+border-radius:16px;
+margin-bottom:20px;
+}
+
+.section h2{
+margin-bottom:15px;
+}
+
+/* ==========================
+FORM
+========================== */
+
+.input{
+width:100%;
+padding:12px;
+background:#0f172a;
+border:none;
+border-radius:10px;
+color:#fff;
+margin-bottom:12px;
+}
+
+.textarea{
+width:100%;
+height:120px;
+padding:12px;
+background:#0f172a;
+border:none;
+border-radius:10px;
+color:#fff;
+resize:none;
+margin-bottom:12px;
+}
+
+.btn{
+width:100%;
+padding:13px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+color:white;
+margin-top:10px;
+}
+
+.btn-save{
+background:#22c55e;
+}
+
+.btn-delete{
+background:#ef4444;
+}
+
+.btn-reset{
+background:#64748b;
+}
+
+/* ==========================
+GRID
+========================== */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+}
+
+.previewArea{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+gap:15px;
+margin-top:20px;
+}
+
+/* ==========================
+HOST CARD
+========================== */
+
+.hostCard{
+background:#111827;
+border-radius:14px;
+overflow:hidden;
+cursor:pointer;
+}
+
+.hostCard img{
+width:100%;
+height:220px;
+object-fit:cover;
+}
+
+.hostInfo{
+padding:10px;
+}
+
+.hostInfo h3{
+font-size:15px;
+margin-bottom:5px;
+}
+
+.hostInfo p{
+font-size:12px;
+opacity:.8;
+}
+
+/* ==========================
+RESPONSIVE
+========================== */
+
+@media(max-width:768px){
+
+.sidebar{
+width:80px;
+}
+
+.logo{
+font-size:16px;
+}
+
+.menu button{
+font-size:0;
+display:flex;
+justify-content:center;
+}
+
+.menu button i{
+font-size:18px;
+}
+
+.main{
+margin-left:80px;
+}
+
+.grid{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+
+
+<div class="sidebar">
+
+<div class="logo">
+HOST ADMIN
+</div>
+
+<div class="menu">
+
+<button>
+<i class="fas fa-chart-line"></i>
+ Dashboard
+</button>
+
+<button>
+<i class="fas fa-user-plus"></i>
+ Tambah Host
+</button>
+
+<a href="video-iklan.html">
+  <button>
+    <i class="fas fa-users"></i>
+    video iklan
+  </button>
+</a>
+
+
+<a href="adminpostinganku.html">
+  <button>
+    <i class="fas fa-users"></i>
+    Postinganku
+  </button>
+</a>
+
+
+</div>
+
+</div>
+
+<div class="main">
+
+<div class="header">
+<h1>Dashboard Host</h1>
+
+
+
+</div>
+
+<div class="stats">
+
+<div class="card-stat">
+<div class="title">
+Total Host
+</div>
+<div class="value" id="totalHost">
+0
+</div>
+</div>
+
+<div class="card-stat">
+<div class="title">
+Total Like
+</div>
+<div class="value" id="totalLike">
+0
+</div>
+</div>
+
+<div class="card-stat">
+<div class="title">
+Total Bookmark
+</div>
+<div class="value" id="totalBookmark">
+0
+</div>
+</div>
+
+<div class="card-stat">
+<div class="title">
+Total Penghasilan
+</div>
+<div class="value" id="totalIncome">
+Rp0
+</div>
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>Tambah / Edit Host</h2>
+
+<input
+class="input"
+id="profil"
+placeholder="Nama Host">
+
+<input
+class="input"
+id="foto"
+placeholder="URL Foto">
+
+<input
+class="input"
+id="umur"
+type="number"
+placeholder="Umur">
+
+<input
+class="input"
+id="negara"
+placeholder="Negara">
+
+<input
+class="input"
+id="gambarNegara"
+placeholder="URL Gambar Negara">
+
+<input
+class="input"
+id="aplikasi"
+placeholder="Nama Aplikasi">
+
+<input
+class="input"
+id="gambarIconAplikasi"
+placeholder="URL Icon Aplikasi">
+
+<input
+class="input"
+id="status"
+placeholder="Status Host">
+
+<input
+class="input"
+id="penghasilan"
+type="number"
+placeholder="Penghasilan Minggu Ini">
+
+<textarea
+class="textarea"
+id="bio"
+placeholder="Bio Host"></textarea>
+
+<div class="grid">
+
+<input
+class="input"
+id="like"
+type="number"
+placeholder="Like">
+
+<input
+class="input"
+id="comment"
+type="number"
+placeholder="Comment">
+
+<input
+class="input"
+id="share"
+type="number"
+placeholder="Share">
+
+<input
+class="input"
+id="bookmark"
+type="number"
+placeholder="Bookmark">
+
+</div>
+
+<button
+class="btn btn-save"
+id="saveBtn">
+Simpan Host
+</button>
+
+<button
+class="btn btn-delete"
+id="deleteBtn">
+Hapus Host
+</button>
+
+<button
+class="btn btn-reset"
+id="resetBtn">
+Reset Form
+</button>
+
+</div>
+
+<div class="section">
+
+<h2>Monitor Host</h2>
+
+<div
+class="previewArea"
+id="previewArea">
+</div>
+
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import {
+getDatabase,
+ref,
+get,
+set,
+push,
+update,
+remove,
+onValue
+}
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* ==========================
+FIREBASE
+========================== */
+
+const firebaseConfig = {
+
+apiKey:
+"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+authDomain:
+"users-96dc5.firebaseapp.com",
+
+databaseURL:
+"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:
+"users-96dc5",
+
+storageBucket:
+"users-96dc5.firebasestorage.app",
+
+messagingSenderId:
+"483322415863",
+
+appId:
+"1:483322415863:web:1397a8f2e808e66ad9e1f2"
+
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getDatabase(app);
+
+/* ==========================
+AUTH CHECK
+========================== */
+
+
+/* ==========================
+GLOBAL
+========================== */
+
+let editId = null;
+
+/* ==========================
+FORMAT RUPIAH
+========================== */
+
+function rupiah(num){
+
+return "Rp " +
+
+Number(num || 0)
+.toLocaleString("id-ID");
+
+}
+
+/* ==========================
+LOAD HOST
+========================== */
+function loadHost(){
+
+onValue(ref(db,"allhost"),(snapshot)=>{
+
+const preview =
+document.getElementById("previewArea");
+
+if(!preview) return;
+
+preview.innerHTML = "";
+
+let totalHost = 0;
+let totalLike = 0;
+let totalBookmark = 0;
+let totalIncome = 0;
+
+if(!snapshot.exists()){
+
+document.getElementById("totalHost").innerText = "0";
+document.getElementById("totalLike").innerText = "0";
+document.getElementById("totalBookmark").innerText = "0";
+document.getElementById("totalIncome").innerText = "Rp 0";
+
+return;
+
+}
+
+snapshot.forEach(child=>{
+
+const id = child.key;
+const d = child.val() || {};
+
+totalHost++;
+
+totalLike += Number(d.like || 0);
+totalBookmark += Number(d.bookmark || 0);
+totalIncome += Number(d.penghasilanMingguIni || 0);
+
+preview.innerHTML += `
+
+<div class="hostCard"
+onclick="editHost('${id}')">
+
+<img src="${d.foto || ''}">
+
+<div class="hostInfo">
+
+<h3>
+${d.profil || '-'}
+</h3>
+
+<p>
+${d.umur || 0} Tahun
+</p>
+
+<p>
+${d.negara || '-'}
+</p>
+
+<p>
+${d.aplikasi || '-'}
+</p>
+
+<p style="
+color:#22c55e;
+font-weight:bold;
+margin-top:5px;
+">
+
+${rupiah(d.penghasilanMingguIni || 0)}
+
+</p>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("totalHost").innerText =
+totalHost.toLocaleString();
+
+document.getElementById("totalLike").innerText =
+totalLike.toLocaleString();
+
+document.getElementById("totalBookmark").innerText =
+totalBookmark.toLocaleString();
+
+document.getElementById("totalIncome").innerText =
+rupiah(totalIncome);
+
+});
+
+}
+
+loadHost();
+
+/* ==========================
+EDIT HOST
+========================== */
+window.editHost = async(id)=>{
+
+try{
+
+const snap = await get(
+ref(db,"allhost/" + id)
+);
+
+if(!snap.exists()){
+alert("Data host tidak ditemukan");
+return;
+}
+
+const d = snap.val();
+
+editId = id;
+
+/* =====================
+FORM UTAMA
+===================== */
+
+document.getElementById("profil").value =
+d.profil || "";
+
+document.getElementById("foto").value =
+d.foto || "";
+
+document.getElementById("umur").value =
+d.umur || "";
+
+document.getElementById("negara").value =
+d.negara || "";
+
+document.getElementById("gambarNegara").value =
+d.gambarNegara || "";
+
+document.getElementById("aplikasi").value =
+d.aplikasi || "";
+
+document.getElementById("gambarIconAplikasi").value =
+d.gambarIconAplikasi || "";
+
+document.getElementById("status").value =
+d.status || "";
+
+document.getElementById("penghasilan").value =
+d.penghasilanMingguIni || 0;
+
+document.getElementById("bio").value =
+d.bio || "";
+
+/* =====================
+STATISTIK
+===================== */
+
+document.getElementById("like").value =
+d.like || 0;
+
+document.getElementById("comment").value =
+d.comment || 0;
+
+document.getElementById("share").value =
+d.share || 0;
+
+document.getElementById("bookmark").value =
+d.bookmark || 0;
+
+/* =====================
+SCROLL KE FORM
+===================== */
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+console.log("HOST LOADED:", d);
+
+}catch(err){
+
+console.error(err);
+
+alert(
+"Gagal memuat data host\n" +
+err.message
+);
+
+}
+
+};
+
+
+
+
+
+
+
+
+/* ==========================
+SIMPAN HOST
+========================== */
+
+document.getElementById("saveBtn").onclick = async()=>{
+
+try{
+
+const data = {
+
+profil:
+document.getElementById("profil").value,
+
+foto:
+document.getElementById("foto").value,
+
+umur:
+Number(
+document.getElementById("umur").value || 0
+),
+
+negara:
+document.getElementById("negara").value,
+
+gambarNegara:
+document.getElementById("gambarNegara").value,
+
+aplikasi:
+document.getElementById("aplikasi").value,
+
+gambarIconAplikasi:
+document.getElementById("gambarIconAplikasi").value,
+
+status:
+document.getElementById("status").value,
+
+bio:
+document.getElementById("bio").value,
+
+penghasilanMingguIni:
+Number(
+document.getElementById("penghasilan").value || 0
+),
+
+like:
+Number(
+document.getElementById("like").value || 0
+),
+
+comment:
+Number(
+document.getElementById("comment").value || 0
+),
+
+share:
+Number(
+document.getElementById("share").value || 0
+),
+
+bookmark:
+Number(
+document.getElementById("bookmark").value || 0
+)
+
+};
+
+/* EDIT */
+
+if(editId){
+
+await update(
+ref(db,"allhost/" + editId),
+data
+);
+
+alert("Host berhasil diperbarui");
+
+}
+
+/* TAMBAH BARU */
+
+else{
+
+const newRef =
+push(ref(db,"allhost"));
+
+await set(
+newRef,
+data
+);
+
+alert("Host berhasil ditambahkan");
+
+}
+
+resetForm();
+
+}catch(err){
+
+console.error(err);
+
+alert(err.message);
+
+}
+
+};
+
+/* ==========================
+HAPUS HOST
+========================== */
+
+document.getElementById("deleteBtn").onclick =
+async()=>{
+
+if(!editId){
+
+alert(
+"Pilih host terlebih dahulu"
+);
+
+return;
+
+}
+
+if(!confirm(
+"Hapus host ini ?"
+)){
+return;
+}
+
+await remove(
+ref(db,"allhost/" + editId)
+);
+
+alert(
+"Host berhasil dihapus"
+);
+
+resetForm();
+
+};
+
+/* ==========================
+RESET FORM
+========================== */
+
+function resetForm(){
+
+editId = null;
+
+document.getElementById("profil").value = "";
+document.getElementById("foto").value = "";
+document.getElementById("umur").value = "";
+document.getElementById("negara").value = "";
+document.getElementById("gambarNegara").value = "";
+document.getElementById("aplikasi").value = "";
+document.getElementById("gambarIconAplikasi").value = "";
+document.getElementById("status").value = "";
+document.getElementById("penghasilan").value = "";
+document.getElementById("bio").value = "";
+document.getElementById("like").value = "";
+document.getElementById("comment").value = "";
+document.getElementById("share").value = "";
+document.getElementById("bookmark").value = "";
+
+}
+
+document.getElementById("resetBtn").onclick =
+resetForm;
+
+
+</script>

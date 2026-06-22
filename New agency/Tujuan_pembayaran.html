@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tujuan Pembayaran</title>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+font-family:Poppins, sans-serif;
+background:#ffffff;
+color:#333;
+}
+
+/* HEADER */
+.header{
+background:#ffffff;
+padding:18px;
+text-align:center;
+font-weight:600;
+font-size:16px;
+}
+
+/* CARD MAIN */
+.card{
+background:#ffffff;
+margin:20px;
+padding:18px;
+border-radius:16px;
+border:1px solid #f0f0f0;
+}
+
+/* LABEL */
+.label{
+font-size:12px;
+color:#888;
+margin-top:12px;
+letter-spacing:0.3px;
+}
+
+/* VALUE TEXT */
+.value{
+font-size:15px;
+font-weight:600;
+margin-top:4px;
+color:#222;
+}
+
+/* BANK BOX */
+.bank-box{
+display:flex;
+align-items:center;
+gap:12px;
+padding:10px;
+border-radius:12px;
+background:#f8f9fc;
+border:1px solid #eee;
+margin-bottom:10px;
+}
+
+/* LOGO BANK */
+.bank-box img{
+width:48px;
+height:48px;
+object-fit:contain;
+border-radius:10px;
+background:#fff;
+padding:4px;
+box-shadow:0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* BANK NAME */
+#bankName{
+font-size:15px;
+font-weight:700;
+color:#222;
+}
+
+/* BANK INFO LABEL */
+#bankRek{
+font-size:12px;
+color:#777;
+}
+
+/* AMOUNT STYLE */
+.amount{
+font-size:26px;
+font-weight:800;
+color:#727272;
+margin-top:10px;
+letter-spacing:0.5px;
+}
+
+/* COPY BUTTON */
+.btn-copy{
+margin-top:15px;
+width:100%;
+padding:12px;
+border:none;
+background:linear-gradient(135deg,#8e44ad,#ff4fd8);
+color:#fff;
+border-radius:12px;
+cursor:pointer;
+font-weight:600;
+box-shadow:0 6px 15px rgba(142,68,173,0.25);
+transition:0.2s;
+}
+
+.btn-copy:active{
+transform:scale(0.98);
+}
+
+/* TIMER */
+.timer{
+text-align:center;
+font-size:12px;
+color:#e74c3c;
+margin-top:15px;
+font-weight:500;
+}
+
+
+
+
+.rek-box{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:10px 12px;
+border-radius:10px;
+background:#f8f9fc;
+border:1px solid #eee;
+margin-top:6px;
+}
+
+.copy-icon{
+font-size:16px;
+color:#7b7b7b;
+cursor:pointer;
+padding:6px;
+border-radius:6px;
+transition:0.2s;
+}
+
+.copy-icon:hover{
+background:#eee;
+transform:scale(1.1);
+}
+
+
+
+
+.order-row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:10px;
+font-size:12px;
+color:#666;
+}
+
+.order-right{
+color:#1a73e8;
+cursor:pointer;
+font-weight:600;
+display:flex;
+align-items:center;
+gap:5px;
+}
+
+.detail-box{
+display:none;
+margin-top:10px;
+padding:10px;
+border-radius:10px;
+background:#f8f9fc;
+border:1px solid #eee;
+font-size:12px;
+color:#444;
+line-height:1.6;
+}
+
+
+
+.payment-info{
+  margin:20px;
+  padding:15px;
+  border-radius:16px;
+  background:#f8f9fc;
+  border:1px solid #eee;
+}
+
+.secure-box{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 0;
+  border-bottom:1px solid #eee;
+}
+
+.secure-box:last-child{
+  border-bottom:none;
+}
+
+.secure-box i{
+  font-size:18px;
+  color:#8e44ad;
+  width:25px;
+  text-align:center;
+}
+
+.title{
+  font-size:13px;
+  font-weight:600;
+  color:#222;
+}
+
+.sub{
+  font-size:11px;
+  color:#777;
+  margin-top:2px;
+}
+
+
+
+.company-wrap{
+  margin:20px;
+  border-radius:14px;
+  border:1px solid #eee;
+  overflow:hidden;
+  background:#fff;
+}
+
+.company-header{
+  padding:12px;
+  font-size:13px;
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  cursor:pointer;
+  background:#f8f9fc;
+}
+
+.company-header i{
+  margin-right:8px;
+}
+
+.company-box{
+  display:none;
+  padding:12px;
+  font-size:12px;
+  color:#444;
+  line-height:1.6;
+  background:#fff;
+}
+
+.c-row{
+  padding:4px 0;
+  border-bottom:1px dashed #eee;
+}
+
+.c-row:last-child{
+  border-bottom:none;
+}
+
+
+
+.payment-status{
+  text-align:center;
+  font-weight:700;
+  font-size:15px;
+  margin-bottom:8px;
+  color:#ff9800;
+  margin-top: 10px;
+}
+
+
+
+
+.status-box{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  margin-top:12px;
+  margin-bottom:8px;
+  font-size:14px;
+  font-weight:700;
+  padding:10px;
+  border-radius:10px;
+  background:#f8f9fc;
+  border:1px solid #eee;
+}
+
+.status-pending{
+  color:#ff9800;
+}
+
+.status-success{
+  color:#22c55e;
+}
+
+.status-rejected{
+  color:#ef4444;
+}
+
+.top-toast {
+  position: fixed;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #222;
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  z-index: 99999;
+  transition: 0.3s ease;
+  opacity: 0;
+}
+
+.top-toast.show {
+  top: 20px;
+  opacity: 1;
+}
+
+
+</style>
+</head>
+
+<body>
+
+  <div id="topToast" class="top-toast"></div>
+
+<div class="header">
+Tujuan Pembayaran
+</div>
+
+<div class="card">
+
+<div class="label">Rekening Tujuan</div>
+
+<div class="bank-box">
+<img id="bankLogo" src="">
+<div>
+<div id="bankName" class="value"></div>
+<div id="bankRek" class="label"></div>
+</div>
+</div>
+
+<hr>
+
+<div class="label">Nama Rekening</div>
+<div id="namaRek" class="value"></div>
+
+
+
+    <div class="label">Nomor Rekening</div>
+<div class="rek-box">
+
+  <div id="noRek" class="value"></div>
+
+  <i class="fa fa-copy copy-icon" onclick="copyRek()"></i>
+</div>
+
+<div class="label">Jumlah Pembayaran</div>
+<div class="amount" id="amount">Rp 0</div>
+
+
+
+
+
+<div class="order-row">
+
+  <div class="order-left">
+    Nomor ID Payment # <span id="orderId"></span>
+  </div>
+
+  <div class="order-right" onclick="toggleDetail()">
+    Detail <i class="fa fa-chevron-down"></i>
+  </div>
+
+</div>
+
+<!-- DETAIL BOX -->
+<!-- DETAIL BOX -->
+<div id="detailBox" class="detail-box">
+
+  <div>Payment ID: <span id="dDepositId"></span></div>
+  <div>Nama host: <span id="dUser"></span></div>
+<div>Status: <span id="dStatus" style="color: goldenrod;"></span></div>
+  <div>Nama Rekening: <span id="dNama">-</span></div>
+  <div>Bank: <span id="dBank"></span></div>
+  <div>Nomor: <span id="dNo"></span></div>
+<div>Total Bayar:</div>
+<div id="dTotalBayar" style="margin-top:5px;"></div>
+</div>
+
+<div id="statusText" class="status-box">
+  Status: 
+</div>
+
+<div class="timer" id="countdownText">
+  Waktu tersisa: 
+</div>
+
+
+
+</div>
+
+<div class="company-wrap">
+
+  <div class="company-header" onclick="toggleCompanyInfo()">
+    <i class="fa fa-circle-info"></i>
+    Lihat detail informasi resmi
+    <i class="fa fa-chevron-down" id="chevronIcon"></i>
+  </div>
+
+  <div class="company-box" id="companyBox">
+
+    <div class="c-row"><b>Entitas Resmi:</b> <span id="cCompany">-</span></div>
+    <div class="c-row"><b>Nama Perusahaan:</b> <span id="cNama">-</span></div>
+    <div class="c-row"><b>Kategori:</b> <span id="cKategori">-</span></div>
+    <div class="c-row"><b>Status:</b> <span id="cStatus">-</span></div>
+    <div class="c-row"><b>Contact:</b> <span id="cContact">-</span></div>
+    <div class="c-row"><b>WhatsApp:</b> <span id="cWa">-</span></div>
+    <div class="c-row"><b>Kantor Pusat:</b> <span id="cKantor">-</span></div>
+    <div class="c-row"><b>Cabang:</b> <span id="cCabang">-</span></div>
+    <div class="c-row">
+  <b>Website:</b>
+  <a id="cSite" href="#" target="_blank" style="color:#1a73e8;text-decoration:none;">
+    -
+  </a>
+</div>
+    <div class="c-row"><b>Order:</b> <span id="cOrder">-</span></div>
+    <div class="c-row"><b>Interaksi:</b> <span id="cInteraksi">-</span></div>
+    <div class="c-row"><b>Team:</b> <span id="cTeam">-</span></div>
+    <div class="c-row"><b>Aplikasi:</b> <span id="cApp">-</span></div>
+
+  </div>
+
+</div>
+
+<div class="payment-info">
+
+  <div class="secure-box">
+    <i class="fa fa-shield-alt"></i>
+    <div>
+      <div class="title">Pembayaran Aman & Terverifikasi</div>
+      <div class="sub">Sistem otomatis diproses oleh gateway internal</div>
+    </div>
+  </div>
+
+  <div class="secure-box">
+    <i class="fa fa-lock"></i>
+    <div>
+      <div class="title">Dilindungi Enkripsi Keamanan</div>
+      <div class="sub">Data transaksi kamu aman & tidak dibagikan</div>
+    </div>
+  </div>
+
+  <div class="secure-box">
+    <i class="fa fa-bolt"></i>
+    <div>
+      <div class="title">Proses Otomatis 24/7</div>
+      <div class="sub">Konfirmasi pembayaran dilakukan otomatis</div>
+    </div>
+  </div>
+
+</div>
+
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  get,
+  update
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* FIREBASE */
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* LOGIN */
+const login = JSON.parse(localStorage.getItem("user"));
+
+if(!login){
+  location.href = "login.html";
+}
+
+
+
+function safe(val){
+  return val ?? "-";
+}
+
+function updateLastActive(page = "Tujuan Pembayaran") {
+
+  const login = JSON.parse(localStorage.getItem("user"));
+  if (!login?.userId) return;
+
+  update(ref(db, "users2/" + login.userId), {
+    lastActive: Date.now(),
+    currentPage: page
+  });
+}
+
+["click", "touchstart", "keydown"].forEach(evt => {
+  document.addEventListener(evt, () => {
+    updateLastActive("Tujuan Pembayaran");
+  }, { passive: true });
+});
+
+updateLastActive("Tujuan Pembayaran");
+
+
+async function getBankData(bankKey){
+  const snap = await get(ref(db, `BANK_EWALLET/${bankKey}`));
+  if(!snap.exists()) return null;
+  return snap.val();
+}
+
+async function getNamaUser(userId){
+  const snap = await get(ref(db, `users2/${userId}`));
+  if(snap.exists()){
+    return snap.val().nama || snap.val().name || "-";
+  }
+  return "-";
+}
+
+
+async function load(){
+
+const snap = await get(ref(db,"Deposithost"));
+if(!snap.exists()) return;
+
+const params =
+new URLSearchParams(location.search);
+
+const selectedDepositId =
+params.get("id");
+
+let last = null;
+
+snap.forEach(d => {
+
+  const data = d.val();
+
+  if(selectedDepositId){
+
+    if(data.depositId === selectedDepositId){
+      last = data;
+    }
+
+  }else{
+
+    if(data.userId === login.userId){
+
+      if(!last){
+        last = data;
+      }else if(
+        (data.createdAt || 0) >
+        (last.createdAt || 0)
+      ){
+        last = data;
+      }
+
+    }
+
+  }
+
+});
+
+if(!last) return;
+
+
+
+
+
+/* EXPIRED CHECK */
+if(last.expiryTime && Date.now() > last.expiryTime){
+
+  document.body.innerHTML = `
+    <div style="display:flex;justify-content:center;align-items:center;height:100vh;font-family:Poppins;text-align:center;">
+      <div>
+        <i class="fa fa-circle-exclamation" style="font-size:50px;color:red;"></i>
+        <h2 style="color:red;">Pembayaran Tidak Valid</h2>
+        <p>Jangan lakukan pembayaran ke tujuan sebelumnya.</p>
+      </div>
+    </div>
+  `;
+
+  return;
+}
+
+/* TIMER */
+if(last.expiryTime){
+  startCountdown(last.expiryTime);
+}
+
+
+const statusEl = document.getElementById("statusText");
+
+if(statusEl){
+
+  const status = (last.status || "").toLowerCase();
+
+  if(status === "pending"){
+    statusEl.className = "status-box status-pending";
+    statusEl.innerHTML =
+      '<i class="fa fa-clock"></i> Status: Pending';
+  }
+  else if(status === "success"){
+    statusEl.className = "status-box status-success";
+    statusEl.innerHTML =
+      '<i class="fa fa-circle-check"></i> Status: Berhasil';
+  }
+  else if(status === "rejected"){
+    statusEl.className = "status-box status-rejected";
+    statusEl.innerHTML =
+      '<i class="fa fa-circle-xmark"></i> Status: Ditolak';
+  }
+  else{
+    statusEl.className = "status-box";
+    statusEl.innerHTML =
+      `Status: ${last.status || "-"}`;
+  }
+
+}
+
+
+
+let bank = {};
+
+if(last.bankId){
+
+const bankSnap = await get(
+  ref(db, `BANK_EWALLET/${last.bankId}`)
+);
+
+if(bankSnap.exists()){
+  bank = bankSnap.val();
+}
+
+}
+
+/* =========================
+ORDER ID
+========================= */
+
+document.getElementById("orderId").innerText =
+safe(last.depositId);
+
+/* =========================
+DATA REKENING WAJIB
+DARI FIREBASE
+========================= */
+
+document.getElementById("bankLogo").src =
+bank.logo || "";
+
+document.getElementById("bankName").innerText =
+safe(bank.namaBank);
+
+document.getElementById("namaRek").innerText =
+safe(bank.namaRekening);
+
+document.getElementById("noRek").innerText =
+safe(bank.noRekening);
+
+
+const bankRekEl = document.getElementById("bankRek");
+
+if(bankRekEl){
+  bankRekEl.innerText =
+    `${safe(bank.namaBank)} • ${safe(bank.noRekening)}`;
+}
+
+
+
+/* =========================
+DETAIL BOX
+========================= */
+
+document.getElementById("dDepositId").innerText =
+safe(last.depositId);
+
+document.getElementById("dStatus").innerText =
+safe(last.status);
+
+document.getElementById("dNama").innerText =
+safe(bank.namaRekening);
+
+document.getElementById("dBank").innerText =
+safe(bank.namaBank);
+
+document.getElementById("dNo").innerText =
+safe(bank.noRekening);
+
+const totalBayarRupiah = Number(last.jumlah || 0);
+const totalBayarUsd = (totalBayarRupiah / 16500).toFixed(2);
+
+const totalEl = document.getElementById("dTotalBayar");
+
+if(totalEl){
+  totalEl.innerHTML = `
+    <div>
+      Payment via $ : <b>$ ${totalBayarUsd}</b>
+      <span style="color:red;">(tidak disarankan)</span>
+    </div>
+
+    <div style="margin-top:5px;">
+      Payment via : <b>IDR ${totalBayarRupiah.toLocaleString("id-ID")}</b>
+    </div>
+  `;
+}
+
+/* =========================
+USER
+========================= */
+
+const namaUser = await getNamaUser(last.userId);
+
+document.getElementById("dUser").innerText =
+safe(namaUser);
+
+/* =========================
+JUMLAH
+========================= */
+
+const rupiah = Number(last.jumlah || 0);
+
+const usd = (rupiah / 16500).toFixed(2);
+
+document.getElementById("amount").innerText =
+`IDR ${rupiah.toLocaleString("id-ID")} ($ ${usd})`;
+/* =========================
+COPY REKENING
+========================= */
+
+window.rekNumber =
+bank.noRekening || "";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+async function loadCompanyInfo(){
+
+  const snap = await get(
+    ref(db, "informasi_perusahaan/company_info")
+  );
+
+  if(!snap.exists()) return;
+
+  const d = snap.val();
+
+  document.getElementById("cCompany").innerText =
+    d.agencyResmi || "-";
+
+  document.getElementById("cNama").innerText =
+    d.namaPerusahaan || "-";
+
+  document.getElementById("cKategori").innerText =
+    d.kategori || "-";
+
+  document.getElementById("cStatus").innerText =
+    d.status || "-";
+
+  document.getElementById("cContact").innerText =
+    d.contact || "-";
+
+  document.getElementById("cWa").innerText =
+    d.whatsappDarurat || "-";
+
+  document.getElementById("cKantor").innerText =
+    d.kantorPusat || "-";
+
+  document.getElementById("cCabang").innerText =
+    d.pusatCabang || "-";
+
+  document.getElementById("cOrder").innerText =
+    d.orderCoin || "-";
+
+  document.getElementById("cInteraksi").innerText =
+    d.interaksiPengguna || "-";
+
+  document.getElementById("cTeam").innerText =
+    d.team || "-";
+
+  document.getElementById("cApp").innerText =
+    d.aplikasiSerupa || "-";
+
+  const site = document.getElementById("cSite");
+
+  site.href = d.situsTopup || "#";
+  site.innerText = d.situsTopup || "-";
+
+
+}
+
+loadCompanyInfo();
+
+
+
+
+load();
+
+function startCountdown(expiryTime){
+
+  const el = document.getElementById("countdownText");
+
+  if(!el || !expiryTime) return;
+
+  const timer = setInterval(async () => {
+
+    try{
+
+      const snap = await get(ref(db, "Deposithost"));
+
+      if(snap.exists()){
+
+        let currentData = null;
+
+        snap.forEach(d => {
+          const data = d.val();
+
+          if(
+            data.userId === login.userId &&
+            data.depositId === document.getElementById("orderId").innerText
+          ){
+            currentData = data;
+          }
+        });
+
+        if(
+          currentData &&
+          (currentData.status || "").toLowerCase() === "success"
+        ){
+
+          clearInterval(timer);
+
+          el.innerHTML = `
+            <i class="fa fa-circle-check"></i>
+            Pembayaran Berhasil
+          `;
+
+          el.style.color = "#22c55e";
+          el.style.fontWeight = "700";
+
+          return;
+        }
+
+      }
+
+    }catch(err){
+      console.error(err);
+    }
+
+    const diff = expiryTime - Date.now();
+
+    if(diff <= 0){
+
+      clearInterval(timer);
+
+      document.body.innerHTML = `
+        <div style="display:flex;justify-content:center;align-items:center;height:100vh;font-family:Poppins;text-align:center;">
+          <div>
+            <i class="fa fa-circle-exclamation" style="font-size:50px;color:red;"></i>
+            <h2 style="color:red;">Pembayaran Tidak Valid</h2>
+            <p>Jangan lakukan pembayaran ke tujuan sebelumnya.</p>
+          </div>
+        </div>
+      `;
+
+      return;
+    }
+
+    const totalSeconds = Math.floor(diff / 1000);
+
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    let text = "Waktu tersisa: ";
+
+    if(days > 0){
+      text += `${days}h `;
+    }
+
+    if(hours > 0 || days > 0){
+      text += `${hours}j `;
+    }
+
+    text += `${minutes}m ${seconds}s`;
+
+    el.innerText = text;
+
+  }, 1000);
+
+}
+
+
+
+/* ================= GLOBAL FIX (WAJIB) ================= */
+
+window.toggleDetail = function () {
+  const box = document.getElementById("detailBox");
+  if (!box) return;
+
+  box.style.display =
+    box.style.display === "block" ? "none" : "block";
+};
+
+window.toggleCompanyInfo = function () {
+  const box = document.getElementById("companyBox");
+  const icon = document.getElementById("chevronIcon");
+
+  if (!box) return;
+
+  const isOpen = box.style.display === "block";
+
+  box.style.display = isOpen ? "none" : "block";
+
+  if (icon) {
+    icon.classList.toggle("fa-chevron-up", !isOpen);
+    icon.classList.toggle("fa-chevron-down", isOpen);
+  }
+};
+
+
+window.copyRek = async function(){
+
+  try{
+
+    if(!window.rekNumber){
+      showTopToast("Nomor rekening tidak tersedia", "error");
+      return;
+    }
+
+    await navigator.clipboard.writeText(window.rekNumber);
+
+    showTopToast("Nomor rekening berhasil disalin");
+
+  }catch(err){
+
+    console.error(err);
+
+    const temp = document.createElement("textarea");
+    temp.value = window.rekNumber;
+    document.body.appendChild(temp);
+    temp.select();
+    document.execCommand("copy");
+    document.body.removeChild(temp);
+
+    showTopToast("Nomor rekening berhasil disalin");
+  }
+
+};
+
+
+
+function showTopToast(msg, type = "success") {
+  const toast = document.getElementById("topToast");
+
+  toast.innerText = msg;
+
+  if (type === "error") {
+    toast.style.background = "#e74c3c";
+  } else {
+    toast.style.background = "#2ecc71";
+  }
+
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2000);
+}
+
+</script>
+
+</body>
+</html>

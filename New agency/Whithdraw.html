@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Withdraw</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family: 'Poppins', sans-serif;
+}
+
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none !important;
+}
+
+/* hilangkan highlight saat klik/focus */
+button, a, div, span, img {
+  outline: none !important;
+}
+
+
+img {
+ 
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+
+
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+
+
+body{
+background:#ffffff;
+padding:15px;
+font-family: 'Poppins', sans-serif;
+}
+
+
+
+
+/* LOADING */
+#loadingScreen{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#fff;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:999999;
+}
+
+.spinner{
+width:24px;
+height:24px;
+border:3px solid #eee;
+border-top:3px solid #8a00ff;
+border-radius:50%;
+animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+from{transform:rotate(0deg);}
+to{transform:rotate(360deg);}
+}
+
+/* CARD */
+.card{
+background:#fff;
+border-radius:18px;
+padding:18px;
+box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+
+.title{
+font-size:20px;
+font-weight:700;
+margin-bottom:15px;
+}
+
+.balance{
+background:#ebebeb;
+color:#212121;
+padding:18px;
+border-radius:14px;
+margin-bottom:18px;
+}
+
+.balance small{
+opacity:.8;
+}
+
+.balance h2{
+margin-top:5px;
+font-size:26px;
+}
+
+.form-group{
+margin-bottom:15px;
+}
+
+label{
+display:block;
+margin-bottom:6px;
+font-size:14px;
+font-weight:600;
+COLOR: #c0c0c0;
+}
+
+.custom-select {
+  position: relative;
+  width: 100%;
+  background: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+}
+
+.selected {
+  padding: 12px;
+}
+
+.options {
+  display: none;
+  position: absolute;
+  width: 100%;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  z-index: 10;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+}
+
+.option img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.selected img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+input,
+select{
+width:100%;
+padding:13px;
+border:1px solid #ddd;
+border-radius:12px;
+font-size:14px;
+outline:none;
+}
+
+input:focus,
+select:focus{
+border-color:#8a00ff;
+}
+
+.btn{
+width:100%;
+padding:14px;
+border:none;
+background:#8a00ff;
+color:#fff;
+font-size:15px;
+font-weight:bold;
+border-radius:14px;
+cursor:pointer;
+transition:.3s;
+}
+
+.btn:disabled{
+background:#c7c7c7;
+color:#777;
+cursor:not-allowed;
+}
+
+.btn:active{
+transform:scale(.98);
+}
+
+/* TOAST */
+.toast{
+position:fixed;
+bottom:90px;
+left:50%;
+transform:translateX(-50%);
+background:#fff;
+padding:12px 16px;
+border-radius:12px;
+box-shadow:0 3px 10px rgba(0,0,0,.15);
+opacity:0;
+pointer-events:none;
+transition:.3s;
+z-index:999999;
+}
+
+.toast.show{
+opacity:1;
+}
+
+
+
+.instruction{
+  padding:15px;
+  background:#fff;
+  border-radius:12px;
+}
+
+.instruction h3{
+  font-size:15px;
+  margin-bottom:10px;
+  color:#000;
+}
+
+.instruction ol{
+  padding-left:18px;
+  margin:0;
+  font-size:14px;
+  line-height:1.8; 
+  color:#333;
+}
+
+.instruction li{
+  margin-bottom:6px; 
+}
+
+
+/* FOOTER */
+.app-footer{
+  margin-top:30px;
+  padding:20px 10px;
+  text-align:center;
+  color:#777;
+  font-size:12.5px;
+}
+
+
+.credit-info {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #d49d15; 
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+</style>
+</head>
+<body>
+
+<div id="loadingScreen">
+  <div class="spinner"></div>
+</div>
+
+<div class="card">
+
+<div class="title">
+Penarikan Credits
+</div>
+
+<div class="balance">
+  <small>Credits</small>
+  <h2 id="saldoText">Rp 0</h2>
+
+  <span class="credit-info">
+    *100 Credits ≈ IDR 17.11K
+  </span>
+</div>
+
+
+
+<div class="form-group">
+  <label>Metode Penarikan</label>
+
+  <div class="custom-select" id="customSelect">
+    <div class="selected">Pilih Metode</div>
+
+    <div class="options">
+      <div class="option">
+        <img src="bca.png"> BCA
+      </div>
+
+      <div class="option">
+        <img src="bri.png"> BRI
+      </div>
+
+      <div class="option">
+        <img src="bank-bni-logo-png.png"> BNI
+      </div>
+
+      <div class="option">
+        <img src="mandiri.png"> MANDIRI
+      </div>
+
+      <div class="option">
+        <img src="dana.png"> DANA
+      </div>
+
+      <div class="option">
+        <img src="ovo.png"> OVO
+      </div>
+
+      <div class="option">
+        <img src="gopay.png"> GOPAY
+      </div>
+
+      <div class="option">
+        <img src="shopeepay.png"> ShopeePay
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<div class="form-group">
+<label>Nama Rekening</label>
+<input
+id="namaRekening"
+placeholder="Nama Pemilik Rekening">
+</div>
+
+<div class="form-group">
+<label>No Rekening / E-Wallet</label>
+<input
+id="rekening"
+placeholder="Masukkan nomor rekening">
+</div>
+
+<div class="form-group">
+<label>Nominal Withdraw</label>
+<input
+type="number"
+id="nominal"
+placeholder="Minimal Rp10.000">
+</div>
+
+<button
+class="btn"
+id="btnWithdraw">
+Ajukan Withdraw
+</button>
+
+</div>
+
+
+
+<div class="instruction">
+  <h3>instruksi</h3>
+
+  <ol>
+    <li>Akun dengan 2000+ Credits dapat diuangkan.</li>
+    <li>Jumlah penarikan akan bervariasi sesuai dengan nilai tukar.</li>
+    <li>Permintaan akan ditangani dalam 2 hari kerja.</li>
+    <li>Jika Anda memiliki pertanyaan, silahkan hubungi kami.</li>
+  </ol>
+</div>
+
+
+
+
+
+
+
+
+
+
+<footer class="app-footer">
+
+  <div style="margin-bottom:10px;">
+    <div onclick="
+      localStorage.setItem('pesanId','customer_service');
+      window.location.href='pesan_lengkap.html';
+    " style="
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      color:orange;
+      font-weight:600;
+      font-size:14px;
+      cursor:pointer;
+      text-decoration:underline;
+      text-underline-offset:3px;
+    ">
+      <img src="customer_service_icon.png" style="width:20px;height:20px;">
+      Layanan Pelanggan
+    </div>
+  </div>
+
+
+
+  <div class="footer-text">
+    © 2026 Tigo.app System. All Rights Reserved.
+  </div>
+
+</footer>
+
+
+
+
+
+<div class="toast" id="toast"></div>
+
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import {
+getDatabase,
+ref,
+get,
+set,
+push,
+update
+}
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* FIREBASE */
+const firebaseConfig = {
+apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+authDomain:"users-96dc5.firebaseapp.com",
+databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId:"users-96dc5",
+storageBucket:"users-96dc5.appspot.com",
+messagingSenderId:"483322415863",
+appId:"1:483322415863:web:1397a8f2e808e66ad9e1f2"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* LOGIN CHECK */
+const login = JSON.parse(localStorage.getItem("user"));
+
+if(!login || !login.userId){
+window.location.href = "login.html";
+}
+
+
+
+
+
+
+
+
+function updateLastActive(page = "Whithdraw") {
+
+  const login = JSON.parse(localStorage.getItem("user"));
+  if (!login?.userId) return;
+
+  update(ref(db, "users2/" + login.userId), {
+    lastActive: Date.now(),
+    currentPage: page
+  });
+
+}
+
+["click", "touchstart", "keydown"].forEach(evt => {
+  document.addEventListener(evt, () => {
+    updateLastActive("Whithdraw");
+  }, { passive: true });
+});
+
+updateLastActive("Whithdraw");
+
+
+
+
+
+
+
+
+
+
+/* USER */
+let currentUser = null;
+let currentUserKey = null;
+let metodeTerpilih = "";
+/* TOAST */
+function showToast(text){
+
+const toast =
+document.getElementById("toast");
+
+toast.innerText = text;
+
+toast.classList.add("show");
+
+setTimeout(()=>{
+toast.classList.remove("show");
+},2500);
+
+}
+
+/* HIDE LOADING */
+function hideLoading(){
+
+const loading =
+document.getElementById("loadingScreen");
+
+if(!loading) return;
+
+loading.style.transition = ".3s";
+loading.style.opacity = "0";
+
+setTimeout(()=>{
+loading.style.display = "none";
+},300);
+
+}
+
+/* FORMAT */
+function formatRupiah(angka){
+return "Rp " +
+Number(angka || 0)
+.toLocaleString("id-ID");
+}
+
+/* ================= LOAD USER (FIX TOTAL USERID ONLY) ================= */
+async function loadUser(){
+
+try{
+
+/* 🔥 FIX: langsung ambil user ini saja */
+const snap =
+await get(ref(db,"users2/" + login.userId));
+
+if(!snap.exists()){
+
+hideLoading();
+showToast("Data user tidak ditemukan");
+return;
+
+}
+
+currentUser = snap.val();
+currentUserKey = login.userId;
+
+/* ================= TAMPILKAN SALDO ================= */
+const saldoText =
+document.getElementById("saldoText");
+
+if(saldoText){
+
+saldoText.innerText =
+formatRupiah(currentUser.saldo || 0);
+
+cekStatusWithdraw();
+
+}
+
+/* ================= AUTO FORM ================= */
+const nama =
+document.getElementById("namaRekening");
+
+if(nama){
+nama.value =
+currentUser.namaRek ||
+currentUser.nama ||
+"";
+}
+
+const rekening =
+document.getElementById("rekening");
+
+if(rekening){
+rekening.value =
+currentUser.noRek || "";
+}
+
+/* HIDE LOADING */
+hideLoading();
+
+}catch(err){
+
+console.log(err);
+
+hideLoading();
+
+showToast("Gagal terhubung ke Firebase");
+
+}
+
+}
+
+loadUser();
+
+/* ================= CEK WITHDRAW ================= */
+function cekStatusWithdraw(){
+
+const btn =
+document.getElementById("btnWithdraw");
+
+const saldo =
+Number(currentUser?.saldo || 0);
+
+if(!btn) return;
+
+if(saldo < 500000){
+
+btn.disabled = true;
+btn.innerText = "Tarik Sekarang";
+
+}else{
+
+btn.disabled = false;
+btn.innerText = "Ajukan Withdraw";
+
+}
+
+}
+
+/* ================= WITHDRAW ================= */
+document
+.getElementById("btnWithdraw")
+?.addEventListener("click", async ()=>{
+
+if(!currentUser){
+showToast("Data user belum dimuat");
+return;
+}
+
+if(!metodeTerpilih){
+  showToast("Pilih metode penarikan");
+  return;
+}
+
+const metode = metodeTerpilih;
+
+const nama =
+document.getElementById("namaRekening").value.trim();
+
+const rekening =
+document.getElementById("rekening").value.trim();
+
+const nominal =
+Number(document.getElementById("nominal").value);
+
+if(!metode || !nama || !rekening || !nominal){
+showToast("Lengkapi semua data");
+return;
+}
+
+if(nominal < 500000){
+showToast("Minimal withdraw Rp500.000");
+return;
+}
+
+if(nominal > Number(currentUser.saldo || 0)){
+showToast("Saldo tidak cukup");
+return;
+}
+
+try{
+
+/* ================= HISTORY ================= */
+const withdrawId =
+push(ref(db,"historyWithdraw"));
+
+await set(withdrawId,{
+userId: currentUserKey,
+nama: currentUser.nama || "",
+email: currentUser.email || "",
+wa: currentUser.wa || "",
+metode,
+namaRekening:nama,
+rekening,
+nominal,
+status:"pending",
+createdAt:Date.now()
+});
+
+/* ================= NOTIFIKASI ================= */
+const notifUserId = String(login.userId);
+
+const usdRate = 15500;
+const nominalUSD = (nominal / usdRate).toFixed(2);
+
+const text = `Aplikasi penarikan $${nominalUSD} Anda telah diajukan, penarikan akan dikreditkan ke akun anda dalam waktu 2 hari kerja, dan Anda akan diberi tahu segera setelah diterima, harap bersabar~`;
+
+await push(
+ref(db, `fithnerchats/notifikasi/${notifUserId}/withdraw`),
+{
+text,
+time: Date.now(),
+profil: "ic_launcher_circle.png",
+read: false,
+nominalIDR: nominal,
+nominalUSD,
+rate: usdRate,
+readAdmin: false
+}
+);
+
+/* ================= POTONG SALDO ================= */
+const saldoBaru =
+Number(currentUser.saldo || 0) - nominal;
+
+await update(ref(db,"users2/" + currentUserKey),{
+saldo: saldoBaru
+});
+
+currentUser.saldo = saldoBaru;
+cekStatusWithdraw();
+
+/* UPDATE UI */
+document.getElementById("saldoText").innerText =
+formatRupiah(saldoBaru);
+
+document.getElementById("nominal").value = "";
+
+document.getElementById("successText").innerHTML =
+`Penarikan sebesar <b>${formatRupiah(nominal)}</b> telah berhasil diajukan...`;
+
+document.getElementById("successModal").style.display = "flex";
+
+}catch(err){
+
+console.log(err);
+showToast("Gagal mengirim withdraw");
+
+}
+
+});
+
+window.closeSuccessModal = function(){
+document.getElementById("successModal").style.display = "none";
+}
+
+
+
+
+
+
+
+
+const select = document.getElementById("customSelect");
+const selected = select.querySelector(".selected");
+const options = select.querySelector(".options");
+
+selected.onclick = () => {
+  options.style.display = options.style.display === "block" ? "none" : "block";
+};
+
+options.querySelectorAll(".option").forEach(opt => {
+  opt.onclick = () => {
+    selected.innerHTML = `
+  <img src="${opt.querySelector('img').src}">
+  <span>${opt.innerText.trim()}</span>
+`;
+
+metodeTerpilih = opt.innerText.trim();
+    options.style.display = "none";
+  };
+});
+
+
+
+
+
+
+
+/* ================= (NO zoom) ================= */
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
+document.addEventListener("selectstart", e => e.preventDefault());
+
+/* ❌ BLOCK ZOOM KEYBOARD (Ctrl + / - / 0) */
+document.addEventListener("keydown", function (e) {
+  if (
+    (e.ctrlKey && e.key === "+") ||
+    (e.ctrlKey && e.key === "-") ||
+    (e.ctrlKey && e.key === "0") ||
+    (e.ctrlKey && e.key === "=")
+  ) {
+    e.preventDefault();
+  }
+});
+
+/* BLOCK PINCH ZOOM (mobile) */
+document.addEventListener("gesturestart", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gesturechange", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gestureend", function (e) {
+  e.preventDefault();
+});
+/* ================= (NO zoom) ================= */
+
+
+
+</script>
+
+
+
+<!-- POPUP SUCCESS -->
+<div id="successModal" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.45);
+z-index:999999;
+justify-content:center;
+align-items:center;
+padding:20px;
+">
+
+  <div style="
+  background:#fff;
+  width:100%;
+  max-width:380px;
+  border-radius:20px;
+  padding:25px;
+  text-align:center;
+  animation:pop .25s ease;
+  ">
+
+    <div style="
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    background:#f3e8ff;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    ">
+      <i class="fa fa-check-circle"
+      style="
+      font-size:42px;
+      color:#8a00ff;
+      "></i>
+    </div>
+
+    <h3 style="
+    margin-top:15px;
+    color:#111;
+    ">
+      Permintaan Penarikan Berhasil
+    </h3>
+
+    <p id="successText"
+    style="
+    color:#666;
+    font-size:14px;
+    line-height:1.7;
+    margin-top:10px;
+    ">
+    </p>
+
+    <button onclick="closeSuccessModal()"
+    style="
+    width:100%;
+    margin-top:18px;
+    padding:13px;
+    border:none;
+    border-radius:14px;
+    background:#8a00ff;
+    color:#fff;
+    font-weight:bold;
+    ">
+      Saya Mengerti
+    </button>
+
+  </div>
+
+</div>
+
+<style>
+@keyframes pop{
+from{
+transform:scale(.85);
+opacity:0;
+}
+to{
+transform:scale(1);
+opacity:1;
+}
+}
+
+
+
+
+</style>
+
+
+</body>
+</html>

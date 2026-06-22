@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Tukar Token</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+
+
+
+<style>
+
+
+
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none !important;
+}
+
+/* hilangkan highlight saat klik/focus */
+button, a, div, span, img {
+  outline: none !important;
+}
+
+
+img {
+ 
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+
+
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+
+
+    *{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#ffffff;
+padding-bottom:120px;
+padding-top:80px;
+}
+
+
+.history-modal,
+.history-modal *{
+  font-family: 'Poppins', sans-serif;
+}
+
+
+/* HEADER */
+
+/* HEADER */
+.header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:65px;
+  background:#ffffff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 16px;
+  z-index:9999;
+  border-bottom:1px solid #ffffff;
+}
+
+
+.back-btn,
+.history-btn{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:#ffffff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  font-size:16px;
+  color:#111;
+}
+
+.header-title{
+  font-size:18px;
+  font-weight:700;
+  color:#111;
+}
+/* CREDIT */
+
+.credit-wrap{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:10px 22px 25px;
+}
+
+.credit-left{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.credit-left img{
+width:24px;
+height:24px;
+}
+
+.credit-value{
+font-size:16px;
+font-weight:550;
+color:#333;
+}
+
+.rate-text{
+font-size:14px;
+color:#888;
+}
+
+/* GRID */
+
+.package-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:13px;
+padding:0 8px;
+}
+
+.package-card{
+background:#fff;
+border:1.5px solid #d8d8d8;
+border-radius:18px;
+height:225px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+transition:.2s;
+}
+
+.package-card.active{
+border:2px solid #ffb800;
+}
+
+.coin-img{
+width:40px;
+height:40px;
+object-fit:contain;
+margin-bottom:25px;
+}
+
+.coin-title{
+font-size:15px;
+font-weight:500;
+color:#333;
+margin-bottom:28px;
+}
+
+.coin-box{
+     height: 30px;
+width:76%;
+background:#f2f2f2;
+border-radius:8px;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+}
+
+.coin-box img{
+width:18px;
+height:18px;
+}
+
+.coin-box span{
+font-size:15px;
+font-weight:700;
+color:#333;
+}
+
+/* BUTTON */
+
+.btn-tukar{
+  position:fixed;
+  left:15px;
+  right:15px;
+  bottom:20px;
+  height:55px;
+  border:none;
+  border-radius:16px;
+  background:#8100ff;
+  color:#fff;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.2s;
+}
+
+/* SALDO TIDAK CUKUP */
+.btn-tukar:disabled{
+  background:#d8d8d8;
+  color:#8a8a8a;
+  cursor:not-allowed;
+  opacity:1;
+}
+
+
+
+
+/* =========================
+   SUCCESS MODAL
+========================= */
+
+.success-modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  justify-content:center;
+  align-items:center;
+  z-index:999999;
+  padding:20px;
+}
+
+.success-card{
+  width:100%;
+  max-width:340px;
+  background:#fff;
+  border-radius:28px;
+  padding:30px 25px;
+  text-align:center;
+  animation:popupShow .25s ease;
+}
+
+.success-icon{
+  width:90px;
+  height:90px;
+  margin:0 auto 15px;
+  border-radius:50%;
+  background:#e8fff1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.success-icon i{
+  font-size:52px;
+  color:#22c55e;
+}
+
+.success-title{
+  font-size:22px;
+  font-weight:700;
+  color:#111;
+  margin-bottom:12px;
+}
+
+.success-text{
+  font-size:14px;
+  color:#666;
+  line-height:1.7;
+  margin-bottom:22px;
+}
+
+.success-btn{
+  width:100%;
+  height:52px;
+  border:none;
+  border-radius:16px;
+  background:#7c3aed;
+  color:#fff;
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.success-btn:active{
+  transform:scale(.98);
+}
+
+@keyframes popupShow{
+
+  from{
+    opacity:0;
+    transform:scale(.9);
+  }
+
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+
+}
+
+
+
+
+.history-modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:99999;
+  justify-content:center;
+  align-items:center;
+}
+
+/* FULL SCREEN CARD */
+.history-card{
+  width:100%;
+  height:100%;
+  background:#fff;
+  border-radius:0; /* hilangkan rounded biar full layar */
+  padding:20px;
+  box-sizing:border-box;
+  display:flex;
+  flex-direction:column;
+}
+
+.history-head{
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:15px;
+}
+
+.history-list{
+  flex:1;              /* biar otomatis isi sisa layar */
+  overflow:auto;
+}
+
+.history-item{
+  padding:12px 0;
+  border-bottom:1px solid #eee;
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+}
+
+/* baris coin & credits */
+.history-row{
+  display:flex;
+  align-items:center;
+  gap:1px;
+}
+
+/* icon di kiri teks */
+.history-icon{
+  width:15px;
+  height:15px;
+  object-fit:cover;
+  border-radius:6px;
+}
+
+/* teks di kanan icon */
+.history-text{
+  font-weight:550;
+  color:#505050;
+  font-size:14px;
+}
+
+.history-close{
+  width:100%;
+  height:48px;
+  margin-top:10px;
+  border:none;
+  border-radius:14px;
+  background:#8100ff;
+  color:#fff;
+  font-weight:700;
+}
+
+
+.history-date{
+  font-size:11px;
+  color:#9a9a9a;
+  margin-top:2px;
+  padding-left:1px;
+  letter-spacing:0.3px;
+}
+
+</style>
+
+
+
+
+
+
+<div class="header">
+
+  <div
+    class="back-btn"
+    onclick="history.back()"
+  >
+    <i class="fas fa-chevron-left"></i>
+  </div>
+
+  <div class="header-title">
+    Menukarkan
+  </div>
+
+  <div
+    class="history-btn"
+    id="historyBtn"
+  >
+    <i class="fas fa-clock-rotate-left"></i>
+  </div>
+
+</div>
+
+
+<div
+id="historyModal"
+class="history-modal"
+>
+
+  <div class="history-card">
+
+    <div class="history-head">
+      Riwayat Penukaran
+    </div>
+
+    <div
+    id="historyList"
+    class="history-list"
+    >
+    </div>
+
+    <button
+    class="history-close"
+    onclick="closeHistoryModal()"
+    >
+      Tutup
+    </button>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="credit-wrap">
+
+<div class="credit-left">
+
+<img src="credit.png">
+
+<div
+class="credit-value"
+id="saldoText"
+>
+0
+</div>
+
+</div>
+
+<div class="rate-text">
+1 Token = 1 Credits
+</div>
+
+</div>
+
+<div
+class="package-grid"
+id="packageGrid"
+></div>
+
+<button
+id="btnTukar"
+class="btn-tukar"
+disabled
+>
+Menukarkan
+</button>
+
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import {
+getDatabase,
+ref,
+get,
+push,
+set,
+update
+}
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* FIREBASE */
+const firebaseConfig = {
+apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+authDomain:"users-96dc5.firebaseapp.com",
+databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId:"users-96dc5",
+storageBucket:"users-96dc5.appspot.com",
+messagingSenderId:"483322415863",
+appId:"1:483322415863:web:1397a8f2e808e66ad9e1f2"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* LOGIN WAJIB */
+const login =
+JSON.parse(localStorage.getItem("user"));
+
+if(!login || !login.userId){
+
+window.location.href = "login.html";
+
+}
+
+
+
+
+
+function updateLastActive(page = "Tukar_token") {
+
+  const login = JSON.parse(localStorage.getItem("user"));
+  if (!login?.userId) return;
+
+  update(ref(db, "users2/" + login.userId), {
+    lastActive: Date.now(),
+    currentPage: page
+  });
+
+}
+
+["click", "touchstart", "keydown"].forEach(evt => {
+  document.addEventListener(evt, () => {
+    updateLastActive("Tukar_token");
+  }, { passive: true });
+});
+
+updateLastActive("Tukar_token");
+
+
+
+
+
+
+/* USER */
+let currentUser = null;
+let selectedCoin = 0;
+let selectedSaldo = 0;
+
+
+
+
+async function loadPaketCoin(){
+
+  const wrap =
+  document.getElementById(
+    "packageGrid"
+  );
+
+  wrap.innerHTML = "";
+
+  const snap = await get(
+    ref(db,"creditTocoin")
+  );
+
+  if(!snap.exists()) return;
+
+  const data = snap.val();
+
+  Object.values(data).forEach(item=>{
+
+    if(item.active !== true) return;
+
+    wrap.innerHTML += `
+
+    <div
+      class="package-card"
+      data-coin="${item.coin}"
+      data-saldo="${item.saldo}"
+    >
+
+      <img
+        src="${item.foto}"
+        class="coin-img"
+      >
+
+      <div class="coin-title">
+        ${Number(item.coin).toLocaleString("id-ID")} Tokens
+      </div>
+
+      <div class="coin-box">
+
+        <img src="${item.foto_credit}">
+
+        <span>
+          ${Number(item.coin).toLocaleString("id-ID")}
+        </span>
+
+      </div>
+
+    </div>
+
+    `;
+
+  });
+
+  initPackageClick();
+
+}
+
+function initPackageClick(){
+
+  document
+  .querySelectorAll(".package-card")
+  .forEach(card=>{
+
+    card.onclick = ()=>{
+
+      document
+      .querySelectorAll(".package-card")
+      .forEach(x=>
+        x.classList.remove("active")
+      );
+
+      card.classList.add("active");
+
+      selectedCoin =
+      Number(card.dataset.coin);
+
+      selectedSaldo =
+      Number(card.dataset.saldo);
+
+      const btn =
+      document.getElementById(
+        "btnTukar"
+      );
+
+ if(
+  Number(currentUser?.saldo || 0)
+  < selectedSaldo
+){
+
+  btn.disabled = true;
+  btn.innerText = "Saldo Tidak Cukup";
+
+}else{
+
+  btn.disabled = false;
+  btn.innerText = "Menukarkan";
+
+}
+
+
+    };
+
+  });
+
+}
+
+
+
+
+
+function formatSaldoCoin(saldo){
+
+  saldo = Number(saldo || 0);
+
+  // 🔥 juta → M
+  if(saldo >= 1000000){
+
+    const juta = saldo / 1000000;
+
+    return Number.isInteger(juta)
+      ? juta + "M"
+      : juta.toFixed(1) + "M";
+
+  }
+
+  // 🔥 credits → DESIMAL
+  const credits = saldo / 171.1;
+
+  return credits.toFixed(1);
+}
+
+/* TOAST */
+function showToast(text){
+
+const toast =
+document.getElementById("toast");
+
+if(!toast) return;
+
+toast.innerText = text;
+
+toast.classList.add("show");
+
+setTimeout(()=>{
+
+toast.classList.remove("show");
+
+},2500);
+
+}
+
+/* LOAD USER */
+async function loadUser(){
+
+try{
+
+const snap =
+await get(
+ref(
+db,
+"users2/" + login.userId
+)
+);
+
+if(!snap.exists()){
+
+showToast("User tidak ditemukan");
+return;
+
+}
+
+currentUser = snap.val();
+
+const saldoText =
+document.getElementById("saldoText");
+
+const coinText =
+document.getElementById("coinText");
+
+if(saldoText){
+
+saldoText.innerText =
+formatSaldoCoin(
+currentUser.saldo || 0
+);
+
+}
+
+if(coinText){
+
+coinText.innerText =
+Number(
+currentUser.coin || 0
+).toLocaleString("id-ID");
+
+}
+
+}catch(err){
+
+console.log(err);
+
+showToast(
+"Gagal memuat data"
+);
+
+}
+
+}
+
+
+
+/* PILIH PAKET */
+document
+.querySelectorAll(
+".package-card"
+)
+.forEach(card=>{
+
+card.onclick = ()=>{
+
+document
+.querySelectorAll(
+".package-card"
+)
+.forEach(x=>
+x.classList.remove(
+"active"
+)
+);
+
+card.classList.add(
+"active"
+);
+
+selectedCoin =
+Number(
+card.dataset.coin
+);
+
+selectedSaldo =
+Number(
+card.dataset.saldo
+);
+
+document.getElementById(
+"selectedCoin"
+).innerText =
+selectedCoin.toLocaleString("id-ID")
++ " Coin";
+
+document.getElementById(
+"selectedSaldo"
+).innerText =
+formatSaldoCoin(
+selectedSaldo
+) + " Credits";
+
+/* CEK SALDO */
+const btn =
+document.getElementById(
+"btnTukar"
+);
+
+if(
+Number(
+currentUser?.saldo || 0
+)
+<
+selectedSaldo
+){
+
+btn.disabled = true;
+
+btn.innerText =
+"Saldo Tidak Cukup";
+
+}else{
+
+btn.disabled = false;
+
+btn.innerText =
+"Tukar Sekarang";
+
+}
+
+};
+
+});
+
+/* TUKAR */
+document
+.getElementById(
+"btnTukar"
+)
+.addEventListener(
+"click",
+async ()=>{
+
+if(!currentUser){
+
+showToast(
+"Data user belum dimuat"
+);
+return;
+
+}
+
+if(
+!selectedCoin ||
+!selectedSaldo
+){
+
+showToast(
+"Pilih paket coin"
+);
+return;
+
+}
+
+const saldoLama =
+Number(
+currentUser.saldo || 0
+);
+
+if(
+saldoLama <
+selectedSaldo
+){
+
+showToast(
+"Saldo tidak cukup"
+);
+return;
+
+}
+
+try{
+
+const saldoBaru =
+saldoLama -
+selectedSaldo;
+
+const coinBaru =
+Number(
+currentUser.coin || 0
+)
++
+selectedCoin;
+
+/* UPDATE USER */
+await update(
+ref(
+db,
+"users2/" +
+login.userId
+),
+{
+saldo: saldoBaru,
+coin: coinBaru
+}
+);
+
+/* HISTORY */
+const historyRef =
+push(
+ref(
+db,
+"historyPenukaranCoin"
+)
+);
+
+await set(
+historyRef,
+{
+userId:
+login.userId,
+
+nama:
+currentUser.nama || "",
+
+email:
+currentUser.email || "",
+
+wa:
+currentUser.wa || "",
+
+coin:
+selectedCoin,
+
+credit:
+selectedSaldo,
+
+createdAt:
+Date.now()
+}
+);
+
+/* NOTIF */
+await push(
+ref(
+db,
+`fithnerchats/notifikasi/${login.userId}/coin`
+),
+{
+text:
+`Penukaran ${selectedCoin} coin berhasil diproses.`,
+read:false,
+time:Date.now(),
+profil:"notifikasi.png"
+}
+);
+
+/* UPDATE LOCAL */
+currentUser.saldo =
+saldoBaru;
+
+currentUser.coin =
+coinBaru;
+
+/* REFRESH UI */
+document.getElementById(
+"saldoText"
+).innerText =
+formatSaldoCoin(
+saldoBaru
+);
+
+const coinText =
+document.getElementById("coinText");
+
+if(coinText){
+
+  coinText.innerText =
+  Number(
+    currentUser.coin || 0
+  ).toLocaleString("id-ID");
+
+}
+
+/* POPUP */
+document.getElementById(
+"successText"
+).innerHTML =
+`
+Berhasil menukarkan
+<b>${selectedCoin.toLocaleString("id-ID")} Coin</b>
+menggunakan
+<b>${formatSaldoCoin(selectedSaldo)} Credits</b>.
+`;
+
+document.getElementById(
+"successModal"
+).style.display =
+"flex";
+
+}catch(err){
+
+console.log(err);
+
+showToast(
+"Gagal melakukan penukaran"
+);
+
+}
+
+}
+);
+
+/* TUTUP POPUP */
+window.closeSuccessModal =
+function(){
+
+document.getElementById(
+"successModal"
+).style.display =
+"none";
+
+};
+
+
+document
+.getElementById("historyBtn")
+.addEventListener(
+"click",
+loadHistory
+);
+
+async function loadHistory(){
+
+  const list =
+  document.getElementById(
+    "historyList"
+  );
+
+  list.innerHTML =
+  "Memuat...";
+
+  const snap =
+  await get(
+    ref(
+      db,
+      "historyPenukaranCoin"
+    )
+  );
+
+  let html = "";
+
+  if(snap.exists()){
+
+    const data =
+    snap.val();
+
+    Object.values(data)
+    .reverse()
+    .forEach(item=>{
+
+      if(
+        item.userId !==
+        login.userId
+      ) return;
+
+html += `
+<div class="history-item">
+
+  <div class="history-row">
+    <img src="token_wrap.png" class="history-icon">
+    <div class="history-text">
+      ${Number(item.coin).toLocaleString("id-ID")} Coin
+    </div>
+  </div>
+
+  <div class="history-row">
+    <img src="credit.png" class="history-icon">
+    <div class="history-text">
+      ${formatSaldoCoin(item.credit)} Credits
+    </div>
+  </div>
+
+  <div class="history-date">
+    ${new Date(item.createdAt).toLocaleString("id-ID")}
+  </div>
+
+</div>
+`;
+
+    });
+
+  }
+
+  if(!html){
+
+    html =
+    `
+    <center>
+      Belum ada riwayat
+    </center>
+    `;
+  }
+
+  list.innerHTML = html;
+
+  document
+  .getElementById(
+    "historyModal"
+  )
+  .style.display =
+  "flex";
+
+}
+
+window.closeHistoryModal =
+function(){
+
+  document
+  .getElementById(
+    "historyModal"
+  )
+  .style.display =
+  "none";
+
+};
+
+
+window.addEventListener("DOMContentLoaded", async () => {
+
+  await loadUser();
+  await loadPaketCoin();
+
+});
+
+</script>
+
+<div
+id="successModal"
+class="success-modal"
+>
+
+  <div class="success-card">
+
+    <div class="success-icon">
+      <i class="fas fa-check-circle"></i>
+    </div>
+
+    <div class="success-title">
+      Penukaran Berhasil
+    </div>
+
+    <div
+    id="successText"
+    class="success-text"
+    >
+    </div>
+
+    <button
+    onclick="closeSuccessModal()"
+    class="success-btn"
+    >
+      Oke
+    </button>
+
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Panggilan Video</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+img {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins', sans-serif;
+}
+
+body{
+  background:#000;
+  overflow:hidden;
+  
+}
+
+body *{
+  pointer-events:auto;
+}
+
+
+
+/* VIDEO AREA */
+.video-container{
+  position:relative;
+  width:100%;
+  height:100vh;
+  background:#000;
+}
+
+video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  background:#000;
+}
+
+/* TOP RIGHT PROFILE */
+.top-right{
+  position:absolute;
+  top:1px;
+  right:15px;
+  z-index:999999;
+  cursor:pointer;
+}
+
+.top-bar{
+  position:absolute;
+  top:15px;
+  left:15px;
+  right:15px;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  z-index:999999;
+}
+
+/* kiri token */
+.top-left{
+  display:flex;
+  align-items:center;
+  gap:6px;
+
+  background:rgba(0,0,0,0.4);
+  padding:6px 10px;
+  border-radius:20px;
+
+  color:#fff;
+  font-size:13px;
+}
+
+.top-left img{
+  width:18px;
+  height:18px;
+}
+
+/* kanan gift tetap */
+.top-right img{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+}
+
+/* TYPING STATUS */
+.typing-box{
+  position:absolute;
+  bottom:720px;
+  left:50%;
+  transform:translateX(-50%);
+  color:#fff;
+  font-size:13px;
+  background:rgba(0,0,0,0.4);
+  padding:8px 12px;
+  border-radius:20px;
+  backdrop-filter:blur(6px);
+}
+
+/* BOTTOM LEFT BUTTON */
+.bottom-left{
+  position:absolute;
+  bottom:90px;
+  left:15px;
+}
+
+.bottom-left button{
+  padding:10px 14px;
+  border:none;
+  border-radius:20px;
+  background:rgb(28 28 28);
+  color:#fff;
+  font-weight:500;
+  cursor:pointer;
+}
+
+/* BOTTOM RIGHT BUTTON */
+.bottom-right{
+  position:absolute;
+  bottom:90px;
+  right:15px;
+}
+
+.bottom-right button{
+  padding:10px 14px;
+  border:none;
+  border-radius:20px;
+  background:#ff2d55;
+  color:#fff;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* SMALL ANIMATION DOT */
+.dot::after{
+  content:"";
+  display:inline-block;
+  width:6px;
+  height:6px;
+  margin-left:5px;
+  border-radius:50%;
+  background:#fff;
+  animation:blink 1s infinite;
+}
+
+@keyframes blink{
+  0%,100%{opacity:0;}
+  50%{opacity:1;}
+}
+
+
+
+.chat-box{
+  position:absolute;
+  bottom:160px;
+  left:15px;
+  right:15px;
+  z-index:20;
+}
+
+.msg{
+  display:inline-block;
+  padding:8px 12px;
+  border-radius:14px;
+  font-size:12.5px;
+  max-width:70%;
+  word-break:break-word;
+}
+
+/* kiri (default kalau nanti lawan chat) */
+.msg.left{
+  align-self:flex-start;
+  background:rgba(255,255,255,0.15);
+  color:#fff;
+}
+
+/* kanan (kita) */
+.msg.right{
+  align-self:flex-end;
+  background:#3d3d3d;
+  color:#fff;
+}
+
+.chat-list{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+
+  max-height:140px;
+  overflow-y:auto;
+
+  justify-content:flex-start; 
+  align-items:flex-end;       
+
+  padding:5px 0;
+}
+.chat-input{
+  display:flex;
+  gap:8px;
+}
+
+.chat-input input{
+  flex:1;
+  padding:10px;
+  border-radius:20px;
+  border:none;
+  outline:none;
+  font-size:13px;
+}
+
+.chat-input button{
+  padding:10px 14px;
+  border:none;
+  border-radius:20px;
+  background:#ac1bff;
+  color:#fff;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.popup{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:999999;
+}
+
+.popup-box{
+  background:#fff;
+  padding:20px;
+  border-radius:16px;
+  text-align:center;
+  width:85%;
+  max-width:320px;
+
+  /* 🔥 INI PENTING BIAR TOUCH TIDAK BLOCK */
+  pointer-events:auto;
+  position:relative;
+}
+
+.popup-box *{
+  pointer-events:auto;
+}
+
+.popup-box button{
+  padding:10px 14px;
+  border:none;
+  border-radius:10px;
+  background:#7b2ff7;
+  color:#fff;
+  font-weight:600;
+  cursor:pointer;
+
+  width:100%;   /* 🔥 biar gampang diklik di HP */
+  margin-top:10px;
+}
+
+
+
+#maybeBtn{
+  background:#b5b5b5;
+  color:#fff;
+  border:none;
+  padding:10px 14px;
+  border-radius:10px;
+  font-weight:600;
+  cursor:pointer;
+  margin-top:10px;
+  width:100%;
+}
+
+#maybeBtn:active{
+  transform:scale(0.98);
+}
+
+
+
+
+.popup-box i{
+  font-size:40px;
+  color:#ff3b30;
+  margin-bottom:10px;
+}
+
+.popup-title{
+  font-weight:700;
+  font-size:14px;
+  margin-bottom:5px;
+}
+
+.popup-desc{
+  font-size:12px;
+  color:#666;
+  margin-bottom:15px;
+}
+
+.popup-box button{
+  padding:10px 14px;
+  border:none;
+  border-radius:10px;
+  color:#fff;
+  font-weight:600;
+  cursor:pointer;
+}
+/* LOADING FULL FIX */
+.hidden{
+  display:none !important;
+}
+
+.loading{
+  position:fixed;
+  inset:0;
+  background:url("ic_launcher_background.png") center/cover no-repeat;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  z-index:9999999999;
+}
+
+.spinner{
+  width:50px;
+  height:50px;
+  border:5px solid rgba(255,255,255,0.3);
+  border-top:5px solid #fff;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+  0%{transform:rotate(0);}
+  100%{transform:rotate(360deg);}
+}
+
+.loading-text{
+  color:#fff;
+  font-weight:600;
+}
+
+
+
+
+
+
+.gift-sheet{
+  position:fixed;
+  left:0;
+  bottom:0;
+  width:100%;
+  height:49%;
+  background:#fff;
+  border-radius:18px 18px 0 0;
+  z-index:999999;
+
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  will-change: transform;
+}
+
+.gift-sheet.show{
+  transform: translateY(0%);
+}
+
+.gift-header{
+  display:flex;
+  justify-content:center;
+  margin-bottom:10px;
+}
+
+.gift-header .line{
+  width:50px;
+  height:5px;
+  background:#ccc;
+  border-radius:20px;
+}
+
+.gift-list{
+  display:grid;
+
+  grid-template-rows:repeat(3, auto); 
+  grid-auto-flow:column;             
+  grid-auto-columns:90px;           
+  gap:12px;
+
+  overflow-x:auto;
+  overflow-y:hidden;
+
+  padding:10px;
+
+  scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
+}
+
+
+.gift-list::-webkit-scrollbar{
+  display:none;
+}
+
+
+.gift-item{
+  width:90px;
+  height:100px;
+
+  background:#f7f7f7;
+  border-radius:12px;
+
+  padding:10px;
+  text-align:center;
+
+  cursor:pointer;
+}
+
+
+
+
+.gift-item > img{
+  width:30px;
+  height:30px;
+  object-fit:contain;
+}
+
+.gift-price{
+  margin-top:5px;
+  font-size:11px;
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:1px;
+}
+
+
+.tokengamgam{
+  width:16px !important;
+  height:16px !important;
+  object-fit:contain;
+  vertical-align:middle;
+  margin-right:3px;
+}
+
+
+
+
+
+
+.gift-notif{
+  position:fixed;
+  top:40px;
+  left:50%;
+  transform:translateX(-50%);
+  display:none;
+  z-index:99999999;
+}
+
+
+.gift-notif.show{
+  display:block;
+}
+
+
+.gift-notif-box{
+  background:#fd3e3e;
+  border-radius:30px;
+  padding:10px 18px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  animation:slideDown .25s ease;
+}
+
+
+.gift-notif-box img{
+  width:25px;
+  height:25px;
+  object-fit:contain;
+}
+
+
+.gift-notif-box span{
+  font-size:13px;
+  font-weight:600;
+  color:#ffffff;
+  white-space:nowrap;
+}
+
+
+@keyframes slideDown{
+
+from{
+  opacity:0;
+  transform:translateY(-20px);
+}
+
+to{
+  opacity:1;
+  transform:translateY(0);
+}
+
+}
+
+
+
+
+.msg.system{
+  align-self:center;
+  background:rgba(255,255,255,0.15);
+  color:#fff;
+
+  font-size:9px;
+  padding:8px 7px;
+  border-radius:20px;
+  display:flex;
+  gap:6px;
+  margin:6px 0;
+  text-align:center;
+}
+
+.msg.system i{
+  color:#ffd54f;
+  font-size:14px;
+}
+
+
+
+.gift-name{
+  margin-top:6px;
+  font-size:12px;
+  font-weight:600;
+  color:#333;
+  text-align:center;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+
+
+
+</style>
+</head>
+<body>
+
+
+
+<div id="giftNotif" class="gift-notif">
+  <div class="gift-notif-box">
+    <img src="ic_launcher.png">
+    <span>
+      Anda tidak dapat memberikan gift saat ini
+    </span>
+  </div>
+</div>
+
+    <!-- POPUP VERIFIKASI -->
+<div id="verifyPopup" class="popup hidden">
+  <div class="popup-box">
+    <i class="fa-solid fa-circle-exclamation"></i>
+
+    <div class="popup-title">
+      Tidak dapat melakukan panggilan video
+    </div>
+
+    <div class="popup-desc">
+      Akun anda belum diverifikasi
+    </div>
+
+   <button onclick="location.href='Verifikasi_akun.html'">Pergi Verifikasi</button>
+
+    <!-- 🔥 BUTTON BARU -->
+<button id="maybeBtn" type="button">
+  Mungkin nanti
+</button>
+
+
+  </div>
+</div>
+
+<div id="loadingScreen" class="loading hidden">
+  <div class="spinner"></div>
+  <div class="loading-text">Menghubungkan Panggilan...</div>
+</div>
+
+
+
+
+<div class="video-container">
+
+  <!-- VIDEO (dummy camera) -->
+ <video id="localVideo" autoplay playsinline muted></video>
+
+  <!-- TOP RIGHT PROFILE -->
+<div class="top-bar">
+
+  <!-- LEFT TOKEN -->
+  <div class="top-left">
+    <img src="credit.png">
+    <span id="saldoToken">Rp 0</span>
+  </div>
+
+  <!-- RIGHT GIFT -->
+  <div class="top-right" onclick="openGift()" style="cursor:pointer;">
+    <img src="im_gift_select.png" alt="gift">
+  </div>
+
+</div>
+
+<!-- GIFT SHEET -->
+<div id="giftSheet" class="gift-sheet">
+  <div class="gift-header">
+    <div class="line"></div>
+  </div>
+
+  <div id="giftList" class="gift-list"></div>
+</div>
+
+
+
+
+
+
+  <!-- TYPING STATUS -->
+  <div class="typing-box">
+    Menunggu status<span class="dot"></span>
+  </div>
+
+
+
+
+
+<div class="chat-box">
+  <div id="chatList" class="chat-list"></div>
+
+  <div class="chat-input">
+    <input id="msgInput" type="text" placeholder="Ketik pesan...">
+    <button onclick="sendMsg()">
+      Kirim
+    </button>
+  </div>
+</div>
+
+
+
+
+
+  <!-- BOTTOM LEFT -->
+  <div class="bottom-left">
+    <button onclick="history.back()">Kembali</button>
+  </div>
+
+  <!-- BOTTOM RIGHT -->
+  <div class="bottom-right">
+    <button onclick="skipCall()">Skip</button>
+  </div>
+
+</div>
+
+
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  set,
+  get,
+  push,
+  update
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+
+
+
+
+const login = JSON.parse(localStorage.getItem("user"));
+
+if (!login || !login.userId) {
+  window.location.href = "login.html";
+}
+
+
+
+
+
+
+function updateLastActive(page = "Panggilan_video") {
+
+  const login = JSON.parse(localStorage.getItem("user"));
+  if (!login?.userId) return;
+
+  update(ref(db, "users2/" + login.userId), {
+    lastActive: Date.now(),
+    currentPage: page
+  });
+
+}
+
+["click", "touchstart", "keydown"].forEach(evt => {
+  document.addEventListener(evt, () => {
+    updateLastActive("Panggilan_video");
+  }, { passive: true });
+});
+
+updateLastActive("Panggilan_video");
+
+
+
+
+
+
+
+
+
+
+
+let currentUser = null;
+
+async function getCurrentUser() {
+  try {
+
+    const snap = await get(ref(db, "users2/" + login.userId));
+
+    if (!snap.exists()) return null;
+
+    currentUser = snap.val();
+
+    
+
+    return currentUser;
+
+  } catch (err) {
+    console.log("ERROR getCurrentUser:", err);
+    return null;
+  }
+}
+
+
+
+
+function formatSaldoCoin(saldo){
+  saldo = Number(saldo || 0);
+
+  // 🔥 juta → M
+  if (saldo >= 1000000) {
+    const juta = saldo / 1000000;
+
+    return Number.isInteger(juta)
+      ? juta + "M"
+      : juta.toFixed(1) + "M";
+  }
+
+  // 🔥 kecil → credits (DESIMAL, bukan bulat)
+  const credits = saldo / 171.1;
+
+  return credits.toFixed(1);
+}
+
+window.addEventListener("DOMContentLoaded", async () => {
+
+  await getCurrentUser();
+
+  const el = document.getElementById("saldoToken");
+
+  if (el && currentUser) {
+    el.innerText = formatSaldoCoin(currentUser.saldo);
+  }
+
+});
+
+
+/* OPEN SHEET */
+function openGift(){
+  console.log("OPEN GIFT CLICKED");
+
+  const sheet = document.getElementById("giftSheet");
+
+  sheet.classList.add("show");
+}
+
+window.openGift = openGift;
+
+
+
+
+document.addEventListener("click", function(e){
+
+  const sheet = document.getElementById("giftSheet");
+  const topRight = document.querySelector(".top-right");
+
+  if(!sheet.classList.contains("show")) return;
+
+  if (!sheet.contains(e.target) && !topRight.contains(e.target)) {
+    sheet.classList.remove("show");
+  }
+
+});
+
+/* SHOW NOTIF */
+function showNotif(){
+
+  const notif = document.getElementById("giftNotif");
+
+  notif.classList.add("show");
+
+
+  setTimeout(()=>{
+    notif.classList.remove("show");
+  },2500);
+
+}
+
+/* LOAD GIFTS */
+async function loadGift(){
+
+  const snap = await get(ref(db, "Gift"));
+
+  let data;
+
+  if(!snap.exists()){
+    // 🔥 AUTO DUMMY 20 DATA
+    data = {};
+    for(let i=1;i<=20;i++){
+      data["gift"+i] = {
+        name: "Gift " + i,
+        price: (i * 50).toString(),
+        img: "gift.png",
+        role: "Gift"
+      };
+    }
+
+    await set(ref(db, "Gift"), data);
+  } else {
+    data = snap.val();
+  }
+
+  renderGift(data);
+}
+
+
+
+/* RENDER */
+function renderGift(data){
+
+  const list = document.getElementById("giftList");
+  list.innerHTML = "";
+
+  Object.keys(data).forEach(key => {
+
+    const g = data[key];
+
+    const div = document.createElement("div");
+    div.className = "gift-item";
+
+div.innerHTML = `
+  <img src="${g.img}">
+
+    <div class="gift-name">
+    ${g.name || "Gift"}
+  </div>
+  <div class="gift-price">
+    <img src="token_wrap.png" class="tokengamgam">
+    <span>${g.price}</span>
+  </div>
+`;
+
+    div.onclick = () => {
+      showNotif();
+    };
+
+    list.appendChild(div);
+  });
+
+}
+
+loadGift();
+
+/* CAMERA */
+async function startCamera(){
+  const stream = await navigator.mediaDevices.getUserMedia({
+    video: { facingMode: "user" },
+    audio: false
+  });
+
+  document.getElementById("localVideo").srcObject = stream;
+}
+startCamera();
+
+/* CHAT */
+window.sendMsg = function(){
+  const input = document.getElementById("msgInput");
+  const text = input.value.trim();
+  if(!text) return;
+
+  const msg = document.createElement("div");
+  msg.className = "msg right";
+  msg.innerText = text;
+
+  document.getElementById("chatList").appendChild(msg);
+  input.value = "";
+};
+
+
+function addSystemMessage(text){
+  const chatList = document.getElementById("chatList");
+
+  const div = document.createElement("div");
+  div.className = "msg system";
+
+  div.innerHTML = `
+    <i class="fa-solid fa-circle-info"></i>
+    <span>${text}</span>
+  `;
+
+  chatList.appendChild(div);
+}
+
+
+
+
+/* ================= POPUP FIX ================= */
+function showPopup(){
+  const popup = document.getElementById("verifyPopup");
+  if(!popup) return;
+
+  popup.classList.remove("hidden");
+
+  setTimeout(() => {
+    popup.classList.add("hidden");
+  }, 4000);
+}
+
+setTimeout(showPopup, 3000);
+
+/* ================= BUTTON FIX ================= */
+window.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("maybeBtn");
+  const popup = document.getElementById("verifyPopup");
+
+  if (!btn || !popup) return;
+
+  btn.onclick = () => {
+    popup.style.display = "none";
+  };
+});
+
+/* ================= SKIP FIX ================= */
+window.skipCall = async function () {
+
+  const loading = document.getElementById("loadingScreen");
+  const popup = document.getElementById("verifyPopup");
+
+  if (!loading || !popup) return;
+
+  /* ================= FIREBASE LOG ================= */
+  try {
+    if (login && login.userId) {
+
+      const snap = await get(ref(db, "users2/" + login.userId));
+
+      if (snap.exists()) {
+        const user = snap.val();
+
+const logData = {
+  userId: login.userId, // 🔥 PENTING
+
+  nama: user.nama || "Unknown",
+  waktu: new Date().toLocaleString("id-ID"),
+  status: "Panggilan dibatalkan",
+  logo: "destiny_icon_video_call.png",
+  profil: user.profil || ""
+};
+
+await push(ref(db, "Logpanggilan"), logData);
+      }
+    }
+  } catch (err) {
+    console.log("LOG ERROR:", err);
+  }
+
+  /* ================= UI LOGIC (ASLI KAMU) ================= */
+
+  popup.classList.add("hidden");
+  loading.classList.remove("hidden");
+
+  // clear timeout lama
+  if (window._skipTimer) {
+    clearTimeout(window._skipTimer);
+  }
+
+  window._skipTimer = setTimeout(() => {
+
+    loading.classList.add("hidden");
+
+    // paksa reflow biar aman
+    void popup.offsetWidth;
+
+    popup.classList.remove("hidden");
+
+  }, 2500);
+};
+
+window.addEventListener("load", () => {
+  addSystemMessage("Mohon berperilaku baik dalam melakukan panggilan");
+});
+
+
+
+
+
+
+
+
+document.addEventListener("contextmenu", function(e){
+  e.preventDefault();
+});
+document.addEventListener("copy", function(e){
+  e.preventDefault();
+});
+
+document.addEventListener("selectstart", function(e){
+  e.preventDefault();
+});
+
+document.addEventListener("dragstart", function(e){
+  e.preventDefault();
+});
+
+
+document.addEventListener("keydown", function (e) {
+  if (
+    (e.ctrlKey && e.key === "+") ||
+    (e.ctrlKey && e.key === "-") ||
+    (e.ctrlKey && e.key === "0") ||
+    (e.ctrlKey && e.key === "=")
+  ) {
+    e.preventDefault();
+  }
+});
+
+document.addEventListener("gesturestart", e => e.preventDefault());
+document.addEventListener("gesturechange", e => e.preventDefault());
+document.addEventListener("gestureend", e => e.preventDefault());
+
+</script>
+
+
+
+
+</body>
+</html>

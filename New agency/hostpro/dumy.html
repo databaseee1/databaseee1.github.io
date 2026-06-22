@@ -1,0 +1,62 @@
+<button onclick="tambahUserIdSemua()">
+Tambah userId Semua User
+</button>
+
+
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  get,
+  update,
+  set
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+/* FIREBASE */
+const firebaseConfig = {
+  apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain:"users-96dc5.firebaseapp.com",
+  databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:"users-96dc5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+async function tambahUserIdSemua() {
+
+  const snap = await get(ref(db, "users1"));
+
+  if (!snap.exists()) {
+    alert("users1 kosong");
+    return;
+  }
+
+  let total = 0;
+
+  snap.forEach(child => {
+
+    const key = child.key; // user_001
+
+    update(
+      ref(db, "users1/" + key),
+      {
+        userId: key
+      }
+    );
+
+    total++;
+  });
+
+  alert(
+    total +
+    " user berhasil ditambahkan field userId"
+  );
+}
+
+window.tambahUserIdSemua = tambahUserIdSemua;
+</script>

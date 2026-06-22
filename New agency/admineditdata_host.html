@@ -1,0 +1,571 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Edit Data Host</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+body{
+margin:0;
+background:#f5f5f5;
+font-family:Poppins,sans-serif;
+}
+
+.header{
+position:sticky;
+top:0;
+z-index:999;
+background:#fff;
+padding:15px;
+border-bottom:1px solid #eee;
+display:flex;
+align-items:center;
+gap:12px;
+font-weight:600;
+}
+
+.back{
+cursor:pointer;
+font-size:18px;
+}
+
+.container{
+padding:10px;
+}
+
+.card{
+background:#fff;
+border-radius:14px;
+padding:15px;
+margin-bottom:12px;
+box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+
+.profil{
+width:100px;
+height:100px;
+border-radius:50%;
+object-fit:cover;
+display:block;
+margin:auto;
+border:3px solid #eee;
+}
+
+.gallery{
+display:flex;
+gap:8px;
+overflow:auto;
+margin-top:12px;
+}
+
+.gallery img{
+width:90px;
+height:90px;
+object-fit:cover;
+border-radius:10px;
+flex:none;
+}
+
+.label{
+font-size:13px;
+font-weight:600;
+margin-top:12px;
+margin-bottom:5px;
+}
+
+input,
+textarea,
+select{
+width:100%;
+box-sizing:border-box;
+padding:11px;
+border:1px solid #ddd;
+border-radius:10px;
+font-size:14px;
+outline:none;
+}
+
+textarea{
+resize:vertical;
+min-height:90px;
+}
+
+.save-btn{
+width:100%;
+border:none;
+padding:14px;
+background:#27ae60;
+color:#fff;
+font-weight:700;
+border-radius:12px;
+font-size:15px;
+margin-top:15px;
+cursor:pointer;
+}
+
+.info{
+font-size:12px;
+color:#666;
+margin-top:6px;
+}
+
+.notif{
+display:none;
+position:fixed;
+left:50%;
+bottom:20px;
+transform:translateX(-50%);
+background:#111;
+color:#fff;
+padding:12px 20px;
+border-radius:10px;
+z-index:99999;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<div class="back" onclick="history.back()">
+<i class="fa fa-chevron-left"></i>
+</div>
+
+<div>Edit Data Host</div>
+</div>
+
+<div class="container">
+
+<div class="card">
+
+<img id="profil" class="profil">
+
+<div class="gallery" id="gallery"></div>
+
+<div class="info">
+Foto profil dan gallery hanya dapat dilihat.
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="label">Nama</div>
+<input id="nama">
+
+<div class="label">Email</div>
+<input id="email">
+
+<div class="label">Password</div>
+<input id="password">
+
+<div class="label">WA</div>
+<input id="wa">
+
+<div class="label">Umur</div>
+<input id="umur">
+
+<div class="label">Jenis Kelamin</div>
+<input id="jk">
+
+<div class="label">App Name</div>
+<input id="appName">
+
+<div class="label">Bank</div>
+<input id="bank">
+
+<div class="label">Nama Rekening</div>
+<input id="namaRek">
+
+<div class="label">Nomor Rekening</div>
+<input id="noRek">
+
+</div>
+
+<div class="card">
+
+<div class="label">Saldo</div>
+<input id="saldo" type="number">
+
+<div class="label">Coin</div>
+<input id="coin" type="number">
+
+<div class="label">Jumlah Tagihan</div>
+<input id="jumlahTagihan" type="number">
+
+<div class="label">Level</div>
+<input id="level">
+
+<div class="label">Deposit Count</div>
+<input id="depositCount" type="number">
+
+<div class="label">Status</div>
+<input id="status">
+
+<div class="label">Status Host</div>
+<input id="statush">
+
+<div class="label">Status Admin Card</div>
+<input id="statusAdminCard">
+
+<div class="label">Verified</div>
+<select id="verified">
+<option value="true">true</option>
+<option value="false">false</option>
+</select>
+
+<div class="label">Tags (pisahkan koma)</div>
+<textarea id="tags"></textarea>
+
+<div class="label">Tanggal Pendaftaran</div>
+<input id="createdAt" readonly>
+
+<button class="save-btn"
+onclick="saveData()">
+SIMPAN PERUBAHAN
+</button>
+
+</div>
+
+</div>
+
+<div class="notif" id="notif"></div>
+
+
+
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import {
+getDatabase,
+ref,
+get,
+update
+}
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* FIREBASE */
+
+const firebaseConfig = {
+  apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain:"users-96dc5.firebaseapp.com",
+  databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:"users-96dc5",
+  storageBucket:"users-96dc5.appspot.com",
+  messagingSenderId:"483322415863",
+  appId:"1:483322415863:web:1397a8f2e808e66ad9e1f2"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+
+
+/* ================= CEK LOGIN ================= */
+
+const adminData = JSON.parse(localStorage.getItem("adminLogin"));
+
+if (!adminData || adminData.role !== "admin") {
+  window.location.replace("Login_admin.html");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* UID DARI URL */
+
+const params =
+  new URLSearchParams(window.location.search);
+
+const uid =
+  params.get("uid");
+
+let currentUser = null;
+
+/* LOAD USER */
+
+async function loadUser(){
+
+  if(!uid){
+    alert("UID tidak ditemukan");
+    return;
+  }
+
+  const snap =
+    await get(
+      ref(db,"users2/" + uid)
+    );
+
+  if(!snap.exists()){
+    alert("User tidak ditemukan");
+    return;
+  }
+
+  const u = snap.val();
+
+  currentUser = u;
+
+
+
+// pastikan field depositCount selalu ada
+if (typeof u.depositCount === "undefined") {
+  await update(ref(db, "users2/" + uid), {
+    depositCount: 0
+  });
+  u.depositCount = 0;
+}
+
+
+
+
+  /* FOTO PROFIL */
+
+  document.getElementById("profil").src =
+    u.profil || "";
+
+  /* GALLERY FOTO */
+
+  const gallery =
+    document.getElementById("gallery");
+
+  gallery.innerHTML = "";
+
+  if(Array.isArray(u.photos)){
+
+    u.photos.forEach(photo=>{
+
+      const img =
+        document.createElement("img");
+
+      img.src = photo;
+
+      gallery.appendChild(img);
+
+    });
+
+  }
+
+  /* DATA USER */
+
+  document.getElementById("nama").value =
+    u.nama || "";
+
+  document.getElementById("email").value =
+    u.email || "";
+
+  document.getElementById("password").value =
+    u.password || "";
+
+  document.getElementById("wa").value =
+    u.wa || "";
+
+  document.getElementById("umur").value =
+    u.umur || "";
+
+  document.getElementById("jk").value =
+    u.jk || "";
+
+  document.getElementById("appName").value =
+    u.appName || "";
+
+  document.getElementById("bank").value =
+    u.bank || "";
+
+  document.getElementById("namaRek").value =
+    u.namaRek || "";
+
+  document.getElementById("noRek").value =
+    u.noRek || "";
+
+  document.getElementById("saldo").value =
+    Number(u.saldo || 0);
+
+  document.getElementById("coin").value =
+    Number(u.coin || 0);
+
+  document.getElementById("jumlahTagihan").value =
+    Number(u.jumlahTagihan || 0);
+
+  document.getElementById("level").value =
+    u.level || "";
+
+document.getElementById("depositCount").value =
+  Number(u.depositCount || 0);
+
+  document.getElementById("status").value =
+    u.status || "";
+
+  document.getElementById("statush").value =
+    u.statush || "";
+
+  document.getElementById("statusAdminCard").value =
+    u.statusAdminCard || "";
+
+  document.getElementById("verified").value =
+    String(u.verified);
+
+  document.getElementById("tags").value =
+    Array.isArray(u.tags)
+      ? u.tags.join(", ")
+      : "";
+
+  /* CREATED AT */
+
+  let tanggal = "";
+
+  if(u.createdAt){
+
+    tanggal =
+      new Date(
+        Number(u.createdAt)
+      ).toLocaleString("id-ID");
+
+  }
+
+  document.getElementById("createdAt").value =
+    tanggal;
+
+}
+
+loadUser();
+
+
+
+/* ================= NOTIF ================= */
+
+window.showNotif = function(text){
+
+  const notif =
+    document.getElementById("notif");
+
+  notif.innerText = text;
+  notif.style.display = "block";
+
+  setTimeout(()=>{
+    notif.style.display = "none";
+  },2500);
+
+};
+
+/* ================= SIMPAN DATA ================= */
+
+window.saveData = async function(){
+
+  try{
+
+    const tagsText =
+      document.getElementById("tags")
+      .value
+      .trim();
+
+    const tagsArray =
+      tagsText
+      ? tagsText
+          .split(",")
+          .map(v=>v.trim())
+          .filter(v=>v)
+      : [];
+
+    await update(
+      ref(db,"users2/" + uid),
+      {
+
+        nama:
+          document.getElementById("nama").value.trim(),
+        email:
+          document.getElementById("email").value.trim(),
+        password:
+          document.getElementById("password").value,
+        wa:
+          document.getElementById("wa").value.trim(),
+        umur:
+          document.getElementById("umur").value.trim(),
+        jk:
+          document.getElementById("jk").value.trim(),
+        appName:
+          document.getElementById("appName").value.trim(),
+        bank:
+          document.getElementById("bank").value.trim(),
+        namaRek:
+          document.getElementById("namaRek").value.trim(),
+        noRek:
+          document.getElementById("noRek").value.trim(),
+        saldo:
+          Number(
+            document.getElementById("saldo").value || 0
+          ),
+
+        coin:
+          Number(
+            document.getElementById("coin").value || 0
+          ),
+
+        jumlahTagihan:
+          Number(
+            document.getElementById("jumlahTagihan").value || 0
+          ),
+
+        level:
+          document.getElementById("level").value.trim(),
+
+          depositCount: Number(
+  document.getElementById("depositCount").value || 0
+),
+
+
+        status:
+          document.getElementById("status").value.trim(),
+        statush:
+          document.getElementById("statush").value.trim(),
+        statusAdminCard:
+          document.getElementById("statusAdminCard").value.trim(),
+        verified:
+          document.getElementById("verified").value === "true",
+        tags:
+          tagsArray
+
+      }
+    );
+
+    showNotif(
+      "Data host berhasil disimpan"
+    );
+
+  }
+  catch(err){
+
+    console.error(err);
+
+    showNotif(
+      "Gagal menyimpan data"
+    );
+
+  }
+
+};
+
+</script>
+
+</body>
+</html>
+

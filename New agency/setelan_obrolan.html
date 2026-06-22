@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Setelan Obrolan</title>
+
+<style>
+
+
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none !important;
+}
+
+
+button, a, div, span, img {
+  outline: none !important;
+}
+
+
+img {
+
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+
+
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+
+
+
+body{
+  margin:0;
+  font-family:'Poppins', sans-serif;
+  background:#f9f9f9;
+}
+
+/* HEADER */
+.header{
+  background:linear-gradient(135deg,#a855f7,#ff6b6b,#ff8c42);
+  padding:18px;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  font-weight:bold;
+  font-size:18px;
+}
+
+.header img.back{
+  position:absolute;
+  left:15px;
+  width:22px;
+  height:22px;
+  cursor:pointer;
+}
+
+/* CARD */
+.card{
+  background:#fff;
+  margin:12px;
+  padding:15px;
+  border-radius:12px;
+}
+
+/* PRICE BOX */
+.price-box{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin-top:10px;
+}
+
+.price-pill{
+  background:#f3e8ff;
+  padding:10px 18px;
+  border-radius:25px;
+  font-weight:bold;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+/* TOGGLE */
+.row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 0;
+  border-bottom:1px solid #eee;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 45px;
+  height: 25px;
+}
+
+.switch input { display:none; }
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #ccc;
+  transition: .3s;
+  border-radius: 25px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 4px;
+  bottom: 3.5px;
+  background-color: white;
+  transition: .3s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #a855f7;
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+/* TABLE */
+.table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+.table td{
+  padding:12px;
+}
+
+.table tr:nth-child(odd){
+  background:#f7f2ff;
+}
+
+.badge{
+  color:red;
+  font-size:12px;
+  margin-left:6px;
+  font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <img src="back_white.png" class="back" onclick="history.back()">
+  Setelan Obrolan
+</div>
+
+<!-- CARD 1 -->
+<div class="card">
+  <div style="text-align:center;font-weight:bold;">
+    Harga Obrolan Video Saya
+  </div>
+
+  <div class="price-box">
+    <div class="price-pill">
+      10.5 <img src="token.png" width="16"> /menit
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:10px;">
+   Level saya saat ini adalah <b id="userLevel" style="color:#a855f7;"></b>
+  </div>
+</div>
+
+<div class="card">
+  <div style="font-weight:bold;margin-bottom:10px;">
+    Setelan Obrolan
+  </div>
+
+  <div class="row">
+    <div>Obrolan Video</div>
+    <label class="switch">
+      <input type="checkbox" id="videoChat" checked>
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="row">
+    <div>Tampilkan Lokasi</div>
+    <label class="switch">
+      <input type="checkbox" id="showLocation">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="row">
+    <div>Tampilkan hadiah di profil</div>
+    <label class="switch">
+      <input type="checkbox" id="showGift">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="row">
+    <div>Salam Otomatis</div>
+    <label class="switch">
+      <input type="checkbox" id="autoGreeting">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="row" style="border:none;">
+    <div>Tampil di Atas</div>
+    <label class="switch">
+      <input type="checkbox" id="showTop">
+      <span class="slider"></span>
+    </label>
+  </div>
+</div>
+
+<!-- CARD 3 -->
+<div class="card">
+  <div style="font-weight:bold;margin-bottom:10px;">
+    Harga Yang Bisa Anda Tetapkan
+  </div>
+
+  <table class="table">
+    <tr>
+      <td>Lv1</td>
+      <td>7.5 <img src="token.png" width="14"> /menit</td>
+    </tr>
+
+    <tr>
+      <td>Lv2</td>
+      <td>9 <img src="token.png" width="14"> /menit</td>
+    </tr>
+
+    <tr>
+      <td>Lv3</td>
+      <td>10.5 <img src="token.png" width="14"> /menit</td>
+    </tr>
+
+    <tr>
+      <td>Lv4</td>
+      <td>12 <img src="token.png" width="14"> /menit</td>
+    </tr>
+
+    <tr>
+      <td>Lv5</td>
+      <td>13.5 <img src="token.png" width="14"> /menit</td>
+    </tr>
+  </table>
+</div>
+
+
+
+
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, get,update, onValue} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* ================= FIREBASE ================= */
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* ================= LOGIN FIX ================= */
+const loginRaw = localStorage.getItem("user");
+
+if (!loginRaw || loginRaw === "null") {
+  window.location.href = "login.html";
+}
+
+const login = JSON.parse(loginRaw);
+
+/* 🔥 WAJIB USER ID ONLY */
+const userId = login.userId;
+
+if (!userId) {
+  localStorage.clear();
+  sessionStorage.clear();
+  window.location.href = "login.html";
+}
+
+
+
+onValue(ref(db, "Statusakun_host/" + login.userId), (snap) => {
+
+  if (!snap.exists()) return;
+
+  const status = snap.val().status;
+
+  if (status === "banned" || status === "suspend") {
+
+    localStorage.removeItem("user");
+    window.location.replace("status_akun.html");
+  }
+
+});
+
+
+
+function updateLastActive(page = "Setelan_Obrolan") {
+
+  const login = JSON.parse(localStorage.getItem("user"));
+  if (!login?.userId) return;
+
+  update(ref(db, "users2/" + login.userId), {
+    lastActive: Date.now(),
+    currentPage: page
+  });
+
+}
+
+["click", "touchstart", "keydown"].forEach(evt => {
+  document.addEventListener(evt, () => {
+    updateLastActive("Setelan_Obrolan");
+  }, { passive: true });
+});
+
+updateLastActive("Setelan_Obrolan");
+
+
+
+
+
+/* ================= LOAD USER (FIX NO GLOBAL BUG) ================= */
+async function loadUser() {
+  const snap = await get(ref(db, "users2"));
+  if (!snap.exists()) return;
+
+  const u = snap.child(userId).val();
+
+  if (!u) return;
+
+  document.getElementById("userLevel").innerText =
+    String(u.level || 1);
+}
+
+loadUser();
+
+/* ================= SETTINGS PER USER (FIX TOTAL) ================= */
+
+/* 🔥 BUKAN GLOBAL LAGI */
+const settings = [
+  "videoChat",
+  "showLocation",
+  "showGift",
+  "autoGreeting",
+  "showTop"
+];
+
+function getKey(id){
+  return `${userId}_${id}`;
+}
+
+window.addEventListener("load", () => {
+
+  settings.forEach(id => {
+
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    const key = getKey(id);
+
+    /* LOAD PER USER */
+    const saved = localStorage.getItem(key);
+
+    if (saved !== null) {
+      el.checked = saved === "true";
+    }
+
+    /* SAVE PER USER */
+    el.addEventListener("change", () => {
+      localStorage.setItem(key, el.checked);
+    });
+  });
+
+});
+
+
+
+/* ================= (NO zoom) ================= */
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
+document.addEventListener("selectstart", e => e.preventDefault());
+
+/* ❌ BLOCK ZOOM KEYBOARD (Ctrl + / - / 0) */
+document.addEventListener("keydown", function (e) {
+  if (
+    (e.ctrlKey && e.key === "+") ||
+    (e.ctrlKey && e.key === "-") ||
+    (e.ctrlKey && e.key === "0") ||
+    (e.ctrlKey && e.key === "=")
+  ) {
+    e.preventDefault();
+  }
+});
+
+/* BLOCK PINCH ZOOM (mobile) */
+document.addEventListener("gesturestart", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gesturechange", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gestureend", function (e) {
+  e.preventDefault();
+});
+/* ================= (NO zoom) ================= */
+
+
+</script>
+
+</body>
+</html>

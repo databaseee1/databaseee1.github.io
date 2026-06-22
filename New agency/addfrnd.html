@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Daftar Teman</title>
+
+<style>
+
+*{
+ font-family:'Poppins',sans-serif;
+ box-sizing:border-box;
+}
+
+body{
+ margin:0;
+ background:#fff;
+ padding-bottom:80px;
+}
+
+
+/* HEADER */
+
+.header{
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ height:90px;
+ position:relative;
+}
+
+
+.back{
+ position:absolute;
+ left:25px;
+ cursor:pointer;
+ display:flex;
+ align-items:center;
+}
+
+.back img{
+ width:28px;
+ height:28px;
+ object-fit:contain;
+}
+
+
+
+.title{
+ font-size:20px;
+ font-weight:600;
+}
+
+
+
+/* TAB */
+
+.tabs{
+
+ margin:8px 25px;
+
+ height:50px;
+
+ background:#f3f3f3;
+
+ border-radius:30px;
+
+ display:flex;
+
+ align-items:center;
+
+ padding:3px;
+
+}
+
+
+
+.tab{
+
+ flex:1;
+
+ height:44px;
+
+ display:flex;
+
+ align-items:center;
+
+ justify-content:center;
+
+ border-radius:25px;
+
+ font-size:16px;
+
+ font-weight:600;
+
+ color:#aaa;
+
+ cursor:pointer;
+
+}
+
+
+
+.tab.active{
+
+ background:#fff;
+
+ color:#222;
+
+ box-shadow:0 2px 10px #ddd;
+
+}
+
+
+
+
+
+/* EMPTY */
+
+.empty{
+
+ height:300px;
+
+ display:flex;
+
+ flex-direction:column;
+
+ align-items:center;
+
+ justify-content:center;
+
+ color:#aaa;
+
+}
+
+
+
+.empty img{
+
+ width:80px;
+
+ opacity:.5;
+
+ margin-bottom:15px;
+
+}
+
+
+.empty-text{
+
+ font-size:15px;
+
+}
+
+
+
+/* BOTTOM NAV */
+
+#bottomNav {
+
+ position:fixed;
+
+ bottom:0;
+ left:0;
+
+ width:100%;
+
+ background:#fff;
+
+ display:flex;
+
+ justify-content:space-around;
+
+ padding:8px 0;
+
+ z-index:9999;
+
+}
+
+
+
+.nav-item{
+
+ flex:1;
+ text-align:center;
+
+}
+
+
+
+.nav-icon{
+
+ width:38px;
+
+}
+
+
+
+.nav-item.active .nav-icon{
+
+ transform:scale(1.1);
+
+}
+
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+
+<div class="header">
+
+<div class="back" onclick="history.back()">
+  <img src="back_black.png">
+</div>
+
+
+<div class="title">
+Daftar teman
+</div>
+
+
+</div>
+
+
+
+
+<div class="tabs">
+
+
+<div class="tab active"
+onclick="changeTab(this,'teman')">
+
+Teman
+
+</div>
+
+
+<div class="tab"
+onclick="changeTab(this,'permintaan')">
+
+Permintaan
+
+</div>
+
+
+</div>
+
+
+
+
+<div id="content"
+class="empty">
+
+
+<div class="empty-text">
+Belum ada Teman
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+
+function changeTab(el,type){
+
+
+ document.querySelectorAll(".tab")
+ .forEach(t=>{
+   t.classList.remove("active");
+ });
+
+
+ el.classList.add("active");
+
+
+
+ const content =
+ document.getElementById("content");
+
+
+
+ if(type==="teman"){
+
+ content.innerHTML=
+ `
+ <div class="empty-text">
+ Belum ada Teman
+ </div>
+ `;
+
+ }
+
+
+ else{
+
+
+ content.innerHTML=
+ `
+ <div class="empty-text">
+ Belum ada Permintaan
+ </div>
+ `;
+
+
+ }
+
+
+}
+
+
+
+</script>
+
+
+
+</body>
+</html>

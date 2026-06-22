@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+
+<title>Riwayat Referral</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<style>
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none !important;
+}
+
+/* hilangkan highlight saat klik/focus */
+button, a, div, span, img {
+  outline: none !important;
+}
+
+
+img {
+ 
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+
+
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  background:#ffffff;
+  padding-top:65px;
+}
+
+.header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:60px;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+  font-weight:600;
+  z-index:9999;
+}
+
+.back-btn{
+  position:absolute;
+  left:15px;
+  width:22px;
+  cursor:pointer;
+}
+
+.container{
+  padding:15px;
+}
+
+.summary-card{
+  background:linear-gradient(135deg, #bfbfbf, #8d5f89);
+  color:#fff;
+  border-radius:9px;
+  padding:20px;
+  margin-bottom:15px;
+}
+
+.summary-title{
+  font-size:13px;
+  opacity:.9;
+}
+
+.summary-total{
+  font-size:28px;
+  font-weight:700;
+  margin-top:5px;
+}
+
+.summary-sub{
+  margin-top:8px;
+  font-size:12px;
+  opacity:.9;
+}
+
+.list{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.item{
+  background:#ffffff;
+  padding:15px;
+  border-bottom: 1px solid #eee;
+}
+
+.item-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.bonus{
+  color:#4b4b4b;
+  font-size:18px;
+  font-weight:450;
+}
+
+.status{
+  background:#e9fff0;
+  color:#1a9b4a;
+  padding:4px 10px;
+  border-radius:50px;
+  font-size:11px;
+  font-weight:600;
+}
+
+.nama{
+  margin-top:5px;
+  font-size:14px;
+  font-weight:500;
+}
+
+.time{
+  margin-top:5px;
+  color:#888;
+  font-size:12px;
+}
+
+.empty{
+  text-align:center;
+  color:#777;
+  padding:50px 20px;
+}
+
+.loading{
+  text-align:center;
+  padding:30px;
+  color:#666;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <img
+    src="back_black.png"
+    class="back-btn"
+    onclick="history.back()">
+  Riwayat Referral
+</div>
+
+<div class="container">
+
+  <div class="summary-card">
+
+    <div class="summary-title">
+      Total Komisi Referral
+    </div>
+
+    <div
+      class="summary-total"
+      id="totalBonus">
+      Rp 0
+    </div>
+
+    <div
+      class="summary-sub"
+      id="totalReferral">
+      0 Referral Berhasil
+    </div>
+
+  </div>
+
+  <div
+    id="historyList"
+    class="list">
+
+    <div class="loading">
+      Memuat data...
+    </div>
+
+  </div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  get,
+  update
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+/* FIREBASE */
+const firebaseConfig = {
+  apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain:"users-96dc5.firebaseapp.com",
+  databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:"users-96dc5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* LOGIN */
+const login =
+  JSON.parse(
+    localStorage.getItem("user")
+  );
+
+if(!login?.userId){
+
+  localStorage.clear();
+  sessionStorage.clear();
+
+  location.href = "login.html";
+}
+
+
+
+
+
+
+
+
+
+
+function updateLastActive(page = "Riwayat_referal") {
+
+  const login = JSON.parse(localStorage.getItem("user"));
+  if (!login?.userId) return;
+
+  update(ref(db, "users2/" + login.userId), {
+    lastActive: Date.now(),
+    currentPage: page
+  });
+
+}
+
+["click", "touchstart", "keydown"].forEach(evt => {
+  document.addEventListener(evt, () => {
+    updateLastActive("Riwayat_referal");
+  }, { passive: true });
+});
+
+updateLastActive("Riwayat_referal");
+
+
+
+
+
+/* FORMAT */
+function rupiah(n){
+
+  return "Rp " +
+  Number(n || 0)
+  .toLocaleString("id-ID");
+}
+
+/* LOAD */
+async function loadHistory(){
+
+  const box =
+    document.getElementById(
+      "historyList"
+    );
+
+  try{
+
+    const snap =
+      await get(
+        ref(
+          db,
+          "referralHistory/" +
+          login.userId
+        )
+      );
+
+    if(!snap.exists()){
+
+      box.innerHTML = `
+      <div class="empty">
+        Belum ada riwayat referral
+      </div>
+      `;
+
+      return;
+    }
+
+    let totalBonus = 0;
+
+    const arr = [];
+
+    snap.forEach(child=>{
+
+      const data = child.val();
+
+      arr.push(data);
+
+      totalBonus +=
+        Number(
+          data.bonus || 0
+        );
+
+    });
+
+    arr.sort(
+      (a,b)=>
+      (b.createdAt||0)
+      -
+      (a.createdAt||0)
+    );
+
+    document.getElementById(
+      "totalBonus"
+    ).innerText =
+      rupiah(totalBonus);
+
+    document.getElementById(
+      "totalReferral"
+    ).innerText =
+      arr.length +
+      " Referral Berhasil";
+
+    let html = "";
+
+    arr.forEach(item=>{
+
+      const waktu =
+      new Date(
+        item.createdAt
+      ).toLocaleString(
+        "id-ID"
+      );
+
+      html += `
+
+      <div class="item">
+
+        <div class="item-top">
+
+          <div class="bonus">
+            ${rupiah(item.bonus)}
+          </div>
+
+          <div class="status">
+            Menerima
+          </div>
+
+        </div>
+
+        <div class="nama">
+          ${item.namaUser || "Referral Baru"}
+        </div>
+
+        <div class="time">
+          ${waktu}
+        </div>
+
+      </div>
+
+      `;
+    });
+
+    box.innerHTML = html;
+
+  }catch(err){
+
+    console.log(err);
+
+    box.innerHTML = `
+    <div class="empty">
+      Gagal memuat data
+    </div>
+    `;
+  }
+
+}
+
+loadHistory();
+
+
+
+
+/* ================= (NO zoom) ================= */
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
+document.addEventListener("selectstart", e => e.preventDefault());
+
+/* ❌ BLOCK ZOOM KEYBOARD (Ctrl + / - / 0) */
+document.addEventListener("keydown", function (e) {
+  if (
+    (e.ctrlKey && e.key === "+") ||
+    (e.ctrlKey && e.key === "-") ||
+    (e.ctrlKey && e.key === "0") ||
+    (e.ctrlKey && e.key === "=")
+  ) {
+    e.preventDefault();
+  }
+});
+
+/* BLOCK PINCH ZOOM (mobile) */
+document.addEventListener("gesturestart", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gesturechange", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gestureend", function (e) {
+  e.preventDefault();
+});
+/* ================= (NO zoom) ================= */
+
+
+
+</script>
+</body>
+</html>

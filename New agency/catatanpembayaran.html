@@ -1,0 +1,400 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>Catatan Pembayaran</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+body{
+margin:0;
+background:#f5f5f5;
+font-family:Poppins,sans-serif;
+}
+
+.header{
+position:sticky;
+top:0;
+z-index:999;
+height:55px;
+background:#fff;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 15px;
+border-bottom:1px solid #eee;
+}
+
+.left{
+display:flex;
+align-items:center;
+gap:12px;
+font-weight:600;
+}
+
+.back{
+cursor:pointer;
+font-size:18px;
+}
+
+.add{
+font-size:20px;
+cursor:pointer;
+color:#27ae60;
+}
+
+.card{
+background:#fff;
+margin:10px;
+padding:12px;
+border-radius:12px;
+box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+
+.row{
+font-size:13px;
+margin:5px 0;
+word-break:break-word;
+}
+
+.nominal{
+font-weight:700;
+color:#27ae60;
+}
+
+.time{
+font-size:12px;
+color:#888;
+margin-top:8px;
+}
+
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.45);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:9999;
+}
+
+.box{
+background:#fff;
+width:320px;
+padding:15px;
+border-radius:12px;
+}
+
+.box input,
+.box textarea{
+width:100%;
+box-sizing:border-box;
+padding:10px;
+margin-bottom:10px;
+border:1px solid #ddd;
+border-radius:8px;
+}
+
+.box textarea{
+height:90px;
+resize:none;
+}
+
+.btn{
+width:100%;
+padding:10px;
+border:none;
+border-radius:8px;
+background:#27ae60;
+color:#fff;
+font-weight:600;
+cursor:pointer;
+}
+
+.notif{
+display:none;
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+background:#111;
+color:#fff;
+padding:12px 20px;
+border-radius:10px;
+z-index:99999;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+
+<div class="left">
+<div class="back"
+onclick="history.back()">
+<i class="fa fa-chevron-left"></i>
+</div>
+
+<div>Catatan Pembayaran</div>
+</div>
+
+<div class="add"
+onclick="openPopup()">
+<i class="fa fa-plus"></i>
+</div>
+
+</div>
+
+<div id="list"></div>
+
+<div class="overlay" id="popup">
+
+<div class="box">
+
+<input
+id="tujuan"
+placeholder="Tujuan pembayaran">
+
+<input
+id="nominal"
+type="number"
+placeholder="Nominal">
+
+<input
+id="bank"
+placeholder="Bank pembayaran">
+
+<textarea
+id="note"
+placeholder="Note"></textarea>
+
+<button
+class="btn"
+onclick="simpanCatatan()">
+Simpan
+</button>
+
+</div>
+
+</div>
+
+<div
+class="notif"
+id="notif">
+</div>
+
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import {
+getDatabase,
+ref,
+get,
+push
+}
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+authDomain:"users-96dc5.firebaseapp.com",
+databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId:"users-96dc5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const params =
+new URLSearchParams(
+window.location.search
+);
+
+const uid =
+params.get("uid");
+
+async function loadData(){
+
+const snap =
+await get(
+ref(
+db,
+"users2/" +
+uid +
+"/catatanPembayaran"
+)
+);
+
+const list =
+document.getElementById("list");
+
+list.innerHTML="";
+
+if(!snap.exists()) return;
+
+const data =
+snap.val();
+
+Object.keys(data)
+.reverse()
+.forEach(id=>{
+
+const d = data[id];
+
+const div =
+document.createElement("div");
+
+div.className =
+"card";
+
+div.innerHTML = `
+
+<div class="row">
+<b>Tujuan :</b>
+${d.tujuan}
+</div>
+
+<div class="row nominal">
+Rp ${Number(
+d.nominal||0
+).toLocaleString("id-ID")}
+</div>
+
+<div class="row">
+<b>Bank :</b>
+${d.bank}
+</div>
+
+<div class="row">
+<b>Note :</b>
+${d.note}
+</div>
+
+<div class="time">
+${new Date(
+d.time
+).toLocaleString("id-ID")}
+</div>
+
+`;
+
+list.appendChild(div);
+
+});
+
+}
+
+loadData();
+
+
+window.openPopup = function(){
+
+document.getElementById("popup")
+.style.display = "flex";
+
+};
+
+window.showNotif = function(text){
+
+const n =
+document.getElementById("notif");
+
+n.innerText = text;
+
+n.style.display = "block";
+
+setTimeout(()=>{
+n.style.display="none";
+},2500);
+
+};
+
+window.simpanCatatan =
+async function(){
+
+const tujuan =
+document.getElementById("tujuan")
+.value.trim();
+
+const nominal =
+Number(
+document.getElementById("nominal")
+.value || 0
+);
+
+const bank =
+document.getElementById("bank")
+.value.trim();
+
+const note =
+document.getElementById("note")
+.value.trim();
+
+if(
+!tujuan ||
+!nominal
+){
+showNotif(
+"Lengkapi data"
+);
+return;
+}
+
+await push(
+
+ref(
+db,
+"users2/" +
+uid +
+"/catatanPembayaran"
+),
+
+{
+tujuan,
+nominal,
+bank,
+note,
+time:Date.now()
+}
+
+);
+
+document.getElementById("popup")
+.style.display = "none";
+
+document.getElementById("tujuan")
+.value="";
+
+document.getElementById("nominal")
+.value="";
+
+document.getElementById("bank")
+.value="";
+
+document.getElementById("note")
+.value="";
+
+showNotif(
+"Catatan berhasil ditambahkan"
+);
+
+loadData();
+
+};
+
+</script>
+
+</body>
+</html>
+

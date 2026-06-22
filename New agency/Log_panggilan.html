@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Log Panggilan</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+body{
+  margin:0;
+  font-family: 'Poppins', sans-serif;
+  background:#fff;
+}
+
+/* HEADER */
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:15px;;
+  font-weight:bold;
+}
+
+.back{
+  width:30px;
+  text-align:left;
+  cursor:pointer;
+  font-size:18px;
+}
+
+.back i{
+  font-size:18px;
+  color:#000;
+}
+
+.title{
+  flex:1;
+  text-align:center;
+  font-size:16px;
+}
+
+/* LIST */
+.list{
+  padding:10px;
+}
+
+.item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 10px;
+  border-bottom:1px solid #f1f1f1;
+}
+
+/* LEFT */
+.left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex:1;
+}
+
+.profil{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+/* NAME + STATUS */
+.info{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.topline{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.name{
+  font-weight:bold;
+  font-size:14px;
+}
+
+.status{
+  font-size:12px;
+  color:#d40000;
+}
+
+/* DATE */
+.date{
+  font-size:11px;
+  color:#999;
+}
+
+/* RIGHT ICON */
+.icon{
+    width: 42px;
+    height: 42px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <div class="back" onclick="history.back()">
+    <i class="fa fa-chevron-left"></i>
+  </div>
+
+  <div class="title">Sejarah</div>
+
+  <div style="width:20px;"></div>
+</div>
+
+<div class="list" id="logList"></div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  get,
+  update
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* FIREBASE */
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+  storageBucket: "users-96dc5.appspot.com",
+  messagingSenderId: "483322415863",
+  appId: "1:483322415863:web:1397a8f2e808e66ad9e1f2"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* LOGIN CHECK */
+const login = JSON.parse(localStorage.getItem("user"));
+
+if (!login || !login.userId) {
+  window.location.href = "login.html";
+}
+
+
+
+
+function updateLastActive(page = "Log_panggilan") {
+
+  const login = JSON.parse(localStorage.getItem("user"));
+  if (!login?.userId) return;
+
+  update(ref(db, "users2/" + login.userId), {
+    lastActive: Date.now(),
+    currentPage: page
+  });
+
+}
+
+["click", "touchstart", "keydown"].forEach(evt => {
+  document.addEventListener(evt, () => {
+    updateLastActive("Log_langgilan");
+  }, { passive: true });
+});
+
+updateLastActive("Log_panggilan");
+
+
+
+
+
+
+
+/* LOAD LOG */
+async function loadLog(){
+
+  const snap = await get(ref(db, "Logpanggilan"));
+
+  if(!snap.exists()) return;
+
+  const data = snap.val();
+
+  const list = document.getElementById("logList");
+  list.innerHTML = "";
+
+  Object.keys(data).reverse().forEach(key => {
+
+    const d = data[key];
+
+    // 🔥 FILTER PER USER
+    if(d.userId !== login.userId) return;
+
+    const div = document.createElement("div");
+    div.className = "item";
+
+    div.innerHTML = `
+      <div class="left">
+        <img class="profil" src="${d.profil || 'default.png'}">
+
+        <div class="info">
+          <div class="name">${d.nama}</div>
+          <div class="status">${d.status}</div>
+          <div class="date">${d.waktu}</div>
+        </div>
+      </div>
+
+      <img class="icon" src="${d.logo}" onclick="window.location.href='Panggilan_video.html'">
+    `;
+
+    list.appendChild(div);
+
+  });
+
+}
+
+loadLog();
+
+
+
+
+
+document.addEventListener("contextmenu", function(e){
+  e.preventDefault();
+});
+document.addEventListener("copy", function(e){
+  e.preventDefault();
+});
+
+document.addEventListener("selectstart", function(e){
+  e.preventDefault();
+});
+
+document.addEventListener("dragstart", function(e){
+  e.preventDefault();
+});
+
+
+document.addEventListener("keydown", function (e) {
+  if (
+    (e.ctrlKey && e.key === "+") ||
+    (e.ctrlKey && e.key === "-") ||
+    (e.ctrlKey && e.key === "0") ||
+    (e.ctrlKey && e.key === "=")
+  ) {
+    e.preventDefault();
+  }
+});
+
+document.addEventListener("gesturestart", e => e.preventDefault());
+document.addEventListener("gesturechange", e => e.preventDefault());
+document.addEventListener("gestureend", e => e.preventDefault());
+
+</script>
+
+</body>
+</html>

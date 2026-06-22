@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Admin Postingan</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+background:#f5f7fb;
+padding:20px;
+}
+
+.header{
+margin-bottom:20px;
+}
+
+.header h2{
+font-size:28px;
+font-weight:700;
+}
+
+.form-card{
+background:#fff;
+padding:20px;
+border-radius:18px;
+box-shadow:0 5px 20px rgba(0,0,0,.08);
+margin-bottom:25px;
+}
+
+.form-card h3{
+margin-bottom:15px;
+}
+
+.form-card input,
+.form-card textarea{
+width:100%;
+padding:14px;
+border:1px solid #ddd;
+border-radius:12px;
+margin-bottom:12px;
+}
+
+.form-card textarea{
+height:140px;
+resize:none;
+}
+
+.form-card button{
+width:100%;
+padding:14px;
+border:none;
+background:#6c3cff;
+color:#fff;
+border-radius:12px;
+font-weight:600;
+cursor:pointer;
+}
+
+#listPostingan{
+display:flex;
+flex-direction:column;
+gap:15px;
+}
+
+.post-card{
+background:#fff;
+padding:18px;
+border-radius:18px;
+box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.post-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:12px;
+}
+
+.post-title{
+font-size:18px;
+font-weight:700;
+}
+
+.post-date{
+font-size:13px;
+color:#777;
+}
+
+.post-desc{
+margin-top:10px;
+line-height:1.6;
+color:#444;
+}
+
+.post-info{
+margin-top:15px;
+display:flex;
+gap:15px;
+color:#777;
+font-size:14px;
+}
+
+.post-actions{
+display:flex;
+gap:10px;
+margin-top:15px;
+}
+
+.btn-edit{
+flex:1;
+background:#2196f3;
+color:white;
+border:none;
+padding:12px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.btn-delete{
+flex:1;
+background:#ff3b5c;
+color:white;
+border:none;
+padding:12px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.5);
+justify-content:center;
+align-items:center;
+z-index:99999;
+}
+
+.modal-box{
+width:95%;
+max-width:550px;
+background:white;
+padding:20px;
+border-radius:18px;
+}
+
+.modal-box input,
+.modal-box textarea{
+width:100%;
+padding:14px;
+border:1px solid #ddd;
+border-radius:12px;
+margin-bottom:12px;
+}
+
+.modal-box textarea{
+height:150px;
+resize:none;
+}
+
+.modal-btns{
+display:flex;
+gap:10px;
+}
+
+.modal-btns button{
+flex:1;
+padding:12px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
+
+#btnSaveEdit{
+background:#6c3cff;
+color:white;
+}
+
+.modal-btns button:last-child{
+background:#ddd;
+}
+
+
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h2>Kelola Postingan</h2>
+</div>
+
+<!-- FORM TAMBAH -->
+<div class="form-card">
+
+    <h3>Tambah Postingan</h3>
+
+    <input
+    type="text"
+    id="judul"
+    placeholder="Judul Postingan">
+
+    <input
+    type="text"
+    id="namaPemosting"
+    placeholder="Nama Pemosting">
+
+    <input
+    type="date"
+    id="tanggal">
+
+    <textarea
+    id="deskripsi"
+    placeholder="Deskripsi Postingan"></textarea>
+
+    <button id="btnTambah">
+        Tambah Postingan
+    </button>
+
+</div>
+
+<!-- LIST POSTINGAN -->
+<div id="listPostingan"></div>
+
+<!-- MODAL EDIT -->
+<div id="editModal" class="modal">
+
+<div class="modal-box">
+
+<h3>Edit Postingan</h3>
+
+<input
+type="text"
+id="editJudul">
+
+<input
+type="text"
+id="editNama">
+
+<input
+type="date"
+id="editTanggal">
+
+<textarea
+id="editDeskripsi"></textarea>
+
+<div class="modal-btns">
+
+<button id="btnSaveEdit">
+Simpan
+</button>
+
+<button onclick="closeModal()">
+Batal
+</button>
+
+</div>
+
+</div>
+</div>
+
+
+
+
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  get,
+  set,
+  update,
+  remove,
+  onValue,
+  push
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* CONFIG */
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+  storageBucket: "users-96dc5.firebasestorage.app",
+  messagingSenderId: "483322415863",
+  appId: "1:483322415863:web:1397a8f2e808e66ad9e1f2",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+
+const listPostingan =
+document.getElementById("listPostingan");
+
+let currentEditId = "";
+
+let cache = {};
+
+
+
+
+
+
+document
+.getElementById("btnTambah")
+.onclick = ()=>{
+
+const judul =
+document.getElementById("judul").value.trim();
+
+const nama =
+document.getElementById("namaPemosting").value.trim();
+
+const tanggal =
+document.getElementById("tanggal").value;
+
+const deskripsi =
+document.getElementById("deskripsi").value.trim();
+
+if(
+!judul ||
+!nama ||
+!tanggal ||
+!deskripsi
+){
+alert("Lengkapi data");
+return;
+}
+
+const newRef =
+push(ref(db,"Mypostingan"));
+
+set(newRef,{
+judul,
+namaPemosting:nama,
+tanggal,
+deskripsi,
+like:0,
+komentar:0,
+timestamp:Date.now()
+});
+
+document.getElementById("judul").value="";
+document.getElementById("namaPemosting").value="";
+document.getElementById("tanggal").value="";
+document.getElementById("deskripsi").value="";
+
+};
+
+
+
+onValue(ref(db,"Mypostingan"),(snap)=>{
+
+const data = snap.val();
+
+cache = data || {};
+
+listPostingan.innerHTML="";
+
+if(!data) return;
+
+let posts = [];
+
+Object.entries(data).forEach(([id,val])=>{
+
+posts.push({
+id,
+...val
+});
+
+});
+
+posts.sort((a,b)=>
+(b.timestamp||0)-
+(a.timestamp||0)
+);
+
+posts.forEach(post=>{
+
+listPostingan.innerHTML += `
+
+<div class="post-card">
+
+<div class="post-header">
+
+<div>
+
+<div class="post-title">
+${post.judul}
+</div>
+
+<div class="post-date">
+${post.tanggal}
+</div>
+
+</div>
+
+</div>
+
+<div class="post-desc">
+${post.deskripsi}
+</div>
+
+<div class="post-info">
+
+<span>
+<i class="fa-solid fa-user"></i>
+${post.namaPemosting}
+</span>
+
+<span>
+<i class="fa-solid fa-heart"></i>
+${post.like||0}
+</span>
+
+<span>
+<i class="fa-solid fa-comment"></i>
+${post.komentar||0}
+</span>
+
+</div>
+
+<div class="post-actions">
+
+<button
+class="btn-edit"
+onclick="editPost('${post.id}')">
+
+Edit
+
+</button>
+
+<button
+class="btn-delete"
+onclick="hapusPost('${post.id}')">
+
+Hapus
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+});
+
+
+
+window.hapusPost = async (id)=>{
+
+const ok = confirm("Hapus postingan ini?");
+
+if(!ok) return;
+
+try{
+
+await remove(
+ref(db,"Mypostingan/"+id)
+);
+
+alert("✅ Postingan berhasil dihapus");
+
+}catch(err){
+
+console.error(err);
+
+alert("❌ Gagal menghapus postingan");
+
+}
+
+};
+
+
+window.editPost = (id)=>{
+
+currentEditId = id;
+
+const d = cache[id];
+
+document.getElementById("editJudul").value =
+d.judul || "";
+
+document.getElementById("editNama").value =
+d.namaPemosting || "";
+
+document.getElementById("editTanggal").value =
+d.tanggal || "";
+
+document.getElementById("editDeskripsi").value =
+d.deskripsi || "";
+
+document.getElementById("editModal")
+.style.display="flex";
+
+};
+
+
+
+document
+.getElementById("btnSaveEdit")
+.onclick = ()=>{
+
+update(
+ref(db,"Mypostingan/"+currentEditId),
+{
+
+judul:
+document.getElementById("editJudul").value,
+
+namaPemosting:
+document.getElementById("editNama").value,
+
+tanggal:
+document.getElementById("editTanggal").value,
+
+deskripsi:
+document.getElementById("editDeskripsi").value
+
+}
+
+);
+
+closeModal();
+
+};
+
+
+window.closeModal = ()=>{
+
+document.getElementById("editModal")
+.style.display="none";
+
+};
+
+
+</script>
+
+</body>
+</html>

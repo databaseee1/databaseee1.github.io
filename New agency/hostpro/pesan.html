@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inbox</title>
+
+<style>
+body{
+  margin:0;
+ font-family:'Poppins', sans-serif;
+  background:#fff;
+  padding-bottom:80px;
+}
+*{
+  font-family:'Poppins', sans-serif;
+}
+
+
+.header{
+  display:flex;
+  align-items:center;
+  padding:22px 24px 15px;
+  background:#fff;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+/* TAB GROUP */
+.header-tabs{
+  display:flex;
+  align-items:center;
+  gap:1px; 
+}
+
+/* TAB STYLE */
+.tab{
+  font-size:16px;
+  font-weight:600;
+  color:#888;
+  padding:6px 10px;
+  cursor:pointer;
+  border-bottom:2px solid transparent;
+}
+
+.tab.active{
+  color:#000;
+  font-size: 20px;
+}
+
+/* ICON RIGHT */
+.header-right{
+  margin-left:auto;
+  display:flex;
+  gap:10px;
+  transform:none; /* ❌ hapus geser aneh */
+}
+
+.header-icon{
+  width:26px;
+  height:26px;
+  object-fit:contain;
+}
+
+
+
+.header-right{
+  margin-left:auto;
+  display:flex;
+  gap:9px;
+  font-size:28px;
+  transform:translateX(10px);
+}
+
+
+
+/* LIST */
+.list{
+  padding:0;
+}
+
+
+
+.chat{
+  display:flex;
+  align-items:center;
+
+  padding:10px 15px;
+
+  margin:8px 0; /* jarak atas bawah */
+
+  gap:10px;
+
+  background:#fff;
+  border-radius:0;
+  box-shadow:none;
+}
+
+.avatar{
+ width:50px;
+ height:50px;
+ border-radius:50%;
+ background:#eee;
+ flex-shrink:0;
+}
+
+
+.avatar img{
+ width:100%;
+ height:100%;
+ object-fit:cover;
+ border-radius:50%;
+}
+
+
+
+.text{
+ flex:1;
+}
+
+
+.name{
+ font-size:13px;
+ font-weight:600;
+}
+
+
+.msg{
+ font-size:12px;
+ color:#999;
+ margin-top:5px;
+
+ white-space:nowrap;
+ overflow:hidden;
+ text-overflow:ellipsis;
+ max-width:230px;
+}
+
+
+
+.status-tag{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  margin-left:6px;
+  padding:2px 8px;
+  background:#ff3b30;
+  color:#fff;
+  border-radius:4px;
+  font-size:7px;
+  font-weight:500;
+  font-family:'Poppins',sans-serif;
+
+  text-transform:uppercase;
+  letter-spacing:.3px;
+
+  line-height:1.4;
+}
+
+/* BADGE MERAH */
+.badge{
+
+ background:#ff4055;
+ color:#fff;
+
+ width:18px;
+ height:18px;
+font-size: 12px;
+ border-radius:50%;
+
+ display:flex;
+ align-items:center;
+ justify-content:center;
+
+}
+
+
+/* ICON KIRI */
+.service-icon{
+
+ width:54px;
+ height:54px;
+ border-radius:50%;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:28px;
+}
+
+.service-icon-img{
+  width:48px;
+  height:48px;
+  object-fit:contain;
+  border-radius: 50px;
+}
+
+
+/* BOTTOM NAV */
+#bottomNav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 0;
+  z-index: 9999;
+
+}
+
+#bottomNav .nav-item {
+  text-align: center;
+  flex: 1;
+  cursor: pointer;
+  user-select: none;
+}
+
+#bottomNav img {
+  width: 38px;
+}
+
+.nav-item.active .nav-icon {
+  transform: scale(1.1);
+  transition: 0.2s;
+}
+
+#loadingScreen{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:999999;
+}
+
+.spinner{
+  width:24px;
+  height:24px;
+  border:3px solid #eee;
+  border-top:3px solid #8a00ff;
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+  from{transform:rotate(0deg);}
+  to{transform:rotate(360deg);}
+}
+
+
+
+
+
+
+
+.chat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* jarak antar chat */
+  padding: 10px 0; /* jarak atas & bawah */
+}
+
+.chat-item {
+  display: flex;
+  align-items: center;
+  padding: 20px 18px;
+  gap: 10px;
+  background: #fff;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+
+.chat-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.chat-content {
+  flex: 1;
+}
+
+.chat-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chat-name {
+  font-weight: 500;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+
+
+
+
+.chat-msg {
+  font-size: 13px;
+  color: #666;
+  margin-top: 2px;
+}
+
+.chat-time {
+  font-size: 11px;
+  color: #999;
+}
+
+
+#callBox{
+  position:fixed;
+  top:70px;
+  left:0;
+  right:0;
+  bottom:70px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:16px;
+  color:#999;
+  font-weight:500;
+}
+
+.call-empty-box{
+  font-size:16px;
+  color:#999;
+  font-weight:500;
+}
+
+
+.more-menu{
+  position:absolute;
+  top:35px;
+  right:1px;
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 4px 15px rgb(0 0 0 / 3%);
+  min-width:190px;
+  display:none;
+  overflow:hidden;
+  z-index:9999;
+}
+
+.menu-item{
+  padding:12px 15px;
+  font-family:'Poppins',sans-serif;
+  font-size:14px;
+  cursor:pointer;
+  background: #f1f1f1;
+}
+
+
+
+</style>
+</head>
+
+<body>
+<div id="loadingScreen">
+  <div class="spinner"></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="header">
+
+<div class="header-tabs">
+
+
+<span class="tab active" id="tabChat">
+  Pesan
+</span>
+
+<span class="tab" id="ta2bPanggilan">
+  Panggilan
+</span>
+
+
+
+</div>
+
+
+
+<div class="header-right">
+
+<img 
+  src="msg_icon_friend.png" 
+  class="header-icon"
+  onclick="window.location.href='addfrnd.html'"
+>
+
+ <img 
+  src="msg_icon_more_dot.png" 
+  class="header-icon"
+  onclick="toggleMenu()"
+>
+  <div id="moreMenu" class="more-menu">
+    <div class="menu-item">Tandai semua sudah dibaca</div>
+    <div class="menu-item">Hapus daftar pesan</div>
+  </div>
+</div>
+
+
+</div>
+
+
+
+
+  <div id="usersList"></div>
+
+
+
+
+</div>
+<!-- BOTTOM NAV -->
+<div id="bottomNav">
+
+  <div class="nav-item" onclick="goNav(this,'home.html','home')">
+    <img class="nav-icon"
+         src="destiny_icon_normal.png"
+         data-default="destiny_icon_normal.png"
+         data-active="destiny_icon_selected.png">
+  </div>
+
+  <div class="nav-item" onclick="goNav(this,'dunia.html','dunia')">
+    <img class="nav-icon"
+         src="match_icon_normal.png"
+         data-default="match_icon_normal.png"
+         data-active="match_icon_selected.png">
+  </div>
+
+  <div class="nav-item" onclick="goNav(this,'inbox.html','inbox')">
+    <img class="nav-icon"
+         src="msg_icon_normal.png"
+         data-default="msg_icon_normal.png"
+         data-active="msg_icon_selected.png">
+  </div>
+
+  <div class="nav-item" onclick="goNav(this,'my_akun.html','saya')">
+    <img class="nav-icon"
+         src="mine_icon_normal.png"
+         data-default="mine_icon_normal.png"
+         data-active="mine_icon_selected.png">
+  </div>
+
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref,update, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain:"users-96dc5.firebaseapp.com",
+  databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:"users-96dc5",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* ================= ELEMENT ================= */
+const chatList = document.getElementById("chatList");
+
+const usersList = document.getElementById("usersList");
+/* ================= TAB ================= */
+
+
+/* ================= LOGIN ================= */
+const login = JSON.parse(localStorage.getItem("user"));
+
+if (!login || !login.uid) {
+  alert("Harus login");
+  window.location.href = "login.html";
+}
+
+const myId = login.uid;
+
+/* ================= FIREBASE REF ================= */
+
+const usersRef = ref(db, "users2");
+const inboxRef = ref(db, "chats");
+
+let usersCache = {};
+let chatsCache = {};
+
+/* ================= USERS ================= */
+
+onValue(usersRef, (snap) => {
+
+  usersCache = {};
+
+  snap.forEach(child => {
+
+    const d = child.val();
+
+    const id =
+      d.uid ||
+      d.email?.replace(/[@.]/g, "_") ||
+      d.wa ||
+      child.key;
+
+    usersCache[id] = d;
+
+  });
+
+  renderUsers();
+});
+
+/* ================= CHATS ================= */
+
+onValue(inboxRef, (snapshot) => {
+
+  chatsCache = snapshot.val() || {};
+
+  renderUsers();
+});
+
+/* ================= HELPERS ================= */
+
+function getName(u, id){
+  if(!u) return id;
+  return u.nama || u.name || id;
+}
+
+function getFoto(u){
+
+  const foto = u?.profil;
+
+  if(!foto){
+    return "assets/images/default_pic_100.png";
+  }
+
+  return foto;
+}
+
+function formatTime(ts){
+
+  if(!ts) return "";
+
+  const d = new Date(ts);
+
+  return `${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`;
+}
+
+function cutText(t, max = 40){
+
+  if(!t) return "";
+
+  return t.length > max
+    ? t.slice(0, max) + "..."
+    : t;
+}
+
+/* ================= LAST MESSAGE ================= */
+
+function getLastMessage(chat){
+
+  if(!chat?.history) return null;
+
+  const arr = Object.values(chat.history);
+
+  if(!arr.length) return null;
+
+  arr.sort((a,b)=>(a.time || 0) - (b.time || 0));
+
+  return arr[arr.length - 1];
+}
+
+/* ================= FIND CHAT ================= */
+
+function findChatWithUser(userId){
+
+  for(const [chatId, chat] of Object.entries(chatsCache)){
+
+    if(
+      chatId.includes(myId) &&
+      chatId.includes(userId)
+    ){
+      return {
+        chatId,
+        chat
+      };
+    }
+
+  }
+
+  return null;
+}
+
+/* ================= OPEN CHAT ================= */
+
+window.openChat = async function(userId){
+
+  const found = findChatWithUser(userId);
+
+  let chatId;
+
+  if(found){
+    chatId = found.chatId;
+  }else{
+    chatId = [myId, userId].sort().join("_");
+  }
+
+  // tandai semua pesan lawan chat sebagai sudah dibaca
+  if(found?.chat?.history){
+
+    const updates = {};
+
+    Object.entries(found.chat.history).forEach(([msgId, msg]) => {
+
+      const sender =
+        msg.senderId ||
+        msg.sender ||
+        "";
+
+      if(
+        sender !== myId &&
+        msg.read === false
+      ){
+        updates[`chats/${chatId}/history/${msgId}/read`] = true;
+      }
+
+    });
+
+    if(Object.keys(updates).length){
+      update(ref(db), updates);
+    }
+  }
+
+  localStorage.setItem("chatId", chatId);
+
+  window.location.href = "isi-chat-host.html";
+};
+
+/* ================= RENDER USERS ================= */
+
+
+
+function getUnreadCount(chat){
+
+  if(!chat?.history) return 0;
+
+  let count = 0;
+
+  Object.values(chat.history).forEach(msg => {
+
+    const sender =
+      msg.senderId ||
+      msg.sender ||
+      "";
+
+    if(
+      sender !== myId &&
+      msg.read === false
+    ){
+      count++;
+    }
+
+  });
+
+  return count;
+}
+
+
+
+
+
+
+
+function renderUsers(){
+
+  if(!usersList) return;
+
+  let html = "";
+
+  const sortedUsers = Object.entries(usersCache)
+    .map(([userId, user]) => {
+
+      const found = findChatWithUser(userId);
+      const chat = found?.chat;
+      const lastMsg = getLastMessage(chat);
+
+      return {
+        userId,
+        user,
+        chat,
+        lastMsg,
+        lastTime: lastMsg?.time || 0
+      };
+
+    })
+    .sort((a, b) => b.lastTime - a.lastTime);
+
+  sortedUsers.forEach(({ userId, user, chat, lastMsg }) => {
+
+    if(userId === myId) return;
+
+    const unreadCount = getUnreadCount(chat);
+
+const pesanTerakhir = lastMsg
+  ? (
+      lastMsg.text ||
+      (lastMsg.gift ? "🎁 " + (lastMsg.giftName || "Gift") : null) ||
+      (lastMsg.foto ? "📷 Foto" : null) ||
+      (lastMsg.image ? "📷 Foto" : null) ||
+      (lastMsg.img ? "📷 Foto" : null) ||
+      "Belum ada pesan"
+    )
+  : "Belum ada pesan";
+
+    html += `
+      <div class="chat-item"
+           onclick="openChat('${userId}')">
+
+        <img
+          class="chat-img"
+          src="${getFoto(user)}"
+          onerror="this.src='assets/images/default_pic_100.png'">
+
+        <div class="chat-content">
+
+          <div class="chat-top">
+
+            <div class="chat-name" style="display:flex;align-items:center;gap:6px;">
+
+  <span>
+    ${getName(user, userId)}
+  </span>
+
+  ${
+    user.statush
+      ? `
+        <span style="
+          font-size:10px;
+          background:#d82727;
+          color:#ffffff;
+          padding:2px 6px;
+          border-radius:10px;
+          line-height:1;
+        ">
+          ${user.statush}
+        </span>
+      `
+      : ""
+  }
+
+</div>
+
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+
+              ${
+                unreadCount > 0
+                  ? `
+                    <span style="
+                      background:#ff3b30;
+                      color:#fff;
+                      min-width:10px;
+                      height:18px;
+                      padding:0 4px;
+                      border-radius:20px;
+                      display:flex;
+                      align-items:center;
+                      justify-content:center;
+                      font-size:11px;
+                      font-weight:500;
+                    ">
+                      ${unreadCount}
+                    </span>
+                  `
+                  : ""
+              }
+
+              <div class="chat-time">
+                ${formatTime(lastMsg?.time)}
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="chat-msg">
+            ${cutText(pesanTerakhir)}
+          </div>
+
+        </div>
+
+      </div>
+    `;
+
+  });
+
+  usersList.innerHTML = html;
+}
+
+
+
+
+
+/* ================= NAV ================= */
+window.goNav = function(el, url){
+
+  document.querySelectorAll("#bottomNav .nav-item").forEach(item => {
+    item.classList.remove("active");
+    const img = item.querySelector(".nav-icon");
+    if (img) img.src = img.dataset.default;
+  });
+
+  el.classList.add("active");
+
+  const img = el.querySelector(".nav-icon");
+  if (img) img.src = img.dataset.active;
+
+  setTimeout(() => window.location.href = url, 150);
+};
+
+
+/* AUTO ACTIVE INBOX */
+document.addEventListener("DOMContentLoaded", () => {
+
+  const inboxNav = document.querySelector(
+    '#bottomNav .nav-item[onclick*="inbox.html"]'
+  );
+
+  if(inboxNav){
+
+    inboxNav.classList.add("active");
+
+    const img = inboxNav.querySelector(".nav-icon");
+
+    if(img){
+      img.src = img.dataset.active;
+    }
+  }
+
+});
+
+
+
+window.addEventListener("load", () => {
+
+  setTimeout(() => {
+
+    document.getElementById(
+      "loadingScreen"
+    ).style.display = "none";
+
+  }, 500);
+
+});
+
+
+
+
+window.toggleMenu = function() {
+  const menu = document.getElementById("moreMenu");
+
+  if(menu.style.display === "block"){
+    menu.style.display = "none";
+  }else{
+    menu.style.display = "block";
+  }
+};
+
+
+document.addEventListener("click",(e)=>{
+  if(
+    !e.target.closest(".header-right") &&
+    !e.target.closest("#moreMenu")
+  ){
+    document.getElementById("moreMenu").style.display="none";
+  }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistem Gaji Agency</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins', sans-serif;
+}
+
+body{
+  background:#fff;
+}
+
+/* HEADER */
+.header{
+  background:#fff;
+  padding:15px;
+  text-align:center;
+  font-weight:600;
+  font-size:18px;
+  position:sticky;
+  top:0;
+  z-index:999;
+
+}
+
+/* CONTAINER */
+.container{
+  padding:15px;
+}
+
+/* CARD */
+.card{
+  background:#fff;
+  padding:18px;
+  border-radius:16px;
+  box-shadow:0 6px 18px rgb(0 0 0 / 3%);
+  margin-top:15px;
+}
+
+/* TITLE */
+.title{
+  font-size:16px;
+  font-weight:700;
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:#7b2ff7;
+}
+
+/* CONTENT */
+.content{
+  font-size:13px;
+  color:#333;
+  line-height:1.8;
+  white-space:pre-line;
+}
+
+/* BOX */
+.box{
+  margin-top:10px;
+  padding:12px;
+  background:#f3f0ff;
+  border-left:4px solid #7b2ff7;
+  border-radius:10px;
+  font-size:13px;
+  line-height:1.6;
+}
+
+/* FOOTER */
+.app-footer{
+  margin-top:30px;
+  padding:20px 10px;
+  text-align:center;
+  color:#777;
+  font-size:12.5px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  Sistem Gaji Agency
+</div>
+
+<div class="container">
+
+  <div class="card">
+    <div class="title">
+      <i class="fa-solid fa-sack-dollar"></i>
+      Sistem Penggajian Agency
+    </div>
+
+    <div id="content" class="content">
+      Memuat data...
+    </div>
+  </div>
+
+</div>
+
+<footer class="app-footer">
+
+  <div style="margin-bottom:10px;">
+    <div onclick="location.href='Layanan_pelanggan.html'" style="
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      color:orange;
+      font-weight:600;
+      font-size:14px;
+      cursor:pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    ">
+      <img src="customer_service_icon.png" style="width:20px;height:20px;">
+      Layanan Pelanggan
+    </div>
+  </div>
+
+  <div class="footer-text">
+    © 2026 Agency System. All Rights Reserved.
+  </div>
+
+</footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  set,
+  get
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* FIREBASE */
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* LOGIN CHECK */
+const login = JSON.parse(localStorage.getItem("user"));
+if (!login) window.location.href = "login.html";
+
+/* KEY */
+const key = "sistem_gaji_agency";
+
+/* DUMMY DATA */
+const dummyText = `
+SISTEM GAJI AGENCY
+
+1. DASAR PENGGAJIAN
+Gaji agency dihitung berdasarkan performa referral dan aktivitas pengguna yang berhasil divalidasi.
+
+2. SISTEM KOMISI
+Setiap agency mendapatkan komisi dari setiap user yang mendaftar melalui link referral aktif.
+
+3. PERHITUNGAN OTOMATIS
+Semua perhitungan gaji dilakukan secara otomatis oleh sistem tanpa intervensi manual.
+
+4. VALIDASI PENGHASILAN
+Hanya aktivitas referral yang sah dan tervalidasi yang akan dihitung sebagai penghasilan.
+
+5. PERSENTASE KOMISI
+Persentase komisi ditentukan berdasarkan level agency dan performa masing-masing akun.
+
+6. PENCAIRAN SALDO
+Saldo dapat dicairkan sesuai batas minimum dan maksimum yang telah ditentukan sistem.
+
+7. WAKTU PEMBAYARAN
+Proses pembayaran dilakukan secara berkala sesuai jadwal sistem yang berlaku.
+
+8. PENAHANAN SALDO
+Sistem berhak menahan saldo apabila terdapat indikasi pelanggaran atau aktivitas mencurigakan.
+
+9. PENYESUAIAN GAJI
+Sistem dapat melakukan penyesuaian gaji berdasarkan kebijakan terbaru tanpa pemberitahuan.
+
+10. PENUTUP
+Sistem ini dibuat untuk memberikan kesempatan penghasilan berbasis performa secara adil, transparan, dan otomatis.
+`;
+
+/* LOAD */
+async function load(){
+
+  const snap = await get(ref(db, key));
+
+  if(!snap.exists()){
+    await set(ref(db, key), dummyText);
+    document.getElementById("content").innerHTML = format(dummyText);
+  } else {
+    document.getElementById("content").innerHTML = format(snap.val());
+  }
+}
+
+/* FORMAT */
+function format(text){
+  let lines = text.split("\n");
+  let html = "";
+
+  lines.forEach(l => {
+    l = l.trim();
+
+    if(!l){
+      html += "<br>";
+      return;
+    }
+
+    if(l.includes("SISTEM GAJI")){
+      html += `<div class="box"><b>${l}</b></div>`;
+    }
+    else if(/^\d+\./.test(l)){
+      html += `<div style="margin-top:8px;"><b>${l}</b></div>`;
+    }
+    else{
+      html += `<div>${l}</div>`;
+    }
+  });
+
+  return html;
+}
+
+load();
+</script>
+
+</body>
+</html>

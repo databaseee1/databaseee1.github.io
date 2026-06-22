@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+
+<title>Dunia</title>
+
+<style>
+
+
+  * {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none !important;
+}
+
+/* hilangkan highlight saat klik/focus */
+button, a, div, span, img {
+  outline: none !important;
+}
+
+
+img {
+ 
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+
+
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+
+
+body{
+  margin:0;
+  font-family:Arial;
+  background:#ffffff;
+  padding-bottom:80px;
+  overflow-x:hidden;
+}
+
+
+.saldo-header{
+  margin:15px;
+  padding:10px 12px;
+  border-radius:12px;
+  font-weight:bold;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  color:#890086;
+}
+
+#carouselContainer{
+  position:relative;
+  width:100%;
+  max-width:600px;
+
+  margin-top:25vh;
+
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  background:url('global_map.png') no-repeat center;
+  background-size:contain;
+}
+
+
+#carouselTrack{
+  display:flex;
+  transition:none;
+  gap:0;
+}
+
+.carousel-item img{
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    object-fit:cover;
+    display:block;
+    margin:0;
+    border:0;
+    box-shadow:none;
+    transform: translateZ(0);
+    backface-visibility:hidden;
+}
+
+
+.btn{
+  margin-top:50px;
+  text-align:center;
+}
+
+.btn button{
+  background:#6c27b0;
+  color:#fff;
+  border:none;
+  padding:12px 60px;
+  border-radius:30px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.btn button:active{
+  transform:scale(0.98);
+}
+
+/* HISTORY POPUP */
+#historyPopup{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#fff;
+  z-index:9999;
+}
+
+.history-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px;
+  font-weight:bold;
+}
+
+.history-body{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+/* BOTTOM NAV */
+#bottomNav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 0;
+  z-index: 9999;
+}
+
+#bottomNav .nav-item {
+  text-align: center;
+  flex: 1;
+  cursor: pointer;
+}
+
+#bottomNav img {
+  width: 38px;
+}
+
+.nav-item.active .nav-icon {
+  transform: scale(1.1);
+  transition: 0.2s;
+}
+
+
+
+
+
+
+#carouselTrack .carousel-item {
+    margin: 0;
+    padding: 0;
+}
+
+#carouselTrack .carousel-item img {
+    width:150px;
+    height:150px;
+    border-radius:50%; 
+    border: none;      
+    box-shadow: none;  
+    display: block;   
+    margin: 0;
+    transition: transform 0.3s;
+}
+
+#carouselTrack{
+  gap:0 !important;
+}
+
+.carousel-item{
+  flex:0 0 auto;
+  margin:0;
+  padding:0;
+}
+
+#carouselContainer{
+  opacity:0;
+  transition:opacity .4s ease;
+}
+
+
+
+
+
+
+#loadingScreen{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:999999;
+}
+
+.spinner{
+  width:24px;
+  height:24px;
+  border:3px solid #eee;
+  border-top:3px solid #8a00ff;
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+  from{transform:rotate(0deg);}
+  to{transform:rotate(360deg);}
+}
+
+
+
+.saldo-box{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:4px 10px;
+  border:1.5px solid #a0a0a0;
+  border-radius:20px;
+  width:fit-content;
+}
+
+.saldo-icon{
+  width:20px;
+  height:20px;
+}
+
+</style>
+</head>
+
+<body>
+<!-- LOADING -->
+<div id="loadingScreen">
+  <div class="spinner"></div>
+</div>
+
+
+
+<!-- SALDO HEADER -->
+<div class="saldo-header">
+<div class="saldo-box">
+  <img src="score_icon_wrap.png" class="saldo-icon">
+  <span id="saldoHostPopup3">Rp 0</span>
+</div>
+
+<img src="match_his_icon.png" style="width:22px;cursor:pointer;" onclick="window.location.href='Log_panggilan.html'">
+</div>
+
+<!-- CAROUSEL -->
+<div id="carouselContainer">
+  <div id="carouselTrack">
+
+  </div>
+</div>
+
+<!-- BUTTON -->
+<div class="btn">
+  <button onclick="location.href='Panggilan_video.html'">
+    Awal
+  </button>
+</div>
+
+<!-- HISTORY -->
+<div id="historyPopup">
+  <div class="history-header">
+    <span onclick="closeHistory()">← Back</span>
+    <span>History Panggilan</span>
+    <div style="width:20px;"></div>
+  </div>
+
+  <div class="history-body">
+    <img src="page_empty_icon.png" style="width:60px;">
+    <p style="color:#aaa;">Tidak ada history panggilan</p>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div id="bottomNav">
+
+  <div class="nav-item" onclick="goNav(this,'home.html')">
+    <img class="nav-icon" src="destiny_icon_normal.png" data-default="destiny_icon_normal.png" data-active="destiny_icon_selected.png">
+  </div>
+
+  <div class="nav-item" onclick="goNav(this,'dunia.html')">
+    <img class="nav-icon" src="match_icon_normal.png" data-default="match_icon_normal.png" data-active="match_icon_selected.png">
+  </div>
+
+  <div class="nav-item" onclick="goNav(this,'inbox.html')">
+    <img class="nav-icon" src="msg_icon_normal.png" data-default="msg_icon_normal.png" data-active="msg_icon_selected.png">
+  </div>
+
+  <div class="nav-item" onclick="goNav(this,'my_akun.html')">
+    <img class="nav-icon" src="mine_icon_normal.png" data-default="mine_icon_normal.png" data-active="mine_icon_selected.png">
+  </div>
+
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  set,
+  update,
+  get,
+  onValue
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* FIREBASE CONFIG */
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+  storageBucket: "users-96dc5.firebasestorage.app",
+  messagingSenderId: "483322415863",
+  appId: "1:483322415863:web:1397a8f2e808e66ad9e1f2",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const loadingScreen =
+document.getElementById("loadingScreen");
+
+const login = JSON.parse(localStorage.getItem("user"));
+
+if (!login || !login.userId) {
+  window.location.href = "login.html";
+}
+
+
+
+
+
+onValue(ref(db, "Statusakun_host/" + login.userId), (snap) => {
+
+  if (!snap.exists()) return;
+
+  const status = snap.val().status;
+
+  if (status === "banned" || status === "suspend") {
+
+    localStorage.removeItem("user");
+    window.location.replace("status_akun.html");
+  }
+
+});
+
+
+
+
+function updateLastActive(page = "Dunia") {
+
+  const login = JSON.parse(localStorage.getItem("user"));
+  if (!login?.userId) return;
+
+  update(ref(db, "users2/" + login.userId), {
+    lastActive: Date.now(),
+    currentPage: page
+  });
+
+}
+
+["click", "touchstart", "keydown"].forEach(evt => {
+  document.addEventListener(evt, () => {
+    updateLastActive("Dunia");
+  }, { passive: true });
+});
+
+updateLastActive("Dunia");
+
+
+
+
+
+
+let currentUser = null;
+
+async function getCurrentUser() {
+  try {
+
+    // 🔥 FIX: langsung ambil berdasarkan userId
+    const snap = await get(ref(db, "users2/" + login.userId));
+
+    if (!snap.exists()) return null;
+
+    currentUser = snap.val();
+
+
+
+    return currentUser;
+
+  } catch (err) {
+    console.log("ERROR getCurrentUser:", err);
+    return null;
+  }
+}
+
+
+window.addEventListener("DOMContentLoaded", async () => {
+  await getCurrentUser();
+
+  const el = document.getElementById("saldoHostPopup3");
+
+  if (el && currentUser) {
+    el.innerText = formatSaldoCoin(currentUser.saldo);
+  }
+});
+
+
+function formatSaldoCoin(saldo){
+  saldo = Number(saldo || 0);
+
+  // 🔥 juta → M
+  if (saldo >= 1000000) {
+    const juta = saldo / 1000000;
+
+    return Number.isInteger(juta)
+      ? juta + "M"
+      : juta.toFixed(1) + "M";
+  }
+
+  // 🔥 kecil → credits (DESIMAL, bukan bulat)
+  const credits = saldo / 171.1;
+
+  return credits.toFixed(1);
+}
+
+
+
+
+
+function shuffleArray(arr){
+  for(let i = arr.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+
+
+
+
+
+
+
+
+async function loadFotoGlobal() {
+
+  const snap = await get(ref(db, "fotoglobal"));
+
+  if (!snap.exists()) return;
+
+  const data = snap.val();
+  let urls = Object.values(data);
+
+// acak setiap refresh
+urls = shuffleArray(urls);
+
+  const track = document.getElementById("carouselTrack");
+
+  track.innerHTML = "";
+
+  // 🔥 tampilkan dulu 10 gambar pertama (biar langsung muncul)
+  const firstBatch = urls.slice(0, 10);
+
+  firstBatch.forEach(item => {
+    const url = typeof item === "string" ? item : item.url;
+
+    const div = document.createElement("div");
+    div.className = "carousel-item";
+    div.innerHTML = `<img src="${url}">`;
+    track.appendChild(div);
+  });
+
+  // 🔥 delay render sisanya (background)
+  setTimeout(() => {
+
+    const rest = urls.slice(10);
+
+    rest.forEach(item => {
+      const url = typeof item === "string" ? item : item.url;
+
+      const div = document.createElement("div");
+      div.className = "carousel-item";
+      div.innerHTML = `<img src="${url}">`;
+      track.appendChild(div);
+    });
+
+  }, 200);
+
+
+
+
+
+  // tunggu browser render
+  await new Promise(resolve =>
+    requestAnimationFrame(resolve)
+  );
+
+  await new Promise(resolve =>
+    requestAnimationFrame(resolve)
+  );
+
+ 
+
+}
+
+
+
+
+
+
+
+
+
+/* HISTORY */
+function openHistory(){
+  document.getElementById("historyPopup").style.display="block";
+}
+function closeHistory(){
+  document.getElementById("historyPopup").style.display="none";
+}
+
+const container = document.getElementById('carouselContainer');
+const track = document.getElementById('carouselTrack');
+const items = track.querySelectorAll('.carousel-item');
+
+let scrollPos =
+Number(localStorage.getItem("carouselPos")) || 0;
+const speed = 0.6;
+
+function autoScroll() {
+    scrollPos += speed;
+
+    const maxScroll = track.scrollWidth - container.offsetWidth;
+
+    if (maxScroll <= 0) return;
+
+    if (scrollPos >= maxScroll) {
+        scrollPos = 0;
+    }
+
+    track.style.transform = "translate3d(" + (-scrollPos) + "px,0,0)";
+}
+
+
+
+// lebih smooth dari setInterval
+function loop() {
+    autoScroll();
+    updateScale(); // 🔥 PENTING: langsung update tiap frame
+    requestAnimationFrame(loop);
+}
+
+
+
+
+(async () => {
+
+  await loadFotoGlobal();
+
+  // 🔥 tunggu layout benar-benar jadi
+  await new Promise(r => requestAnimationFrame(r));
+  await new Promise(r => requestAnimationFrame(r));
+
+  container.style.opacity = "1";
+
+  loadingScreen.classList.add("hide");
+  setTimeout(()=>loadingScreen.remove(),400);
+
+  // 🔥 BARU START LOOP DI SINI
+  loop();
+
+})();
+
+window.addEventListener("resize", () => {
+    scrollPos = 0;
+});
+
+
+let saveCounter = 0;
+
+// SCALE OPTIMASI (tidak pakai loop berat tiap 80ms)
+let lastScaleUpdate = 0;
+
+function updateScale() {
+  const containerRect = container.getBoundingClientRect();
+  const centerX = containerRect.left + containerRect.width / 2;
+
+  const items = document.querySelectorAll("#carouselTrack .carousel-item");
+
+  items.forEach(item => {
+    const img = item.querySelector("img");
+    const rect = item.getBoundingClientRect();
+
+    const itemCenter = rect.left + rect.width / 2;
+
+    let distance = Math.abs(centerX - itemCenter);
+
+    let scale = 1 - distance / 250;
+
+    if (scale < 0.6) scale = 0.6;
+    if (scale > 1) scale = 1;
+
+    img.style.transform = `scale(${scale})`;
+  });
+}
+
+// throttle scale (biar tidak spam di mobile)
+function scaleLoop(time) {
+    if (time - lastScaleUpdate > 120) {
+        updateScale();
+        lastScaleUpdate = time;
+    }
+    requestAnimationFrame(scaleLoop);
+}
+
+requestAnimationFrame(scaleLoop);
+
+
+
+
+window.goNav = function(el, url) {
+
+  document.querySelectorAll("#bottomNav .nav-item").forEach(i => {
+    i.classList.remove("active");
+
+    const img = i.querySelector("img");
+    if (img) img.src = img.dataset.default;
+  });
+
+  el.classList.add("active");
+
+  const img = el.querySelector("img");
+  if (img) img.src = img.dataset.active;
+
+  setTimeout(() => {
+    window.location.href = url;
+  }, 150);
+};
+window.addEventListener("DOMContentLoaded", () => {
+
+  const items = document.querySelectorAll("#bottomNav .nav-item");
+
+  if (items.length > 1) {
+    items[1].classList.add("active");
+
+    const img = items[1].querySelector("img");
+    if (img) img.src = img.dataset.active;
+  }
+
+});
+/* AUTO ACTIVE */
+document.querySelectorAll(".nav-item")[1].classList.add("active");
+
+
+
+/* ================= (NO zoom) ================= */
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
+document.addEventListener("selectstart", e => e.preventDefault());
+
+/* ❌ BLOCK ZOOM KEYBOARD (Ctrl + / - / 0) */
+document.addEventListener("keydown", function (e) {
+  if (
+    (e.ctrlKey && e.key === "+") ||
+    (e.ctrlKey && e.key === "-") ||
+    (e.ctrlKey && e.key === "0") ||
+    (e.ctrlKey && e.key === "=")
+  ) {
+    e.preventDefault();
+  }
+});
+
+/* BLOCK PINCH ZOOM (mobile) */
+document.addEventListener("gesturestart", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gesturechange", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gestureend", function (e) {
+  e.preventDefault();
+});
+/* ================= (NO zoom) ================= */
+
+
+
+
+</script>
+
+</body>
+</html>

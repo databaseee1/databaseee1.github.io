@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Rating Saya</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+
+
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none !important;
+}
+
+/* hilangkan highlight saat klik/focus */
+button, a, div, span, img {
+  outline: none !important;
+}
+
+
+img {
+
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+
+
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins', sans-serif;
+}
+
+body{
+  background:#fff;
+}
+
+/* HEADER */
+.header{
+  background:#fff;
+  padding:15px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:sticky;
+  top:0;
+  z-index:9999;
+  position:relative;
+  font-weight:600;
+  font-size:18px;
+}
+
+.header img{
+  width:22px;
+  position:absolute;
+  left:15px;
+  cursor:pointer;
+}
+
+/* CONTAINER */
+.container{
+  padding:20px;
+}
+
+/* BIG RATING */
+.big-rating{
+  text-align:center;
+  margin-top:10px;
+}
+
+.big-rating .num{
+  font-size:40px;
+  font-weight:700;
+  color:#7b2ff7;
+}
+
+/* STARS */
+.stars{
+  margin-top:5px;
+  color:#7b2ff7;
+  font-size:20px;
+}
+
+/* CARD LIST */
+.card{
+  background:#fff;
+  margin-top:15px;
+  padding:15px;
+  border-radius:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 5px 15px rgba(0,0,0,0.06);
+}
+
+.left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:15px;
+}
+
+.icon{
+  width:22px;
+  height:22px;
+}
+
+.right{
+  color:#7b2ff7;
+  font-weight:600;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <img src="back_black.png" onclick="history.back()">
+  Rating saya
+</div>
+
+<div class="container">
+
+  <!-- RATING BESAR -->
+  <div class="big-rating">
+    <div class="num" id="ratingValue">3</div>
+    <div class="stars" id="stars">
+      ★★★☆☆
+    </div>
+  </div>
+
+  <!-- LIST -->
+  <div class="card">
+    <div class="left">
+      <img class="icon" src="im_msg_video_in_icon - Copy.png">
+      <div>Video</div>
+    </div>
+    <div class="right">3</div>
+  </div>
+
+  <div class="card">
+    <div class="left">
+      <img class="icon" src="msg_icon_normal.png">
+      <div>Pesan</div>
+    </div>
+    <div class="right">3.2</div>
+  </div>
+
+  <div class="card">
+    <div class="left">
+      <img class="icon" src="prist.png">
+      <div>Perilaku</div>
+    </div>
+    <div class="right">5</div>
+  </div>
+
+  <div class="card">
+    <div class="left">
+      <img class="icon" src="e_tou_diselected.png">
+      <div>Pesona</div>
+    </div>
+    <div class="right">2</div>
+  </div>
+
+  <div class="card">
+    <div class="left">
+      <img class="icon" src="contact_requested.png">
+      <div>Profil</div>
+    </div>
+    <div class="right">2</div>
+  </div>
+
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase,update, ref, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* LOGIN CHECK */
+const login = JSON.parse(localStorage.getItem("user"));
+if (!login) window.location.href = "login.html";
+/* =========================
+   LOGIN CHECK (WAJIB LOGIN)
+========================= */
+
+
+
+
+function updateLastActive(page = "Level_Saya") {
+
+  const login = JSON.parse(localStorage.getItem("user"));
+  if (!login?.userId) return;
+
+  update(ref(db, "users2/" + login.userId), {
+    lastActive: Date.now(),
+    currentPage: page
+  });
+
+}
+
+["click", "touchstart", "keydown"].forEach(evt => {
+  document.addEventListener(evt, () => {
+    updateLastActive("Level_Saya");
+  }, { passive: true });
+});
+
+updateLastActive("Level_Saya");
+
+
+
+
+
+
+
+/* ================= (NO zoom) ================= */
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
+document.addEventListener("selectstart", e => e.preventDefault());
+
+/* ❌ BLOCK ZOOM KEYBOARD (Ctrl + / - / 0) */
+document.addEventListener("keydown", function (e) {
+  if (
+    (e.ctrlKey && e.key === "+") ||
+    (e.ctrlKey && e.key === "-") ||
+    (e.ctrlKey && e.key === "0") ||
+    (e.ctrlKey && e.key === "=")
+  ) {
+    e.preventDefault();
+  }
+});
+
+/* BLOCK PINCH ZOOM (mobile) */
+document.addEventListener("gesturestart", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gesturechange", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gestureend", function (e) {
+  e.preventDefault();
+});
+/* ================= (NO zoom) ================= */
+
+
+</script>
+
+</body>
+</html>

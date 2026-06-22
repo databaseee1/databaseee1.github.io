@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+
+<title>Edit My Data</title>
+
+<style>
+
+
+  
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none !important;
+}
+
+/* hilangkan highlight saat klik/focus */
+button, a, div, span, img {
+  outline: none !important;
+}
+
+
+img {
+
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+
+
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+
+
+body{
+  margin:0;
+  font-family:Arial;
+  background:#ffffff;
+}
+
+.container{
+  max-width:450px;
+  margin:auto;
+  padding:15px;
+}
+
+.card{
+  background:#fff;
+  padding:15px;
+  border-radius:12px;
+  margin-bottom:12px;
+}
+
+.title{
+  font-size:16px;
+  font-weight:bold;
+  margin-bottom:10px;
+}
+
+.photo-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.photo-box{
+  position:relative;
+  width:100%;
+  aspect-ratio:1/1;
+  background:#eee;
+  border-radius:10px;
+  overflow:hidden;
+  cursor:pointer;
+}
+
+.photo-box img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.photo-box input{
+  display:none;
+}
+
+.label{
+  font-size:13px;
+  margin:10px 0 5px;
+  color:#444;
+}
+
+input{
+  width:95%;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid #ddd;
+  outline:none;
+}
+
+.tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+
+.tag{
+  background:#e0e0e0;
+  padding:5px 10px;
+  border-radius:20px;
+  font-size:12px;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:50px;
+  background:#8100ff;
+  color:#fff;
+  font-size:15px;
+  margin-top:10px;
+}
+
+
+
+
+
+/* ===== NOTIF SYSTEM UNIQUE ===== */
+.noti_918273645 {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #111;
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.noti_918273645.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.noti_918273645 img {
+  width: 20px;
+  height: 20px;
+}
+
+
+
+
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+
+
+<div class="card">
+  <div class="title">Foto Profil</div>
+
+  <div class="photo-box" id="profilBox">
+    <img id="profilImg" src="assets/images/photos_add_item_icon.png">
+  </div>
+</div>
+
+
+  <!-- FOTO -->
+  <div class="card">
+    <div class="title">Foto Aktivitas (6)</div>
+    <div class="photo-grid" id="photoGrid"></div>
+  </div>
+
+  <!-- FORM -->
+  <div class="card">
+    <div class="title">Edit Data</div>
+
+    <div class="label">Nama</div>
+    <input id="nama" placeholder="Nama">
+
+    <div class="label">Umur</div>
+    <input id="umur" type="number" placeholder="Umur">
+
+    <div class="label">Tags</div>
+    <div class="tags" id="tagsBox"></div>
+
+
+<div class="label">Tambah Tags</div>
+
+<div style="display:flex; gap:8px;">
+  <input id="tagInput" placeholder="contoh: #travel">
+  <button type="button" id="addTagBtn" style="
+    width:120px;
+    margin:0;
+  ">Tambah</button>
+</div>
+
+
+
+    <button id="saveBtn">Simpan</button>
+  </div>
+
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  get,
+  update
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* ================= FIREBASE ================= */
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* ================= LOGIN (FIX FINAL) ================= */
+const loginRaw = localStorage.getItem("user");
+
+if (!loginRaw || loginRaw === "null") {
+  location.href = "login.html";
+}
+
+const login = JSON.parse(loginRaw);
+
+if (!login.userId) {
+  localStorage.clear();
+  sessionStorage.clear();
+  location.href = "login.html";
+}
+
+
+
+
+function updateLastActive(page = "Edit_my_data") {
+
+  const login = JSON.parse(localStorage.getItem("user"));
+  if (!login?.userId) return;
+
+  update(ref(db, "users2/" + login.userId), {
+    lastActive: Date.now(),
+    currentPage: page
+  });
+
+}
+
+["click", "touchstart", "keydown"].forEach(evt => {
+  document.addEventListener(evt, () => {
+    updateLastActive("Edit_my_data");
+  }, { passive: true });
+});
+
+updateLastActive("Edit_my_data");
+
+
+
+
+
+
+
+
+console.log("SCRIPT BARU JALAN");
+  
+/* ================= GLOBAL ================= */
+let userKey = login.userId;
+let profil = "";
+let photos = Array(6).fill("assets/images/photos_add_item_icon.png");
+let tags = [];
+
+/* ================= LOAD USER (FIX TOTAL AMAN) ================= */
+async function loadUser() {
+
+  // 🔥 FIX PENTING: langsung ambil 1 node, bukan child()
+  const snap = await get(ref(db, "users2/" + userKey));
+
+  if (!snap.exists()) {
+    alert("User tidak ditemukan");
+    return;
+  }
+
+  const u = snap.val();
+
+  /* FORM */
+  document.getElementById("nama").value = u.nama || "";
+  document.getElementById("umur").value = u.umur || "";
+
+  /* ================= PROFIL (ANTI CACHE) ================= */
+  profil = u.profil || "";
+
+  document.getElementById("profilImg").src =
+    profil
+      ? profil + "?t=" + Date.now()
+      : "assets/images/photos_add_item_icon.png";
+
+  /* ================= PHOTOS ================= */
+  photos = Array(6).fill("assets/images/photos_add_item_icon.png");
+
+  if (Array.isArray(u.photos)) {
+    for (let i = 0; i < 6; i++) {
+      if (u.photos[i]) {
+        photos[i] = u.photos[i] + "?t=" + Date.now();
+      }
+    }
+  }
+
+  /* ================= TAGS ================= */
+  tags = Array.isArray(u.tags) && u.tags.length
+    ? u.tags
+    : ["#makan", "#nongkrong"];
+
+  renderPhotos();
+  renderTags();
+}
+
+/* ================= CLOUD ================= */
+const CLOUD_NAME = "dowoq4a0i";
+const UPLOAD_PRESET = "fotousershost";
+
+/* ================= RENDER PHOTOS ================= */
+function renderPhotos() {
+
+  const grid = document.getElementById("photoGrid");
+  grid.innerHTML = "";
+
+  for (let i = 0; i < 6; i++) {
+
+    grid.innerHTML += `
+      <div class="photo-box" data-index="${i}">
+        <img src="${photos[i]}">
+      </div>
+    `;
+
+  }
+
+document.querySelectorAll("#photoGrid .photo-box").forEach((box) => {
+    box.onclick = () => {
+
+      const index = box.dataset.index;
+
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = "image/*";
+
+      input.onchange = async (e) => {
+alert("UPLOAD DIMULAI");
+console.log("UPLOAD DIMULAI");
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", UPLOAD_PRESET);
+
+        const res = await fetch(
+          `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+          { method: "POST", body: formData }
+        );
+
+        const data = await res.json();
+
+        if (data.secure_url) {
+
+          photos[index] = data.secure_url;
+
+          renderPhotos();
+
+        }
+
+      };
+
+      input.click();
+
+    };
+
+  });
+
+}
+
+/* ================= TAGS ================= */
+function renderTags() {
+
+  const box = document.getElementById("tagsBox");
+  box.innerHTML = "";
+
+  if (!tags.length) tags = ["#makan", "#nongkrong"];
+
+  tags.forEach((t, i) => {
+
+    const el = document.createElement("div");
+    el.className = "tag";
+    el.innerText = t;
+
+    el.onclick = () => {
+      tags.splice(i, 1);
+      renderTags();
+    };
+
+    box.appendChild(el);
+
+  });
+
+}
+
+document.getElementById("addTagBtn").onclick = () => {
+
+  const input = document.getElementById("tagInput");
+  const val = input.value.trim();
+
+  if (!val.startsWith("#"))
+    return showNotif_918273645("Harus pakai #");
+
+  tags.push(val);
+  input.value = "";
+
+  renderTags();
+
+};
+
+/* ================= PROFIL UPLOAD ================= */
+/* ================= PROFIL UPLOAD ================= */
+document.getElementById("profilBox").onclick = () => {
+
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = "image/*";
+
+
+  input.onchange = async (e)=>{
+
+    const file = e.target.files[0];
+    if(!file) return;
+
+
+    const formData = new FormData();
+
+    formData.append("file", file);
+    formData.append("upload_preset", UPLOAD_PRESET);
+
+
+
+    try {
+
+
+      const res = await fetch(
+        `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+        {
+          method:"POST",
+          body:formData
+        }
+      );
+
+
+      console.log("CLOUD STATUS",res.status);
+
+
+
+      const text = await res.text();
+
+      console.log("CLOUD RAW",text);
+
+
+
+      const data = JSON.parse(text);
+
+
+
+      console.log("CLOUD DATA",data);
+
+
+
+      if(!data.secure_url){
+        alert("Tidak ada");
+        return;
+      }
+
+
+
+      // update firebase
+      await update(
+        ref(db,"users2/"+userKey),
+        {
+          profil:data.secure_url
+        }
+      );
+
+
+
+      console.log(
+        "FIREBASE PROFIL UPDATED",
+        data.secure_url
+      );
+
+await loadUser();
+
+      // update tampilan
+      profil = data.secure_url;
+
+
+      document.getElementById("profilImg").src =
+        profil+"?t="+Date.now();
+
+
+
+    }catch(err){
+
+      console.error("UPLOAD PROFIL ERROR",err);
+
+    }
+
+
+  };
+
+
+  input.click();
+
+};
+
+
+console.log("LOGIN:", login);
+console.log("USER KEY DIPAKAI:", userKey);
+
+/* ================= SAVE ================= */
+document.getElementById("saveBtn").onclick = async () => {
+
+  const nama = document.getElementById("nama").value;
+  const umur = document.getElementById("umur").value;
+
+await update(ref(db, "users2/" + userKey), {
+  nama,
+  umur,
+  photos,
+  tags
+});
+
+  showNotif_918273645("Berhasil disimpan!", "ic_launcher_circle.png");
+  location.href = "my_akun.html";
+
+};
+
+/* ================= INIT ================= */
+loadUser();
+
+
+
+
+
+
+/* ================= (NO zoom) ================= */
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
+document.addEventListener("selectstart", e => e.preventDefault());
+
+/* ❌ BLOCK ZOOM KEYBOARD (Ctrl + / - / 0) */
+document.addEventListener("keydown", function (e) {
+  if (
+    (e.ctrlKey && e.key === "+") ||
+    (e.ctrlKey && e.key === "-") ||
+    (e.ctrlKey && e.key === "0") ||
+    (e.ctrlKey && e.key === "=")
+  ) {
+    e.preventDefault();
+  }
+});
+
+/* BLOCK PINCH ZOOM (mobile) */
+document.addEventListener("gesturestart", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gesturechange", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gestureend", function (e) {
+  e.preventDefault();
+});
+/* ================= (NO zoom) ================= */
+
+function showNotif_918273645(text, img = "") {
+
+  let el = document.createElement("div");
+  el.className = "noti_918273645";
+
+  el.innerHTML = `
+    ${img ? `<img src="${img}">` : ""}
+    <span>${text}</span>
+  `;
+
+  document.body.appendChild(el);
+
+  setTimeout(() => {
+    el.classList.add("show");
+  }, 10);
+
+  setTimeout(() => {
+    el.classList.remove("show");
+    setTimeout(() => el.remove(), 300);
+  }, 2500);
+
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bahasa Aplikasi</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#fff;
+  color:#111;
+  padding-bottom : 90px;
+}
+
+/* HEADER */
+.header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:55px;
+  background:#fff;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 15px;
+  z-index:10;
+}
+
+.header i{
+  font-size:18px;
+  cursor:pointer;
+  color: #989898;
+}
+
+/* CONTENT */
+.container{
+  padding:70px 15px 20px;
+}
+
+.title{
+  font-size:18px;
+  font-weight:bold;
+  margin-bottom:10px;
+}
+
+.lang-box{
+  border:1px solid #eee;
+  border-radius:10px;
+  padding:12px;
+  margin-bottom:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.lang-box:hover{
+  background:#f5f5f5;
+}
+
+/* BUTTON UNGU */
+.btn {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 40px);
+  max-width: 420px;
+
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+
+  background: #7b2cff; /* ungu */
+  color: white;
+  font-weight: 600;
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  z-index: 9999;
+}
+/* TOAST */
+.toast{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#111;
+  color:#fff;
+  padding:10px 14px;
+  border-radius:8px;
+  font-size:13px;
+  opacity:0;
+  transition:.3s;
+  pointer-events:none;
+
+  z-index: 99999;
+}
+
+.toast.show{
+  opacity:1;
+}
+
+/* MODAL INFO */
+.modal{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background:#fff;
+  display:none;
+  flex-direction:column;
+  padding:20px;
+  z-index:20;
+}
+
+.modal.active{
+  display:flex;
+}
+
+.modal h3{
+  margin-top:50px;
+}
+
+.modal p{
+  font-size:14px;
+  line-height:1.5;
+}
+
+
+.lang-box.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+  background: #f5f5f5;
+}
+</style>
+</head>
+                  <i class=""></i>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <i class="fa-solid fa-angle-left" onclick="history.back()"></i>
+  <div>Bahasa Aplikasi</div>
+  <i class="fa fa-circle-info" onclick="openInfo()"></i>
+</div>
+
+<!-- CONTENT -->
+<div class="container">
+
+  <div class="title">Pilih Bahasa</div>
+
+<div class="lang-box disabled">
+  <div>Bahasa Indonesia (Bahasa otomatis)</div>
+  <div>›</div>
+</div>
+
+  <div class="lang-box" onclick="selectLang('en')">
+    <div>English</div>
+    <div>›</div>
+  </div>
+
+  <div class="lang-box" onclick="selectLang('jp')">
+    <div>Japanese</div>
+    <div>›</div>
+  </div>
+
+  <div class="lang-box" onclick="selectLang('kr')">
+    <div>Korean</div>
+    <div>›</div>
+  </div>
+
+
+
+<div class="lang-box" onclick="selectLang('cn')">
+  <div>Chinese (Mandarin)</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('es')">
+  <div>Spanish</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('fr')">
+  <div>French</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('de')">
+  <div>German</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('pt')">
+  <div>Portuguese</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ru')">
+  <div>Russian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ar')">
+  <div>Arabic</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('it')">
+  <div>Italian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('tr')">
+  <div>Turkish</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('vi')">
+  <div>Vietnamese</div>
+  <div>›</div>
+</div>
+
+
+<div class="lang-box" onclick="selectLang('ms')">
+  <div>Malay</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('hi')">
+  <div>Hindi</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('nl')">
+  <div>Dutch</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('pl')">
+  <div>Polish</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('sv')">
+  <div>Swedish</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('fi')">
+  <div>Finnish</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('da')">
+  <div>Danish</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('no')">
+  <div>Norwegian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ur')">
+  <div>Urdu</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('fa')">
+  <div>Persian</div>
+  <div>›</div>
+</div>
+
+
+<div class="lang-box" onclick="selectLang('he')">
+  <div>Hebrew</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('el')">
+  <div>Greek</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('hu')">
+  <div>Hungarian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ro')">
+  <div>Romanian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('cs')">
+  <div>Czech</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('sk')">
+  <div>Slovak</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('bg')">
+  <div>Bulgarian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('hr')">
+  <div>Croatian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('sr')">
+  <div>Serbian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('sl')">
+  <div>Slovenian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('uk')">
+  <div>Ukrainian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('be')">
+  <div>Belarusian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('lt')">
+  <div>Lithuanian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('lv')">
+  <div>Latvian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('et')">
+  <div>Estonian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('is')">
+  <div>Icelandic</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ga')">
+  <div>Irish</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('cy')">
+  <div>Welsh</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('eu')">
+  <div>Basque</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ca-es')">
+  <div>Catalan</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('gl')">
+  <div>Galician</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('af')">
+  <div>Afrikaans</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('sw')">
+  <div>Swahili</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('am')">
+  <div>Amharic</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ne')">
+  <div>Nepali</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('si')">
+  <div>Sinhala</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('km')">
+  <div>Khmer</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('lo')">
+  <div>Lao</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('my')">
+  <div>Burmese</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('mn')">
+  <div>Mongolian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ka')">
+  <div>Georgian</div>
+  <div>›</div>
+</div>
+
+
+<div class="lang-box" onclick="selectLang('yo')">
+  <div>Yoruba</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ig')">
+  <div>Igbo</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ha')">
+  <div>Hausa</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('zu')">
+  <div>Zulu</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('xh')">
+  <div>Xhosa</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('st')">
+  <div>Southern Sotho</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('tn')">
+  <div>Tswana</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('sn')">
+  <div>Shona</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('rw')">
+  <div>Kinyarwanda</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('so')">
+  <div>Somali</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('mg')">
+  <div>Malagasy</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('tl')">
+  <div>Tagalog</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ceb')">
+  <div>Cebuano</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('haw')">
+  <div>Hawaiian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('mi')">
+  <div>Maori</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('sm')">
+  <div>Samoan</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('to')">
+  <div>Tongan</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('fj')">
+  <div>Fijian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ny')">
+  <div>Chichewa</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('lg')">
+  <div>Luganda</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('wo')">
+  <div>Wolof</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('br')">
+  <div>Breton</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('co')">
+  <div>Corsican</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('lb')">
+  <div>Luxembourgish</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('mt')">
+  <div>Maltese</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('fo')">
+  <div>Faroese</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('kl')">
+  <div>Greenlandic</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('gv')">
+  <div>Manx</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ii')">
+  <div>Yi</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('bo')">
+  <div>Tibetan</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('dz')">
+  <div>Dzongkha</div>
+  <div>›</div>
+</div>
+
+
+<div class="lang-box" onclick="selectLang('ace')">
+  <div>Acehnese</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ban')">
+  <div>Balinese</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('jv')">
+  <div>Javanese</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('su')">
+  <div>Sundanese</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('min')">
+  <div>Minangkabau</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('bug')">
+  <div>Bugis</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('mak')">
+  <div>Makassar</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('mad')">
+  <div>Madura</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('sas')">
+  <div>Sasak</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('bjn')">
+  <div>Banjar</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('day')">
+  <div>Dayak</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('iba')">
+  <div>Iban</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('nia')">
+  <div>Nias</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('btk')">
+  <div>Batak</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('toz')">
+  <div>Toba Batak</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ak')">
+  <div>Akan</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('tw')">
+  <div>Twi</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ee')">
+  <div>Ewe</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('fon')">
+  <div>Fon</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('lg-ug')">
+  <div>Luganda (Uganda)</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('kin')">
+  <div>Kinyarwanda (Rwanda)</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('run')">
+  <div>Rundi</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ts')">
+  <div>Tsonga</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ve')">
+  <div>Venda</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('nr')">
+  <div>Southern Ndebele</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ss')">
+  <div>Swati</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('nso')">
+  <div>Northern Sotho</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ik')">
+  <div>Inupiaq</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('iu')">
+  <div>Inuktitut</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('cr')">
+  <div>Cree</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('oj')">
+  <div>Ojibwe</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('nv')">
+  <div>Navajo</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('klc')">
+  <div>Kalanga</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('shi')">
+  <div>Tachelhit</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('tzm')">
+  <div>Central Atlas Tamazight</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('kab')">
+  <div>Kabyle</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ber')">
+  <div>Berber</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('lad')">
+  <div>Ladino</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('syr')">
+  <div>Syriac</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('arc')">
+  <div>Aramaic</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('cop')">
+  <div>Coptic</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('got')">
+  <div>Gothic</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ang')">
+  <div>Old English</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('non')">
+  <div>Old Norse</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('lat')">
+  <div>Latin</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('grc')">
+  <div>Ancient Greek</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('san')">
+  <div>Sanskrit</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('pli')">
+  <div>Pali</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('xho')">
+  <div>Xhosa (Full Code)</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('zul')">
+  <div>Zulu (Full Code)</div>
+  <div>›</div>
+</div>
+
+
+<div class="lang-box" onclick="selectLang('af-ZA')">
+  <div>Afrikaans (South Africa)</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('sq')">
+  <div>Albanian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('hy')">
+  <div>Armenian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('az')">
+  <div>Azerbaijani</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('bs')">
+  <div>Bosnian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('my-MM')">
+  <div>Burmese (Myanmar)</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ceb-PH')">
+  <div>Cebuano (Philippines)</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ckb')">
+  <div>Central Kurdish</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('co-FR')">
+  <div>Corsican (France)</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('fy')">
+  <div>Frisian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('gd')">
+  <div>Scottish Gaelic</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('gu')">
+  <div>Gujarati</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ha-NG')">
+  <div>Hausa (Nigeria)</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('haw-US')">
+  <div>Hawaiian (USA)</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('is-IS')">
+  <div>Icelandic</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('jv-ID')">
+  <div>Javanese (Indonesia)</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('kn')">
+  <div>Kannada</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('kk')">
+  <div>Kazakh</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('km-KH')">
+  <div>Khmer (Cambodia)</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ky')">
+  <div>Kyrgyz</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('lo-LA')">
+  <div>Lao (Laos)</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('lb-LU')">
+  <div>Luxembourgish</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('mk')">
+  <div>Macedonian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('mg-MG')">
+  <div>Malagasy</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ml')">
+  <div>Malayalam</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('mt-MT')">
+  <div>Maltese</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('mi-NZ')">
+  <div>Maori (New Zealand)</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('mn-MN')">
+  <div>Mongolian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ne-NP')">
+  <div>Nepali (Nepal)</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('or')">
+  <div>Odia (Oriya)</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('pa')">
+  <div>Punjabi</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ps')">
+  <div>Pashto</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('qu')">
+  <div>Quechua</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('sm-WS')">
+  <div>Samoan</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('si-LK')">
+  <div>Sinhala (Sri Lanka)</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('sn-ZW')">
+  <div>Shona (Zimbabwe)</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('so-SO')">
+  <div>Somali</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('sw-KE')">
+  <div>Swahili (Kenya)</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ta')">
+  <div>Tamil</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('te')">
+  <div>Telugu</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('tg')">
+  <div>Tajik</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('tk')">
+  <div>Turkmen</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ug')">
+  <div>Uyghur</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('uz')">
+  <div>Uzbek</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('cy-GB')">
+  <div>Welsh</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('yi')">
+  <div>Yiddish</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('zu-ZA')">
+  <div>Zulu (South Africa)</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ain')"><div>Ainu</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('alt')"><div>Southern Altai</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('bho')"><div>Bhojpuri</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('chr')"><div>Cherokee</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('cv')"><div>Chuvash</div><div>›</div></div>
+
+<div class="lang-box" onclick="selectLang('dv')"><div>Dhivehi</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('efi')"><div>Efik</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('fon')"><div>Fon (Benin)</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('gon')"><div>Gondi</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('grt')"><div>Garo</div><div>›</div></div>
+
+<div class="lang-box" onclick="selectLang('hil')"><div>Hiligaynon</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('hmn')"><div>Hmong</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('ho')"><div>Hiri Motu</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('ilo')"><div>Ilocano</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('inh')"><div>Ingush</div><div>›</div></div>
+
+<div class="lang-box" onclick="selectLang('kab')"><div>Kabyle</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('krc')"><div>Karachay-Balkar</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('kj')"><div>Kuanyama</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('krl')"><div>Karelian</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('kum')"><div>Kumyk</div><div>›</div></div>
+
+<div class="lang-box" onclick="selectLang('lad')"><div>Ladino</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('lez')"><div>Lezghian</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('liv')"><div>Livonian</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('lmo')"><div>Lombard</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('lua')"><div>Luba-Kasai</div><div>›</div></div>
+
+<div class="lang-box" onclick="selectLang('mdf')"><div>Moksha</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('mhr')"><div>Meadow Mari</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('mrj')"><div>Hill Mari</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('mwl')"><div>Mirandese</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('na')"><div>Nauru</div><div>›</div></div>
+
+<div class="lang-box" onclick="selectLang('nap')"><div>Neapolitan</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('new')"><div>Newari</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('nqo')"><div>N’Ko</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('om')"><div>Oromo</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('os')"><div>Ossetian</div><div>›</div></div>
+
+<div class="lang-box" onclick="selectLang('pag')"><div>Pangasinan</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('pam')"><div>Pampanga</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('pfl')"><div>Palatine German</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('rm')"><div>Romansh</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('rue')"><div>Rusyn</div><div>›</div></div>
+
+<div class="lang-box" onclick="selectLang('sah')"><div>Yakut</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('se')"><div>Northern Sami</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('sg')"><div>Sango</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('shn')"><div>Shan</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('siou')"><div>Siouan</div><div>›</div></div>
+
+<div class="lang-box" onclick="selectLang('tpi')"><div>Tok Pisin</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('tvl')"><div>Tuvaluan</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('udm')"><div>Udmurt</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('vep')"><div>Veps</div><div>›</div></div>
+<div class="lang-box" onclick="selectLang('vro')"><div>Võro</div><div>›</div></div>
+
+
+
+<div class="lang-box" onclick="selectLang('sw')">
+  <div>Swahili</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('am')">
+  <div>Amharic</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('yo')">
+  <div>Yoruba</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ig')">
+  <div>Igbo</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ha')">
+  <div>Hausa</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('so')">
+  <div>Somali</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('zu')">
+  <div>Zulu</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('xh')">
+  <div>Xhosa</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('st')">
+  <div>Sesotho</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ny')">
+  <div>Chichewa</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('mg')">
+  <div>Malagasy</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('si')">
+  <div>Sinhala</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ta')">
+  <div>Tamil</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('te')">
+  <div>Telugu</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ml')">
+  <div>Malayalam</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('kn')">
+  <div>Kannada</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('gu')">
+  <div>Gujarati</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('pa')">
+  <div>Punjabi</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ne')">
+  <div>Nepali</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('my')">
+  <div>Burmese</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('km')">
+  <div>Khmer</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('lo')">
+  <div>Lao</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ka')">
+  <div>Georgian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('hy')">
+  <div>Armenian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('az')">
+  <div>Azerbaijani</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('uz')">
+  <div>Uzbek</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('kk')">
+  <div>Kazakh</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ky')">
+  <div>Kyrgyz</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('tg')">
+  <div>Tajik</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('mn')">
+  <div>Mongolian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('bo')">
+  <div>Tibetan</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ug')">
+  <div>Uyghur</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('si')">
+  <div>Sindhi</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('or')">
+  <div>Odia</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('as')">
+  <div>Assamese</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('bn')">
+  <div>Bengali</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('dz')">
+  <div>Dzongkha</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ti')">
+  <div>Tigrinya</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ff')">
+  <div>Fulah</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('sn')">
+  <div>Shona</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('rw')">
+  <div>Kinyarwanda</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('lg')">
+  <div>Luganda</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('om')">
+  <div>Oromo</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('aa')">
+  <div>Afar</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('cv')">
+  <div>Chuvash</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ba')">
+  <div>Bashkir</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('tt')">
+  <div>Tatar</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('ce')">
+  <div>Chechen</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('be')">
+  <div>Belarusian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('uk')">
+  <div>Ukrainian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('lt')">
+  <div>Lithuanian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('lv')">
+  <div>Latvian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('et')">
+  <div>Estonian</div>
+  <div>›</div>
+</div>
+
+<div class="lang-box" onclick="selectLang('is')">
+  <div>Icelandic</div>
+  <div>›</div>
+</div>
+
+
+
+  <button class="btn" onclick="saveLang()">
+    Simpan Bahasa
+  </button>
+
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="toast"></div>
+
+<!-- MODAL INFO -->
+<div id="infoModal" class="modal">
+  <h3>Informasi Bahasa</h3>
+  <p>
+Fitur bahasa pada akun Anda masih dalam tahap pengaturan. <p></p> Pilihan Anda akan kami simpan khusus untuk akun ini dan akan digunakan pada jika sudah memenuhi syarat.
+  </p>
+  <button class="btn" onclick="closeInfo()">Tutup</button>
+</div>
+
+<script>
+
+
+
+
+
+
+
+
+/* ================= LOGIN CHECK ================= */
+const login = JSON.parse(localStorage.getItem("user"));
+
+if (!login?.userId) {
+  window.location.href = "login.html";
+}
+
+/* ================= CUSTOM TOAST ================= */
+function showToast(msg){
+  const toast = document.getElementById("toast");
+  toast.innerText = msg;
+  toast.classList.add("show");
+
+  setTimeout(()=>{
+    toast.classList.remove("show");
+  }, 2500);
+}
+
+/* ================= SELECT LANGUAGE ================= */
+let selectedLang = null;
+
+function selectLang(lang){
+
+  selectedLang = lang;
+
+  showToast(
+    "Akun Anda belum dapat memilih bahasa saat ini. Pilihan akan disimpan untuk pengembangan berikutnya."
+  );
+}
+
+/* ================= SAVE ================= */
+function saveLang(){
+
+  if(!selectedLang){
+    showToast("Silakan pilih bahasa terlebih dahulu");
+    return;
+  }
+
+  localStorage.setItem("lang", selectedLang);
+
+  showToast("Akun ini belum memenuhi status");
+}
+
+/* ================= MODAL ================= */
+function openInfo(){
+  document.getElementById("infoModal").classList.add("active");
+}
+
+function closeInfo(){
+  document.getElementById("infoModal").classList.remove("active");
+}
+</script>
+
+</body>
+</html>

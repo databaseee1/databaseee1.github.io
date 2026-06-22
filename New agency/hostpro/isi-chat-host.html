@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Pesan</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins', sans-serif;
+}
+
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none !important;
+}
+
+/* hilangkan highlight saat klik/focus */
+button, a, div, span, img {
+  outline: none !important;
+}
+
+
+img {
+
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+
+
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+
+
+html,
+body,
+input,
+button,
+textarea,
+select{
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  background:#ffffff;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+/* HEADER */
+.header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:#fff;
+  height:55px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.header-title{
+  display:flex;
+  align-items:center;
+  gap:1px;
+
+  font-size:17px;
+  font-weight:500;
+  color:#222;
+}
+.header-back{
+  position:absolute;
+  left:15px;
+  width:22px;
+  height:22px;
+  cursor:pointer;
+}
+
+.header-right{
+  position:absolute;
+  right:15px;
+  width:22px;
+  height:22px;
+  object-fit:contain;
+  cursor:pointer;
+}
+
+
+
+
+
+
+
+
+.chat-row{
+  display:flex;
+  align-items:flex-end;
+  margin:10px 0;
+  gap:8px;
+}
+
+.chat-row.me{
+  justify-content:flex-end;
+}
+
+.chat-avatar{
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  object-fit:cover;
+  flex-shrink:0;
+}
+
+
+/* CHAT BOX */
+.chat-box{
+  flex:1;
+  overflow-y:auto;
+  padding:15px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+/* BUBBLE */
+.msg{
+  max-width:70%;
+  padding:10px 12px;
+  border-radius:12px;
+  font-size:13px;
+  word-wrap:break-word;
+}
+
+.left{
+  background:#eeeeee;
+      align-self: flex-end;
+    border-radius: 8px;
+    border-top-left-radius: 1px;
+    position: relative;
+    top: 6px;
+}
+
+.right{
+  background:#a51dff;
+  color:#fff;
+  align-self:flex-end;
+  border-radius:8px;
+  border-top-right-radius:1px;
+
+  position:relative;
+  top:6px;
+}
+/* INPUT */
+.input-box{
+  display:flex;
+  padding:10px;
+  background:#fff;
+}
+
+.input-box input{
+  flex:1;
+  padding:10px;
+  border:1px solid #ffffff;
+  border-radius:20px;
+  outline:none;
+  background: #ececec;
+}
+
+.input-box button{
+  padding:1px 5px;
+  border:none;
+  border-radius:20px;
+  color:#fff;
+  font-weight:600;
+}
+
+
+.bottom-icons{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 45px;
+  background:#fff;
+
+  transform:translateX(-20px);
+  margin-bottom:15px;
+}
+
+.bottom-icon{
+  width:35px;
+  height:35px;
+  object-fit:contain;
+  cursor:pointer;
+}
+
+.send-btn{
+  background:none;
+  border:none;
+  padding:0;
+  cursor:pointer;
+}
+
+.send-btn img{
+  width:45px;
+  height:45px;
+  object-fit:contain;
+  display:block;
+}
+
+
+
+.more-menu{
+  position:absolute;
+  top:50px;
+  right:5px;
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 4px 15px rgba(0,0,0,.15);
+  min-width:190px;
+  display:none;
+  overflow:hidden;
+  z-index:9999;
+}
+
+.menu-item{
+  padding:12px 15px;
+  font-family:'Poppins',sans-serif;
+  font-size:14px;
+  cursor:pointer;
+  background: #f1f1f1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.gift-sheet{
+  position:fixed;
+  left:0;
+  bottom:0;
+  width:100%;
+  height:49%;
+  background:#fff;
+  border-radius:18px 18px 0 0;
+  z-index:999999;
+
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  will-change: transform;
+}
+
+.gift-sheet.show{
+  transform: translateY(0%);
+  background: #f1f1f1;
+}
+
+.gift-header{
+  display:flex;
+  justify-content:center;
+  margin-bottom:10px;
+}
+
+.gift-header .line{
+  width:50px;
+  height:5px;
+  background:#ccc;
+  border-radius:20px;
+}
+
+.gift-list{
+  display:grid;
+
+  grid-template-rows:repeat(3, auto); 
+  grid-auto-flow:column;             
+  grid-auto-columns:90px;           
+  gap:12px;
+
+  overflow-x:auto;
+  overflow-y:hidden;
+
+  padding:10px;
+
+  scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
+}
+
+
+.gift-list::-webkit-scrollbar{
+  display:none;
+}
+
+
+.gift-item{
+  width:90px;
+  height:100px;
+
+  background:#f7f7f7;
+  border-radius:12px;
+
+  padding:10px;
+  text-align:center;
+
+  cursor:pointer;
+}
+
+
+
+
+.gift-item > img{
+  width:60px;
+  height:60px;
+  object-fit:contain;
+}
+
+.gift-price{
+  margin-top:5px;
+  font-size:13px;
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:1px;
+}
+
+
+.tokengamgam{
+  width:16px !important;
+  height:16px !important;
+  object-fit:contain;
+  vertical-align:middle;
+  margin-right:3px;
+}
+
+
+
+
+
+
+.gift-notif{
+  position:fixed;
+  top:40px;
+  left:50%;
+  transform:translateX(-50%);
+  display:none;
+  z-index:99999999;
+}
+
+
+.gift-notif.show{
+  display:block;
+}
+
+
+.gift-notif-box{
+  background:#fd3e3e;
+  border-radius:9px;
+  padding:10px 18px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  animation:slideDown .25s ease;
+}
+
+
+.gift-notif-box img{
+  width:25px;
+  height:25px;
+  object-fit:contain;
+}
+
+
+.gift-notif-box span{
+  font-size:13px;
+  font-weight:600;
+  color:#ffffff;
+  white-space:nowrap;
+}
+
+
+
+
+
+#uploadLoading{
+  position:fixed;
+  inset:0;
+  background:rgba(255,255,255,.7);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:999999;
+}
+
+
+.loader{
+  width:35px;
+  height:35px;
+  border:4px solid #eee;
+  border-top:4px solid #8a00ff;
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+}
+
+
+@keyframes spin{
+ from{
+  transform:rotate(0deg);
+ }
+ to{
+  transform:rotate(360deg);
+ }
+}
+
+</style>
+</head>
+
+<body>
+
+    <div id="uploadLoading">
+
+  <div class="loader"></div>
+
+</div>
+
+
+
+<div class="header">
+
+  <img src="back_black.png" class="header-back" onclick="history.back()">
+
+  <div id="chatHeader" class="header-title">
+    -
+  </div>
+
+ <img src="msg_icon_more_dot.png"
+       class="header-right"
+       onclick="toggleMenu()">
+
+  <div id="moreMenu" class="more-menu">
+    <div class="menu-item">Cancel topping</div>
+    <div class="menu-item">Blokir</div>
+    <div class="menu-item">Laporan</div>
+  </div>
+
+</div>
+
+<div id="chatBox" class="chat-box"></div>
+
+<div class="input-box">
+  <input id="msgInput" placeholder="">
+  <button onclick="sendMsg()" class="send-btn">
+  <img src="send_im_msg_icon.png" alt="Kirim">
+</button>
+</div>
+
+<!-- MENU ICON BAWAH -->
+<div class="bottom-icons">
+
+  <img src="chat_icon_emoji.png" class="bottom-icon">
+
+<img src="im_image.png" class="bottom-icon" onclick="chooseImage()">
+
+<img src="im_gift_select.png" class="bottom-icon" onclick="openGift()" style="cursor:pointer;">
+</div>
+<div id="giftSheet" class="gift-sheet">
+  <div class="gift-header">
+    <div class="line"></div>
+  </div>
+
+  <div id="giftList" class="gift-list"></div>
+</div>
+
+<div id="giftNotif" class="gift-notif">
+  <div class="gift-notif-box">
+    <img src="ic_launcher.png">
+    <span>Gift berhasil dikirim</span>
+  </div>
+</div>
+
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  push,
+  set,
+  get,
+  update
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+/* ================= FIREBASE ================= */
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+
+
+
+
+
+
+
+
+
+
+
+
+let myUserData = {};
+
+/* ================= LOGIN ================= */
+const login = JSON.parse(localStorage.getItem("user"));
+if (!login) window.location.href = "login.html";
+
+/* ================= BLOCK USERS2 (WAJIB USERS1 ONLY) ================= */
+async function checkUsers1(){
+
+  const snap = await get(ref(db, "users1"));
+
+  let ok = false;
+
+  snap.forEach(child => {
+    const d = child.val();
+
+    if (
+      d.uid === login.uid &&
+      d.email === login.email &&
+      d.wa === login.wa
+    ) {
+      ok = true;
+    }
+  });
+
+  if (!ok) {
+    alert("Akses ditolak (bukan users1)");
+    localStorage.removeItem("user");
+    window.location.href = "login.html";
+  }
+}
+
+checkUsers1();
+
+
+async function loadMyUser(){
+
+  const snap = await get(ref(db, "users1"));
+
+  snap.forEach(child => {
+    const d = child.val();
+
+    if (d.uid === login.uid) {
+      myUserData = d;
+    }
+  });
+
+}
+
+loadMyUser();
+
+
+
+/* ================= CLEAN ID ================= */
+function clean(id){
+  return String(id || "")
+    .replace(/[@.]/g, "_")
+    .toLowerCase();
+}
+
+/* ================= USER ID ================= */
+const myId = clean(login.uid || login.email || login.wa);
+
+/* ================= CHAT ID ================= */
+const chatId = clean(localStorage.getItem("chatId"));
+
+const chatBox = document.getElementById("chatBox");
+const header = document.getElementById("chatHeader");
+
+/* ================= FORMAT TIME ================= */
+function formatTime(ts){
+  const d = new Date(ts);
+  return `${String(d.getHours()).padStart(2,'0')}.${String(d.getMinutes()).padStart(2,'0')}`;
+}
+
+
+
+
+
+/* ================= LOAD CHAT (FROM chats) ================= */
+onValue(ref(db, "chats/" + chatId + "/history"), async (snap) => {
+
+  chatBox.innerHTML = "";
+
+  const history = snap.val() || {};
+
+let namaLawan = "Chat";
+let idLawan = "";
+let statusLawan = "";
+let receiverId = "";
+
+Object.values(history).forEach(msg => {
+
+  const sender =
+    clean(msg.senderId || msg.sender || "");
+
+  if(sender !== myId){
+
+    idLawan = sender;
+    namaLawan = msg.senderName || "Chat";
+    receiverId = sender;
+
+  }
+
+});
+
+/* ambil statush dari users2 */
+if(idLawan){
+
+  const usersSnap = await get(ref(db, "users2"));
+
+  if(usersSnap.exists()){
+
+    usersSnap.forEach(child => {
+
+      const user = child.val();
+
+      const uid =
+        user.uid ||
+        user.email?.replace(/[@.]/g, "_") ||
+        user.wa ||
+        "";
+
+      if(uid === idLawan){
+        statusLawan = user.statush || "";
+      }
+
+    });
+
+  }
+
+}
+
+if(header){
+
+  header.innerHTML = `
+    ${namaLawan}
+    <span style="
+      font-size:12px;
+      color:#ffffff;
+      margin-left:6px;
+      font-weight:normal;
+      padding: 0px 5px;
+          border-radius: 10px;
+          background: #ff1010;
+    ">
+      ${statusLawan}
+    </span>
+  `;
+
+}
+
+
+
+  /* ambil data lawan chat dari users1 */
+/* ambil data lawan chat dari users1 */
+const userSnap = await get(ref(db, "users1/" + chatId));
+const userData = userSnap.val() || {};
+
+Object.keys(history).forEach(key => {
+
+  const msg = history[key];
+
+  const senderId = clean(msg.senderId || msg.sender || "");
+
+  const isMe = senderId === myId;
+
+  const row = document.createElement("div");
+  row.className = isMe ? "chat-row me" : "chat-row";
+
+  const myPhoto =
+    login.profil ||
+    login.foto?.[0] ||
+    "assets/images/default_pic_100.png";
+
+  const otherPhoto =
+    msg.senderFoto ||
+    userData.profil ||
+    userData.foto?.[0] ||
+    "assets/images/default_pic_100.png";
+
+  const content = msg.gift
+    ? `
+        <div class="gift-chat">
+          <img src="${msg.giftImg}" class="gift-chat-img">
+          <div class="gift-chat-name">${msg.giftName}</div>
+          <div class="gift-chat-price">🪙 ${msg.giftPrice}</div>
+        </div>
+      `
+    : msg.foto
+      ? `
+          <img src="${msg.foto}"
+               style="max-width:180px;border-radius:10px;">
+        `
+      : `
+          <div class="msg ${isMe ? "right" : "left"}">
+            ${msg.text || ""}
+          </div>
+        `;
+
+  row.innerHTML = isMe
+    ? `
+        ${content}
+        <img class="chat-avatar" src="${myPhoto}">
+      `
+    : `
+        <img class="chat-avatar" src="${otherPhoto}">
+        ${content}
+      `;
+
+  chatBox.appendChild(row);
+});
+
+chatBox.scrollTop = chatBox.scrollHeight;
+});
+
+
+
+
+/* ================= SEND MESSAGE ================= */
+window.sendMsg = function(){
+
+  const input = document.getElementById("msgInput");
+  const text = input.value.trim();
+  if(!text) return;
+
+const msg = {
+  text,
+  sender: myId,
+  senderName: myUserData.nama || login.nama || "Unknown",
+  senderFoto: (myUserData.foto?.[0]) || login.foto?.[0] || "",
+  time: Date.now(),
+  read :false
+};
+
+  push(ref(db, "chats/" + chatId + "/history"), msg);
+
+  input.value = "";
+};
+
+/* ================= SEND IMAGE ================= */
+window.chooseImage = function(){
+
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = "image/*";
+
+  input.onchange = async (e) => {
+
+    const file = e.target.files[0];
+    if(!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "fotousershost");
+
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/dowoq4a0i/image/upload",
+      { method: "POST", body: formData }
+    );
+
+    const data = await res.json();
+
+push(ref(db, "chats/" + chatId + "/history"), {
+  foto: data.secure_url,
+  sender: myId,
+  senderName: myUserData.nama || login.nama || "Unknown",
+  senderFoto: (myUserData.foto?.[0]) || login.foto?.[0] || "",
+  time: Date.now(),
+  read :false
+});
+  };
+
+  input.click();
+};
+
+
+
+
+
+
+
+
+
+
+
+/* OPEN SHEET */
+function openGift(){
+  console.log("OPEN GIFT CLICKED");
+
+  const sheet = document.getElementById("giftSheet");
+
+  sheet.classList.add("show");
+}
+
+window.openGift = openGift;
+
+
+
+
+document.addEventListener("click", function(e){
+
+  const sheet = document.getElementById("giftSheet");
+  const giftBtn = document.querySelector(".bottom-icon[onclick='openGift()']");
+
+  if(!sheet) return;
+
+  if(!sheet.classList.contains("show")) return;
+
+  if(!sheet.contains(e.target) && e.target !== giftBtn) {
+    sheet.classList.remove("show");
+  }
+
+});
+
+/* SHOW NOTIF */
+function showNotif(){
+
+  const notif = document.getElementById("giftNotif");
+
+  notif.classList.add("show");
+
+
+  setTimeout(()=>{
+    notif.classList.remove("show");
+  },2500);
+
+}
+
+/* LOAD GIFTS */
+async function loadGift(){
+
+  const snap = await get(ref(db, "Gift"));
+
+  let data;
+
+  if(!snap.exists()){
+    // 🔥 AUTO DUMMY 20 DATA
+    data = {};
+    for(let i=1;i<=20;i++){
+      data["gift"+i] = {
+        name: "Gift " + i,
+        price: (i * 50).toString(),
+        img: "gift.png",
+        role: "Gift"
+      };
+    }
+
+    await set(ref(db, "Gift"), data);
+  } else {
+    data = snap.val();
+  }
+
+  renderGift(data);
+}
+
+
+
+/* RENDER */
+function renderGift(data){
+
+  const list = document.getElementById("giftList");
+  list.innerHTML = "";
+
+  Object.keys(data).forEach(key => {
+
+    const g = data[key];
+
+    const div = document.createElement("div");
+    div.className = "gift-item";
+
+div.innerHTML = `
+  <img src="${g.img}">
+  <div class="gift-price">
+    <img src="token_wrap.png" class="tokengamgam">
+    <span>${g.price}</span>
+  </div>
+`;
+
+    div.onclick = () => {
+      showNotif();
+    };
+
+    list.appendChild(div);
+  });
+
+}
+
+loadGift();
+
+
+
+
+
+
+
+
+window.toggleMenu = function() {
+  const menu = document.getElementById("moreMenu");
+
+  if(menu.style.display === "block"){
+    menu.style.display = "none";
+  }else{
+    menu.style.display = "block";
+  }
+};
+
+
+document.addEventListener("click",(e)=>{
+  if(
+    !e.target.closest(".header-right") &&
+    !e.target.closest("#moreMenu")
+  ){
+    document.getElementById("moreMenu").style.display="none";
+  }
+});
+</script>
+
+</body>
+</html>

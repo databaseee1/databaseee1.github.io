@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Login Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+background:#f5f5f5;
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.card{
+width:350px;
+background:#fff;
+padding:25px;
+border-radius:16px;
+box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.logo{
+width:80px;
+height:80px;
+margin:auto;
+display:block;
+object-fit:contain;
+margin-bottom:15px;
+}
+
+.title{
+text-align:center;
+font-size:22px;
+font-weight:700;
+margin-bottom:20px;
+}
+
+.input{
+width:100%;
+padding:12px;
+border:1px solid #ddd;
+border-radius:10px;
+margin-bottom:12px;
+outline:none;
+}
+
+.btn{
+width:100%;
+padding:12px;
+border:none;
+border-radius:10px;
+background:#bb0493;
+color:#fff;
+font-weight:600;
+cursor:pointer;
+}
+
+.btn:hover{
+opacity:.9;
+}
+
+.notif{
+margin-top:12px;
+font-size:13px;
+text-align:center;
+color:#e74c3c;
+}
+
+</style>
+</head>
+<body>
+
+<div class="card">
+
+<img
+src="assets/images/agencylogo.png"
+class="logo">
+
+<div class="title">
+LOGIN ADMIN
+</div>
+
+<input
+id="email"
+class="input"
+placeholder="Email">
+
+<input
+id="password"
+type="password"
+class="input"
+placeholder="Password">
+
+<button
+class="btn"
+onclick="loginAdmin()">
+Masuk
+</button>
+
+<div
+id="notif"
+class="notif">
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import {
+getDatabase,
+ref,
+get
+}
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+authDomain:"users-96dc5.firebaseapp.com",
+databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId:"users-96dc5",
+storageBucket:"users-96dc5.appspot.com",
+messagingSenderId:"483322415863",
+appId:"1:483322415863:web:1397a8f2e808e66ad9e1f2"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+window.loginAdmin = async function(){
+
+const email =
+document.getElementById("email")
+.value
+.trim()
+.toLowerCase();
+
+const password =
+document.getElementById("password")
+.value
+.trim();
+
+if(!email || !password){
+
+document.getElementById("notif")
+.innerText =
+"Email dan password wajib diisi";
+
+return;
+}
+
+const snap =
+await get(ref(db,"admins"));
+
+if(!snap.exists()){
+
+document.getElementById("notif")
+.innerText =
+"Data admin tidak ditemukan";
+
+return;
+}
+
+const admins =
+snap.val();
+
+let foundAdmin = null;
+
+Object.keys(admins)
+.forEach(key=>{
+
+const a = admins[key];
+
+if(
+String(a.email || "")
+.toLowerCase() === email &&
+String(a.password || "")
+=== password
+){
+foundAdmin = {
+id:key,
+...a
+};
+}
+
+});
+
+if(!foundAdmin){
+
+document.getElementById("notif")
+.innerText =
+"Email atau password salah";
+
+return;
+}
+
+/* SIMPAN SESSION */
+
+localStorage.setItem(
+  "adminLogin",
+  JSON.stringify({
+    uid: foundAdmin.id,   
+    nama: foundAdmin.nama || "",
+    email: foundAdmin.email || "",
+    role: foundAdmin.role || "",
+    level: foundAdmin.level || "",
+    negara: foundAdmin.negara || "",
+    lokasi: foundAdmin.lokasi || "",
+    diverifikasi: foundAdmin.diverifikasi || "",
+    tanggalBergabung: foundAdmin.tanggalBergabung || "",
+    profil: foundAdmin.profil || "",
+    status: foundAdmin.status || "",
+    verified: foundAdmin.verified || false
+  })
+);
+
+window.location.href =
+"Dasboard_admin.html";
+};
+
+</script>
+
+</body>
+</html>
+

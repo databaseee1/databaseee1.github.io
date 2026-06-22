@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Status Akun</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body{
+  margin:0;
+  font-family:'Poppins', sans-serif;
+  background:#f5f5f5;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+/* BOX */
+.box{
+  width:90%;
+  max-width:380px;
+  text-align:center;
+  padding:20px;
+}
+
+/* LOGO */
+.logo{
+  width:90px;
+  height:90px;
+  object-fit:contain;
+  margin-bottom:10px;
+}
+
+/* TITLE */
+.title{
+  font-size:18px;
+  font-weight:600;
+  margin-bottom:10px;
+}
+
+/* TEXT */
+.text{
+  font-size:13px;
+  color:#666;
+  margin-bottom:15px;
+  line-height:1.5;
+}
+
+/* LINK */
+.link{
+  font-size:13px;
+  color:#3498db;
+  margin:15px 0;
+  cursor:pointer;
+  display:inline-block;
+}
+
+/* BUTTON BACK STYLE */
+.btn-back{
+  margin-top:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  color:#3498db;
+  font-weight:500;
+  cursor:pointer;
+}
+
+.btn-back i{
+  font-size:14px;
+}
+
+/* LOADING */
+.loading{
+  font-size:13px;
+  color:#999;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<div class="box" id="box">
+  <div class="loading">Memeriksa status akun...</div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain:"users-96dc5.firebaseapp.com",
+  databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:"users-96dc5",
+  storageBucket:"users-96dc5.appspot.com",
+  messagingSenderId:"483322415863",
+  appId:"1:483322415863:web:1397a8f2e808e66ad9e1f2"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* LOGIN CHECK */
+const login = JSON.parse(localStorage.getItem("user"));
+
+if(!login){
+  window.location.href = "login.html";
+}
+
+async function load(){
+
+  const box = document.getElementById("box");
+
+  const snap = await get(ref(db, "Statusakun_host/" + login.userId));
+
+  let status = "approved";
+  let ket = "Akun Anda aktif dan dapat digunakan.";
+
+  if(snap.exists()){
+    const d = snap.val();
+    status = d.status;
+    ket = d.keterangan || "";
+  }
+
+if(status === "banned"){
+
+box.innerHTML = `
+  
+  <!-- ATAS -->
+  <div style="margin-top:10px;">
+    <img src="banned_icon.png" class="logo">
+  </div>
+
+  <div class="title">Akun Dilarang</div>
+
+  <div class="text">${ket}</div>
+
+  <!-- JARAK BESAR (lebih clean daripada banyak div kosong) -->
+  <div style="height:460px;"></div>
+
+  <!-- CARD PERATURAN -->
+  <div onclick="rule()" style="
+    border:1px solid #9826ff;
+    border-radius:20px;
+    padding:12px;
+    font-size:13px;
+    margin-bottom:12px;
+    background:#fff;
+    cursor:pointer;
+  ">
+    Peraturan Komunitas
+  </div>
+
+  <!-- LAYANAN PELANGGAN -->
+  <div onclick="cs()" style="
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    font-size:13px;
+    color:#3498db;
+    cursor:pointer;
+  ">
+    <i class="fa fa-chevron-left"></i>
+    Layanan pelanggan
+  </div>
+
+`;
+
+}
+
+else if(status === "suspend"){
+
+box.innerHTML = `
+  
+  <!-- ATAS -->
+  <div style="margin-top:10px;">
+    <img src="im_banned_icon.png" class="logo">
+  </div>
+
+  <div class="title">Akun Ditangguhkan</div>
+
+  <div class="text">${ket}</div>
+
+  <!-- JARAK BESAR (lebih clean daripada banyak div kosong) -->
+  <div style="height:460px;"></div>
+
+  <!-- CARD PERATURAN -->
+  <div onclick="rule()" style="
+    border:1px solid #9826ff;
+    border-radius:20px;
+    padding:12px;
+    font-size:13px;
+    margin-bottom:12px;
+    background:#fff;
+    cursor:pointer;
+  ">
+    Peraturan Komunitas
+  </div>
+
+  <!-- LAYANAN PELANGGAN -->
+  <div onclick="cs()" style="
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    font-size:13px;
+    color:#3498db;
+    cursor:pointer;
+  ">
+    <i class="fa fa-chevron-left"></i>
+    Layanan pelanggan
+  </div>
+
+`;
+}
+
+
+
+  else{
+
+    window.location.href = "my_akun.html";
+
+  }
+}
+
+load();
+
+/* ACTION */
+window.rule = function(){
+  window.location.href = "syarat_ketentuan.html";
+};
+
+window.cs = function(){
+  window.location.href = "Layanan_pelanggan.html";
+};
+
+</script>
+
+</body>
+</html>

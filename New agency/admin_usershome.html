@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Host Users</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+  font-family: Arial;
+  background:#111;
+  color:white;
+}
+
+h2{
+  text-align:center;
+}
+
+#userList{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  padding:10px;
+}
+
+.user-card{
+  background:#222;
+  padding:10px;
+  border-radius:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+button{
+  padding:6px 10px;
+  margin:3px;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+.modal{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.7);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.modal-box{
+  background:#1c1c1c;
+  padding:20px;
+  width:400px;
+  border-radius:10px;
+  max-height:90vh;
+  overflow:auto;
+}
+
+.hidden{
+  display:none;
+}
+
+input{
+  width:100%;
+  margin:5px 0;
+  padding:6px;
+}
+
+
+
+
+
+
+
+/* ===== MODAL BOX ===== */
+.box{
+  width:420px;
+  max-height:90vh;
+  overflow-y:auto;
+  background:#111827;
+  border:1px solid #1f2937;
+  border-radius:14px;
+  padding:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+  animation:pop .2s ease;
+}
+
+/* animation */
+@keyframes pop{
+  from{transform:scale(.95); opacity:0;}
+  to{transform:scale(1); opacity:1;}
+}
+
+/* ===== TITLE ===== */
+.box h2{
+  font-size:18px;
+  margin-bottom:10px;
+  color:#f9fafb;
+}
+
+.box h3{
+  font-size:14px;
+  margin:12px 0 6px;
+  color:#93c5fd;
+}
+
+/* ===== INPUT ===== */
+.box input{
+  width:94%;
+  padding:10px 12px;
+  margin:6px 0;
+  border-radius:10px;
+  border:1px solid #374151;
+  background:#0b1220;
+  color:#fff;
+  font-size:13px;
+  outline:none;
+  transition:0.2s;
+}
+
+.box input:focus{
+  border-color:#3b82f6;
+  box-shadow:0 0 0 2px rgba(59,130,246,0.2);
+}
+
+/* placeholder */
+.box input::placeholder{
+  color:#6b7280;
+}
+
+/* ===== HR ===== */
+.box hr{
+  border:none;
+  border-top:1px solid #1f2937;
+  margin:12px 0;
+}
+
+/* ===== BUTTON ===== */
+.box button{
+  width:100%;
+  padding:10px;
+  margin-top:6px;
+  border:none;
+  border-radius:10px;
+  font-weight:600;
+  font-size:13px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+/* primary button */
+.box button:nth-of-type(1){
+  background:#3b82f6;
+  color:white;
+}
+
+.box button:nth-of-type(1):hover{
+  background:#2563eb;
+}
+
+/* close button */
+.box button:nth-of-type(2){
+  background:#374151;
+  color:#e5e7eb;
+}
+
+.box button:nth-of-type(2):hover{
+  background:#4b5563;
+}
+
+/* ===== GIFT PREVIEW ===== */
+#giftPreview{
+  margin-top:10px;
+  padding:8px;
+  background:#0b1220;
+  border:1px solid #1f2937;
+  border-radius:10px;
+  font-size:12px;
+  color:#cbd5e1;
+}
+
+/* gift item */
+#giftPreview div{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:6px 4px;
+  border-bottom:1px solid #1f2937;
+}
+
+/* delete button inside gift */
+#giftPreview button{
+  width:auto;
+  padding:4px 8px;
+  font-size:11px;
+  background:#ef4444;
+  color:white;
+  border-radius:6px;
+}
+
+#giftPreview button:hover{
+  background:#dc2626;
+}
+
+/* scrollbar */
+.box::-webkit-scrollbar{
+  width:6px;
+}
+
+.box::-webkit-scrollbar-thumb{
+  background:#374151;
+  border-radius:10px;
+}
+
+
+
+
+
+.fab-add{
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+
+  width: 140px;
+  height: 45px;
+
+  background: #3b82f6;
+  color: white;
+
+  border: none;
+  border-radius: 12px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: 0.2s ease;
+  
+}
+
+.fab-add:hover{
+  background:#2563eb;
+  transform: translateY(-2px);
+}
+
+.fab-add:active{
+  transform: scale(0.97);
+}
+
+
+
+.input-wrap{
+  position:relative;
+}
+
+.input-wrap::after{
+  content:"▼";
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  pointer-events:none;
+  font-size:12px;
+  color:#666;
+}
+
+
+.select-box{
+  position:relative;
+}
+
+.dropdown-menu{
+  display:none;
+  position:absolute;
+  left:0;
+  right:0;
+  background:#000000;
+  border:1px solid #ddd;
+  max-height:200px;
+  overflow:auto;
+  z-index:999;
+}
+
+.dropdown-menu div{
+  padding:10px;
+  cursor:pointer;
+}
+
+.dropdown-menu div:hover{
+  background:#f2f2f2;
+}
+
+
+
+
+#photoModal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.8);
+  z-index:99999;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+#photoModal.hidden{
+  display:none;
+}
+
+.photo-content{
+  width:90%;
+  max-width:900px;
+  background:#fff;
+  padding:20px;
+  border-radius:10px;
+}
+
+#allPhotos{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  gap:10px;
+}
+
+#allPhotos img{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+  border-radius:8px;
+}
+
+.close-btn{
+  float:right;
+  cursor:pointer;
+  font-size:25px;
+}
+
+
+
+
+
+</style>
+
+
+</head>
+<body>
+
+<h2>ADMIN PANEL USERS</h2>
+
+<div id="userList"></div>
+<button class="fab-add" onclick="openAddUser()">
+  + Tambah User
+</button>
+
+
+<div id="addModal" class="modal hidden">
+  <div class="box">
+
+    <h2>Tambah User (Firebase Style)</h2>
+
+    <input id="aNama" placeholder="nama">
+    <input id="aUmur" placeholder="umur">
+    <input id="aLevel" placeholder="level">
+
+
+<div class="select-box">
+
+  <input
+    id="aLevelLogo"
+    placeholder="levelLogo"
+    readonly
+    onclick="toggleLevelDropdown()">
+
+  <div id="levelDropdown" class="dropdown-menu">
+
+    <div
+      onclick="pilihLevelLogo('https://i.ibb.co.com/1BBJB7V/user-level-0-icon.png')">
+      Lv0 &nbsp; 
+    </div>
+
+    <div
+      onclick="pilihLevelLogo('https://i.ibb.co.com/04PTY51/user-level-1-icon.png')">
+      Lv1 &nbsp; 
+    </div>
+
+    <div
+      onclick="pilihLevelLogo('https://i.ibb.co.com/Tqwn50Ps/user-level-2-icon.png')">
+      Lv2 &nbsp;
+    </div>
+
+        <div
+      onclick="pilihLevelLogo('https://i.ibb.co.com/Hp2p71VY/user-level-3-icon.png')">
+      Lv3 &nbsp; 
+    </div>
+
+        <div
+      onclick="pilihLevelLogo('https://i.ibb.co.com/PZR2r5wK/user-level-4-icon.png')">
+      Lv4 &nbsp; 
+    </div>
+
+        <div
+      onclick="pilihLevelLogo('https://i.ibb.co.com/JwVNjQnq/user-level-5-icon.png')">
+      Lv5 &nbsp;
+    </div>
+
+        <div
+      onclick="pilihLevelLogo('https://i.ibb.co.com/X0v3KRq/user-level-6-icon.png')">
+      Lv6 &nbsp; 
+    </div>
+
+        <div
+      onclick="pilihLevelLogo('https://i.ibb.co.com/yF2pqdFy/user-level-7-icon.png')">
+      Lv7 &nbsp; 
+ </div>
+        <div
+      onclick="pilihLevelLogo('https://i.ibb.co.com/hRmYQyBZ/user-level-8-icon.png')">
+      Lv8 &nbsp; 
+    </div>
+
+  </div>
+
+</div>
+
+
+<div class="input-wrap">
+  <input id="aNegara" list="negaraList" placeholder="negara">
+</div>
+
+<datalist id="negaraList">
+  <option value="Indonesia">
+  <option value="Malaysia">
+  <option value="Singapore">
+</datalist>
+
+
+<div class="input-wrap">
+  <input id="aNegaraLogo" list="negaraLogoList" placeholder="negaraLogo">
+</div>
+
+<datalist id="negaraLogoList">
+  <option value="https://i.ibb.co.com/ymjNzsVP/indonesialogo.png">
+</datalist>
+
+
+
+
+
+    <hr>
+
+    <h3>Hashtags (pisah koma)</h3>
+    <input id="aHashtags" placeholder="#carijodoh,#jakarta">
+
+    <h3>Foto (pisah koma)</h3>
+    <input id="aFoto" placeholder="url1,url2,url3">
+
+    <hr>
+    <h3>Gifts</h3>
+
+    <input id="gKey" placeholder="Key (car, crown, dll)">
+    <input id="gName" placeholder="Nama Gift">
+    <input id="gImage" placeholder="Image (gift4.png)">
+    <input id="gTotal" type="number" placeholder="Total">
+
+
+    <button onclick="addGiftTemp()">+ Tambah Gift</button>
+
+    <div id="giftPreview"></div>
+   
+    <hr>
+
+    <button onclick="createUser()">CREATE</button>
+    <button onclick="closeAdd()">CLOSE</button>
+
+  </div>
+</div>
+
+
+
+
+
+<!-- MODAL EDIT USER -->
+<div id="editModal" class="modal hidden">
+  <div class="modal-box">
+    <h3>Edit User</h3>
+
+    <input id="editNama" placeholder="Nama">
+    <input id="editUmur" type="number" placeholder="Umur">
+    <input id="editLevel" type="number" placeholder="Level">
+    <input id="editNegara" placeholder="Negara">
+    <input id="editNegaraLogo" placeholder="Negara Logo">
+    <input id="editLevelLogo" placeholder="Level Logo">
+
+    <hr>
+
+    <h4>Hashtag</h4>
+    <div id="hashtagBox"></div>
+    <input id="newHashtag" placeholder="Tambah hashtag">
+    <button onclick="addHashtag()">Tambah</button>
+
+    <hr>
+
+    <h4>Foto</h4>
+    <div id="fotoBox"></div>
+    <input id="newFoto" placeholder="URL Foto">
+    <button onclick="addFoto()">Tambah Foto</button>
+
+    <hr>
+
+    <h4>Gift</h4>
+    <div id="giftBox"></div>
+
+    <input id="giftName" placeholder="Nama Gift">
+    <input id="giftImage" placeholder="Image Gift">
+    <input id="giftTotal" type="number" placeholder="Total">
+    <button onclick="addGift()">Tambah Gift</button>
+
+    <hr>
+
+    <button onclick="saveUser()">Simpan</button>
+    <button onclick="closeModal()">Tutup</button>
+  </div>
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  update,
+  remove,
+  get,
+  set,
+  push
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* FIREBASE */
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+  storageBucket: "users-96dc5.appspot.com",
+  messagingSenderId: "483322415863",
+  appId: "1:483322415863:web:1397a8f2e808e66ad9e1f2"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+
+
+
+/* ================= CEK LOGIN ================= */
+
+const adminData = JSON.parse(localStorage.getItem("adminLogin"));
+
+if (!adminData || adminData.role !== "admin") {
+  window.location.replace("Login_admin.html");
+}
+
+
+
+
+
+
+
+let currentUserId = null;
+let currentUserData = null;
+
+/* =========================
+   TEMP GIFT STORAGE (FIX)
+========================= */
+window.tempGifts = {};
+
+/* =========================
+   OPEN / CLOSE ADD MODAL
+========================= */
+window.openAddUser = ()=>{
+  document.getElementById("addModal").classList.remove("hidden");
+};
+
+window.closeAdd = ()=>{
+  document.getElementById("addModal").classList.add("hidden");
+  window.tempGifts = {};
+  if(document.getElementById("giftPreview"))
+    document.getElementById("giftPreview").innerHTML = "";
+};
+
+/* =========================
+   ADD USER (FIX FULL)
+========================= */
+window.createUser = async ()=>{
+
+  if(!confirm("Buat user baru?")) return;
+
+  const newRef = push(ref(db,"Users"));
+  const uid = newRef.key;
+
+  const hashtags = aHashtags.value
+    ? aHashtags.value.split(",").map(x=>x.trim())
+    : [];
+
+  const foto = aFoto.value
+    ? aFoto.value.split(",").map(x=>x.trim())
+    : [];
+
+  const data = {
+    uid: uid,
+    createdAt: Date.now(),
+
+    nama: aNama.value || "",
+    umur: aUmur.value || "",
+    level: aLevel.value || "",
+    levelLogo: aLevelLogo.value || "",
+    negara: aNegara.value || "",
+    negaraLogo: aNegaraLogo.value || "",
+
+    foto: foto,
+    hashtags: hashtags,
+    gifts: window.tempGifts || {}
+  };
+
+  await set(newRef, data);
+
+  alert("User berhasil dibuat!");
+
+  closeAdd();
+
+  /* reset */
+  aNama.value = "";
+  aUmur.value = "";
+  aLevel.value = "";
+  aLevelLogo.value = "";
+  aNegara.value = "";
+  aNegaraLogo.value = "";
+  aHashtags.value = "";
+  aFoto.value = "";
+};
+
+/* =========================
+   LOAD USERS
+========================= */
+const userList = document.getElementById("userList");
+
+onValue(ref(db,"Users"), (snap)=>{
+  userList.innerHTML = "";
+
+  snap.forEach(child=>{
+    const user = child.val();
+    const id = child.key;
+
+    const fotoUtama =
+      user.foto && user.foto.length
+        ? user.foto[0]
+        : "https://via.placeholder.com/60";
+
+    userList.innerHTML += `
+      <div class="user-card">
+
+        <div style="display:flex;align-items:center;gap:10px;">
+
+          <img
+            src="${fotoUtama}"
+            onclick="showPhotos('${id}')"
+            style="
+              width:60px;
+              height:60px;
+              object-fit:cover;
+              border-radius:50%;
+              cursor:pointer;
+            "
+          >
+
+          <div>
+            <b>${user.nama}</b> (${user.umur})
+            <br>
+            Level: ${user.level}
+          </div>
+
+        </div>
+
+        <div>
+          <button onclick="editUser('${id}')">Edit</button>
+          <button onclick="deleteUser('${id}')">Hapus</button>
+        </div>
+
+      </div>
+    `;
+  });
+});
+
+/* =========================
+   EDIT USER
+========================= */
+window.editUser = async (id)=>{
+  currentUserId = id;
+
+  const snap = await get(ref(db,"Users/"+id));
+  currentUserData = snap.val();
+
+  document.getElementById("editModal").classList.remove("hidden");
+
+  editNama.value = currentUserData.nama || "";
+  editUmur.value = currentUserData.umur || "";
+  editLevel.value = currentUserData.level || "";
+  editNegara.value = currentUserData.negara || "";
+  editNegaraLogo.value = currentUserData.negaraLogo || "";
+  editLevelLogo.value = currentUserData.levelLogo || "";
+
+  renderAll();
+};
+
+/* =========================
+   RENDER EDIT DATA
+========================= */
+function renderAll(){
+
+  hashtagBox.innerHTML = "";
+  (currentUserData.hashtags || []).forEach((h,i)=>{
+    hashtagBox.innerHTML += `
+      <div>${h} <button onclick="removeHashtag(${i})">x</button></div>
+    `;
+  });
+
+  fotoBox.innerHTML = "";
+  (currentUserData.foto || []).forEach((f,i)=>{
+    fotoBox.innerHTML += `
+      <div>
+        <img src="${f}" width="60">
+        <button onclick="removeFoto(${i})">x</button>
+      </div>
+    `;
+  });
+
+  giftBox.innerHTML = "";
+  const gifts = currentUserData.gifts || {};
+
+  Object.keys(gifts).forEach(key=>{
+    const g = gifts[key];
+    giftBox.innerHTML += `
+      <div>
+        ${g.name} x${g.total}
+        <button onclick="removeGift('${key}')">x</button>
+      </div>
+    `;
+  });
+}
+
+/* =========================
+   HASHTAG
+========================= */
+window.addHashtag = ()=>{
+  const val = newHashtag.value.trim();
+  if(!val) return;
+
+  if(!currentUserData.hashtags) currentUserData.hashtags = [];
+  currentUserData.hashtags.push(val);
+
+  renderAll();
+  newHashtag.value = "";
+};
+
+window.removeHashtag = (i)=>{
+  if(confirm("Hapus hashtag?")){
+    currentUserData.hashtags.splice(i,1);
+    renderAll();
+  }
+};
+
+/* =========================
+   FOTO
+========================= */
+window.addFoto = ()=>{
+  const val = newFoto.value.trim();
+  if(!val) return;
+
+  if(!currentUserData.foto) currentUserData.foto = [];
+  currentUserData.foto.push(val);
+
+  renderAll();
+  newFoto.value = "";
+};
+
+window.removeFoto = (i)=>{
+  if(confirm("Hapus foto?")){
+    currentUserData.foto.splice(i,1);
+    renderAll();
+  }
+};
+
+/* =========================
+   GIFT (EDIT MODE)
+========================= */
+window.addGift = ()=>{
+  const name = giftName.value;
+  const image = giftImage.value;
+  const total = Number(giftTotal.value);
+
+  if(!currentUserData.gifts) currentUserData.gifts = {};
+
+  const id = Date.now();
+
+  currentUserData.gifts[id] = {
+    name,
+    image,
+    total
+  };
+
+  renderAll();
+};
+
+window.removeGift = (key)=>{
+  if(confirm("Hapus gift?")){
+    delete currentUserData.gifts[key];
+    renderAll();
+  }
+};
+
+/* =========================
+   SAVE USER
+========================= */
+window.saveUser = async ()=>{
+
+  if(!confirm("Simpan perubahan user ini?")) return;
+
+  await update(ref(db,"Users/"+currentUserId), {
+    nama: editNama.value,
+    umur: editUmur.value,
+    level: editLevel.value,
+    negara: editNegara.value,
+    negaraLogo: editNegaraLogo.value,
+    levelLogo: editLevelLogo.value,
+    hashtags: currentUserData.hashtags || [],
+    foto: currentUserData.foto || [],
+    gifts: currentUserData.gifts || {}
+  });
+
+  alert("Berhasil disimpan!");
+  closeModal();
+};
+
+/* =========================
+   DELETE USER
+========================= */
+window.deleteUser = async (id)=>{
+  if(confirm("Yakin hapus user ini?")){
+    await remove(ref(db,"Users/"+id));
+    alert("User dihapus!");
+  }
+};
+
+/* =========================
+   CLOSE MODAL EDIT
+========================= */
+window.closeModal = ()=>{
+  document.getElementById("editModal").classList.add("hidden");
+};
+
+/* =========================
+   ADD GIFT TEMP (FIXED CLEAN)
+========================= */
+window.addGiftTemp = ()=>{
+
+  const key = gKey.value.trim();
+  if(!key) return alert("Key wajib");
+
+  window.tempGifts[key] = {
+    name: gName.value,
+    image: gImage.value,
+    total: Number(gTotal.value || 0)
+  };
+
+  renderGiftPreview();
+
+  gKey.value = "";
+  gName.value = "";
+  gImage.value = "";
+  gTotal.value = "";
+};
+
+/* =========================
+   RENDER GIFT PREVIEW
+========================= */
+function renderGiftPreview(){
+
+  if(!document.getElementById("giftPreview")) return;
+
+  giftPreview.innerHTML = "";
+
+  Object.keys(window.tempGifts).forEach(k=>{
+    const g = window.tempGifts[k];
+
+    giftPreview.innerHTML += `
+      <div>
+        ${k} - ${g.name} x${g.total}
+        <button onclick="removeTempGift('${k}')">x</button>
+      </div>
+    `;
+  });
+}
+
+/* =========================
+   REMOVE TEMP GIFT
+========================= */
+window.removeTempGift = (k)=>{
+  delete window.tempGifts[k];
+  renderGiftPreview();
+};
+
+
+
+
+
+
+
+window.toggleLevelDropdown = ()=>{
+
+  const d =
+  document.getElementById("levelDropdown");
+
+  d.style.display =
+    d.style.display === "block"
+      ? "none"
+      : "block";
+};
+
+window.pilihLevelLogo = (url)=>{
+
+  aLevelLogo.value = url;
+
+  document.getElementById(
+    "levelDropdown"
+  ).style.display = "none";
+};
+
+
+
+
+
+
+
+
+
+window.showPhotos = async (id)=>{
+
+  const snap = await get(ref(db,"Users/"+id));
+
+  if(!snap.exists()) return;
+
+  const user = snap.val();
+
+  const photos = user.foto || [];
+
+  allPhotos.innerHTML = "";
+
+  photos.forEach(url=>{
+
+    allPhotos.innerHTML += `
+      <img src="${url}">
+    `;
+
+  });
+
+  photoModal.classList.remove("hidden");
+};
+
+window.closePhotoModal = ()=>{
+
+  photoModal.classList.add("hidden");
+
+};
+
+
+
+
+
+
+const photoModal = document.getElementById("photoModal");
+
+photoModal.addEventListener("click", (e) => {
+
+  // jika yang diklik background modal
+  if (e.target === photoModal) {
+    closePhotoModal();
+  }
+
+});
+
+
+</script>
+
+
+
+
+
+<div id="photoModal" class="hidden">
+
+  <div class="photo-content">
+
+    <span onclick="closePhotoModal()" class="close-btn">
+      ✕
+    </span>
+
+    <div id="allPhotos"></div>
+
+  </div>
+
+</div>
+
+</body>
+</html>

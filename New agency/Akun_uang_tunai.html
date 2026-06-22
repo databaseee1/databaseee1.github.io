@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Akun Uang Tunai</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family: 'Poppins', sans-serif;
+}
+
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none !important;
+}
+
+/* hilangkan highlight saat klik/focus */
+button, a, div, span, img {
+  outline: none !important;
+}
+
+
+img {
+ 
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+
+
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family: 'Poppins', sans-serif;
+}
+
+body{
+background:#ffffff;
+color:#333;
+}
+
+/* HEADER */
+.header{
+height:60px;
+background:#fff;
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+font-size:18px;
+font-weight:500;
+border-bottom:1px solid #eee;
+}
+
+.back-btn{
+position:absolute;
+left:18px;
+font-size:22px;
+cursor:pointer;
+}
+
+/* BANK BAR */
+.bank-bar{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:7px;
+  background:#f5f5f5;
+}
+
+.bank-icon{
+  font-size:28px;
+  color:#8b8b8b;
+  width:32px;
+  text-align:center;
+}
+
+/* CONTENT */
+.content{
+padding:25px;
+}
+
+.label{
+font-size:18px;
+color:#999;
+margin-bottom:18px;
+}
+
+.flag-logo{
+  width:28px;
+  height:28px;
+  border-radius: 50px;
+  flex-shrink:0;
+}
+
+.row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+      margin-bottom: 15px;
+}
+.value{
+font-size:22px;
+}
+
+.field{
+margin-bottom:35px;
+}
+
+.field-title{
+font-size:18px;
+color:#999;
+margin-bottom:25px;
+}
+
+.field-value{
+font-size:22px;
+padding-bottom:12px;
+border-bottom:1px solid #ddd;
+}
+
+/* BUTTON */
+.save-btn{
+width:100%;
+height:62px;
+border:none;
+border-radius:35px;
+background:linear-gradient(
+90deg,
+#8b2cff,
+#a300ff
+);
+color:#fff;
+font-size:18px;
+cursor:pointer;
+margin-top:40px;
+}
+
+/* POPUP */
+.popup{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.55);
+display:none;
+justify-content:center;
+align-items:center;
+padding:20px;
+z-index:99999;
+}
+
+.popup-box{
+background:#fff;
+width:100%;
+max-width:340px;
+border-radius:18px;
+padding:25px;
+text-align:center;
+}
+
+.popup-icon{
+font-size:55px;
+color:#ff9800;
+margin-bottom:15px;
+}
+
+.popup-title{
+font-size:18px;
+font-weight:700;
+margin-bottom:10px;
+}
+
+.popup-text{
+font-size:14px;
+line-height:1.6;
+color:#666;
+}
+
+.popup-btn{
+margin-top:20px;
+width:100%;
+height:48px;
+border:none;
+border-radius:12px;
+background:#8b2cff;
+color:#fff;
+font-size:15px;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<i class="fa-solid fa-chevron-left back-btn"
+onclick="history.back()"></i>
+
+Akun Uang Tunai
+</div>
+
+<div class="bank-bar">
+
+<i
+  class="fas fa-wallet bank-icon"
+  id="bankLogo"
+></i>
+
+<span id="bankName">BCA</span>
+
+</div>
+
+<div class="content">
+
+<div class="label">
+Negara & Mata Uang
+</div>
+
+<div class="row">
+
+<img
+src="indonesialogo.png"
+class="flag-logo"
+>
+
+<div class="value">
+ID & IDR
+</div>
+
+</div>
+
+<div class="field">
+<div
+  class="field-title"
+  id="rekeningTitle"
+>
+Nomor Rekening
+</div>
+
+
+<div
+class="field-value"
+id="rekeningText">
+-
+</div>
+</div>
+
+<div class="field">
+<div class="field-title">
+Nama
+</div>
+
+<div
+class="field-value"
+id="namaText">
+-
+</div>
+</div>
+
+<button
+class="save-btn"
+onclick="showBlockedPopup()">
+Menyimpan
+</button>
+
+</div>
+
+<!-- POPUP -->
+<div
+class="popup"
+id="blockedPopup">
+
+<div class="popup-box">
+
+<i class="fa-solid fa-shield-halved popup-icon"></i>
+
+<div class="popup-title">
+Tidak Dapat Mengganti Rekening
+</div>
+
+<div class="popup-text">
+Guna melindungi peretasan akun dan
+mengambil dana Anda, informasi rekening
+yang telah terdaftar saat ini tidak dapat
+diubah oleh pengguna.
+</div>
+
+<button
+class="popup-btn"
+onclick="closeBlockedPopup()">
+Mengerti
+</button>
+
+</div>
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import {
+getDatabase,
+ref,
+get,
+update
+}
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* FIREBASE */
+const firebaseConfig = {
+apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+authDomain:"users-96dc5.firebaseapp.com",
+databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId:"users-96dc5",
+storageBucket:"users-96dc5.appspot.com",
+messagingSenderId:"483322415863",
+appId:"1:483322415863:web:1397a8f2e808e66ad9e1f2"
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getDatabase(app);
+
+/* LOGIN WAJIB */
+const login =
+JSON.parse(
+localStorage.getItem("user")
+);
+
+if(!login || !login.userId){
+
+window.location.href =
+"login.html";
+
+}
+
+
+
+
+function updateLastActive(page = "Akun_uang_tunai") {
+
+  const login = JSON.parse(localStorage.getItem("user"));
+  if (!login?.userId) return;
+
+  update(ref(db, "users2/" + login.userId), {
+    lastActive: Date.now(),
+    currentPage: page
+  });
+
+}
+
+["click", "touchstart", "keydown"].forEach(evt => {
+  document.addEventListener(evt, () => {
+    updateLastActive("Akun_uang_tunai");
+  }, { passive: true });
+});
+
+updateLastActive("Akun_uang_tunai");
+
+
+
+
+
+
+/* LOAD USER */
+async function loadUser(){
+
+try{
+
+const snap =
+await get(
+ref(
+db,
+"users2/" + login.userId
+)
+);
+
+if(!snap.exists()) return;
+
+const user = snap.val();
+
+document.getElementById(
+"namaText"
+).innerText =
+user.namaRek || "-";
+
+document.getElementById(
+"rekeningText"
+).innerText =
+user.noRek || "-";
+
+document.getElementById(
+"bankName"
+).innerText =
+user.bank || "-";
+
+/* TITLE DINAMIS */
+const rekeningTitle =
+document.getElementById(
+"rekeningTitle"
+);
+
+if(rekeningTitle){
+
+rekeningTitle.innerText =
+(user.bank || "Bank")
++ " Account";
+
+}
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+loadUser();
+
+/* POPUP */
+window.showBlockedPopup = function(){
+
+document.getElementById(
+"blockedPopup"
+).style.display = "flex";
+
+}
+
+window.closeBlockedPopup = function(){
+
+document.getElementById(
+"blockedPopup"
+).style.display = "none";
+
+}
+
+
+
+
+
+
+
+/* ================= (NO zoom) ================= */
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
+document.addEventListener("selectstart", e => e.preventDefault());
+
+/* ❌ BLOCK ZOOM KEYBOARD (Ctrl + / - / 0) */
+document.addEventListener("keydown", function (e) {
+  if (
+    (e.ctrlKey && e.key === "+") ||
+    (e.ctrlKey && e.key === "-") ||
+    (e.ctrlKey && e.key === "0") ||
+    (e.ctrlKey && e.key === "=")
+  ) {
+    e.preventDefault();
+  }
+});
+
+/* BLOCK PINCH ZOOM (mobile) */
+document.addEventListener("gesturestart", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gesturechange", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gestureend", function (e) {
+  e.preventDefault();
+});
+/* ================= (NO zoom) ================= */
+
+</script>
+
+</body>
+</html>

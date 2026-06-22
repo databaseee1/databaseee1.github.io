@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Profil User</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:sans-serif;
+}
+
+
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none !important;
+}
+
+/* hilangkan highlight saat klik/focus */
+button, a, div, span, img {
+  outline: none !important;
+}
+
+
+img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+
+
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+
+body{
+background:#ffffff;
+overflow-x:hidden;
+overflow-y:auto;
+min-height:100vh;
+}
+/* FOTO */
+
+.photo-slider{
+position:relative;
+width:100%;
+height:50vh;
+
+display:flex;
+overflow-x:auto;
+
+scroll-snap-type:x mandatory;
+scroll-behavior:smooth;
+}
+
+
+
+.photo-slider::-webkit-scrollbar{
+display:none;
+}
+
+.photo-slider img{
+width:100vw;
+height:50vh;
+flex-shrink:0;
+object-fit:cover;
+scroll-snap-align:start;
+}
+
+/* TOP */
+
+.top-bar{
+position:absolute;
+top:20px;
+left:0;
+right:0;
+padding:0 18px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+z-index:20;
+color:#fff;
+}
+
+
+
+.back-btn,
+.menu-btn{
+font-size:34px;
+cursor:pointer;
+}
+
+/* DOTS */
+
+.slider-dots{
+position:fixed;
+
+top:calc(50vh - 60px);
+
+left:50%;
+transform:translateX(-50%);
+
+display:flex;
+gap:8px;
+
+z-index:999;
+}
+
+.slider-dots span{
+width:8px;
+height:8px;
+border-radius:50%;
+background:#ffffff88;
+}
+
+.slider-dots .active{
+width:24px;
+border-radius:20px;
+background:#fff;
+}
+
+/* SHEET */
+
+.profile-sheet{
+position:relative;
+
+margin-top:-40px;
+
+background:#fff;
+
+border-radius:32px 32px 0 0;
+
+padding:22px 22px 120px;
+
+min-height:240px;
+
+z-index:10;
+}
+
+.sheet-handle{
+width:42px;
+height:8px;
+background:#ddd;
+border-radius:30px;
+margin:auto;
+margin-bottom:18px;
+}
+
+/* HEADER */
+
+.profile-header{
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+}
+
+.name-row{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+#userName{
+font-size:22px;
+font-weight:700;
+}
+
+.level-badge{
+  color:#fff;
+  display:flex;
+  align-items:center;
+  gap:1px;
+  padding:2px 8px;
+  border-radius:30px;
+  font-size:11px;
+  font-weight:700;
+}
+
+
+.level-1{ background:#ba7347; }   
+.level-2{ background:#dc8800; }   
+.level-3{ background:#c56b22; }  
+.level-4{ background:#f59e0b; }   
+.level-5{ background:#ef4444; }  
+.level-6{ background:#008990; }  
+.level-7{
+  background:#16d6d6;
+  box-shadow:0 0 10px #16d6d6;
+}  
+
+
+.level-badge img{
+width:11px;
+height:11px;
+}
+
+
+
+.user-info{
+margin-top:12px;
+display:flex;
+gap:20px;
+align-items:center;
+color:#666;
+font-size:15px;
+}
+
+.country-box{
+display:flex;
+align-items:center;
+gap:6px;
+}
+
+.country-logo{
+width:18px;
+height:18px;
+border-radius:50%;
+object-fit:cover;
+}
+
+.filter-btn{
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.filter-btn img{
+width:38px;
+height:38px;
+object-fit:contain;
+cursor:pointer;
+}
+/* HASHTAG */
+
+.hashtag-title{
+margin-top:40px;
+font-size:18px;
+font-weight:700;
+}
+
+.hashtags{
+margin-top:18px;
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.tag{
+padding:10px 18px;
+border:1px solid #ddd;
+border-radius:30px;
+background:#fff;
+color:#777;
+}
+
+/* BUTTON */
+.message-btn{
+  position:fixed;
+  left:22px;
+  right:22px;
+  bottom:15px;
+
+  height:54px;
+
+  display:flex;            
+  align-items:center;      
+  justify-content:center;   
+
+  gap:8px;                 
+
+  border:none;
+  border-radius:50px;
+
+  background:linear-gradient(90deg, #8c14ff, #b100ff);
+
+  color:#fff;
+  font-size:15px;
+  font-weight:600;
+  cursor:pointer;
+  z-index:999;
+  transition:0.2s ease;
+}
+
+/* efek klik/hover */
+.message-btn:active{
+  transform:scale(0.98);
+}
+
+.message-icon{
+  width:24px;
+  height:24px;
+  object-fit:contain;
+}
+
+.message-text{
+  line-height:1;
+}
+
+.photo-wrapper{
+position:relative;
+height:50vh;
+}
+
+.slider-dots{
+position:absolute;
+bottom:15px;
+
+left:50%;
+transform:translateX(-50%);
+
+display:flex;
+gap:8px;
+
+z-index:10;
+}
+
+.gender-age{
+display:flex;
+align-items:center;
+gap:6px;
+
+color:#666;
+font-size:15px;
+}
+
+.gender-age i{
+font-size:16px;
+color:#eb3fff;
+}
+
+.gift-title{
+margin-top:30px;
+margin-bottom:15px;
+
+font-size:18px;
+font-weight:700;
+}
+
+.gift-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+}
+
+.gift-card{
+background:#f8f8f8;
+
+border-radius:18px;
+
+padding:12px 8px;
+
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+
+text-align:center;
+}
+
+.gift-card img{
+width:35px;
+height:35px;
+object-fit:contain;
+}
+
+.gift-card span{
+margin-top:8px;
+font-size:13px;
+font-weight:600;
+}
+
+.gift-card small{
+margin-top:4px;
+color:#888;
+font-size:12px;
+}
+
+.verified-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+
+  margin-left:-5px;   
+  margin-top:8px;    
+  margin-bottom:2px; 
+
+  padding:3px 10px;
+
+  background:rgba(140, 20, 255, 0.12);
+
+  border-radius:20px;
+
+  color:#8c14ff;
+  font-size:12px;
+  font-weight:400;
+
+  line-height:1;
+}
+
+.verified-badge img{
+  width:14px;
+  height:14px;
+  object-fit:contain;
+}
+
+
+.menu-wrapper{
+  position:relative;
+}
+
+.menu-btn{
+  font-size:34px;
+  cursor:pointer;
+  user-select:none;
+}
+
+/* dropdown */
+.menu-dropdown{
+  position:absolute;
+  top:40px;
+  right:0;
+
+  width:180px;
+  background:#fff;
+
+  border-radius:12px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+
+  overflow:hidden;
+  z-index:9999;
+}
+
+.menu-item{
+  padding:12px 14px;
+  font-size:14px;
+  color:#333;
+  cursor:pointer;
+
+  transition:0.2s;
+}
+
+.menu-item:hover{
+  background:#f3f3f3;
+}
+
+.hidden{
+  display:none;
+}
+
+.toast{
+  position:fixed;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%);
+
+  display:flex;
+  align-items:center;
+  gap:8px;
+
+  background:#ffffff;
+  color:#000000;
+
+  padding:10px 14px;
+  border-radius:12px;
+
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
+  z-index:99999;
+
+  font-size:14px;
+
+  animation:fadeIn 0.2s ease;
+}
+
+.toast-icon{
+  width:18px;
+  height:18px;
+  object-fit:contain;
+}
+
+.hidden{
+  display:none;
+}
+
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateX(-50%) translateY(-10px);
+  }
+  to{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+  }
+}
+
+
+.loading-screen{
+  position:fixed;
+  inset:0;
+  background:#fff;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:999999;
+}
+
+.spinner{
+  width:55px;
+  height:55px;
+  border:5px solid #eee;
+  border-top:5px solid #8c14ff;
+  border-radius:50%;
+  animation:spin 0.8s linear infinite;
+}
+
+@keyframes spin{
+  from{transform:rotate(0deg);}
+  to{transform:rotate(360deg);}
+}
+
+.loading-text{
+  margin-top:12px;
+  font-size:14px;
+  color:#666;
+}
+
+
+
+</style>
+</head>
+<body>
+
+
+
+    <div id="loadingScreen" class="loading-screen">
+  <div class="spinner"></div>
+  <div class="loading-text"></div>
+</div>
+
+
+
+
+<!-- FOTO SLIDER -->
+<div class="photo-wrapper">
+
+  <div id="photoSlider" class="photo-slider"></div>
+
+  <div id="sliderDots" class="slider-dots"></div>
+
+</div>
+<!-- TOP BAR -->
+<div class="top-bar">
+
+<div class="back-btn" onclick="history.back()">
+❮
+</div>
+
+<div class="menu-wrapper">
+  <div class="menu-btn" onclick="toggleMenu()">⋯</div>
+
+  <div id="menuDropdown" class="menu-dropdown hidden">
+<div class="menu-item" onclick="handleMenu('report')">Laporkan</div>
+<div class="menu-item" onclick="handleMenu('block')">Tambahkan daftar hitam</div>
+  </div>
+</div>
+
+</div>
+
+
+
+<!-- BOTTOM SHEET -->
+<div class="profile-sheet">
+
+<div class="sheet-handle"></div>
+
+<div class="profile-header">
+
+<div>
+
+<div class="name-row">
+
+<span id="userName">
+Loading...
+</span>
+
+
+
+<div id="levelBadge" class="level-badge">
+
+<img id="levelLogo"
+src=""
+alt="">
+
+<span>
+Lv
+<span id="userLevel">
+0
+</span>
+</span>
+
+</div>
+
+</div>
+
+
+
+<span class="verified-badge">
+  <img src="verifikasi.png">
+  Diverifikasi
+</span>
+
+
+<div class="user-info">
+
+<div class="gender-age">
+  <i class="fa fa-mars"></i>
+  <span id="userAge">0</span>
+</div>
+
+<div class="country-box">
+
+<img
+id="countryLogo"
+class="country-logo"
+src="">
+
+<span id="countryName">
+Indonesia
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="filter-btn">
+  <img src="adduser.png" alt="Filter">
+</div>
+
+</div>
+
+<div class="hashtag-title">
+Hashtag Saya
+</div>
+
+<div
+id="hashtags"
+class="hashtags">
+</div>
+
+<div class="gift-title">
+  Gift
+</div>
+
+<div id="giftGrid" class="gift-grid"></div>
+
+
+<button class="message-btn" onclick="showToast('Aktifkan akun terlebih dahulu', 'ic_launcher_small.png')">
+  <img src="call_message_type_video.png" class="message-icon">
+  <span class="message-text">Mulai Gratis</span>
+</button>
+
+</div>
+
+<script type="module">
+
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import {
+getDatabase,
+ref,
+get,
+update,
+onValue
+}
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+
+apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+
+authDomain:"users-96dc5.firebaseapp.com",
+
+databaseURL:
+"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:"users-96dc5",
+
+storageBucket:"users-96dc5.appspot.com",
+
+messagingSenderId:"483322415863",
+
+appId:
+"1:483322415863:web:1397a8f2e808e66ad9e1f2"
+
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getDatabase(app);
+
+
+const loadingScreen = document.getElementById("loadingScreen");
+
+const userId = localStorage.getItem("profilUid");
+
+
+/* ELEMENT */
+const slider = document.getElementById("photoSlider");
+const dots = document.getElementById("sliderDots");
+const userName = document.getElementById("userName");
+const userAge = document.getElementById("userAge");
+const userLevel = document.getElementById("userLevel");
+const levelLogo = document.getElementById("levelLogo");
+const countryName = document.getElementById("countryName");
+const countryLogo = document.getElementById("countryLogo");
+const hashtags = document.getElementById("hashtags");
+const giftGrid = document.getElementById("giftGrid");
+
+/* LOAD USER REALTIME */
+onValue(ref(db, "users1"), (snapshot) => {
+
+  loadingScreen.style.display = "none";
+
+  if(!snapshot.exists()) return;
+
+  let user = null;
+
+  snapshot.forEach(child => {
+
+    const d = child.val();
+
+    if(d.uid === userId){
+      user = d;
+    }
+
+  });
+
+  if(!user){
+    console.log("user tidak ditemukan");
+    return;
+  }
+
+ 
+
+  /* INFO */
+  userName.textContent = user.nama || "";
+  userAge.textContent = user.umur || "";
+  userLevel.textContent = user.level || "";
+
+  const levelBadge = document.getElementById("levelBadge");
+  const lvl = user.level || 1;
+  levelBadge.className = `level-badge level-${lvl}`;
+
+  countryName.textContent = user.negara || "";
+  countryLogo.src = user.negaraLogo || "";
+  levelLogo.src = user.levelLogo || "";
+
+  /* FOTO */
+  slider.innerHTML = "";
+  dots.innerHTML = "";
+
+  const photos = user.foto || [];
+
+  photos.forEach((url,index)=>{
+    slider.innerHTML += `<img src="${url}">`;
+    dots.innerHTML += `<span class="${index===0?'active':''}"></span>`;
+  });
+
+  /* HASHTAG */
+  hashtags.innerHTML = "";
+
+  (user.hashtags || []).forEach(tag=>{
+    hashtags.innerHTML += `<div class="tag">${tag}</div>`;
+  });
+
+  /* GIFT */
+  giftGrid.innerHTML = "";
+
+  if(user.gifts){
+
+    Object.keys(user.gifts).forEach(key=>{
+
+      const gift = user.gifts[key];
+
+      giftGrid.innerHTML += `
+        <div class="gift-card">
+          <img src="${gift.image}">
+          <span>${gift.name}</span>
+          <small>x${gift.total}</small>
+        </div>
+      `;
+    });
+
+  }
+
+});
+
+/* slider dot */
+slider.addEventListener("scroll",()=>{
+  const index = Math.round(slider.scrollLeft / slider.clientWidth);
+
+  dots.querySelectorAll("span").forEach(dot =>
+    dot.classList.remove("active")
+  );
+
+  if(dots.children[index]){
+    dots.children[index].classList.add("active");
+  }
+});
+
+/* TOAST */
+window.showToast = (text, icon = "ic_launcher_small.png") => {
+  const toast = document.getElementById("toast");
+  const toastText = document.getElementById("toastText");
+  const toastIcon = document.querySelector(".toast-icon");
+
+  toastText.textContent = text;
+  toastIcon.src = icon;
+
+  toast.classList.remove("hidden");
+
+  setTimeout(()=>{
+    toast.classList.add("hidden");
+  },2000);
+};
+
+window.toggleMenu = () => {
+  const menu = document.getElementById("menuDropdown");
+  menu.classList.toggle("hidden");
+};
+
+document.addEventListener("click", function(e){
+  const wrapper = document.querySelector(".menu-wrapper");
+  if(wrapper && !wrapper.contains(e.target)){
+    document.getElementById("menuDropdown").classList.add("hidden");
+  }
+});
+
+window.handleMenu = (type) => {
+  document.getElementById("menuDropdown").classList.add("hidden");
+
+  if(type === "report"){
+    showToast("User dilaporkan", "ic_launcher_small.png");
+  }
+
+  if(type === "block"){
+    showToast("Ditambahkan ke daftar hitam", "ic_launcher_small.png");
+  }
+};
+
+
+
+window.showToast = (text, icon = "ic_launcher_small.png") => {
+  const toast = document.getElementById("toast");
+  const toastText = document.getElementById("toastText");
+  const toastIcon = document.querySelector(".toast-icon");
+
+  toastText.textContent = text;
+  toastIcon.src = icon;
+
+  toast.classList.remove("hidden");
+
+  setTimeout(() => {
+    toast.classList.add("hidden");
+  }, 2000);
+};
+
+
+
+
+
+/* ================= MINE (NO SCROLL) ================= */
+window.goMine99navigasi = function () {
+  window.location.href = "login.html";
+};
+
+
+
+
+/* ================= (NO zoom) ================= */
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
+document.addEventListener("selectstart", e => e.preventDefault());
+
+/* ❌ BLOCK ZOOM KEYBOARD (Ctrl + / - / 0) */
+document.addEventListener("keydown", function (e) {
+  if (
+    (e.ctrlKey && e.key === "+") ||
+    (e.ctrlKey && e.key === "-") ||
+    (e.ctrlKey && e.key === "0") ||
+    (e.ctrlKey && e.key === "=")
+  ) {
+    e.preventDefault();
+  }
+});
+
+/* BLOCK PINCH ZOOM (mobile) */
+document.addEventListener("gesturestart", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gesturechange", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gestureend", function (e) {
+  e.preventDefault();
+});
+/* ================= (NO zoom) ================= */
+
+
+
+
+
+function updateLastActive(page = "Profil_users_2") {
+
+  const login = JSON.parse(localStorage.getItem("user"));
+  if (!login?.userId) return;
+
+  update(ref(db, "users2/" + login.userId), {
+    lastActive: Date.now(),
+    currentPage: page
+  });
+
+}
+
+["click", "touchstart", "keydown"].forEach(evt => {
+  document.addEventListener(evt, () => {
+    updateLastActive("Profil_users_2");
+  }, { passive: true });
+});
+
+updateLastActive("Profil_users_2");
+
+
+
+
+
+
+
+
+</script>
+<div id="toast" class="toast hidden">
+  <img src="ic_launcher_small.png" class="toast-icon">
+  <span id="toastText"></span>
+</div>
+</body>
+</html>

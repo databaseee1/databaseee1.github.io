@@ -1,0 +1,992 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Dashboard Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+background:#f5f5f5;
+}
+
+/* HEADER */
+
+.header{
+position:sticky;
+top:0;
+z-index:999;
+background:#fff;
+padding:12px 15px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+border-bottom:1px solid #eee;
+}
+
+.header-left{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.avatar{
+width:45px;
+height:45px;
+border-radius:50%;
+object-fit:cover;
+border:2px solid #eee;
+}
+
+.name{
+font-weight:600;
+font-size:14px;
+}
+
+.role{
+font-size:12px;
+color:#777;
+}
+
+.logout{
+background:#e74c3c;
+color:#fff;
+border:none;
+padding:8px 12px;
+border-radius:8px;
+cursor:pointer;
+}
+
+/* INFO */
+
+.profile-card{
+background:#fff;
+margin:12px;
+padding:15px;
+border-radius:14px;
+box-shadow:0 3px 10px rgba(0,0,0,.05);
+}
+
+.profile-card .row{
+margin:8px 0;
+font-size:14px;
+}
+
+/* MENU */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+padding:12px;
+margin-top: 20px;
+}
+
+.menu{
+background:#fff;
+border-radius:14px;
+padding:20px;
+text-align:center;
+cursor:pointer;
+box-shadow:0 3px 10px rgba(0,0,0,.05);
+position: relative;
+}
+
+.badge {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  background: red;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+}
+
+.menu i{
+font-size:26px;
+margin-bottom:10px;
+color: #42a2e4;
+}
+
+.menu-title{
+font-size:14px;
+font-weight:600;
+}
+
+.footer{
+padding:15px;
+text-align:center;
+font-size:12px;
+color:#888;
+}
+
+
+
+
+.avatar{
+width:50px;
+height:50px;
+border-radius:50%;
+object-fit:cover;
+border:2px solid #e5e5e5;
+background:#fff;
+}
+
+
+
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-box {
+  background: white;
+  width: 80%;
+  max-width: 300px;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.modal-box .icon {
+  font-size: 40px;
+  color: #e74c3c;
+  margin-bottom: 10px;
+}
+
+.modal-box h3 {
+  font-size: 15px;
+  margin-bottom: 15px;
+}
+
+.btn-group {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn.cancel {
+  background: #ddd;
+}
+
+.btn.danger {
+  background: #e74c3c;
+  color: white;
+}
+
+
+.live-box{
+  background:#fff3b0;
+  padding:8px 12px;
+  font-size:13px;
+  border-bottom:1px solid #eee;
+  font-weight:500;
+}
+
+
+
+
+.menu-icon-wrap{
+  position:relative;
+  display:inline-block;
+}
+
+.badge{
+  position:absolute;
+  top:-6px;
+  right:-8px;
+  min-width:18px;
+  height:18px;
+  padding:0 4px;
+  border-radius:999px;
+  background:#ff3b30;
+  color:#fff;
+  font-size:11px;
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+</style>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="header">
+
+<div class="header-left">
+
+<img
+id="adminFoto"
+class="avatar"
+src="agencywwwlogo.png"
+onerror="this.src='agencylogo.png'">
+
+<div>
+<div
+id="adminNama"
+class="name">
+ADMIN
+</div>
+
+<div
+id="adminRole"
+class="role">
+Administrator
+</div>
+</div>
+
+</div>
+
+<button
+class="logout"
+onclick="logoutAdmin()">
+Logout
+</button>
+
+</div>
+
+
+
+<div id="liveActivityBox" class="live-box"></div>
+
+
+<div id="pantaudetail2" style="display:none;">
+  <div id="pantauList"></div>
+</div>
+
+<div class="grid">
+
+<div class="menu"
+onclick="handleUsersClick()">
+<i class="fa fa-users"></i>
+<div class="menu-title">
+Host Users
+</div>
+<span id="usersBadge" class="badge"></span>
+</div>
+
+
+
+
+<div class="menu" id="withdrawMenu" onclick="openWithdraw()">
+  <i class="fa fa-money-bill-wave"></i>
+
+  <div class="menu-title">
+    Withdraw
+  </div>
+
+  <div id="withdrawBadge" class="badge"></div>
+</div>
+
+
+
+
+
+<div
+class="menu"
+onclick="location.href='adminsaldohost.html'">
+<i class="fa fa-wallet"></i>
+<div class="menu-title">
+Saldo Host
+</div>
+</div>
+
+
+
+<div class="menu" onclick="location.href='admin_verifikasi.html'">
+  <i class="fa-solid fa-elevator"></i>
+
+  <div class="menu-title">
+    Request deposit
+  </div>
+
+
+  <span id="depositBadge" class="badge"></span>
+</div>
+
+
+<div
+class="menu"
+onclick="location.href='admin_pengunjung.html'">
+<i class="fa-solid fa-eye-slash"></i>
+<div class="menu-title">
+Pengunjung
+</div>
+</div>
+
+
+<div
+class="menu"
+onclick="location.href='adminhostwo.html'">
+<i class="fa-solid fa-ranking-star"></i>
+<div class="menu-title">
+TOP HOST
+</div>
+</div>
+
+
+<div
+class="menu"
+onclick="location.href='adminpostinganku.html'">
+<i class="fa-solid fa-panorama"></i>
+<div class="menu-title">
+postingan
+</div>
+</div>
+
+
+<div
+class="menu"
+onclick="location.href='video-iklan.html'">
+<i class="fa-solid fa-video"></i>
+<div class="menu-title">
+video iklan
+</div>
+</div>
+
+
+<div
+class="menu"
+onclick="location.href='admin_usershome.html'">
+<i class="fa-solid fa-elevator"></i>
+<div class="menu-title">
+HOST HOME
+</div>
+</div>
+
+
+<div class="menu" onclick="openReferral()">
+  <i class="fa-solid fa-elevator"></i>
+  <div class="menu-title">Referal</div>
+  <span id="referalBadge" class="badge"></span>
+</div>
+
+
+<div class="menu" onclick="location.href='admin_pengaturan.html'">
+  <i class="fa-solid fa-gear"></i>
+  <div class="menu-title">
+    Pengaturan
+  </div>
+</div>
+
+
+
+
+<div class="menu" onclick="openServant()">
+
+  <div class="menu-icon-wrap">
+    <i class="fa-solid fa-headset"></i>
+    <span id="csBadge" class="badge" style="display:none"></span>
+  </div>
+
+  <div class="menu-title">
+    Layanan pelanggan
+  </div>
+
+</div>
+
+
+
+</div>
+
+<div class="footer">
+Tigo Host Admin Panel
+</div>
+
+
+
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  push,
+  set,
+  update,
+  get
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+/* ================= FIREBASE ================= */
+const firebaseConfig = {
+  apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain:"users-96dc5.firebaseapp.com",
+  databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:"users-96dc5",
+  storageBucket:"users-96dc5.appspot.com",
+  messagingSenderId:"483322415863",
+  appId:"1:483322415863:web:1397a8f2e808e66ad9e1f2"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+
+
+/* ================= CEK LOGIN ================= */
+
+const adminData = JSON.parse(localStorage.getItem("adminLogin"));
+
+if (!adminData || adminData.role !== "admin") {
+  window.location.replace("Login_admin.html");
+}
+
+
+
+
+
+const badge = document.getElementById("csBadge");
+
+onValue(ref(db, "cs_inbox"), (snap) => {
+
+  let total = 0;
+
+  snap.forEach(child => {
+
+    const d = child.val();
+
+    if (d.unread === true) {
+      total++;
+    }
+
+  });
+
+  if (total > 0) {
+    badge.style.display = "flex";
+    badge.textContent = total;
+  } else {
+    badge.style.display = "none";
+  }
+
+});
+
+
+
+window.openServant = async function() {
+
+  const snap = await get(ref(db, "cs_inbox"));
+
+  snap.forEach(child => {
+    update(ref(db, `cs_inbox/${child.key}`), {
+      unread: false
+    });
+  });
+
+  location.href = "servant.html";
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ================= UPDATE STATUS AKTIF/PANTAU ================= */
+function formatLastActive(timestamp) {
+  if (!timestamp) return "-";
+
+  const date = new Date(timestamp);
+
+  const tgl = String(date.getDate()).padStart(2, "0");
+  const bln = String(date.getMonth() + 1).padStart(2, "0");
+  const thn = date.getFullYear();
+
+  const jam = String(date.getHours()).padStart(2, "0");
+  const menit = String(date.getMinutes()).padStart(2, "0");
+
+  return `${tgl}/${bln}/${thn} pukul ${jam}:${menit} WIB`;
+}
+
+onValue(ref(db, "users2"), (snap) => {
+
+  const data = snap.val();
+  if (!data) return;
+
+  let latestUser = null;
+
+  Object.keys(data).forEach(id => {
+    const u = data[id];
+
+    if (!u.lastActive) return;
+
+    if (!latestUser || u.lastActive > latestUser.lastActive) {
+      latestUser = { id, ...u };
+    }
+  });
+
+  const box = document.getElementById("liveActivityBox");
+
+  if (!latestUser) {
+    box.innerHTML = "Tidak ada aktivitas user";
+    return;
+  }
+
+  
+
+  box.innerHTML = `
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+
+    <!-- LEFT: PROFILE + NAME -->
+    <div style="display:flex;align-items:center;gap:8px;">
+      <img src="${latestUser.profil || 'https://via.placeholder.com/30'}"
+        style="width:30px;height:30px;border-radius:50%;object-fit:cover;">
+      
+      <div>
+        <div style="font-size:13px;font-weight:600;">
+          ${latestUser.nama}
+        </div>
+        <div style="font-size:11px;color:#555;">
+          aktif ${formatLastActive(latestUser.lastActive)}
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: TIME + ARROW -->
+    <div style="display:flex;align-items:center;gap:6px;">
+      <div style="font-size:11px;color:#444;">
+        
+      </div>
+
+      <i class="fa fa-chevron-right" id="openPantauBtn"
+        style="cursor:pointer;"></i>
+    </div>
+
+  </div>
+`;
+
+});
+
+document.addEventListener("click", (e) => {
+  if (e.target.id === "openPantauBtn") {
+
+    const box = document.getElementById("pantaudetail2");
+
+    if (!box) return;
+
+    // 🔥 TOGGLE LOGIC
+    if (box.style.display === "block") {
+      box.style.display = "none";
+    } else {
+      box.style.display = "block";
+    }
+  }
+});
+
+
+
+
+function getStartOfWeek() {
+  const now = new Date();
+  const day = now.getDay();
+  const diff = now.getDate() - day + (day === 0 ? -6 : 1);
+  const monday = new Date(now.setDate(diff));
+  monday.setHours(0,0,0,0);
+  return monday.getTime();
+}
+
+onValue(ref(db, "users2"), (snap) => {
+
+  const data = snap.val();
+  if (!data) return;
+
+  const weekStart = getStartOfWeek();
+  const list = document.getElementById("pantauList");
+
+  list.innerHTML = "";
+
+  Object.keys(data).forEach(id => {
+    const u = data[id];
+
+    if (u.lastActive && u.lastActive >= weekStart) {
+
+      const div = document.createElement("div");
+      div.style = "display:flex;align-items:center;gap:8px;padding:8px;border-bottom:1px solid #eee;";
+
+      div.innerHTML = `
+        <img src="${u.profil || 'https://via.placeholder.com/30'}"
+          style="width:28px;height:28px;border-radius:50%;">
+        <div>
+          <div style="font-weight:600;font-size:13px;">${u.nama}</div>
+          <div style="font-size:11px;color:#666;">
+            ${formatLastActive(u.lastActive)}
+          </div>
+        </div>
+      `;
+
+      list.appendChild(div);
+    }
+  });
+
+});
+
+
+/* ================= BADGE DEPOSIT ================= */
+
+async function loadBadge() {
+  try {
+    const snap = await get(ref(db, "Deposithost"));
+
+    let count = 0;
+
+    snap.forEach((child) => {
+      const data = child.val();
+
+      if (data.read === false) {
+        count++;
+      }
+    });
+
+    const badge = document.getElementById("depositBadge");
+
+    if (!badge) return;
+
+    if (count > 0) {
+      badge.innerText = count;
+      badge.style.display = "flex";
+    } else {
+      badge.style.display = "none";
+    }
+
+  } catch (err) {
+    console.error("Badge error:", err);
+  }
+}
+
+loadBadge();
+
+
+
+
+/* ================= BADGE HOST USERS ================= */
+
+function loadUsersBadgeRealtime() {
+
+  const usersRef = ref(db, "users2");
+
+  onValue(usersRef, (snap) => {
+
+    let count = 0;
+
+    snap.forEach((child) => {
+      const data = child.val();
+
+      if (data.read === false) {
+        count++;
+      }
+    });
+
+    const badge = document.getElementById("usersBadge");
+
+    if (!badge) return;
+
+    if (count > 0) {
+      badge.innerText = count > 99 ? "99+" : count;
+      badge.style.display = "flex";
+    } else {
+      badge.style.display = "none";
+    }
+
+  });
+
+}
+
+loadUsersBadgeRealtime();
+
+async function markAllUsersAsRead() {
+  const snap = await get(ref(db, "users2"));
+
+  snap.forEach((child) => {
+    const key = child.key;
+    const data = child.val();
+
+    if (data.read === false) {
+      update(ref(db, "users2/" + key), {
+        read: true
+      });
+    }
+  });
+}
+
+window.handleUsersClick = async function () {
+
+  await markAllUsersAsRead(); // hapus badge (mark read)
+
+  window.location.href = "adminhost_users.html";
+
+};
+
+
+
+/* ================= BADGE HOST REFERAL ================= */
+
+function loadReferralBadge() {
+
+  const refRef = ref(db, "referralHistory");
+
+  onValue(refRef, (snap) => {
+
+    let count = 0;
+
+    snap.forEach((hostSnap) => {
+      hostSnap.forEach((child) => {
+        const data = child.val();
+
+        if (data.readAdmin === false) {
+          count++;
+        }
+      });
+    });
+
+    const badge = document.getElementById("referalBadge");
+
+    if (!badge) return;
+
+    if (count > 0) {
+      badge.innerText = count > 99 ? "99+" : count;
+      badge.style.display = "flex";
+    } else {
+      badge.style.display = "none";
+    }
+
+  });
+
+}
+
+loadReferralBadge();
+
+
+
+window.openReferral = async function () {
+
+  const snap = await get(ref(db, "referralHistory"));
+
+  snap.forEach((hostSnap) => {
+    const hostId = hostSnap.key;
+
+    hostSnap.forEach((child) => {
+      const key = child.key;
+      const data = child.val();
+
+      if (data.readAdmin === false) {
+        update(ref(db, `referralHistory/${hostId}/${key}`), {
+          readAdmin: true
+        });
+      }
+    });
+
+  });
+
+  // langsung hilangkan badge
+  document.getElementById("referalBadge").style.display = "none";
+
+  // pindah halaman
+  window.location.href = "admin_referal.html";
+};
+
+
+
+
+/* ================= BADGE HOST WD ================= */
+
+
+onValue(ref(db, "fithnerchats/notifikasi"), (snap) => {
+
+  let count = 0;
+
+  snap.forEach(userSnap => {
+    userSnap.forEach(typeSnap => {
+
+      typeSnap.forEach(itemSnap => {
+        const d = itemSnap.val();
+
+        if (d.readAdmin === false) {
+          count++;
+        }
+      });
+
+    });
+  });
+
+  const badge = document.getElementById("withdrawBadge");
+
+  if (count > 0) {
+    badge.style.display = "block";
+    badge.textContent = count;
+  } else {
+    badge.style.display = "none";
+  }
+});
+
+
+window.openWithdraw = function () {
+
+  location.href = "adminhost_withdraw.html";
+
+  import("https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js")
+    .then(({ getDatabase, ref, get, update }) => {
+
+      const db = getDatabase();
+
+      get(ref(db, "fithnerchats/notifikasi")).then((snap) => {
+
+        snap.forEach(userSnap => {
+          userSnap.forEach(typeSnap => {
+            typeSnap.forEach(itemSnap => {
+
+              const data = itemSnap.val();
+
+              if (data.readAdmin === false) {
+                update(itemSnap.ref, {
+                  readAdmin: true
+                });
+              }
+
+            });
+          });
+        });
+
+      });
+
+    });
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ================= LOAD ADMIN ================= */
+
+const admin = JSON.parse(localStorage.getItem("adminLogin")) || {};
+
+function setText(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.innerText = value;
+}
+
+setText("adminNama", admin.nama || "-");
+setText("adminRole", admin.role || "-");
+setText("nama", admin.nama || "-");
+setText("email", admin.email || "-");
+setText("role", admin.role || "-");
+setText("negara", admin.negara || "-");
+setText("lokasi", admin.lokasi || "-");
+setText("verified", admin.diverifikasi || "-");
+setText("tanggal", admin.tanggalBergabung || "-");
+
+/* ================= FOTO ADMIN ================= */
+
+const foto = document.getElementById("adminFoto");
+if (foto) {
+  foto.src = admin.profil || "agencylogo.png";
+}
+
+/* ================= LOGOUT ================= */
+
+window.logoutAdmin = function () {
+  document.getElementById("logoutModal").style.display = "flex";
+};
+
+window.closeLogout = function () {
+  document.getElementById("logoutModal").style.display = "none";
+};
+
+window.doLogout = function () {
+  localStorage.removeItem("adminLogin");
+  window.location.replace("Login_admin.html");
+};
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<div id="logoutModal" class="modal">
+
+  <div class="modal-box">
+
+    <i class="fa fa-right-from-bracket icon"></i>
+
+    <h3>Yakin anda ingin keluar dari akun?</h3>
+
+    <div class="btn-group">
+      <button class="btn cancel" onclick="closeLogout()">Nanti</button>
+      <button class="btn danger" onclick="doLogout()">Keluar</button>
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>
+

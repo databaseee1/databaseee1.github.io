@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Admin Saldo Host</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body{
+  margin:0;
+  font-family:Poppins,sans-serif;
+  background:#f5f5f5;
+}
+
+.header{
+  padding:15px;
+  text-align:center;
+  background:#fff;
+  font-weight:600;
+  border-bottom:1px solid #eee;
+}
+
+/* SEARCH */
+.search-box{
+  display:flex;
+  align-items:center;
+  background:#fff;
+  margin:10px;
+  padding:10px;
+  border-radius:10px;
+  gap:10px;
+  border:1px solid #eee;
+}
+
+.search-box i{
+  color:#888;
+}
+
+.search-box input{
+  width:100%;
+  border:none;
+  outline:none;
+  font-size:14px;
+}
+
+/* CARD */
+.card{
+  background:#fff;
+  margin:10px;
+  padding:12px;
+  border-radius:12px;
+  position:relative;
+  box-shadow:0 2px 8px rgba(0,0,0,0.05);
+}
+
+.row{
+  font-size:13px;
+  margin:3px 0;
+}
+
+.user-top{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:8px;
+}
+
+.user-top img{
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid #eee;
+}
+
+.user-info{
+  flex:1;
+}
+
+.name{
+  font-weight:600;
+  font-size:15px;
+}
+
+/* MENU */
+.menu{
+  position:absolute;
+  top:10px;
+  right:10px;
+}
+
+.btn-menu{
+  width:32px;
+  height:32px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#3498db;
+  color:#fff;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.menu-box{
+  display:none;
+  position:absolute;
+  right:0;
+  top:40px;
+  background:#fff;
+  border:1px solid #eee;
+  border-radius:10px;
+  padding:6px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+  z-index:999;
+}
+
+.menu-box button{
+  width:160px;
+  padding:8px;
+  border:none;
+  background:none;
+  text-align:left;
+  cursor:pointer;
+}
+
+.menu-box button:hover{
+  background:#f2f2f2;
+}
+
+/* POPUP */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.5);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+
+.box{
+  background:#fff;
+  padding:15px;
+  border-radius:12px;
+  width:300px;
+}
+
+.box input{
+  width:90%;
+  padding:10px;
+  margin:6px 0;
+  border-radius:8px;
+  border:1px solid #ddd;
+}
+
+.box button{
+  margin-top:8px;
+  padding:8px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.ok{background:#2ecc71;color:#fff;}
+.cancel{background:#ccc;}
+</style>
+</head>
+
+<body>
+
+ <!-- NOTIF -->
+<div class="overlay" id="notifBox">
+  <div class="box">
+    <div id="notifText"></div>
+
+    <button
+      class="ok"
+      onclick="closeNotif()">
+      OK
+    </button>
+  </div>
+</div>
+
+<div class="header">ADMIN SALDO HOST</div>
+
+<div class="search-box">
+  <i class="fa fa-search"></i>
+  <input id="search" placeholder="Cari nama, email, WA, app..." />
+</div>
+
+<div id="list"></div>
+
+<!-- POPUP -->
+<div class="overlay" id="popup">
+  <div class="box">
+    <div id="popupTitle"></div>
+    <input id="valueInput" placeholder="Masukkan nominal / tagihan">
+    <button class="ok" onclick="confirmAction()">OK</button>
+    <button class="cancel" onclick="closePopup()">Batal</button>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  get,
+  update,
+  push
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain:"users-96dc5.firebaseapp.com",
+  databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:"users-96dc5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* ================= CEK LOGIN ================= */
+
+const adminData = JSON.parse(localStorage.getItem("adminLogin"));
+
+if (!adminData || adminData.role !== "admin") {
+  window.location.replace("Login_admin.html");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+let allUsers = {};
+let selectedUser = null;
+let actionType = "";
+
+/* LOAD */
+async function load(){
+  const snap = await get(ref(db,"users2"));
+  if(!snap.exists()) return;
+
+  allUsers = snap.val();
+  render(allUsers);
+}
+load();
+
+/* RENDER */
+function render(data){
+
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+
+  Object.keys(data).forEach(id=>{
+
+    const u = data[id];
+
+    const div = document.createElement("div");
+    div.className = "card";
+
+    div.innerHTML = `
+      <div class="menu">
+        <div class="btn-menu" onclick="toggleMenu('${id}')">
+          <i class="fa fa-ellipsis-vertical"></i>
+        </div>
+
+        <div class="menu-box" id="menu-${id}">
+          <button onclick="topup('${id}')">Riwayat Top Up</button>
+          <button onclick="saldo('${id}')">Isi Saldo Host</button>
+          <button onclick="tagihan('${id}')">Tambah Tagihan</button>
+        </div>
+      </div>
+
+<div class="user-top">
+
+  <img
+    src="${u.profil || 'https://via.placeholder.com/50'}"
+    onerror="this.src='https://via.placeholder.com/50'"
+  >
+
+  <div class="user-info">
+    <div class="name">${u.nama}</div>
+    <div class="row">${u.email || "-"}</div>
+  </div>
+
+</div>
+      <div class="row">WA: ${u.wa || "-"}</div>
+<div class="row">
+  Saldo: Rp ${Number(u.saldo || 0).toLocaleString("id-ID")}
+</div>
+
+<div class="row">
+  Tagihan: Rp ${Number(u.jumlahTagihan || 0).toLocaleString("id-ID")}
+</div>
+      <div class="row">App: ${u.appName || "-"}</div>
+    `;
+
+    list.appendChild(div);
+  });
+}
+
+/* SEARCH */
+document.getElementById("search").addEventListener("input", function(){
+
+  const v = this.value.toLowerCase();
+
+  const filtered = {};
+
+  Object.keys(allUsers).forEach(id=>{
+    const u = allUsers[id];
+
+    const match =
+      (u.nama||"").toLowerCase().includes(v) ||
+      (u.email||"").toLowerCase().includes(v) ||
+      (u.wa||"").toString().includes(v) ||
+      (u.appName||"").toLowerCase().includes(v);
+
+    if(match) filtered[id]=u;
+  });
+
+  render(filtered);
+});
+
+/* MENU */
+window.toggleMenu = function(id){
+
+  document.querySelectorAll(".menu-box").forEach(m=>{
+    if(m.id !== "menu-"+id) m.style.display="none";
+  });
+
+  const el = document.getElementById("menu-"+id);
+  el.style.display = el.style.display==="block"?"none":"block";
+};
+
+/* ACTIONS */
+window.topup = function(id){
+  window.location.href = "riwayat_pengisian_saldo.html?uid="+id;
+};
+
+window.saldo = function(id){
+  selectedUser = id;
+  actionType = "saldo";
+  openPopup("Isi Saldo Host");
+};
+
+window.tagihan = function(id){
+  selectedUser = id;
+  actionType = "tagihan";
+  openPopup("Tambah Tagihan");
+};
+
+/* POPUP */
+function openPopup(title){
+  document.getElementById("popupTitle").innerText = title;
+  document.getElementById("popup").style.display="flex";
+}
+
+window.closePopup = function(){
+  document.getElementById("popup").style.display="none";
+};
+
+window.confirmAction = async function () {
+
+  const val = Number(
+    document.getElementById("valueInput").value || 0
+  );
+
+  if (!selectedUser || val <= 0) return;
+
+  const uRef = ref(db, "users2/" + selectedUser);
+
+  const snap = await get(uRef);
+  const u = snap.val();
+
+  let newSaldo = Number(u.saldo || 0);
+  let newTagihan = Number(u.jumlahTagihan || 0);
+
+  // ambil nama aplikasi
+  const appName = u.appName || "Aplikasi Anda";
+
+  const RATE = 15500;
+  const usd = (val / RATE).toFixed(2);
+
+  let text = "";
+
+  if (actionType === "saldo") {
+
+    newSaldo += val;
+
+    text =
+      `Saldo host Anda di aplikasi ${appName} berhasil ditambahkan sebesar $${usd}. Silakan periksa saldo terbaru pada akun Anda.`;
+
+  }
+
+  if (actionType === "tagihan") {
+
+    newTagihan += val;
+
+    text =
+      `Tagihan pajak pengelolaan saldo host live streaming <span style="color:#000;font-weight:600">${appName}</span> Anda sebesar $${usd} telah ditambahkan ke akun. Silakan periksa rincian terbaru pada halaman tagihan.`;
+
+  }
+
+  await update(uRef, {
+    saldo: newSaldo,
+    jumlahTagihan: newTagihan
+  });
+
+  await push(
+    ref(db, `fithnerchats/notifikasi/${selectedUser}/withdraw`),
+    {
+      text,
+      profil: "notifikasi.png",
+      read: false,
+      time: Date.now(),
+      nominalIDR: val,
+      nominalUSD: usd,
+      rate: RATE
+    }
+  );
+
+  closePopup();
+
+  if (actionType === "saldo") {
+    showNotif(`Saldo host di ${appName} berhasil ditambahkan sebesar $${usd}`);
+  } else if (actionType === "tagihan") {
+    showNotif(`Tagihan host di ${appName} berhasil ditambahkan sebesar $${usd}`);
+  }
+
+  load();
+};
+
+
+window.showNotif = function(text){
+
+  document.getElementById("notifText").innerText = text;
+
+  document.getElementById("notifBox").style.display = "flex";
+};
+
+window.closeNotif = function(){
+
+  document.getElementById("notifBox").style.display = "none";
+};
+</script>
+
+</body>
+</html>

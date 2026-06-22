@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+
+<title>Inbox</title>
+
+<style>
+
+
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none !important;
+}
+
+/* hilangkan highlight saat klik/focus */
+button, a, div, span, img {
+  outline: none !important;
+}
+
+
+img {
+
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+
+
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+
+
+
+
+body{
+  margin:0;
+ font-family:'Poppins', sans-serif;
+  background:#fff;
+  padding-bottom:80px;
+}
+*{
+  font-family:'Poppins', sans-serif;
+}
+
+
+.header{
+  display:flex;
+  align-items:center;
+  padding:22px 24px 15px;
+  background:#fff;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+/* TAB GROUP */
+.header-tabs{
+  display:flex;
+  align-items:center;
+  gap:1px; 
+}
+
+/* TAB STYLE */
+.tab{
+  font-size:16px;
+  font-weight:600;
+  color:#888;
+  padding:6px 10px;
+  cursor:pointer;
+  border-bottom:2px solid transparent;
+}
+
+.tab.active{
+  color:#000;
+  font-size: 20px;
+}
+
+/* ICON RIGHT */
+.header-right{
+  margin-left:auto;
+  display:flex;
+  gap:10px;
+  transform:none; /* ❌ hapus geser aneh */
+}
+
+.header-icon{
+  width:26px;
+  height:26px;
+  object-fit:contain;
+}
+
+
+
+.header-right{
+  margin-left:auto;
+  display:flex;
+  gap:9px;
+  font-size:28px;
+  transform:translateX(10px);
+}
+
+
+
+/* LIST */
+.list{
+  padding:0;
+}
+
+
+
+.chat{
+  display:flex;
+  align-items:center;
+
+  padding:10px 15px;
+
+  margin:8px 0; /* jarak atas bawah */
+
+  gap:10px;
+
+  background:#fff;
+  border-radius:0;
+  box-shadow:none;
+}
+
+.avatar{
+ width:50px;
+ height:50px;
+ border-radius:50%;
+ background:#eee;
+ flex-shrink:0;
+}
+
+
+.avatar img{
+ width:100%;
+ height:100%;
+ object-fit:cover;
+ border-radius:50%;
+}
+
+
+
+.text{
+ flex:1;
+}
+
+
+.name{
+ font-size:13px;
+ font-weight:600;
+}
+
+
+.msg{
+ font-size:12px;
+ color:#999;
+ margin-top:5px;
+
+ white-space:nowrap;
+ overflow:hidden;
+ text-overflow:ellipsis;
+ max-width:230px;
+}
+
+
+
+.status-tag{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  margin-left:6px;
+  padding:2px 8px;
+  background:#ff3b30;
+  color:#fff;
+  border-radius:4px;
+  font-size:7px;
+  font-weight:500;
+  font-family:'Poppins',sans-serif;
+
+  text-transform:uppercase;
+  letter-spacing:.3px;
+
+  line-height:1.4;
+}
+
+/* BADGE MERAH */
+.badge{
+
+ background:#ff4055;
+ color:#fff;
+
+ width:18px;
+ height:18px;
+font-size: 12px;
+ border-radius:50%;
+
+ display:flex;
+ align-items:center;
+ justify-content:center;
+
+}
+
+
+.chat-time {
+  font-size: 11px;
+  color: #999;
+}
+
+
+
+/* ICON KIRI */
+.service-icon{
+
+ width:54px;
+ height:54px;
+ border-radius:50%;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:28px;
+}
+
+.service-icon-img{
+  width:48px;
+  height:48px;
+  object-fit:contain;
+}
+
+
+/* BOTTOM NAV */
+#bottomNav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 0;
+  z-index: 9999;
+
+}
+
+#bottomNav .nav-item {
+  text-align: center;
+  flex: 1;
+  cursor: pointer;
+  user-select: none;
+}
+
+#bottomNav img {
+  width: 38px;
+}
+
+.nav-item.active .nav-icon {
+  transform: scale(1.1);
+  transition: 0.2s;
+}
+
+#loadingScreen{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:999999;
+}
+
+.spinner{
+  width:24px;
+  height:24px;
+  border:3px solid #eee;
+  border-top:3px solid #8a00ff;
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+  from{transform:rotate(0deg);}
+  to{transform:rotate(360deg);}
+}
+
+
+
+
+
+.chat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 0;
+}
+
+.chat-item {
+  display: flex;
+  align-items: flex-start; /* 🔥 FIX: jangan center */
+  padding: 12px 18px; /* 🔥 lebih rapih dari 20px */
+  gap: 10px;
+  background: #fff;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.chat-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.chat-content {
+  flex: 1;
+  min-width: 0; /* 🔥 WAJIB supaya text tidak dorong layout */
+}
+
+.chat-top {
+  display: flex;
+  align-items: flex-start; /* 🔥 FIX penting */
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.chat-name {
+  font-weight: 500;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chat-msg {
+  font-size: 13px;
+  color: #666;
+  margin-top: 2px;
+
+  /* 🔥 FIX TEXT AGAR TIDAK DORONG LAYOUT */
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+#callBox{
+  position:fixed;
+  top:70px;
+  left:0;
+  right:0;
+  bottom:70px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:16px;
+  color:#999;
+  font-weight:500;
+}
+
+.call-empty-box{
+  font-size:16px;
+  color:#999;
+  font-weight:500;
+}
+
+
+.more-menu{
+  position:absolute;
+  top:35px;
+  right:1px;
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 4px 15px rgb(0 0 0 / 3%);
+  min-width:190px;
+  display:none;
+  overflow:hidden;
+  z-index:9999;
+}
+
+.menu-item{
+  padding:12px 15px;
+  font-family:'Poppins',sans-serif;
+  font-size:14px;
+  cursor:pointer;
+  background: #f1f1f1;
+}
+
+.chat-right{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+}
+
+</style>
+</head>
+
+<body>
+<div id="loadingScreen">
+  <div class="spinner"></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="header">
+
+<div class="header-tabs">
+
+
+<span class="tab active" id="tabChat">
+  Pesan
+</span>
+
+<span class="tab" id="tabPanggilan">
+  Panggilan
+</span>
+
+
+
+</div>
+
+
+
+<div class="header-right">
+
+<img 
+  src="msg_icon_friend.png" 
+  class="header-icon"
+  onclick="window.location.href='addfrnd.html'"
+>
+
+ <img 
+  src="msg_icon_more_dot.png" 
+  class="header-icon"
+  onclick="toggleMenu()"
+>
+  <div id="moreMenu" class="more-menu">
+    <div class="menu-item">Tandai semua sudah dibaca</div>
+    <div class="menu-item">Hapus daftar pesan</div>
+  </div>
+</div>
+
+
+</div>
+
+
+
+
+<div id="chatPanel">
+
+  <div class="list" id="list"></div>
+  <div id="chatList"></div>
+
+</div>
+
+
+<div id="callBox" style="display:none;">
+  Panggilan kosong
+</div>
+
+
+</div>
+<!-- BOTTOM NAV -->
+<div id="bottomNav">
+
+  <div class="nav-item" onclick="goNav(this,'home.html','home')">
+    <img class="nav-icon"
+         src="destiny_icon_normal.png"
+         data-default="destiny_icon_normal.png"
+         data-active="destiny_icon_selected.png">
+  </div>
+
+  <div class="nav-item" onclick="goNav(this,'dunia.html','dunia')">
+    <img class="nav-icon"
+         src="match_icon_normal.png"
+         data-default="match_icon_normal.png"
+         data-active="match_icon_selected.png">
+  </div>
+
+  <div class="nav-item" onclick="goNav(this,'inbox.html','inbox')">
+    <img class="nav-icon"
+         src="msg_icon_normal.png"
+         data-default="msg_icon_normal.png"
+         data-active="msg_icon_selected.png">
+  </div>
+
+  <div class="nav-item" onclick="goNav(this,'my_akun.html','saya')">
+    <img class="nav-icon"
+         src="mine_icon_normal.png"
+         data-default="mine_icon_normal.png"
+         data-active="mine_icon_selected.png">
+  </div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+import {
+  getDatabase,
+  ref,
+  onValue,
+  push,
+  set,
+  update,
+  get  
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+/* ================= FIREBASE ================= */
+const firebaseConfig = {
+  apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain:"users-96dc5.firebaseapp.com",
+  databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:"users-96dc5",
+  storageBucket:"users-96dc5.appspot.com",
+  messagingSenderId:"483322415863",
+  appId:"1:483322415863:web:1397a8f2e808e66ad9e1f2"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+
+
+
+function cleanId(id){
+  return String(id || "")
+    .toLowerCase()
+    .replace(/\./g, "_")
+    .replace(/@/g, "_")
+    .replace(/\s+/g, "_");
+}
+
+
+
+/* ================= TAB ================= */
+const tabChat = document.getElementById("tabChat");
+const tabPanggilan = document.getElementById("tabPanggilan");
+const callBox = document.getElementById("callBox");
+
+
+if(!chatList){
+  console.log("chatList tidak ditemukan");
+}
+const list = document.getElementById("list");
+
+/* ================= LOGIN ================= */
+const login = JSON.parse(localStorage.getItem("user"));
+if (!login) window.location.href = "login.html";
+
+const myId = cleanId(login.email || login.wa || login.uid);
+
+
+
+
+
+
+
+
+
+onValue(ref(db, "Statusakun_host/" + login.userId), (snap) => {
+
+  if (!snap.exists()) return;
+
+  const status = snap.val().status;
+
+  if (status === "banned" || status === "suspend") {
+
+    localStorage.removeItem("user");
+    window.location.replace("status_akun.html");
+  }
+
+});
+
+
+
+
+
+
+function updateLastActive(page = "Inbox") {
+
+  const login = JSON.parse(localStorage.getItem("user"));
+  if (!login?.userId) return;
+
+  update(ref(db, "users2/" + login.userId), {
+    lastActive: Date.now(),
+    currentPage: page
+  });
+
+}
+
+["click", "touchstart", "keydown"].forEach(evt => {
+  document.addEventListener(evt, () => {
+    updateLastActive("Inbox");
+  }, { passive: true });
+});
+
+updateLastActive("Inbox");
+
+
+
+
+
+
+
+
+/* ================= UTIL ================= */
+function getChatId(a, b) {
+  return [a, b].sort().join("_");
+}
+
+function formatTime(timestamp) {
+  const now = new Date();
+  const date = new Date(timestamp);
+
+  const diff = Math.floor((now - date) / (1000 * 60 * 60 * 24));
+
+  if (diff === 0) {
+    const h = String(date.getHours()).padStart(2, '0');
+    const m = String(date.getMinutes()).padStart(2, '0');
+    return `${h}.${m}`;
+  }
+
+  if (diff === 1) return "Kemarin";
+
+  const d = String(date.getDate()).padStart(2, '0');
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  return `${d}-${m}`;
+}
+
+/* ================= TAB SYSTEM ================= */
+tabChat?.addEventListener("click", () => setTab("chat"));
+tabPanggilan?.addEventListener("click", () => setTab("panggilan"));
+
+function setTab(type){
+
+  document.querySelectorAll(".tab")
+    .forEach(t => t.classList.remove("active"));
+
+  if(type === "chat"){
+    tabChat.classList.add("active");
+    if(list) list.style.display = "block";
+    if(chatList) chatList.style.display = "block";
+    if(callBox) callBox.style.display = "none";
+  }
+
+  if(type === "panggilan"){
+    tabPanggilan.classList.add("active");
+    if(list) list.style.display = "none";
+    if(chatList) chatList.style.display = "none";
+    if(callBox) callBox.style.display = "";
+  }
+}
+
+
+
+/* ================= ADMIN LIST (TETAP) ================= */
+onValue(ref(db, "adminfathner"), async (snap) => {
+
+  let html = "";
+  const userId = login.userId;
+
+  let items = [];
+
+  snap.forEach((child) => {
+    items.push({
+      key: child.key,
+      d: child.val()
+    });
+  });
+
+  const order = {
+    customer_service: 0,
+    pengunjung: 1,
+    notifikasi: 2
+  };
+
+  items.sort((a, b) => (order[a.key] ?? 999) - (order[b.key] ?? 999));
+
+  for (const item of items) {
+
+    const key = item.key;
+    const d = item.d;
+
+
+
+
+/* ================= CUSTOMER SERVICE ================= */
+/* ================= CUSTOMER SERVICE ================= */
+let unreadCount = 0;
+
+if (key === "customer_service") {
+
+  const oldUserId = userId; // -OvPgN6C8OW9vYf8aTaa (SYSTEM LAMA)
+
+  const emailUserId =
+    (login.email || "")
+      .toLowerCase()
+      .replace(/\./g, "_dot_")
+      .replace(/@/g, "_at_"); // ADMIN CHAT BARU
+
+  /* ================= AMBIL 2 NODE ================= */
+  const snapOld = await get(
+    ref(db, `fithnerchats/customer_service/${oldUserId}`)
+  );
+
+  const snapNew = await get(
+    ref(db, `fithnerchats/customer_service/${emailUserId}`)
+  );
+
+  let lastCS = null;
+
+  const allMessages = [];
+
+  /* ================= NODE LAMA (SYSTEM) ================= */
+  if (snapOld.exists()) {
+    snapOld.forEach(child => {
+      allMessages.push(child.val());
+    });
+  }
+
+  /* ================= NODE BARU (ADMIN CHAT + FOTO) ================= */
+  if (snapNew.exists()) {
+    snapNew.forEach(child => {
+      allMessages.push(child.val());
+    });
+  }
+
+  /* ================= PROSES SEMUA MESSAGE ================= */
+  allMessages.forEach(data => {
+
+    if (!data) return;
+
+    /* LAST MESSAGE */
+    if (!lastCS || (data.time || 0) > (lastCS.time || 0)) {
+      lastCS = data;
+    }
+
+    const sender = String(data.sender || "").toLowerCase();
+    const type = String(data.type || "");
+
+    /* ================= ADMIN UNREAD ================= */
+    const isAdminUnread =
+      sender === "admin" &&
+      data.read !== true &&
+      (data.text || data.foto);
+
+    /* ================= SYSTEM UNREAD (NODE LAMA) ================= */
+    const isSystemUnread =
+      sender === "system" &&
+      type === "hapus_akun" &&
+      data.read !== true;
+
+    if (isAdminUnread || isSystemUnread) {
+      unreadCount++;
+    }
+
+  });
+
+  /* ================= OUTPUT LIST ================= */
+  if (lastCS) {
+
+    if (lastCS.foto) {
+      d._lastText = "📷 Foto";
+    } else {
+      d._lastText = lastCS.text || "";
+    }
+
+    d._badge = unreadCount;
+
+    if (lastCS.time) {
+      d.time = new Date(lastCS.time).toLocaleTimeString("id-ID", {
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    }
+
+  } else {
+    d._lastText = "";
+    d._badge = 0;
+  }
+}
+
+
+
+
+
+
+
+
+    /* ================= PENGUNJUNG ================= */
+    if (key === "pengunjung") {
+
+      const snapData = await get(
+        ref(db, `fithnerchats/pengunjung/${userId}`)
+      );
+
+      let lastData = null;
+
+      if (snapData.exists()) {
+
+        snapData.forEach(child => {
+
+          const data = child.val();
+
+          lastData = data;
+
+          if (data.read === false) {
+            unreadCount++;
+          }
+
+        });
+
+      }
+
+      if (!lastData) {
+  lastData = {
+    isiChat: "No messages at the moment",
+    time: 0
+  };
+}
+
+      let timeText = "";
+
+      if (lastData.time) {
+        timeText = new Date(lastData.time)
+          .toLocaleTimeString("id-ID", {
+            hour: "2-digit",
+            minute: "2-digit"
+          });
+      }
+
+      html += `
+      <div class="chat" onclick="openPesan('${key}')">
+
+        <div class="service-icon">
+          <img src="message_see_me_item_icon.png"
+     class="service-icon-img">
+        </div>
+
+        <div class="text">
+          <div class="name">Pengunjung</div>
+          <div class="msg">${lastData.isiChat || ""}</div>
+        </div>
+
+        <div class="chat-right">
+          ${unreadCount > 0 ? `<div class="badge">${unreadCount}</div>` : ""}
+          <div class="chat-time">${timeText}</div>
+        </div>
+
+      </div>`;
+      continue;
+    }
+
+    /* ================= NOTIFIKASI ================= */
+/* ================= NOTIFIKASI ================= */
+/* ================= NOTIFIKASI ================= */
+if (key === "notifikasi") {
+
+  try {
+
+    const msgs = [];
+    let unreadCount = 0;
+
+    // ================= STATUS AKUN =================
+    const snapNotif = await get(
+      ref(db, "fithnerchats/notifikasi")
+    );
+
+    if (snapNotif.exists()) {
+
+      snapNotif.forEach(child => {
+
+        const data = child.val();
+
+        if (data.userId === userId) {
+
+          msgs.push({
+            key: child.key,
+            path: "notifikasi",
+            ...data
+          });
+
+          if (!data.read) unreadCount++;
+
+        }
+
+      });
+
+    }
+
+    // ================= WITHDRAW (SUDAH BENAR DI USER NODE) =================
+    const snapWithdraw = await get(
+      ref(db, `fithnerchats/notifikasi/${userId}/withdraw`)
+    );
+
+    if (snapWithdraw.exists()) {
+
+      snapWithdraw.forEach(child => {
+
+        const data = child.val();
+
+        msgs.push({
+          key: child.key,
+          path: "withdraw",
+          ...data
+        });
+
+        if (!data.read) unreadCount++;
+
+      });
+
+    }
+
+    // ================= LAST MSG =================
+    if (msgs.length > 0) {
+
+      msgs.sort((a, b) => (a.time || 0) - (b.time || 0));
+
+      const lastMsg = msgs[msgs.length - 1];
+
+      d._lastText = lastMsg?.text || "";
+      d._badge = unreadCount;
+
+      d._lastPath = lastMsg?.path || "";
+
+      if (lastMsg?.time) {
+        d.time = new Date(lastMsg.time).toLocaleTimeString("id-ID", {
+          hour: "2-digit",
+          minute: "2-digit"
+        });
+      }
+
+    } else {
+      d._lastText = "";
+      d._badge = 0;
+    }
+
+  } catch (err) {
+    console.log(err);
+  }
+
+}
+    html += `
+    <div class="chat" onclick="openPesan('${key}')">
+
+      <div class="service-icon">
+        <img src="${d.foto}" class="service-icon-img">
+      </div>
+
+      <div class="text">
+        <div class="name">${d.nama}</div>
+        ${key !== "customer_service" ? `<div class="msg">${d._lastText || ""}</div>` : ""}
+      </div>
+
+      <div class="chat-right">
+        ${d._badge > 0 ? `<div class="badge">${d._badge}</div>` : ""}
+        ${d.time ? `<div class="chat-time">${d.time}</div>` : ""}
+      </div>
+
+    </div>`;
+  }
+
+  list.innerHTML = html;
+});
+
+
+
+window.openPesan = function(id){
+
+  const userId = login.userId;
+
+  localStorage.setItem("pesanId", id);
+
+  /* ================= CUSTOMER SERVICE ================= */
+  if (id === "customer_service") {
+
+    const oldNode = ref(
+      db,
+      `fithnerchats/customer_service/${userId}`
+    );
+
+    const emailNode =
+      (login.email || "")
+        .toLowerCase()
+        .replace(/\./g, "_dot_")
+        .replace(/@/g, "_at_");
+
+    const newNode = ref(
+      db,
+      `fithnerchats/customer_service/${emailNode}`
+    );
+
+    /* ================= READ NODE LAMA ================= */
+    get(oldNode).then((snap) => {
+      if (snap.exists()) {
+        snap.forEach(child => {
+          update(
+            ref(db, `fithnerchats/customer_service/${userId}/${child.key}`),
+            {
+              read: true,
+              readAdmin: true
+            }
+          );
+        });
+      }
+    });
+
+    /* ================= READ NODE BARU (ADMIN CHAT + FOTO) ================= */
+    get(newNode).then((snap) => {
+      if (snap.exists()) {
+        snap.forEach(child => {
+          update(
+            ref(db, `fithnerchats/customer_service/${emailNode}/${child.key}`),
+            {
+              read: true
+            }
+          );
+        });
+      }
+    });
+
+  }
+  /* ================= PENGUNJUNG ================= */
+  else if (id === "pengunjung") {
+
+    const refPengunjung = ref(db, `fithnerchats/pengunjung/${userId}`);
+
+    get(refPengunjung).then((snap) => {
+
+      if (snap.exists()) {
+
+        snap.forEach(child => {
+          update(
+            ref(db, `fithnerchats/pengunjung/${userId}/${child.key}`),
+            { read: true }
+          );
+        });
+
+      }
+
+    });
+  }
+
+  /* ================= NOTIFIKASI ================= */
+else if (id === "notifikasi") {
+
+  const userId = login.userId;
+
+  // ================= STATUS AKUN =================
+  const refNotif = ref(db, "fithnerchats/notifikasi");
+
+  get(refNotif).then((snap) => {
+
+    if (snap.exists()) {
+
+      snap.forEach(child => {
+
+        const data = child.val();
+
+        if (data.userId === userId) {
+
+          update(
+            ref(db, `fithnerchats/notifikasi/${child.key}`),
+            { read: true }
+          );
+
+        }
+
+      });
+
+    }
+
+  });
+
+  // ================= WITHDRAW (FIX PATH) =================
+  const refWithdraw = ref(db, `fithnerchats/notifikasi/${userId}/withdraw`);
+
+  get(refWithdraw).then((snap) => {
+
+    if (snap.exists()) {
+
+      snap.forEach(child => {
+
+        update(
+          ref(db, `fithnerchats/notifikasi/${userId}/withdraw/${child.key}`),
+          { read: true }
+        );
+
+      });
+
+    }
+
+  });
+
+}
+  window.location.href = "pesan_lengkap.html";
+};
+
+
+
+/* ================= LOAD ISI CHAT ================= */
+document.addEventListener("DOMContentLoaded", () => {
+
+  function cleanId(id) {
+    return (id || "").toString().toLowerCase();
+  }
+
+  const chatList = document.getElementById("chatList");
+
+  const chatsRef = ref(db, "chats");
+
+  function loadInbox() {
+
+    if (!chatList) return;
+
+    onValue(chatsRef, async (snap) => {
+
+      chatList.innerHTML = "";
+
+      const usersSnap = await get(ref(db, "users1"));
+
+      const users = {};
+
+      usersSnap.forEach(u => {
+        const d = u.val();
+
+        if (d.userId) {
+          users[d.userId] = d;
+        }
+      });
+
+      const myEmailKey = (login.email || "")
+        .toLowerCase()
+        .replace(/@/g, "_")
+        .replace(/\./g, "_");
+
+      const chatArray = [];
+
+      snap.forEach((child) => {
+
+        const chatId = child.key;
+
+        // hanya chat milik user login
+        if (!chatId.startsWith(myEmailKey + "_")) {
+          return;
+        }
+
+        const data = child.val() || {};
+        const history = data.history || {};
+
+        const msgs = Object.values(history).filter(Boolean);
+
+        if (!msgs.length) return;
+
+        const lastMsg = msgs.reduce((max, m) => {
+          return (m.time || 0) > (max.time || 0)
+            ? m
+            : max;
+        }, msgs[0]);
+
+        chatArray.push({
+          chatId,
+          msgs,
+          lastMsg,
+          lastTime: lastMsg.time || 0
+        });
+
+      });
+
+      chatArray.sort((a, b) => b.lastTime - a.lastTime);
+
+      chatArray.forEach(({ chatId, msgs, lastMsg, lastTime }) => {
+
+        let unreadCount = 0;
+
+        msgs.forEach(msg => {
+
+          const sender = msg.senderId || "";
+
+          const isFromOther =
+            sender !== lastMsg.senderId;
+
+          const isUnread =
+            msg.read === false;
+
+          if (isFromOther && isUnread) {
+            unreadCount++;
+          }
+
+        });
+
+        const otherId =
+          chatId.replace(myEmailKey + "_", "");
+
+        const otherUser =
+          users[otherId];
+
+        const otherName =
+          otherUser?.nama ||
+          lastMsg.senderName ||
+          "Unknown User";
+
+        const otherFoto =
+          otherUser?.foto?.[0] ||
+          lastMsg.senderFoto ||
+          "default.png";
+
+        const otherStatus =
+          otherUser?.statush || "";
+
+const lastText =
+  lastMsg.gift
+    ? `<img src="${lastMsg.giftImg}" style="width:20px;height:20px;vertical-align:middle;"> ${lastMsg.giftName}`
+    : lastMsg.foto
+      ? "📷 Foto"
+      : shortText(lastMsg.text || "", 30);
+
+        chatList.innerHTML += `
+          <div class="chat-item"
+            onclick="openChat('${chatId}','${otherName}','${otherFoto}')">
+
+            <img class="chat-img" src="${otherFoto}">
+
+            <div class="chat-content">
+
+              <div class="chat-top">
+
+                <div class="chat-name">
+                  ${otherName}
+                  ${otherStatus
+                    ? `<span class="status-tag">${otherStatus}</span>`
+                    : ""}
+                </div>
+
+                <div class="chat-time"
+                  style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;padding-top:2px;">
+
+                  ${unreadCount > 0
+                    ? `<div class="badge">${unreadCount}</div>`
+                    : `<div style="height:16px;"></div>`
+                  }
+
+                  <div style="font-size:12px;opacity:.7;">
+                    ${formatTime(lastTime)}
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div class="chat-msg"
+                style="margin-top:-12px;line-height:1.3;">
+                ${lastText}
+              </div>
+
+            </div>
+
+          </div>
+        `;
+      });
+
+    });
+
+  }
+
+  function shortText(text, max = 30) {
+    if (!text) return "";
+    return text.length > max
+      ? text.substring(0, max) + "..."
+      : text;
+  }
+
+  loadInbox();
+
+});
+
+/* ================= OPEN CHAT ================= */
+window.openChat = function(chatId, nama, foto){
+
+  localStorage.setItem("chatId", chatId);
+  localStorage.setItem("chatNama", nama);
+  localStorage.setItem("chatFoto", foto);
+
+  const historyRef =
+    ref(db, `chats/${chatId}/history`);
+
+  get(historyRef).then(snap => {
+
+    snap.forEach(child => {
+
+      const msg = child.val();
+
+if (
+  msg.senderId !== login.userId &&
+  msg.read === false
+) {
+  update(
+    ref(db, `chats/${chatId}/history/${child.key}`),
+    {
+      read: true
+    }
+  );
+}
+    });
+
+    window.location.href = "isi-chat.html";
+
+  });
+
+};
+
+
+
+
+
+
+
+
+
+
+
+window.goNav = function(el, url) {
+
+  document.querySelectorAll("#bottomNav .nav-item").forEach(item => {
+    item.classList.remove("active");
+
+    const img = item.querySelector(".nav-icon");
+    if (img) {
+      img.src = img.dataset.default;
+    }
+  });
+
+  el.classList.add("active");
+
+  const img = el.querySelector(".nav-icon");
+  if (img) {
+    img.src = img.dataset.active;
+  }
+
+  setTimeout(() => {
+    window.location.href = url;
+  }, 150);
+};
+
+/* AUTO ACTIVE INBOX */
+document.addEventListener("DOMContentLoaded", () => {
+
+  const inboxNav = document.querySelector(
+    '#bottomNav .nav-item[onclick*="inbox.html"]'
+  );
+
+  if(inboxNav){
+
+    inboxNav.classList.add("active");
+
+    const img = inboxNav.querySelector(".nav-icon");
+
+    if(img){
+      img.src = img.dataset.active;
+    }
+  }
+
+});
+
+
+
+window.addEventListener("load", () => {
+
+  setTimeout(() => {
+
+    document.getElementById(
+      "loadingScreen"
+    ).style.display = "none";
+
+  }, 500);
+
+});
+
+
+
+
+window.toggleMenu = function() {
+  const menu = document.getElementById("moreMenu");
+
+  if(menu.style.display === "block"){
+    menu.style.display = "none";
+  }else{
+    menu.style.display = "block";
+  }
+};
+
+
+document.addEventListener("click",(e)=>{
+  if(
+    !e.target.closest(".header-right") &&
+    !e.target.closest("#moreMenu")
+  ){
+    document.getElementById("moreMenu").style.display="none";
+  }
+});
+
+
+
+
+
+
+/* ================= (NO zoom) ================= */
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
+document.addEventListener("selectstart", e => e.preventDefault());
+
+/* ❌ BLOCK ZOOM KEYBOARD (Ctrl + / - / 0) */
+document.addEventListener("keydown", function (e) {
+  if (
+    (e.ctrlKey && e.key === "+") ||
+    (e.ctrlKey && e.key === "-") ||
+    (e.ctrlKey && e.key === "0") ||
+    (e.ctrlKey && e.key === "=")
+  ) {
+    e.preventDefault();
+  }
+});
+
+/* BLOCK PINCH ZOOM (mobile) */
+document.addEventListener("gesturestart", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gesturechange", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gestureend", function (e) {
+  e.preventDefault();
+});
+/* ================= (NO zoom) ================= */
+
+
+</script>
+
+</body>
+</html>

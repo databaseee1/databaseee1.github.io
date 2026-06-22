@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+
+<title>Layanan Pelanggan</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+
+
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none !important;
+}
+
+/* hilangkan highlight saat klik/focus */
+button, a, div, span, img {
+  outline: none !important;
+}
+
+
+img {
+
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+
+
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+
+
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f6f7fb;
+color:#222;
+}
+
+.header{
+position:sticky;
+top:0;
+z-index:100;
+background:#fff;
+height:60px;
+display:flex;
+align-items:center;
+padding:0 15px;
+box-shadow:0 1px 10px rgba(0,0,0,.05);
+}
+
+.back-btn{
+width:24px;
+height:24px;
+cursor:pointer;
+}
+
+.header-title{
+flex:1;
+text-align:center;
+font-size:18px;
+font-weight:600;
+margin-right:24px;
+}
+
+.hero{
+background:linear-gradient(135deg, #d9d9d9, #ac0ecd);
+padding:35px 20px;
+color:#fff;
+
+border-radius:0 0 120px 0;
+overflow:hidden;
+}
+.hero-icon{
+width:75px;
+height:75px;
+background:#fff;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+margin:auto;
+margin-bottom:15px;
+}
+
+.hero-icon img{
+width:42px;
+height:42px;
+}
+
+.hero h1{
+font-size:24px;
+font-weight:700;
+text-align:center;
+margin-bottom:10px;
+}
+
+.hero p{
+font-size:14px;
+line-height:1.8;
+text-align:center;
+opacity:.95;
+}
+
+.quick-menu{
+padding:18px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+
+.quick-card{
+background:#fff;
+border-radius:14px;
+padding:18px;
+box-shadow:0 3px 12px rgba(0,0,0,.05);
+cursor:pointer;
+transition:.2s;
+}
+
+.quick-card:active{
+transform:scale(.98);
+}
+
+.quick-title{
+font-size:15px;
+font-weight:600;
+margin-bottom:8px;
+}
+
+.quick-desc{
+font-size:12px;
+color:#666;
+line-height:1.6;
+}
+
+.section{
+padding:18px;
+}
+
+.card{
+background:#fff;
+padding:20px;
+border-radius:16px;
+margin-bottom:15px;
+box-shadow:0 3px 12px rgba(0,0,0,.05);
+}
+
+.card-title{
+font-size:18px;
+font-weight:700;
+margin-bottom:15px;
+}
+
+.card p{
+font-size:14px;
+line-height:2;
+color:#555;
+margin-bottom:14px;
+}
+
+.announcement{
+background:#fff7ea;
+border-left:4px solid orange;
+padding:15px;
+border-radius:12px;
+margin-top:10px;
+}
+
+.announcement-title{
+font-size:15px;
+font-weight:600;
+margin-bottom:8px;
+}
+
+.action-btn{
+width:100%;
+border:none;
+background:#ff8a00;
+color:#fff;
+height:52px;
+border-radius:15px;
+font-size:15px;
+font-weight:600;
+margin-top:18px;
+cursor:pointer;
+}
+
+.action-btn:active{
+transform:scale(.98);
+}
+
+
+
+
+
+
+
+.cs-note{
+text-align:center;
+font-size:12px;
+color:#888;
+margin-top:8px;
+line-height:1.6;
+}
+
+
+.info-grid{
+display:grid;
+
+}
+
+.info-item{
+
+border-radius:14px;
+padding:14px;
+}
+
+.info-label{
+font-size:12px;
+color:#888;
+margin-bottom:6px;
+font-weight:600;
+text-transform:uppercase;
+letter-spacing:.5px;
+}
+
+.info-value{
+font-size:14px;
+line-height:1.8;
+color:#222;
+word-break:break-word;
+}
+
+.loading-box{
+padding:20px;
+text-align:center;
+color:#888;
+}
+
+.company-header{
+background:linear-gradient(135deg, #7f7f7f, #932ef0);
+padding:18px;
+border-radius:16px;
+margin-bottom:15px;
+color:#fff;
+}
+
+.company-name{
+font-size:20px;
+font-weight:700;
+margin-bottom:5px;
+}
+
+.company-desc{
+font-size:13px;
+opacity:.95;
+line-height:1.7;
+}
+
+
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<img
+src="back_black.png"
+class="back-btn"
+onclick="history.back()">
+
+<div class="header-title">
+Layanan Pelanggan
+</div>
+
+</div>
+
+<div class="hero">
+
+<div class="hero-icon">
+<img src="customer_service_icon.png">
+</div>
+
+<h1>Pusat Bantuan Pengguna</h1>
+
+<p>
+Selamat datang di pusat bantuan resmi platform.
+Halaman ini berisi berbagai informasi penting mengenai penggunaan sistem, proses pelaporan masalah, keamanan akun, pengumuman terbaru, serta panduan untuk menghubungi tim layanan pelanggan apabila diperlukan.
+</p>
+
+</div>
+
+<div class="quick-menu">
+
+<div class="quick-card" onclick="scrollToSection('lapor')">
+<div class="quick-title">Cara Lapor</div>
+<div class="quick-desc">
+Panduan lengkap melaporkan kendala akun maupun transaksi.
+</div>
+</div>
+
+<div class="quick-card" onclick="scrollToSection('pengumuman')">
+<div class="quick-title">Pengumuman</div>
+<div class="quick-desc">
+Informasi resmi terkait pembaruan dan sistem.
+</div>
+</div>
+
+<div class="quick-card" onclick="scrollToSection('keamanan')">
+<div class="quick-title">Keamanan Akun</div>
+<div class="quick-desc">
+Tips menjaga akun tetap aman dan terlindungi.
+</div>
+</div>
+
+<div class="quick-card" onclick="openCS()">
+<div class="quick-title">Hubungi CS</div>
+<div class="quick-desc">
+Masuk ke ruang chat layanan pelanggan.
+</div>
+</div>
+
+</div>
+
+<div class="section">
+
+<div class="card">
+
+<div class="card-title">
+Tentang Layanan Pelanggan
+</div>
+
+<p>
+Layanan pelanggan merupakan bagian penting dari sistem yang bertugas membantu pengguna dalam memperoleh informasi, menyelesaikan kendala, serta memberikan arahan yang tepat terkait penggunaan berbagai fitur yang tersedia. Tim layanan pelanggan hadir untuk memberikan dukungan yang cepat, jelas, dan profesional agar setiap pengguna dapat menggunakan platform dengan nyaman.
+</p>
+
+<p>
+Setiap laporan yang masuk akan diproses sesuai urutan dan tingkat prioritas. Pengguna disarankan untuk menjelaskan kendala secara rinci agar proses pemeriksaan dapat dilakukan lebih cepat. Informasi yang lengkap akan membantu tim melakukan verifikasi dan menemukan solusi yang sesuai.
+</p>
+
+<p>
+Melalui pusat bantuan ini, pengguna dapat menemukan berbagai informasi penting yang sering ditanyakan. Sebagian besar pertanyaan umum telah dijelaskan dalam bentuk panduan sehingga pengguna dapat memperoleh jawaban tanpa harus menunggu balasan dari petugas layanan pelanggan.
+</p>
+
+</div>
+</div>
+<div class="section">
+
+<div class="card" id="lapor">
+
+<div class="card-title">
+Cara Melaporkan Kendala
+</div>
+
+<p>
+Apabila Anda mengalami kendala saat menggunakan platform, disarankan untuk terlebih dahulu memastikan bahwa koneksi internet dalam kondisi stabil dan aplikasi telah berjalan dengan baik. Sebagian besar kendala ringan dapat diselesaikan dengan melakukan penyegaran halaman atau masuk kembali ke akun.
+</p>
+
+<p>
+Jika kendala masih terjadi, pengguna dapat membuat laporan melalui layanan pelanggan. Saat mengirim laporan, jelaskan masalah secara rinci agar proses pemeriksaan dapat dilakukan dengan lebih cepat dan akurat.
+</p>
+
+<p>
+Laporan yang baik biasanya memuat informasi waktu kejadian, aktivitas yang sedang dilakukan, halaman yang mengalami kendala, serta pesan kesalahan yang muncul apabila tersedia. Informasi yang lengkap akan membantu tim teknis dalam melakukan investigasi.
+</p>
+
+<p>
+Pengguna juga disarankan untuk menyertakan tangkapan layar atau screenshot apabila menemukan tampilan yang tidak normal. Bukti visual sering kali membantu mempercepat proses identifikasi masalah dibandingkan laporan yang hanya berisi deskripsi singkat.
+</p>
+
+<p>
+Setelah laporan diterima, sistem akan melakukan proses verifikasi. Dalam beberapa kondisi tertentu, tim layanan pelanggan mungkin memerlukan informasi tambahan untuk memastikan bahwa masalah yang dilaporkan dapat ditangani dengan benar.
+</p>
+
+<div class="announcement">
+
+<div class="announcement-title">
+Panduan Laporan yang Disarankan
+</div>
+
+1. Jelaskan masalah secara rinci.<br><br>
+
+2. Sertakan waktu kejadian apabila diketahui.<br><br>
+
+3. Lampirkan screenshot jika memungkinkan.<br><br>
+
+4. Jelaskan langkah yang dilakukan sebelum masalah terjadi.<br><br>
+
+5. Tunggu proses pemeriksaan dari tim terkait.
+
+</div>
+
+</div>
+
+<div class="card" id="pengumuman">
+
+<div class="card-title">
+Pengumuman Sistem
+</div>
+
+<p>
+Untuk menjaga kualitas layanan, sistem dapat melakukan pemeliharaan secara berkala. Pemeliharaan dilakukan guna meningkatkan stabilitas, memperbaiki bug, memperkuat keamanan, serta menghadirkan fitur-fitur baru yang mendukung pengalaman pengguna yang lebih baik.
+</p>
+
+<p>
+Selama proses pemeliharaan berlangsung, sebagian fitur mungkin mengalami keterlambatan pemuatan atau tidak dapat digunakan untuk sementara waktu. Kondisi tersebut merupakan bagian dari proses peningkatan sistem dan biasanya akan kembali normal setelah pemeliharaan selesai dilakukan.
+</p>
+
+<p>
+Tim pengembang secara rutin melakukan evaluasi terhadap performa platform untuk memastikan seluruh layanan dapat berjalan dengan baik. Setiap pembaruan yang diterapkan bertujuan untuk meningkatkan kenyamanan dan keamanan seluruh pengguna.
+</p>
+
+<p>
+Pengguna diimbau untuk selalu menggunakan versi terbaru dari sistem yang tersedia. Versi terbaru biasanya telah memperoleh berbagai perbaikan yang dapat mengurangi risiko gangguan maupun masalah kompatibilitas.
+</p>
+
+<p>
+Informasi resmi terkait pembaruan sistem hanya disampaikan melalui halaman resmi yang tersedia di dalam platform. Pengguna diharapkan berhati-hati terhadap informasi yang berasal dari pihak yang tidak memiliki hubungan resmi dengan layanan.
+</p>
+
+<div class="announcement">
+
+<div class="announcement-title">
+Informasi Penting
+</div>
+
+Seluruh proses peningkatan sistem dilakukan secara bertahap untuk memastikan kestabilan layanan. Dalam kondisi tertentu, beberapa fitur dapat mengalami penyesuaian tampilan maupun perubahan mekanisme penggunaan demi meningkatkan kualitas pengalaman pengguna.
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-title">
+Informasi Penting Untuk Pengguna
+</div>
+
+<p>
+Keamanan dan kenyamanan pengguna merupakan prioritas utama dalam pengembangan platform. Oleh karena itu, setiap aktivitas yang terdeteksi tidak wajar dapat ditinjau kembali oleh sistem demi menjaga lingkungan yang aman bagi seluruh pengguna.
+</p>
+
+<p>
+Pengguna diharapkan menggunakan seluruh fitur sesuai ketentuan yang berlaku. Aktivitas yang melanggar aturan dapat menyebabkan pembatasan akses sementara maupun tindakan lain yang diperlukan untuk menjaga integritas sistem.
+</p>
+
+<p>
+Sistem terus dikembangkan agar mampu memberikan pengalaman yang lebih stabil, lebih aman, dan lebih efisien. Oleh sebab itu, beberapa fitur dapat mengalami perubahan atau penyesuaian dari waktu ke waktu sesuai kebutuhan operasional.
+</p>
+
+<p>
+Apabila terdapat pertanyaan yang belum terjawab melalui pusat bantuan ini, pengguna dapat menghubungi layanan pelanggan untuk memperoleh informasi lebih lanjut. Tim dukungan akan berusaha memberikan bantuan terbaik sesuai informasi yang tersedia.
+</p>
+
+</div>
+
+</div>
+
+
+
+
+<div class="section">
+
+<div class="card" id="keamanan">
+
+<div class="card-title">
+Keamanan Akun
+</div>
+
+<p>
+Menjaga keamanan akun merupakan tanggung jawab bersama antara pengguna dan sistem. Oleh karena itu, setiap pengguna disarankan untuk selalu menggunakan informasi login secara bijak dan tidak membagikan data akun kepada pihak lain.
+</p>
+
+<p>
+Jangan pernah memberikan kata sandi, kode verifikasi, ataupun informasi keamanan lainnya kepada siapa pun. Tim layanan pelanggan tidak akan pernah meminta informasi rahasia akun melalui chat maupun media komunikasi lainnya.
+</p>
+
+<p>
+Apabila menemukan aktivitas yang mencurigakan, seperti login yang tidak dikenal, perubahan data yang tidak dilakukan sendiri, atau transaksi yang tidak dikenali, segera lakukan pemeriksaan akun dan hubungi layanan pelanggan untuk mendapatkan bantuan lebih lanjut.
+</p>
+
+<p>
+Pengguna juga disarankan untuk selalu keluar dari akun setelah selesai menggunakan perangkat umum atau perangkat yang digunakan bersama dengan orang lain. Langkah sederhana ini dapat membantu mengurangi risiko akses yang tidak sah.
+</p>
+
+<p>
+Sistem secara berkala melakukan peningkatan keamanan guna melindungi data dan aktivitas pengguna. Namun demikian, kewaspadaan pengguna tetap menjadi bagian penting dalam menjaga keamanan akun secara keseluruhan.
+</p>
+
+<div class="announcement">
+
+<div class="announcement-title">
+Tips Keamanan
+</div>
+
+• Jangan membagikan password akun.<br><br>
+
+• Jangan memberikan kode verifikasi kepada siapa pun.<br><br>
+
+• Hindari menggunakan informasi login yang mudah ditebak.<br><br>
+
+• Periksa aktivitas akun secara berkala.<br><br>
+
+• Laporkan aktivitas mencurigakan kepada layanan pelanggan.
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-title">
+Pertanyaan Yang Sering Diajukan
+</div>
+
+<p>
+<b>Mengapa akun saya tidak dapat masuk?</b><br><br>
+Pastikan informasi login yang digunakan sudah benar dan koneksi internet dalam keadaan stabil. Jika masalah tetap terjadi, silakan hubungi layanan pelanggan untuk proses pemeriksaan lebih lanjut.
+</p>
+
+<p>
+<b>Mengapa proses tertentu membutuhkan waktu?</b><br><br>
+Beberapa proses memerlukan verifikasi sistem untuk memastikan keamanan dan keakuratan data. Oleh karena itu, waktu penyelesaian dapat berbeda tergantung kondisi dan antrian proses yang sedang berlangsung.
+</p>
+
+<p>
+<b>Bagaimana cara menghubungi layanan pelanggan?</b><br><br>
+Pengguna dapat menekan tombol Hubungi Layanan Pelanggan yang tersedia pada halaman ini untuk masuk ke ruang bantuan dan berkomunikasi langsung dengan tim dukungan.
+</p>
+
+<p>
+<b>Apakah semua laporan akan diperiksa?</b><br><br>
+Ya. Setiap laporan yang masuk akan diterima oleh sistem dan diproses sesuai urutan serta tingkat prioritas yang berlaku.
+</p>
+
+<p>
+<b>Mengapa saya perlu memberikan informasi yang lengkap saat melapor?</b><br><br>
+Informasi yang lengkap membantu tim layanan pelanggan memahami situasi yang terjadi sehingga proses penanganan dapat dilakukan lebih cepat dan lebih akurat.
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="card-title">
+Penutup
+</div>
+
+<p>
+Terima kasih telah menggunakan layanan yang tersedia pada platform ini. Dukungan, masukan, serta laporan dari pengguna sangat membantu dalam proses pengembangan dan peningkatan kualitas layanan di masa mendatang.
+</p>
+
+<p>
+Kami berkomitmen untuk terus meningkatkan kenyamanan, keamanan, dan stabilitas sistem agar seluruh pengguna dapat memperoleh pengalaman yang lebih baik. Setiap pembaruan yang dilakukan merupakan bagian dari upaya berkelanjutan untuk memberikan layanan yang profesional dan dapat diandalkan.
+</p>
+
+<p>
+Apabila Anda masih memerlukan bantuan, memiliki pertanyaan tambahan, atau ingin menyampaikan laporan tertentu, silakan menghubungi tim layanan pelanggan melalui tombol yang tersedia di bawah halaman ini.
+</p>
+
+<button class="action-btn" onclick="openCS()">
+Hubungi Layanan Pelanggan
+</button>
+
+<div class="cs-note">
+(Hanya dapat menghubungi melalui sesi login yang aktif)
+</div>
+
+</div>
+
+
+
+</div>
+<div class="card">
+
+  <div class="card-title">
+    Informasi Pengembang
+  </div>
+
+  <div id="companyInfo">
+    <div class="loading-box">
+      Memuat informasi...
+    </div>
+  </div>
+
+</div>
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+  storageBucket: "users-96dc5.firebasestorage.app",
+  messagingSenderId: "483322415863",
+  appId: "1:483322415863:web:1397a8f2e808e66ad9e1f2",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+loadCompanyInfo();
+
+async function loadCompanyInfo(){
+
+  const snap = await get(
+    ref(db,"informasi_perusahaan/company_info")
+  );
+
+  if(!snap.exists()){
+    document.getElementById("companyInfo").innerHTML =
+    "<div class='loading-box'>Informasi belum tersedia</div>";
+    return;
+  }
+
+  const d = snap.val();
+
+  document.getElementById("companyInfo").innerHTML = `
+
+  <div class="company-header">
+
+    <div class="company-name">
+      ${d.namaPerusahaan || "-"}
+    </div>
+
+    <div class="company-desc">
+      Informasi resmi perusahaan dan pengembang platform.
+    </div>
+
+  </div>
+
+  <div class="info-grid">
+
+    <div class="info-item">
+      <div class="info-label">Kantor Pusat</div>
+      <div class="info-value">${d.kantorPusat || "-"}</div>
+    </div>
+
+    <div class="info-item">
+      <div class="info-label">Pusat Cabang</div>
+      <div class="info-value">${d.pusatCabang || "-"}</div>
+    </div>
+
+    <div class="info-item">
+      <div class="info-label">Kategori</div>
+      <div class="info-value">${d.kategori || "-"}</div>
+    </div>
+
+    <div class="info-item">
+      <div class="info-label">Team</div>
+      <div class="info-value">${d.team || "-"}</div>
+    </div>
+
+    <div class="info-item">
+      <div class="info-label">Order Coin</div>
+      <div class="info-value">${d.orderCoin || "-"}</div>
+    </div>
+
+    <div class="info-item">
+      <div class="info-label">Interaksi Pengguna</div>
+      <div class="info-value">${d.interaksiPengguna || "-"}</div>
+    </div>
+
+    <div class="info-item">
+      <div class="info-label">Aplikasi Serupa</div>
+      <div class="info-value">${d.aplikasiSerupa || "-"}</div>
+    </div>
+
+    <div class="info-item">
+      <div class="info-label">Agency Resmi</div>
+      <div class="info-value">${d.agencyResmi || "-"}</div>
+    </div>
+
+    <div class="info-item">
+      <div class="info-label">Situs Top Up Terverifikasi</div>
+      <div class="info-value">
+        <a href="${d.situsTopup}" target="_blank">
+          ${d.situsTopup}
+        </a>
+      </div>
+    </div>
+
+  </div>
+  `;
+}
+
+function openCS(){
+  localStorage.setItem("pesanId","customer_service");
+  window.location.href="pesan_lengkap.html";
+}
+
+window.openCS = openCS;
+
+window.scrollToSection = function(id){
+  document.getElementById(id).scrollIntoView({
+    behavior:"smooth"
+  });
+};
+
+
+
+
+/* ================= (NO zoom) ================= */
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
+document.addEventListener("selectstart", e => e.preventDefault());
+
+/* ❌ BLOCK ZOOM KEYBOARD (Ctrl + / - / 0) */
+document.addEventListener("keydown", function (e) {
+  if (
+    (e.ctrlKey && e.key === "+") ||
+    (e.ctrlKey && e.key === "-") ||
+    (e.ctrlKey && e.key === "0") ||
+    (e.ctrlKey && e.key === "=")
+  ) {
+    e.preventDefault();
+  }
+});
+
+/* BLOCK PINCH ZOOM (mobile) */
+document.addEventListener("gesturestart", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gesturechange", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gestureend", function (e) {
+  e.preventDefault();
+});
+/* ================= (NO zoom) ================= */
+
+
+</script>
+
+</body>
+</html>

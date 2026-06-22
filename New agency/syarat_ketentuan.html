@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Syarat & Ketentuan</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins', sans-serif;
+}
+
+body{
+  background:#ffffff;
+}
+
+/* HEADER */
+.header{
+  background:#fff;
+  padding:15px;
+  text-align:center;
+  font-weight:600;
+  font-size:18px;
+  position:sticky;
+  top:0;
+  z-index:999;
+}
+
+/* CONTAINER */
+.container{
+  padding:15px;
+}
+
+/* CARD */
+.card{
+  background:#fff;
+  padding:18px;
+  border-radius:16px;
+  box-shadow:0 6px 18px rgb(0 0 0 / 3%);
+  margin-top:15px;
+}
+
+/* TITLE */
+.title{
+  font-size:16px;
+  font-weight:700;
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:#7b2ff7;
+}
+
+/* TEXT */
+.content{
+  font-size:13px;
+  color:#333;
+  line-height:1.7;
+  white-space:pre-line;
+}
+
+/* BOX IMPORTANT */
+.box{
+  margin-top:10px;
+  padding:12px;
+  background:#f3f0ff;
+  border-left:4px solid #7b2ff7;
+  border-radius:10px;
+  font-size:13px;
+  line-height:1.6;
+}
+
+/* LOADING */
+.loading{
+  text-align:center;
+  padding:20px;
+  color:#666;
+}
+
+
+.app-footer{
+  margin-top:30px;
+  padding:20px 10px;
+  text-align:center;
+  color:#777;
+  font-size:12.5px;
+}
+
+.footer-text{
+  opacity:0.8;
+  letter-spacing:0.3px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  Syarat & Ketentuan
+</div>
+
+<div class="container">
+
+  <div class="card">
+    <div class="title">
+      <i class="fa-solid fa-file-contract"></i>
+      Dokumen Syarat & Ketentuan
+    </div>
+
+    <div id="content" class="content">
+      Memuat data...
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+<footer class="app-footer">
+
+    <!-- BOTTOM NAV -->
+<div style="
+  bottom:40px;
+  left:0;
+  width:100%;
+  padding:10px 0;
+  display:flex;
+  justify-content:center;
+  z-index:9999;
+">
+
+ <div onclick="location.href='Layanan_pelanggan.html'" style="
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:orange;
+    font-weight:600;
+    font-size:14px;
+    cursor:pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  ">
+    <img src="customer_service_icon.png" style="width:20px;height:20px;">
+    Layanan Pelanggan
+  </div>
+
+</div>
+<div style="height:1px;"></div>
+
+
+  <div class="footer-text">
+    © 2026 Tigo.co System. All Rights Reserved.
+  </div>
+</footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  set,
+  get
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* FIREBASE */
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const key = "syarat&ketentuan";
+
+/* DUMMY DATA (AUTO INSERT SEKALI SAJA) */
+const dummyText = `
+SYARAT & KETENTUAN PENGGUNAAN AGENCY
+
+1. KEANGGOTAAN
+Pengguna yang mendaftar sebagai agency wajib memberikan data yang benar, valid, dan dapat dipertanggungjawabkan.
+
+2. VERIFIKASI AKUN
+Setiap akun akan melalui proses verifikasi sistem untuk memastikan keaslian data sebelum dapat digunakan secara penuh.
+
+3. SISTEM PENDAPATAN
+Pendapatan agency dihitung berdasarkan aktivitas referral dan validasi sistem. Semua perhitungan bersifat otomatis dan final.
+
+4. VALIDASI REFERRAL
+Hanya referral yang terverifikasi oleh sistem yang akan dihitung sebagai aktivitas sah dalam perolehan bonus.
+
+5. PELANGGARAN SISTEM
+Segala bentuk kecurangan, spam referral, atau manipulasi sistem akan menyebabkan akun dibekukan tanpa pemberitahuan.
+
+6. KEAMANAN AKUN
+Pengguna bertanggung jawab penuh atas keamanan akun, termasuk password, email, dan data login lainnya.
+
+7. TANGGUNG JAWAB PENGGUNA
+Setiap agency bertanggung jawab penuh atas seluruh aktivitas akun yang dilakukan menggunakan kredensial miliknya. Pihak sistem tidak bertanggung jawab atas kehilangan akses, penyalahgunaan akun, maupun ketidaklanjutan akun apabila akun tersebut sudah tidak valid, terindikasi pelanggaran, atau telah diblokir oleh pihak sistem maupun pihak agency terkait. Segala risiko yang timbul akibat kelalaian pengguna dalam menjaga keamanan akun menjadi tanggung jawab pengguna sepenuhnya.
+
+8. KEBIJAKAN PEMBLOKIRAN
+Sistem berhak melakukan pemblokiran akun apabila ditemukan aktivitas mencurigakan atau pelanggaran terhadap ketentuan yang berlaku.
+
+9. PERUBAHAN KETENTUAN
+Pihak sistem berhak mengubah syarat & ketentuan kapan saja untuk meningkatkan kualitas layanan tanpa pemberitahuan sebelumnya.
+
+10. PEMBAYARAN & BONUS
+Bonus akan diberikan sesuai ketentuan sistem yang berlaku dan dapat berubah sewaktu-waktu tanpa pemberitahuan.
+
+11. PENUNDAAN PEMBAYARAN
+Sistem berhak menunda pembayaran jika ditemukan indikasi pelanggaran atau verifikasi tambahan.
+
+12. KEABSAHAN DATA
+Data yang tidak valid atau palsu akan menyebabkan pembatalan hak agency tanpa kompensasi.
+
+13. PENGGUNAAN SISTEM
+Sistem hanya boleh digunakan untuk tujuan yang sah sesuai dengan aturan platform.
+
+14. KETERBATASAN TANGGUNG JAWAB SISTEM
+Sistem tidak bertanggung jawab atas kerugian yang timbul akibat penggunaan layanan oleh pengguna.
+
+15. AKTIVITAS ILEGAL
+Segala bentuk aktivitas ilegal akan langsung menyebabkan akun dibekukan permanen.
+
+16. KETENTUAN BONUS TAMBAHAN
+Bonus tambahan hanya berlaku pada event tertentu yang diumumkan secara resmi oleh sistem.
+
+17. AKTIVITAS GANDA
+Penggunaan lebih dari satu akun oleh satu individu dapat menyebabkan seluruh akun diblokir.
+
+18. PEMULIHAN AKUN
+Pemulihan akun hanya dapat dilakukan melalui proses verifikasi resmi.
+
+19. KEPUTUSAN SISTEM
+Semua keputusan sistem bersifat final dan tidak dapat diganggu gugat.
+
+20. PENUTUP
+Dengan menggunakan layanan ini, pengguna dianggap telah membaca, memahami, dan menyetujui seluruh syarat & ketentuan yang berlaku.
+`;
+
+async function loadData(){
+
+  const snap = await get(ref(db, key));
+
+  if(!snap.exists()){
+    await set(ref(db, key), dummyText);
+    document.getElementById("content").innerHTML = formatText(dummyText);
+  } else {
+    document.getElementById("content").innerHTML = formatText(snap.val());
+  }
+}
+
+/* FORMAT RAPI + BOX AUTO */
+function formatText(text){
+
+  let lines = text.split("\n");
+  let html = "";
+
+  lines.forEach(line => {
+
+    line = line.trim();
+
+    if(line === ""){
+      html += "<br>";
+      return;
+    }
+
+    /* BOX UNTUK JUDUL BESAR */
+    if(line.includes("SYARAT") || line.includes("KEANGGOTAAN")){
+      html += `<div class="box"><b>${line}</b></div>`;
+    }
+    else if(/^\d+\./.test(line)){
+      html += `<div style="margin-top:8px;"><b>${line}</b></div>`;
+    }
+    else{
+      html += `<div>${line}</div>`;
+    }
+
+  });
+
+  return html;
+}
+
+loadData();
+
+</script>
+
+</body>
+</html>

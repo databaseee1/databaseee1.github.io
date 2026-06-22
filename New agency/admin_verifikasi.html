@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Verifikasi</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+body{
+  font-family: Arial;
+  background:#f5f5f5;
+  margin:0;
+  padding:15px;
+  padding-top: 65px;
+}
+
+
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 55px;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  z-index: 999;
+}
+
+/* BACK ICON */
+.back {
+  font-size: 18px;
+  cursor: pointer;
+  width: 40px;
+}
+
+/* TITLE */
+.title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* BADGE */
+.badge-wrap {
+  display: flex;
+  align-items: center;
+}
+
+#depositBadge {
+  background: red;
+  color: white;
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 50px;
+  display: none;
+  margin-right: 30px;
+}
+
+
+/* CARD */
+.card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+  position: relative;
+  cursor: pointer;
+}
+
+/* ROW */
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.small {
+  font-size: 12px;
+  color: gray;
+}
+
+/* STATUS */
+.status {
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 5px;
+  background: orange;
+  color: white;
+}
+
+.status.success { background: green; }
+.status.pending { background: orange; }
+.status.failed { background: red; }
+
+/* NEW BADGE */
+.badge-new {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: red;
+  color: white;
+  font-size: 10px;
+  padding: 3px 6px;
+  border-radius: 50px;
+}
+
+
+
+
+
+
+.menu-toggle {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  cursor: pointer;
+  color: #555;
+width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #3498db;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+  
+}
+
+.menu-box {
+display: none;
+    position: absolute;
+    top: 38px;
+    right: 0;
+    background: #2c8d65;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 6px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+}
+
+.menu-box div {
+  padding: 8px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.menu-box div:hover {
+  background: #f0f0f0;
+  color: #000;
+}
+
+#popuphapus90,
+#shownotifhpus90 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+
+#popuphapus90 .box,
+#shownotifhpus90 .box {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  min-width: 250px;
+}
+
+#popuphapus90 button {
+  margin: 5px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#btnHapusYes90 {
+  background: red;
+  color: white;
+}
+
+
+
+
+
+
+
+
+#popupStatus90 {
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background: rgba(0,0,0,0.5);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:99999;
+}
+
+#popupStatus90 .box{
+  background:#fff;
+  padding:20px;
+  border-radius:12px;
+  text-align:center;
+  min-width:250px;
+}
+
+#popupStatus90 button{
+  margin:5px;
+  padding:8px 12px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+#btnYes90{
+  background:#3498db;
+  color:#fff;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+
+  <!-- LEFT: BACK -->
+  <div class="back" onclick="history.back()">
+    <i class="fa fa-chevron-left"></i>
+  </div>
+
+  <!-- TITLE -->
+  <div class="title">
+    Request Deposit
+  </div>
+
+  <!-- RIGHT: BADGE -->
+  <div class="badge-wrap">
+    <span id="depositBadge">0</span>
+  </div>
+
+</div>
+
+<!-- LIST -->
+<div id="listDeposit"></div>
+
+<script type="module">
+
+/* ================= FIREBASE ================= */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  update,
+  remove
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+  storageBucket: "users-96dc5.appspot.com",
+  messagingSenderId: "483322415863",
+  appId: "1:483322415863:web:1397a8f2e808e66ad9e1f2"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* ================= CEK LOGIN ================= */
+
+const adminData = JSON.parse(localStorage.getItem("adminLogin"));
+
+if (!adminData || adminData.role !== "admin") {
+  window.location.replace("Login_admin.html");
+}
+
+
+
+let actionData = {
+  id: null,
+  status: null
+};
+
+
+
+/* ================= LIST DEPOSIT REALTIME ================= */
+
+const listEl = document.getElementById("listDeposit");
+
+onValue(ref(db, "Deposithost"), (snap) => {
+
+  let data = [];
+
+  snap.forEach((child) => {
+    data.push(child.val());
+  });
+
+  // 🔥 SORT TERBARU DI ATAS
+  data.sort((a, b) => b.createdAt - a.createdAt);
+
+  let html = "";
+
+  data.forEach((d) => {
+
+    const isUnread = d.read === false;
+
+html += `
+  <div class="card" id="card-${d.depositId}">
+
+    <div class="row">
+      <b>${d.nama}</b>
+
+      <span class="status ${d.status}">
+        ${d.status}
+      </span>
+    </div>
+
+    <!-- ================= BANK USER ================= -->
+<div class="row small" style="display:flex;align-items:center;gap:6px;">
+  <b>Bank users :</b>
+
+  <div style="display:flex;align-items:center;gap:6px;">
+    <img 
+      src="${d.bankLogo || ''}" 
+      style="width:18px;height:18px;object-fit:contain;border-radius:4px;"
+      onerror="this.style.display='none'">
+
+    <span style="font-weight:500;">
+      ${d.bankId || "-"}
+    </span>
+  </div>
+</div>
+
+    <div class="row small">
+      <b>Nama rekening :</b> ${d.namaRekening || "-"}
+    </div>
+
+    <div class="row small">
+      <b>No rekening :</b> ${d.nomorRekening || "-"}
+    </div>
+
+    <!-- ================= BANK TUJUAN (FIX DEFAULT) ================= -->
+    <div class="row small">
+      <b>Bank tujuan :</b> BRI
+    </div>
+
+
+    <!-- ================= JUMLAH ================= -->
+    <div class="row small">
+      Rp ${Number(d.jumlah || 0).toLocaleString()}
+    </div>
+
+    <!-- ================= WAKTU ================= -->
+    <div class="row small">
+      ${formatWIB(d.createdAt)}
+    </div>
+
+    <!-- ================= MENU ================= -->
+    <div class="menu-toggle" onclick="toggleMenu(event, '${d.depositId}')">
+      <i class="fa fa-ellipsis-vertical"></i>
+    </div>
+
+<div class="menu-box" id="menu-${d.depositId}">
+<div onclick="updateStatus('${d.depositId}', 'success', '${d.jumlah}', '${d.userId}')">Success</div>
+<div onclick="updateStatus('${d.depositId}', 'pending', '${d.jumlah}', '${d.userId}')">Pending</div>
+<div onclick="updateStatus('${d.depositId}', 'failed', '${d.jumlah}', '${d.userId}')">Failed</div>
+
+  <div onclick="deleteDeposit('${d.depositId}')" 
+       style="color:#ff4d4d;font-weight:600;">
+    Hapus
+  </div>
+</div>
+
+    ${isUnread ? `<div class="badge-new" id="badge-${d.depositId}">NEW</div>` : ""}
+
+  </div>
+`;
+  });
+
+  listEl.innerHTML = html;
+
+});
+
+
+
+
+function formatWIB(timestamp) {
+  const date = new Date(timestamp);
+
+  const dd = String(date.getDate()).padStart(2, "0");
+  const mm = String(date.getMonth() + 1).padStart(2, "0");
+  const yyyy = date.getFullYear();
+
+  const hh = String(date.getHours()).padStart(2, "0");
+  const min = String(date.getMinutes()).padStart(2, "0");
+
+  return `${dd}/${mm}/${yyyy} pukul ${hh}:${min} WIB`;
+}
+
+
+
+const badge = document.getElementById("depositBadge");
+
+onValue(ref(db, "Deposithost"), (snap) => {
+
+  let count = 0;
+
+  snap.forEach((child) => {
+    const d = child.val();
+
+    if (d.read === false) {
+      count++;
+    }
+  });
+
+  if (count > 0) {
+    badge.innerText = count;
+    badge.style.display = "flex";
+  } else {
+    badge.style.display = "none";
+  }
+
+});
+
+
+
+
+
+window.updateStatus = function(id, status) {
+
+  update(ref(db, "Deposithost/" + id), {
+    status: status,
+    read: true
+  });
+
+  const badge = document.getElementById("badge-" + id);
+  if (badge) badge.remove();
+
+  const menu = document.getElementById("menu-" + id);
+  if (menu) menu.style.display = "none";
+};
+
+window.toggleMenu = function(event, id) {
+  event.stopPropagation();
+
+  const menu = document.getElementById("menu-" + id);
+
+  // close all menu dulu
+  document.querySelectorAll(".menu-box").forEach(m => {
+    if (m !== menu) m.style.display = "none";
+  });
+
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+};
+
+
+document.addEventListener("click", function () {
+
+  document.querySelectorAll(".menu-box").forEach(menu => {
+    menu.style.display = "none";
+  });
+
+});
+
+
+window.updateStatus = function(id, status, jumlah, userId){
+
+  actionData = { id, status, jumlah, userId };
+
+  const text = document.getElementById("popupText90");
+
+  if(status === "success"){
+    text.innerHTML = "Yakin ingin <b>APPROVE SUCCESS</b> dan menambah saldo user?";
+  }
+  else if(status === "pending"){
+    text.innerText = "Yakin ubah status ke PENDING?";
+  }
+  else if(status === "failed"){
+    text.innerText = "Yakin ubah status ke FAILED?";
+  }
+
+  document.getElementById("popupStatus90").style.display = "flex";
+};
+
+window.closePopupStatus90 = function(){
+  document.getElementById("popupStatus90").style.display = "none";
+};
+
+
+
+
+
+
+
+document.getElementById("btnYes90").onclick = async function(){
+
+  const { getDatabase, ref, update, get } = await import(
+    "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"
+  );
+
+  const db = getDatabase();
+
+  const { id, status, jumlah, userId } = actionData;
+
+  // ================= UPDATE STATUS DEPOSIT =================
+  await update(ref(db, "Deposithost/" + id), {
+    status: status,
+    read: true
+  });
+
+  // ================= JIKA SUCCESS → TAMBAH SALDO =================
+  if(status === "success"){
+
+    const userSnap = await get(ref(db, "users2/" + userId));
+
+    if(userSnap.exists()){
+
+      let saldoLama = Number(userSnap.val().saldo || 0);
+      let jumlahDeposit = Number(jumlah || 0);
+
+      await update(ref(db, "users2/" + userId), {
+        saldo: saldoLama + jumlahDeposit
+      });
+
+    }
+  }
+
+  document.getElementById("popupStatus90").style.display = "none";
+
+  showNotif("Status berhasil diupdate");
+
+  actionData = { id:null, status:null };
+};
+
+
+
+
+
+
+
+
+let deleteTargetId = null;
+
+// OPEN POPUP
+window.deleteDeposit = function(id){
+  deleteTargetId = id;
+  document.getElementById("popuphapus90").style.display = "flex";
+};
+
+// CLOSE POPUP
+window.closePopupHapus90 = function(){
+  document.getElementById("popuphapus90").style.display = "none";
+};
+
+
+
+document.getElementById("btnHapusYes90").onclick = async function () {
+
+  if(!deleteTargetId) return;
+
+  const { getDatabase, ref, remove } = await import(
+    "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"
+  );
+
+  const db = getDatabase();
+
+  await remove(ref(db, "Deposithost/" + deleteTargetId));
+
+  document.getElementById("popuphapus90").style.display = "none";
+
+  // show notif berhasil
+  const notif = document.getElementById("shownotifhpus90");
+  notif.style.display = "flex";
+
+  setTimeout(() => {
+    notif.style.display = "none";
+  }, 1000);
+
+  deleteTargetId = null;
+};
+</script>
+
+<div id="shownotifhpus90" style="display:none;">
+  <div class="box">
+    <p>Berhasil dihapus</p>
+  </div>
+</div>
+
+
+<div id="popupStatus90" style="display:none;">
+  <div class="box">
+    <p id="popupText90">Konfirmasi aksi</p>
+
+    <button id="btnYes90">Ya</button>
+    <button onclick="closePopupStatus90()">Batal</button>
+  </div>
+</div>
+
+
+<div id="popuphapus90" style="display:none;">
+  <div class="box">
+    <p>Yakin ingin menghapus deposit ini?</p>
+
+    <button id="btnHapusYes90">Hapus</button>
+    <button onclick="closePopupHapus90()">Batal</button>
+  </div>
+</div>
+</body>
+</html>

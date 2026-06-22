@@ -1,0 +1,1928 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Isi Chat</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins', sans-serif;
+}
+
+
+
+
+html,
+body,
+input,
+button,
+textarea,
+select{
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  background:#ffffff;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+/* HEADER */
+.header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:#fff;
+  height:55px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.header-title{
+  font-size:17px;
+  font-weight:600;
+  color:#222;
+}
+
+.header-back{
+  position:absolute;
+  left:15px;
+  width:22px;
+  height:22px;
+  cursor:pointer;
+}
+
+.header-right{
+  position:absolute;
+  right:15px;
+  width:22px;
+  height:22px;
+  object-fit:contain;
+  cursor:pointer;
+}
+
+
+
+
+
+
+.chat-row{
+  display:flex;
+  align-items:flex-start;
+  margin:10px 0;
+  gap:8px;
+}
+
+.chat-row.me{
+  display:flex;
+  justify-content:flex-end;
+  align-items:flex-end;
+}
+.chat-avatar{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  object-fit:cover;
+  flex-shrink:0;
+  align-self:flex-start;
+}
+
+/* CHAT BOX */
+.chat-box{
+  flex:1;
+  overflow-y:auto;
+  padding:15px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+/* BUBBLE */
+.msg{
+  max-width:30ch;
+  padding:10px 12px;
+  border-radius:12px;
+
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+.left{
+  background:#fafafa;
+      align-self: flex-end;
+    border-radius: 8px;
+    border-top-left-radius: 1px;
+    position: relative;
+    top: 1px;
+    font-size: 19px;
+}
+
+
+.msg.notif {
+  background:#eeeeee;
+      align-self: flex-end;
+    border-radius: 8px;
+    border-top-left-radius: 1px;
+    position: relative;
+    top: -10px;
+    font-size: 16px;
+}
+
+
+
+.right{
+  background:#a51dff;
+  color:#fff;
+  align-self:flex-end;
+  border-radius:8px;
+  border-top-right-radius:1px;
+
+  position:relative;
+  top:6px;
+}
+
+
+.msg.right{
+  max-width:75%;
+  width:fit-content;
+  margin-left:auto;
+  word-break:break-word;
+}
+
+
+
+/* INPUT */
+.input-box{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px;
+  background:#fff;
+}
+
+.bottom-icon{
+  width:26px;
+  height:26px;
+  flex-shrink:0;
+}
+
+#msgInput{
+  flex:1;
+  height:38px;
+  border:none;
+  outline:none;
+  background:#f5f5f5;
+  border-radius:20px;
+  padding:0 15px;
+}
+
+.send-btn{
+  width:40px;
+  height:40px;
+  border:none;
+  background:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0;
+}
+
+.send-btn img{
+  width:24px;
+  height:24px;
+}
+
+.input-box input{
+  flex:1;
+  padding:10px;
+  border:1px solid #ffffff;
+  border-radius:20px;
+  outline:none;
+  background: #ececec;
+}
+
+.input-box button{
+  padding:1px 5px;
+  border:none;
+  border-radius:20px;
+  color:#fff;
+  font-weight:600;
+}
+
+
+.bottom-icons{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 45px;
+  background:#fff;
+
+  transform:translateX(-20px);
+  margin-bottom:50px;
+}
+
+.bottom-icon{
+  width:35px;
+  height:35px;
+  object-fit:contain;
+  cursor:pointer;
+}
+
+.send-btn{
+  background:none;
+  border:none;
+  padding:0;
+  cursor:pointer;
+}
+
+.send-btn img{
+  width:45px;
+  height:45px;
+  object-fit:contain;
+  display:block;
+}
+
+
+
+.more-menu{
+  position:absolute;
+  top:50px;
+  right:5px;
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 4px 15px rgba(0,0,0,.15);
+  min-width:190px;
+  display:none;
+  overflow:hidden;
+  z-index:9999;
+}
+
+.menu-item{
+  padding:12px 15px;
+  font-family:'Poppins',sans-serif;
+  font-size:14px;
+  cursor:pointer;
+  background: #f1f1f1;
+}
+
+
+
+
+.cs_arrow_9182 {
+  color: #999;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.cs_item_9182 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 10px;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.cs_icon_9182 {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.cs_text_9182 {
+  flex: 1;
+}
+
+.cs_item_9182:hover {
+  background: #ececec;
+  transform: scale(1.01);
+}
+
+.cs_icon_9182 {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+
+#cs_root_box_9182 {
+  margin: 12px;
+  padding: 23px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  border: 1px solid #f0f0f0;
+  font-family: 'Poppins', sans-serif;
+}
+
+#cs_root_title_9182 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.cs_item_9182 {
+  padding: 12px 10px;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.cs_item_9182:hover {
+  background: #ececec;
+  transform: scale(1.01);
+}
+
+.cs_item_9182:last-child {
+  margin-bottom: 0;
+}
+
+
+#chatBox {
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+
+
+.msg-divider{
+  height:1px;
+  background:#dcdcdc;
+  margin:8px 0;
+}
+
+.msg-en{
+  font-size:13px;
+  color:#000000;
+}
+
+.msg-id{
+  font-size:14px;
+  color:#000000;
+}
+
+
+.sender-name{
+  font-size:12px;
+  font-weight:600;
+  color:#7a7a7a;
+  margin-bottom:6px;
+  padding-bottom:4px;
+  border-bottom:1px solid #e5e5e5;
+}
+
+
+.sender-name {
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+
+
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+
+  <img src="back_black.png" class="header-back" onclick="history.back()">
+
+  <div id="chatHeader" class="header-title">
+    Chat
+  </div>
+
+
+</div>
+
+
+
+
+<div id="chatBox" class="chat-box"></div>
+
+<div id="queueNotice" style="
+  display:none;
+  margin:10px;
+  padding:10px;
+  background:#fff3cd;
+  color:#856404;
+  border-radius:10px;
+  font-size:14px;
+  text-align:center;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+"></div>
+
+<div class="input-box">
+     <img src="im_image.png"
+     class="bottom-icon"
+     onclick="pickUserImage()">
+  <input id="msgInput" placeholder="">
+  <button id="sendBtn" class="send-btn">
+  <img src="send_im_msg_icon.png" alt="Kirim">
+</button>
+</div>
+
+<!-- MENU ICON BAWAH -->
+<div class="bottom-icons">
+
+</div>
+
+
+
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  get,
+  onValue,
+  push,
+  set,
+  update
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+/* FIREBASE */
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* LOGIN */
+const login = JSON.parse(
+  localStorage.getItem("user")
+);
+
+if (!login) {
+  window.location.href = "login.html";
+}
+
+if (!login.userId) {
+  localStorage.clear();
+  sessionStorage.clear();
+  window.location.href = "login.html";
+}
+
+/* USER ID LOGIN */
+const loginUserId = login.userId;
+
+function cleanId(id){
+  return String(id || "")
+    .toLowerCase()
+    .replace(/\./g, "_")
+    .replace(/@/g, "_")
+    .replace(/\s+/g, "_");
+}
+
+
+let waitingTimeout = null;
+let hasAdminReply = false;
+let notifUserId = "";
+let loginUser = null;
+
+async function loadLoginUser() {
+
+  if (!login.userId) return;
+
+  const snap = await get(
+    ref(db, "users2/" + login.userId)
+  );
+
+  
+
+  if (snap.exists()) {
+    loginUser = snap.val();
+  }
+}
+
+await loadLoginUser();
+initApp();
+
+
+
+
+
+
+let lastQueueNotice = null;
+function initApp() {
+
+  const pesanId = localStorage.getItem("pesanId");
+
+  let historyRef;
+
+  if (pesanId === "notifikasi") {
+
+    historyRef = ref(db, `fithnerchats/notifikasi`);
+
+  } 
+
+  else if (pesanId === "customer_service") {
+
+    const csUserId = encodeEmail(loginUser?.email || "");
+
+    historyRef = ref(
+      db,
+      `fithnerchats/customer_service/${csUserId}`
+    );
+
+  }
+
+
+
+
+
+
+
+  
+
+  else if (pesanId === "pengunjung") {
+
+    historyRef = ref(db, `fithnerchats/pengunjung`);
+
+  } else {
+
+    const loginUserId = encodeEmail(loginUser?.email || "");
+
+    historyRef = ref(db, `fithnerchats/${pesanId}/${loginUserId}`);
+  }
+
+  onValue(historyRef, (snap) => {
+
+    chatBox.innerHTML = "";
+
+  });
+
+}
+
+
+
+
+
+function updateLastActive(page = "pesan Lengkap") {
+
+  const login = JSON.parse(localStorage.getItem("user"));
+  if (!login?.userId) return;
+
+  update(ref(db, "users2/" + login.userId), {
+    lastActive: Date.now(),
+    currentPage: page
+  });
+
+}
+
+["click", "touchstart", "keydown"].forEach(evt => {
+  document.addEventListener(evt, () => {
+    updateLastActive("Pesan Lengkap");
+  }, { passive: true });
+});
+
+updateLastActive("Pesan Lengkap");
+
+
+
+
+/* PESAN ID */
+const pesanId = localStorage.getItem("pesanId");
+
+
+
+
+
+if (pesanId === "notifikasi") {
+
+  const inputBox =
+    document.querySelector(".input-box");
+
+  const bottomIcons =
+    document.querySelector(".bottom-icons");
+
+  if(inputBox){
+    inputBox.style.display = "none";
+  }
+
+  if(bottomIcons){
+    bottomIcons.style.display = "none";
+  }
+
+}
+
+
+
+if (pesanId === "pengunjung") {
+
+  document.querySelector(".input-box")?.remove();
+
+  document.querySelector(".bottom-icons")?.remove();
+
+  document.getElementById("chatBox").style.bottom = "0";
+
+}
+
+
+
+
+
+if (!pesanId) {
+  alert("Pesan tidak ditemukan!");
+}
+
+
+/* ELEMENT */
+const chatBox = document.getElementById("chatBox");
+const header = document.getElementById("chatHeader");
+const sendBtn = document.getElementById("sendBtn");
+const input = document.getElementById("msgInput");
+
+
+
+
+let queueEl = null;
+
+
+
+/* MENU CUSTOMER SERVICE */
+const customerServiceAnswers = {
+
+  "Kas Keluar":
+    "Kas keluar merupakan transaksi pengeluaran dana yang terjadi dalam sistem, baik dari aktivitas pengguna maupun proses operasional platform. Semua kas keluar akan tercatat secara otomatis untuk memastikan transparansi dan keamanan data keuangan.",
+
+  "Kesalahan Aplikasi":
+    "Jika Anda mengalami kendala atau error pada aplikasi, silakan lakukan langkah berikut: kirimkan screenshot, jelaskan kronologi kejadian, serta sebutkan perangkat yang digunakan. Tim support akan segera melakukan pengecekan dan memberikan solusi.",
+
+  "Cara Verifikasi":
+    `Proses verifikasi akun dilakukan untuk memastikan keamanan dan validitas pengguna dalam sistem.
+<br><br>
+Setelah akun berhasil diverifikasi:<br><br>
+- Pengguna dapat mengakses seluruh fitur platform<br><br>
+- Dapat mengikuti aktivitas host atau live<br><br>
+- Berpotensi mendapatkan penghasilan dari aktivitas yang dilakukan<br><br>
+
+Pengguna yang belum diverifikasi tidak dapat menggunakan fitur utama karena sistem keamanan masih membatasi akses.<br>
+
+Untuk melanjutkan, silakan ikuti instruksi verifikasi dan lakukan deposit sesuai ketentuan akun masing-masing.`,
+
+
+  "Tentang Aplikasi":
+    "Aplikasi ini merupakan platform interaksi digital yang menyediakan fitur komunikasi, live streaming, serta ruang sosial untuk memperluas jaringan pertemanan dan aktivitas pengguna secara online.",
+
+  "Video":
+   `Peraturan ini dibuat untuk menjaga kenyamanan, keamanan, dan kesehatan seluruh pengguna di dalam platform.
+ <br> <br>
+1. Larangan Memaksa Pengguna Lain <br>
+Setiap pengguna dilarang keras melakukan paksaan dalam bentuk apa pun, baik untuk melakukan tindakan tertentu, mengikuti ajakan, maupun memberikan respons yang tidak diinginkan. Semua interaksi harus dilakukan secara sukarela dan saling menghormati.
+ <br> <br>
+2. Larangan Meminta Transfer atau Uang <br>
+Pengguna tidak diperbolehkan meminta, menekan, atau mempengaruhi pengguna lain untuk melakukan transfer uang, pengiriman saldo, atau bentuk pembayaran apa pun di luar ketentuan resmi platform. Pelanggaran terhadap aturan ini dapat mengakibatkan pembatasan atau penonaktifan akun.
+ <br> <br>
+3. Etika Komunikasi dan Panggilan <br> 
+Dalam penggunaan fitur panggilan video atau komunikasi langsung, pengguna wajib menjaga etika, tidak menggunakan kata-kata kasar, tidak melakukan tindakan yang mengganggu, serta tetap menjaga suasana yang sehat dan nyaman.
+ <br> <br>
+4. Menjaga Kesehatan Penggunaan <br>
+Pengguna diharapkan menggunakan fitur video secara bijak dan tidak berlebihan. Istirahat yang cukup dan penggunaan yang wajar sangat dianjurkan untuk menjaga kesehatan fisik maupun mental.
+ <br> <br>
+5. Sanksi Pelanggaran <br>
+Setiap pelanggaran terhadap peraturan ini dapat dikenakan sanksi berupa peringatan, pembatasan fitur, hingga penonaktifan akun secara permanen sesuai tingkat pelanggaran.
+
+Dengan menggunakan platform ini, Anda dianggap telah menyetujui seluruh peraturan yang berlaku.`
+,
+"undangan":
+`Fitur Undangan memungkinkan setiap host untuk membuat dan membagikan kode referal kepada teman.
+
+Pengguna dapat mengakses fitur ini melalui menu <a href="undang_vip.html" style="color:blue;text-decoration:underline;">Invite Teman</a>., yang akan mengarahkan ke halaman undangan.
+
+Setiap undangan yang berhasil dan memenuhi ketentuan akan memberikan komisi referal kepada host sebesar <br><br>~Rp 300.000 hingga ~Rp 1.000.000.
+
+Komisi akan diberikan berdasarkan keberhasilan aktivasi dan validasi akun yang diundang.`
+
+};
+
+window.selectCS = function(topic){
+
+  const answer = customerServiceAnswers[topic];
+
+  const row = document.createElement("div");
+
+  row.className = "chat-row";
+
+  row.innerHTML = `
+    <div class="msg left">
+      ${answer}
+    </div>
+  `;
+
+  chatBox.appendChild(row);
+};
+
+
+
+
+
+
+
+
+
+/* ================= HEADER CHAT ================= */
+
+const infoRef = ref(db, "adminfathner/" + pesanId);
+
+onValue(infoRef, (snap) => {
+
+  const data = snap.val();
+  if (!data) return;
+
+
+
+
+  header.innerText =
+    data.nama || "Pesan";
+
+});
+
+/* ================= LOAD HISTORY ================= */
+/* ================= LOAD HISTORY ================= */
+/* ================= LOAD HISTORY ================= */
+/* ================= LOAD HISTORY FIX FINAL ================= */
+
+/* ================= LOAD HISTORY FIX FINAL ================= */
+
+let historyRef;
+
+/* ================= PATH LOGIC ================= */
+if (pesanId === "notifikasi") {
+
+historyRef = ref(
+  db,
+  `fithnerchats/notifikasi`
+);
+
+} 
+
+else if (pesanId === "customer_service") {
+
+  const csUserId = encodeEmail(loginUser?.email || "");
+
+  // 🔥 INI WAJIB
+  historyRef = ref(
+    db,
+    `fithnerchats/customer_service/${csUserId}`
+  );
+
+  // queue tetap terpisah (OK)
+const queueRef = ref(
+  db,
+  `fithnerchats/customer_service/${loginUserId}`
+);
+
+ 
+
+}
+
+
+
+
+else if (pesanId === "pengunjung") {
+
+  historyRef = ref(
+    db,
+    `fithnerchats/pengunjung`
+  );
+
+} else {
+
+  historyRef = ref(
+    db,
+    `fithnerchats/${pesanId}/${loginUserId}`
+  );
+
+}
+
+
+
+
+onValue(historyRef, (snap) => {
+if (pesanId !== "customer_service") {
+  chatBox.innerHTML = "";
+}
+if (pesanId === "customer_service") {
+  chatBox.innerHTML = "";
+}
+
+
+
+let isRendering = false;
+
+/* ================= NOTIFIKASI ================= */
+/* ================= OVERRIDE KHUSUS NOTIFIKASI ================= */
+if (pesanId === "notifikasi") {
+
+  const refNotif = ref(db, "fithnerchats/notifikasi");
+  const refWithdraw = ref(db, `fithnerchats/notifikasi/${loginUserId}/withdraw`);
+
+  let statusMsgs = [];
+  let withdrawMsgs = [];
+
+  // ================= TRANSLATE FUNCTION =================
+async function translateToEnglish(text) {
+
+  try {
+
+    // simpan link dulu
+    const links = [];
+
+    const cleanText = text.replace(
+      /<a[^>]*>(.*?)<\/a>/g,
+      (match)=>{
+
+        const id = `__LINK_${links.length}__`;
+
+        links.push(match);
+
+        return id;
+      }
+    );
+
+
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=t&q=${encodeURIComponent(cleanText)}`;
+
+    const res = await fetch(url);
+    const data = await res.json();
+
+    let result = data[0]
+      .map(x=>x[0])
+      .join("");
+
+
+    // balikin link asli
+    links.forEach((link,i)=>{
+
+      result = result.replace(
+        `__LINK_${i}__`,
+        link
+      );
+
+    });
+
+
+    return result;
+
+
+  } catch(e){
+
+    return "";
+
+  }
+
+}
+
+  // ================= RENDER =================
+  let rendering = false;
+
+const render = async () => {
+
+  if(rendering) return;
+
+  rendering = true;
+
+    const allMsgs = [...statusMsgs, ...withdrawMsgs];
+
+    chatBox.innerHTML = "";
+
+    if (allMsgs.length === 0) return;
+
+    allMsgs.sort((a, b) => (a.time || 0) - (b.time || 0));
+
+    // ================= LOOP =================
+    for (const msg of allMsgs) {
+
+      const row = document.createElement("div");
+      row.className = "chat-row";
+
+      const indo = msg.text || "";
+
+      // 🔥 ONLY STATUS AKUN YANG TRANSLATE
+      const isStatus = statusMsgs.includes(msg);
+      const eng = isStatus ? await translateToEnglish(indo) : "";
+
+      row.innerHTML = `
+        <img class="chat-avatar"
+             src="${msg.profil || 'ic_launcher_circle.png'}">
+
+        <div class="msg left notif">
+
+          ${isStatus ? `
+            <!-- ENGLISH -->
+            <div style="color:#111;font-weight:500;margin-bottom:4px;">
+              ${eng}
+            </div>
+
+            <!-- GARIS -->
+            <div style="height:1px;background:rgba(0,0,0,0.2);margin:6px 0;"></div>
+          ` : ""}
+
+          <!-- INDONESIA -->
+          <div style="color:rgb(0 0 0 / 80%);">
+            ${indo}
+          </div>
+
+        </div>
+      `;
+
+      chatBox.appendChild(row);
+    }
+
+setTimeout(() => {
+  chatBox.scrollTop = chatBox.scrollHeight;
+}, 50);
+
+
+rendering = false;
+
+};
+
+
+
+
+
+
+  // ================= STATUS AKUN =================
+onValue(refNotif, (snap) => {
+
+  statusMsgs = [];
+
+  snap.forEach(child => {
+
+    const d = child.val();
+
+    if(String(d.userId) === String(loginUserId)){
+      statusMsgs.push(d);
+    }
+
+  });
+
+
+  onValue(refWithdraw, (wdSnap)=>{
+
+    withdrawMsgs = [];
+
+    wdSnap.forEach(child=>{
+
+      withdrawMsgs.push(child.val());
+
+    });
+
+
+    render();
+
+  });
+
+});
+
+  return;
+}
+
+
+
+else if (pesanId === "customer_service") {
+
+  const refSystem = ref(
+    db,
+    `fithnerchats/customer_service/${loginUserId}`
+  );
+
+const queueRef = ref(
+  db,
+  `fithnerchats/customer_service/${loginUserId}`
+);
+  let lastQueueNotice = null;
+
+  // =========================
+  // 🔥 RESTORE SAAT RELOAD
+  // =========================
+  const saved = localStorage.getItem("lastQueueNotice");
+  if (saved) {
+    const data = JSON.parse(saved);
+    showQueueNoticeFromFirebase(data);
+  }
+
+  // =========================
+  // 🔥 REALTIME LISTENER
+  // =========================
+onValue(queueRef, (snap) => {
+
+  let list = [];
+
+  snap.forEach(child => {
+    const d = child.val();
+
+    if (d.type === "queue_notice") {
+      list.push(d);
+    }
+  });
+
+  if (list.length > 0) {
+
+    list.sort((a, b) => (a.time || 0) - (b.time || 0));
+
+    const latest = list[list.length - 1];
+
+    showQueueNoticeFromFirebase(latest);
+
+    // 🔥 SIMPAN BIAR TIDAK HILANG SAAT RELOAD
+    localStorage.setItem("lastQueueNotice", JSON.stringify(latest));
+
+  } else {
+
+    hideQueueNotice();
+
+    localStorage.removeItem("lastQueueNotice");
+
+  }
+
+});
+
+let chatMsgs = [];
+let systemMsgs = [];
+
+
+
+
+
+  // =========================
+  // 💬 CHAT CS
+  // =========================
+  snap.forEach(child => {
+    const data = child.val();
+
+    if (data) {
+      chatMsgs.push({
+        ...data,
+        source: "chat"
+      });
+    }
+  });
+
+  async function translateToEnglish(text) {
+    try {
+      const url =
+        `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=t&q=${encodeURIComponent(text)}`;
+
+      const res = await fetch(url);
+      const data = await res.json();
+
+      return data[0].map(x => x[0]).join("");
+
+    } catch (e) {
+      return "";
+    }
+  }
+
+  // =========================
+  // RENDER
+  // =========================
+  async function render() {
+
+console.log("chatMsgs =", chatMsgs);
+console.log("systemMsgs =", systemMsgs);
+
+    const messages = [...chatMsgs, ...systemMsgs];
+
+    messages.sort((a, b) => (a.time || 0) - (b.time || 0));
+
+    chatBox.innerHTML = "";
+
+    for (const msg of messages) {
+
+
+
+if (msg.type === "queue_notice") {
+
+  const row = document.createElement("div");
+
+  const parts = (msg.text || "").split("\n");
+
+  const title = parts[0] || "";
+  const body = parts.slice(1).join("\n") || "";
+
+  row.className = "chat-row";
+
+  row.innerHTML = `
+    <div style="
+      width:100%;
+      text-align:center;
+      margin:10px 0;
+      font-family:Poppins, sans-serif;
+    ">
+
+      ${title ? `
+        <div style="
+          font-size:14px;
+          font-weight:600;
+          color:#222;
+          margin-bottom:6px;
+        ">
+          ${title}
+        </div>
+      ` : ""}
+
+      ${body ? `
+        <div style="
+          display:inline-block;
+          color:#444;
+          padding:1px 14px;
+          border-radius:12px;
+          font-size:14px;
+        ">
+          ${body}
+        </div>
+      ` : ""}
+
+    </div>
+  `;
+
+  chatBox.appendChild(row);
+  continue;
+}
+
+
+      const isSystem = msg.source === "system";
+      const isAdmin = msg.sender === "admin";
+      const text = msg.text || "";
+
+const eng =
+  (isAdmin || isSystem)
+    ? await translateToEnglish(text)
+    : "";
+      const row = document.createElement("div");
+
+      // =========================
+      // SYSTEM MESSAGE
+      // =========================
+console.log(
+  "RENDER",
+  {
+    isAdmin,
+    isSystem,
+    sender: msg.sender,
+    text
+  }
+);
+
+
+if (isSystem && msg.type === "hapus_akun") {
+
+  row.className = "chat-row system";
+
+  row.innerHTML = `
+    <div class="msg system-box">
+
+      <div class="msg-en">
+        ⚠️ ${eng}
+      </div>
+
+      <div class="msg-divider"></div>
+
+      <div class="msg-id">
+        ${text}
+      </div>
+
+    </div>
+  `;
+}  // =========================
+      // ADMIN
+      // =========================
+  else if (isAdmin) {
+
+
+hasAdminReply = true;
+
+hideQueueNotice();
+
+if (waitingTimeout) {
+  clearTimeout(waitingTimeout);
+}
+
+
+
+  row.className = "chat-row";
+
+ row.innerHTML = `
+  <div class="admin-wrap">
+
+    <div class="sender-name">
+      Human Assistant
+    </div>
+
+    <div class="msg left">
+
+      ${
+        msg.foto
+        ?
+        `
+      <img src="${msg.foto}" onclick="openImage('${msg.foto}')"
+style="
+  width:180px;
+  max-width:100%;
+  border-radius:12px;
+  display:block;
+  cursor:pointer;
+">
+        `
+        :
+        ""
+      }
+
+      ${
+        eng
+        ?
+        `
+        <div class="msg-en">
+          ${eng}
+        </div>
+        <div class="msg-divider"></div>
+        `
+        :
+        ""
+      }
+
+      ${
+        text
+        ?
+        `
+        <div class="msg-id">
+          ${text}
+        </div>
+        `
+        :
+        ""
+      }
+
+    </div>
+
+  </div>
+`;
+}
+
+      // =========================
+      // USER
+      // =========================
+else {
+
+  row.className = "chat-row me";
+
+  row.innerHTML = `
+
+    ${msg.foto ? `
+      <img src="${msg.foto}"
+        style="
+          width:180px;
+          max-width:100%;
+          border-radius:12px;
+          display:block;
+          margin-bottom:6px;
+        ">
+    ` : ""}
+
+    ${msg.text ? `
+      <div class="msg right">
+        ${msg.text}
+      </div>
+    ` : ""}
+
+    <img class="chat-avatar"
+      src="${
+        msg.profil ||
+        loginUser?.profil ||
+        'assets/images/default_pic_100.png'
+      }">
+
+  `;
+}
+
+      chatBox.appendChild(row);
+    }
+
+    setTimeout(() => {
+      showCSMenu();
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }, 100);
+  }
+
+  // =========================
+  // SYSTEM CS
+  // =========================
+  onValue(refSystem, (snapSys) => {
+
+    systemMsgs = [];
+
+    snapSys.forEach(child => {
+      const data = child.val();
+
+      if (data) {
+        systemMsgs.push({
+          ...data,
+          source: "system"
+        });
+      }
+    });
+
+    render();
+
+  });
+
+  
+}
+
+
+/* ================= PENGUNJUNG ================= */
+else if (pesanId === "pengunjung") {
+
+  const refPath = ref(db, `fithnerchats/pengunjung/${loginUserId}`);
+
+  onValue(refPath, (snap) => {
+
+    chatBox.innerHTML = "";
+
+    if (!snap.exists()) return;
+
+    snap.forEach(child => {
+
+      const d = child.val();
+
+      const row = document.createElement("div");
+      row.className = "chat-row";
+
+      row.innerHTML = `
+        <img class="chat-avatar"
+             src="${d.foto || 'message_see_me_item_icon.png'}">
+
+        <div class="msg left">
+          ${d.isiChat || ""}
+        </div>
+      `;
+
+      chatBox.appendChild(row);
+
+    });
+
+  });
+
+}
+
+  /* ================= CHAT BIASA ================= */
+
+  chatBox.scrollTop = chatBox.scrollHeight;
+
+
+// reset status
+hasAdminReply = false;
+
+// reset timeout lama
+if (waitingTimeout) clearTimeout(waitingTimeout);
+
+// sembunyikan dulu
+hideQueueNotice();
+
+// mulai hitung 10 detik
+waitingTimeout = setTimeout(() => {
+
+if (!hasAdminReply) {
+  // jangan hardcode lagi
+}
+
+}, 5000);
+
+
+});
+
+
+
+let csMenuHiddenBySend = false;
+let csMenuTimeout = null;
+
+function showCSMenu() {
+if (csMenuHiddenBySend) return;
+  // kalau sudah ada → jangan bikin lagi
+  if (document.getElementById("cs_root_box_9182")) {
+    return;
+  }
+
+  const menu = document.createElement("div");
+  menu.id = "cs_root_box_9182";
+
+  menu.innerHTML = `
+    <div id="cs_root_title_9182">
+      Bagaimana saya bisa membantu anda?
+    </div>
+
+    <div class="cs_item_9182" onclick="selectCS('Cara Verifikasi')">
+      <img src="cert_failed_wrong_avatar.png" class="cs_icon_9182">
+      <div class="cs_text_9182">Cara Verifikasi</div>
+      <div class="cs_arrow_9182">></div>
+    </div>
+
+    <div class="cs_item_9182" onclick="selectCS('Video')">
+      <img src="im_video_call.png" class="cs_icon_9182">
+      <div class="cs_text_9182">Video</div>
+      <div class="cs_arrow_9182">></div>
+    </div>
+
+    <div class="cs_item_9182" onclick="selectCS('undangan')">
+      <img src="im_red_pack_not_open_bg.png" class="cs_icon_9182">
+      <div class="cs_text_9182">Undang</div>
+      <div class="cs_arrow_9182">></div>
+    </div>
+
+    <div class="cs_item_9182" onclick="selectCS('Kas Keluar')">
+      <img src="credit.png" class="cs_icon_9182">
+      <div class="cs_text_9182">Kas Keluar</div>
+      <div class="cs_arrow_9182">></div>
+    </div>
+
+    <div class="cs_item_9182" onclick="selectCS('Tentang Aplikasi')">
+      <img src="chat_icon_send_failure.png" class="cs_icon_9182">
+      <div class="cs_text_9182">Tentang Aplikasi</div>
+      <div class="cs_arrow_9182">></div>
+    </div>
+
+    <div class="cs_item_9182" onclick="selectCS('Kesalahan Aplikasi')">
+      <img src="video_report_icon.png" class="cs_icon_9182">
+      <div class="cs_text_9182">Kesalahan Aplikasi</div>
+      <div class="cs_arrow_9182">></div>
+    </div>
+  `;
+
+  chatBox.appendChild(menu);
+}
+
+
+let firstMessageSent = false;
+let queueTimer = null;
+let adminReplied = false;
+/* ================= SEND MESSAGE ================= */
+
+function encodeEmail(email) {
+  return email
+    .toLowerCase()
+    .replace(/\./g, "_dot_")
+    .replace(/@/g, "_at_");
+}
+
+async function sendMsg() {
+
+  const text = input.value.trim();
+  if (!text) return;
+
+  // 🔥 pakai email sebagai ID utama
+  const loginUserId = encodeEmail(loginUser?.email);
+
+  try {
+
+    // =========================
+    // 1. SIMPAN CHAT ASLI USER
+    // =========================
+    const msgRef = push(
+      ref(db, `fithnerchats/${pesanId}/${loginUserId}`)
+    );
+ await set(msgRef, {
+ text:text,
+ profil:
+ loginUser?.profil ||
+ "assets/images/default_pic_100.png",
+ sender: loginUserId,
+ nama:
+ loginUser?.nama || "User",
+ email:
+ loginUser?.email || "",
+ time:Date.now()
+});
+
+    // =========================
+    // 2. UPDATE CS INBOX (ADMIN LIST)
+    // =========================
+    const inboxRef = ref(db, `cs_inbox/${loginUserId}`);
+
+    await set(inboxRef, {
+      userId: loginUserId,
+      nama: loginUser?.nama || "Unknown",
+      email: loginUser?.email || "",
+      profil: loginUser?.profil || "",
+      lastMessage: text,
+      lastTime: Date.now(),
+      unread: true
+    });
+
+
+    // =========================
+    // 3. UPDATE CS USERS (WA LIST ADMIN)
+    // =========================
+    const userIndexRef = ref(db, `cs_users/${loginUserId}`);
+
+    await set(userIndexRef, {
+      userId: loginUserId,
+      nama: loginUser?.nama || "Unknown",
+      email: loginUser?.email || "",
+      profil: loginUser?.profil || "",
+      lastMessage: text,
+      lastTime: Date.now()
+    });
+
+
+    input.value = "";
+
+
+// =========================
+// CS MENU AUTO HIDE SETELAH SEND PESAN
+// =========================
+csMenuHiddenBySend = true;
+
+// hapus menu kalau masih tampil
+document.getElementById("cs_root_box_9182")?.remove();
+
+// reset timer lama
+if (csMenuTimeout) clearTimeout(csMenuTimeout);
+
+// tampil lagi setelah 30 detik
+csMenuTimeout = setTimeout(() => {
+  csMenuHiddenBySend = false;
+  showCSMenu();
+}, 30000);
+
+
+chatBox.scrollTop =
+chatBox.scrollHeight;
+
+// tandai user sudah kirim pesan pertama
+firstMessageSent = true;
+
+// reset timer lama
+if (queueTimer) clearTimeout(queueTimer);
+
+// delay 5 detik baru cek admin status
+queueTimer = setTimeout(async () => {
+
+  try {
+
+    const snap = await get(ref(db, "system/admin_status"));
+
+    if (!snap.exists()) return;
+
+    const status = snap.val();
+
+    if (status.busy === true) {
+
+      showQueueNoticeFromFirebase({
+        type: "queue_notice",
+        text:
+`Terhubung dengan Layanan Kemanusiaan...
+Permintaan Anda untuk layanan manusia sedang dalam antrian. Perkiraan waktu tidak dapat dipastikan, mohon menunggu~`,
+        time: Date.now()
+      });
+
+    }
+
+  } catch (err) {
+    console.log("queue check error:", err);
+  }
+
+}, 1000);
+
+
+
+  } catch (err) {
+
+    console.error(err);
+    alert("Gagal mengirim pesan");
+
+  }
+}
+
+
+
+
+sendBtn.addEventListener(
+  "click",
+  sendMsg
+);
+
+input.addEventListener(
+  "keypress",
+  (e) => {
+    if (e.key === "Enter") {
+      sendMsg();
+    }
+  }
+);
+
+
+
+
+
+
+
+
+window.selectCS = function(topic){
+
+  // HAPUS MENU SETELAH DIKLIK
+  document.getElementById("cs_root_box_9182")?.remove();
+
+  const answer = customerServiceAnswers[topic];
+
+  const row = document.createElement("div");
+  row.className = "chat-row";
+
+  row.innerHTML = `
+    <div class="msg left">
+      ${answer}
+    </div>
+  `;
+
+  chatBox.appendChild(row);
+
+chatBox.style.scrollBehavior = "auto";
+chatBox.scrollTop = chatBox.scrollHeight;
+
+  // OPTIONAL: munculkan lagi setelah 1 menit
+  setTimeout(() => {
+    showCSMenu();
+  }, 10000);
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ================= (NO zoom) ================= */
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
+document.addEventListener("selectstart", e => e.preventDefault());
+
+/* ❌ BLOCK ZOOM KEYBOARD (Ctrl + / - / 0) */
+document.addEventListener("keydown", function (e) {
+  if (
+    (e.ctrlKey && e.key === "+") ||
+    (e.ctrlKey && e.key === "-") ||
+    (e.ctrlKey && e.key === "0") ||
+    (e.ctrlKey && e.key === "=")
+  ) {
+    e.preventDefault();
+  }
+});
+
+/* BLOCK PINCH ZOOM (mobile) */
+document.addEventListener("gesturestart", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gesturechange", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gestureend", function (e) {
+  e.preventDefault();
+});
+/* ================= (NO zoom) ================= */
+
+
+
+
+
+
+window.openImage = function(url){
+  const imgModal = document.getElementById("imgModal");
+  const imgPreview = document.getElementById("imgPreview");
+
+  imgPreview.src = url;
+  imgModal.style.display = "flex";
+};
+
+
+
+
+const imgModal = document.getElementById("imgModal");
+const imgPreview = document.getElementById("imgPreview");
+
+imgModal.onclick = () => {
+  imgModal.style.display = "none";
+  imgPreview.src = "";
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const CLOUD_NAME = "dowoq4a0i";
+const UPLOAD_PRESET = "fotousershost";
+
+window.pickUserImage = function () {
+
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = "image/*";
+
+  input.onchange = async (e) => {
+
+    try {
+
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", UPLOAD_PRESET);
+
+      const upload = await fetch(
+        `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+        {
+          method: "POST",
+          body: formData
+        }
+      );
+
+      const data = await upload.json();
+
+      if (!data.secure_url) {
+        alert("Upload gagal");
+        return;
+      }
+
+      /* LOGIN */
+      const loginRaw = localStorage.getItem("user");
+      if (!loginRaw) {
+        alert("User belum login");
+        return;
+      }
+
+      const login = JSON.parse(loginRaw);
+
+      /* HARUS SAMA DENGAN ID YANG DIPAKAI CHAT TEXT */
+      const chatUserId =
+        (login.email || "")
+          .toLowerCase()
+          .replace(/\./g, "_dot_")
+          .replace(/@/g, "_at_");
+
+      await set(
+        push(
+          ref(
+            db,
+            `fithnerchats/customer_service/${chatUserId}`
+          )
+        ),
+        {
+          text: "",
+          foto: data.secure_url,
+          sender: chatUserId,
+          email: login.email || "",
+          time: Date.now(),
+          read: false
+        }
+      );
+
+      console.log("USER IMAGE SENT");
+      console.log("CHAT USER ID =", chatUserId);
+
+    } catch (err) {
+
+      console.error("UPLOAD FOTO GAGAL =", err);
+      alert("Gagal mengirim foto");
+
+    }
+
+  };
+
+  input.click();
+};
+
+
+
+
+function showQueueNoticeFromFirebase(data){
+
+  if(!data || !data.text) return;
+
+  let el = document.getElementById("queue_notice_box");
+
+  if(!el){
+    el = document.createElement("div");
+    el.id = "queue_notice_box";
+    chatBox.appendChild(el);
+  }
+
+  el.innerHTML = `
+    <div style="
+      width:100%;
+      text-align:center;
+      margin:10px 0;
+      font-family:Poppins, sans-serif;
+    ">
+      <div style="
+        display:inline-block;
+        color:#444;
+        padding:10px 14px;
+        border-radius:12px;
+        font-size:14px;
+      ">
+        ${data.text}
+      </div>
+    </div>
+  `;
+
+  // 🔥 INI YANG HILANG SEBELUMNYA
+chatBox.style.scrollBehavior = "auto";
+chatBox.scrollTop = chatBox.scrollHeight;
+}
+function hideQueueNotice(){
+  const el = document.getElementById("queue_notice_box");
+  if(el) el.remove();
+}
+</script>
+
+
+
+
+
+
+
+
+
+<div id="imgModal" style="
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.9);
+  z-index:9999;
+  justify-content:center;
+  align-items:center;
+">
+  <img id="imgPreview" style="
+    max-width:95%;
+    max-height:95%;
+    border-radius:10px;
+  ">
+</div>
+</body>
+</html>

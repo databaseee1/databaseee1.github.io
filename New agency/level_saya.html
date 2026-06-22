@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Level Saya</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none !important;
+}
+
+/* hilangkan highlight saat klik/focus */
+button, a, div, span, img {
+  outline: none !important;
+}
+
+
+img {
+
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+
+
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+
+
+
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:#f5f5f5;
+}
+
+.header{
+  background:#fff;
+  padding:15px;
+  display:flex;
+  align-items:center;
+  justify-content:center; /* penting */
+  font-weight:bold;
+  font-size:18px;
+  position:sticky;
+  top:0;
+  z-index:999999;
+  position:relative;
+}
+
+/* icon/back tetap di kiri */
+.header img{
+  width:22px;
+  cursor:pointer;
+  position:absolute;
+  left:15px;
+}
+
+/* teks tetap di tengah */
+.header .title{
+  text-align:center;
+}
+/* CARD HERO */
+.hero{
+  margin:12px;
+  border-radius:16px;
+  padding:15px;
+  background:linear-gradient(135deg,#ff4ecd,#ff6b6b,#a855f7);
+  color:#fff;
+  text-align:center;
+  position:relative;
+}
+
+.badge{
+  width:70px;
+}
+
+.progress{
+  height:8px;
+  background:#ffffff50;
+  border-radius:20px;
+  margin:10px 0;
+  overflow:hidden;
+}
+
+.progress-bar{
+  height:100%;
+  background:#fff;
+  width:50%;
+}
+
+.box{
+  display:flex;
+  justify-content:space-between;
+  margin-top:10px;
+  font-size:13px;
+}
+
+/* INFO BOX */
+.info{
+  margin:12px;
+  padding:10px;
+}
+
+.item{
+  display:flex;
+  align-items:center;
+  background:#fff;
+  padding:12px;
+  border-radius:14px;
+  margin-bottom:10px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.05);
+}
+
+.icon{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#ff4ecd,#ff6b6b);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-right:12px;
+}
+
+.icon img{
+  width:22px;
+  height:22px;
+  object-fit:contain;
+}
+
+.item b{
+  font-size:14px;
+  display:block;
+}
+
+.item div{
+  font-size:12px;
+  color:#666;
+}
+
+/* TABLE */
+.table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:10px;
+  background:#fff;
+  border-radius:12px;
+  overflow:hidden;
+}
+
+.table td{
+  padding:12px;
+  font-size:14px;
+}
+
+.table tr:nth-child(odd){
+  background:#faf5ff;
+}
+
+.lv-badge{
+  padding:5px 10px;
+  border-radius:20px;
+  font-size:12px;
+  color:#fff;
+  display:inline-block;
+}
+
+.lv0{background:#aaa;}
+.lv1{background:#f59e0b;}
+.lv2{background:#f97316;}
+.lv3{background:#ef4444;}
+.lv4{background:#ec4899;}
+.lv5{background:#db2777;}
+.lv6{background:#c026d3;}
+.lv7{background:#a855f7;}
+.lv8{background:#9333ea;}
+.lv9{background:#7c3aed;}
+.lv10{background:#6d28d9;}
+
+
+.lv-wrap{
+  display:flex;
+  align-items:center;
+  gap:1px;
+  padding:1px 5px;
+  border-radius:8px;
+  width:fit-content;
+  font-weight:bold;
+  color:white;
+}
+
+/* ICON DI DALAM BADGE */
+.lv-icon{
+  width:20px;
+  height:20px;
+  object-fit:contain;
+}
+
+/* TEKS LEVEL */
+.lv-text{
+  font-size:14px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <img src="back_black.png" onclick="history.back()">
+  Tingkat
+</div>
+
+<!-- HERO -->
+<div class="hero">
+
+  <img class="badge" src="float_grab_1_f.png">
+
+  <div id="myLevel" style="font-size:20px;font-weight:bold;margin-top:5px;">
+    LV0
+  </div>
+
+  <div class="progress">
+    <div class="progress-bar" id="bar"></div>
+  </div>
+
+  <div class="box">
+    <div id="currentCredit">0</div>
+    <div id="nextLevel">LV1</div>
+  </div>
+
+  <div style="margin-top:8px;font-size:12px;" id="desc">
+    Dapatkan Credits untuk naik level
+  </div>
+
+</div>
+
+<!-- INFO -->
+<div class="info">
+
+  <div class="item">
+    <div class="icon">
+      <img src="destiny_icon_video_call.png" alt="">
+    </div>
+    <div>
+      <b>Video Pertandingan</b><br>
+      Anda memiliki kecocokan video tanpa batas per hari
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="icon">
+      <img src="credit.png" alt="">
+    </div>
+    <div>
+      <b>Lebih Banyak Bonus</b><br>
+      Setiap pertandingan akan dihargai lebih tinggi
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="icon">
+      <img src="destiny_icon_msg_chat.png" alt="">
+    </div>
+    <div>
+      <b>Harga Obrolan Lebih Tinggi</b><br>
+      Maksimal harga meningkat sesuai level
+    </div>
+  </div>
+
+</div>
+
+<!-- TABLE -->
+<div style="padding:12px;">
+<table class="table">
+
+<tr>
+  <td>
+    <div class="lv-wrap lv0">
+      <img src="user_level_0_icon.png" class="lv-icon">
+      <span class="lv-text">LV0</span>
+    </div>
+  </td>
+  <td>0</td>
+</tr>
+
+<tr>
+  <td>
+    <div class="lv-wrap lv1">
+      <img src="user_level_1_icon.png" class="lv-icon">
+      <span class="lv-text">LV1</span>
+    </div>
+  </td>
+  <td>100</td>
+</tr>
+
+<tr>
+  <td>
+    <div class="lv-wrap lv2">
+      <img src="user_level_2_icon.png" class="lv-icon">
+      <span class="lv-text">LV2</span>
+    </div>
+  </td>
+  <td>2000</td>
+</tr>
+
+<tr>
+  <td>
+    <div class="lv-wrap lv3">
+      <img src="user_level_3_male_icon.png" class="lv-icon">
+      <span class="lv-text">LV3</span>
+    </div>
+  </td>
+  <td>4000</td>
+</tr>
+
+<tr>
+  <td>
+    <div class="lv-wrap lv4">
+      <img src="user_level_4_male_icon.png" class="lv-icon">
+      <span class="lv-text">LV4</span>
+    </div>
+  </td>
+  <td>8000</td>
+</tr>
+
+<tr>
+  <td>
+    <div class="lv-wrap lv5">
+      <img src="user_level_5_icon.png" class="lv-icon">
+      <span class="lv-text">LV5</span>
+    </div>
+  </td>
+  <td>20000</td>
+</tr>
+
+<tr>
+  <td>
+    <div class="lv-wrap lv6">
+      <img src="user_level_6_icon.png" class="lv-icon">
+      <span class="lv-text">LV6</span>
+    </div>
+  </td>
+  <td>40000</td>
+</tr>
+
+<tr>
+  <td>
+    <div class="lv-wrap lv7">
+      <img src="user_level_7_icon.png" class="lv-icon">
+      <span class="lv-text">LV7</span>
+    </div>
+  </td>
+  <td>80000</td>
+</tr>
+
+<tr>
+  <td>
+    <div class="lv-wrap lv8">
+      <img src="user_level_8_icon.png" class="lv-icon">
+      <span class="lv-text">LV8</span>
+    </div>
+  </td>
+  <td>200000</td>
+</tr>
+
+<tr>
+  <td>
+    <div class="lv-wrap lv9">
+      <img src="user_level_9_icon.png" class="lv-icon">
+      <span class="lv-text">LV9</span>
+    </div>
+  </td>
+  <td>400000</td>
+</tr>
+
+<tr>
+  <td>
+    <div class="lv-wrap lv10">
+      <img src="user_level_10_male_icon.png" class="lv-icon">
+      <span class="lv-text">LV10</span>
+    </div>
+  </td>
+  <td>800000</td>
+</tr>
+
+</table>
+</div>
+
+<!-- FIREBASE -->
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase,update, ref, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* ================= LOGIN FIX ================= */
+const loginRaw = localStorage.getItem("user");
+
+if (!loginRaw || loginRaw === "null") {
+  window.location.href = "login.html";
+}
+
+const login = JSON.parse(loginRaw);
+
+/* 🔥 ONLY USER ID */
+const userId = login.userId;
+
+if (!userId) {
+  localStorage.clear();
+  sessionStorage.clear();
+  window.location.href = "login.html";
+}
+
+
+
+
+
+function updateLastActive(page = "Level_saya") {
+
+  const login = JSON.parse(localStorage.getItem("user"));
+  if (!login?.userId) return;
+
+  update(ref(db, "users2/" + login.userId), {
+    lastActive: Date.now(),
+    currentPage: page
+  });
+
+}
+
+["click", "touchstart", "keydown"].forEach(evt => {
+  document.addEventListener(evt, () => {
+    updateLastActive("Level_saya");
+  }, { passive: true });
+});
+
+updateLastActive("Level_saya");
+
+
+
+
+
+
+
+/* ================= LEVEL TABLE ================= */
+const levels = [0, 100, 2000, 4000, 8000, 20000, 40000, 80000, 200000, 400000, 800000];
+
+function parseLevel(levelText) {
+  if (!levelText) return 0;
+
+  const match = String(levelText).match(/\d+/);
+  return match ? Number(match[0]) : 0;
+}
+
+/* ================= LOAD ONLY THIS USER ================= */
+async function load() {
+
+  const snap = await get(ref(db, "users2"));
+  if (!snap.exists()) return;
+
+  const user = snap.child(userId).val();
+
+  if (!user) return;
+
+  const credit = Number(user.credit || user.saldo || 0);
+  const level = parseLevel(user.level);
+
+  /* ================= UI ================= */
+  document.getElementById("myLevel").innerText = "LV" + level;
+  document.getElementById("currentCredit").innerText = credit;
+  document.getElementById("nextLevel").innerText = "LV" + (level + 1);
+
+  const next = levels[level + 1] ?? levels[level];
+  const prev = levels[level] ?? 0;
+
+  let progress = 0;
+
+  if (next > prev) {
+    progress = ((credit - prev) / (next - prev)) * 100;
+  }
+
+  if (progress < 0) progress = 0;
+  if (progress > 100) progress = 100;
+
+  document.getElementById("bar").style.width = progress + "%";
+}
+
+load();
+
+
+
+
+
+
+
+/* ================= (NO zoom) ================= */
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
+document.addEventListener("selectstart", e => e.preventDefault());
+
+/* ❌ BLOCK ZOOM KEYBOARD (Ctrl + / - / 0) */
+document.addEventListener("keydown", function (e) {
+  if (
+    (e.ctrlKey && e.key === "+") ||
+    (e.ctrlKey && e.key === "-") ||
+    (e.ctrlKey && e.key === "0") ||
+    (e.ctrlKey && e.key === "=")
+  ) {
+    e.preventDefault();
+  }
+});
+
+/* BLOCK PINCH ZOOM (mobile) */
+document.addEventListener("gesturestart", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gesturechange", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gestureend", function (e) {
+  e.preventDefault();
+});
+/* ================= (NO zoom) ================= */
+
+
+</script>
+
+</body>
+</html>

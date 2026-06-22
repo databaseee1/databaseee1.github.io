@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Versi Tigo.app</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins', sans-serif;
+}
+
+body{
+  background:#fff;
+}
+
+/* HEADER */
+.header{
+  background:#fff;
+  padding:15px;
+  text-align:center;
+  font-weight:600;
+  font-size:18px;
+  position:sticky;
+  top:0;
+  z-index:999;
+
+}
+
+/* CONTAINER */
+.container{
+  padding:15px;
+}
+
+/* CARD */
+.card{
+  background:#fff;
+  padding:18px;
+  border-radius:16px;
+  box-shadow:0 6px 18px rgb(0 0 0 / 3%);
+  margin-top:15px;
+}
+
+/* TITLE */
+.title{
+  font-size:16px;
+  font-weight:700;
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:#7b2ff7;
+}
+
+/* CONTENT */
+.content{
+  font-size:13px;
+  color:#333;
+  line-height:1.8;
+  white-space:pre-line;
+}
+
+/* BOX */
+.box{
+  margin-top:10px;
+  padding:12px;
+  background:#f3f0ff;
+  border-left:4px solid #7b2ff7;
+  border-radius:10px;
+  font-size:13px;
+  line-height:1.6;
+}
+
+/* VERSION BADGE */
+.version-box{
+  margin-top:10px;
+  padding:12px;
+  border-radius:12px;
+  background:linear-gradient(135deg, #be45fd, #590066);
+  color:#fff;
+  font-size:13px;
+}
+
+/* FOOTER */
+.app-footer{
+  margin-top:30px;
+  padding:20px 10px;
+  text-align:center;
+  color:#777;
+  font-size:12.5px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  Versi Tigo.app
+</div>
+
+<div class="container">
+
+  <div class="card">
+    <div class="title">
+      <i class="fa-solid fa-code-branch"></i>
+      Informasi Versi Aplikasi
+    </div>
+
+    <div id="content" class="content">
+      Memuat data...
+    </div>
+  </div>
+
+</div>
+
+<footer class="app-footer">
+
+  <div style="margin-bottom:10px;">
+    <div onclick="location.href='Layanan_pelanggan.html'" style="
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      color:orange;
+      font-weight:600;
+      font-size:14px;
+      cursor:pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    ">
+      <img src="customer_service_icon.png" style="width:20px;height:20px;">
+      Layanan Pelanggan
+    </div>
+  </div>
+
+  <div class="footer-text">
+    © 2026 Tigo.app System. All Rights Reserved.
+  </div>
+
+</footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  set,
+  get
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* FIREBASE */
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* LOGIN CHECK */
+const login = JSON.parse(localStorage.getItem("user"));
+if (!login) window.location.href = "login.html";
+
+/* DB KEY */
+const key = "versiAplikasi";
+
+/* DUMMY DATA */
+const dummyText = `
+VERSI APLIKASI Tigo.app SYSTEM
+
+1. VERSI SAAT INI
+Versi aplikasi saat ini adalah v6.1.2 dengan stabilitas sistem yang telah dioptimalkan untuk performa Tigo.app.
+
+2. PEMBARUAN SISTEM
+Sistem akan diperbarui secara berkala setiap 6 bulan sekali untuk meningkatkan keamanan, stabilitas, dan fitur baru.
+
+3. MIGRASI VERSI
+Setiap pembaruan besar akan menyebabkan migrasi dari versi lama ke versi baru secara otomatis oleh sistem.
+
+4. RESET DATA VERSI
+Dalam proses pembaruan besar, beberapa data sistem dapat dilakukan penyesuaian untuk menyesuaikan struktur versi terbaru.
+
+5. KOMPATIBILITAS
+Versi lama mungkin tidak lagi didukung sepenuhnya setelah versi baru dirilis.
+
+6. PENINGKATAN FITUR
+Setiap versi baru akan menghadirkan peningkatan fitur, termasuk sistem referral, gaji, dan dashboard Tigo.app.
+
+7. KEAMANAN SISTEM
+Pembaruan versi bertujuan untuk meningkatkan keamanan akun dan mencegah penyalahgunaan sistem.
+
+8. PENYESUAIAN DATA
+Data tertentu dapat diperbarui atau disesuaikan sesuai kebutuhan sistem tanpa mengurangi hak pengguna.
+
+9. PEMBERITAHUAN UPDATE
+Pengguna akan mendapatkan informasi terkait update versi melalui sistem notifikasi internal.
+
+10. PENUTUP
+Dengan menggunakan sistem ini, pengguna dianggap menyetujui seluruh pembaruan dan perubahan versi yang dilakukan secara berkala.
+`;
+
+/* LOAD */
+async function load(){
+
+  const snap = await get(ref(db, key));
+
+  if(!snap.exists()){
+    await set(ref(db, key), dummyText);
+    document.getElementById("content").innerHTML = format(dummyText);
+  } else {
+    document.getElementById("content").innerHTML = format(snap.val());
+  }
+}
+
+/* FORMAT */
+function format(text){
+  let lines = text.split("\n");
+  let html = "";
+
+  lines.forEach(l => {
+    l = l.trim();
+
+    if(!l){
+      html += "<br>";
+      return;
+    }
+
+    if(l.includes("VERSI")){
+      html += `<div class="version-box"><b>${l}</b></div>`;
+    }
+    else if(/^\d+\./.test(l)){
+      html += `<div style="margin-top:8px;"><b>${l}</b></div>`;
+    }
+    else{
+      html += `<div>${l}</div>`;
+    }
+  });
+
+  return html;
+}
+
+load();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Referral</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family:Poppins,sans-serif;
+  background:#ffffff;
+}
+
+.header{
+  background:#fff;
+  padding:15px;
+  font-weight:600;
+  text-align:center;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.container{
+  padding:12px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.card{
+  background:#fff;
+  padding:12px;
+  border-radius:12px;
+  position:relative;
+  box-shadow:0 3px 10px rgba(0,0,0,.05);
+}
+
+.row{
+  font-size:13px;
+  margin:4px 0;
+}
+
+.name{
+  font-weight:600;
+  font-size:14px;
+}
+
+
+.fa-user:before{
+    color: #8c6161;
+}
+
+
+
+.bonus{
+  color:green;
+  font-weight:600;
+}
+
+/* HOST NAME bottom right */
+.host{
+  position:absolute;
+  bottom:8px;
+  right:10px;
+  font-size:11px;
+  color:#777;
+  background:#fce3ff;
+  padding:2px 6px;
+  border-radius:8px;
+}
+
+.badge{
+  position:absolute;
+  top:8px;
+  right:10px;
+  background:red;
+  color:#fff;
+  font-size:11px;
+  padding:2px 6px;
+  border-radius:10px;
+}
+
+
+
+.menu-btn{
+  position:absolute;
+  top:10px;
+  right:10px;
+}
+
+.popup-menu{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,.4);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+.popup-menu-content{
+  background:#fff;
+  padding:15px;
+  border-radius:10px;
+  width:200px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.popup-menu-content button{
+  padding:10px;
+  border:none;
+  cursor:pointer;
+  border-radius:6px;
+}
+
+.popup-menu-content .danger{
+  background:red;
+  color:#fff;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+  Referral List
+</div>
+
+<div class="container" id="list"></div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  get
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+/* FIREBASE */
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+
+
+
+
+window.referralData = {};
+window.referralHostMap = {};
+
+
+const list = document.getElementById("list");
+
+
+const usersCache = {};
+onValue(ref(db, "referralHistory"), async (snap) => {
+
+  list.innerHTML = "";
+
+  const hosts = snap.val();
+  if (!hosts) return;
+
+  for (const hostId in hosts) {
+
+    const hostData = hosts[hostId];
+
+    // ambil nama host (CACHE SYSTEM)
+    let hostName = "-";
+
+ let hostProfile = "https://via.placeholder.com/20";
+
+if (usersCache["profile_" + hostId]) {
+  hostProfile = usersCache["profile_" + hostId];
+} else {
+  const hostSnap = await get(ref(db, "users2/" + hostId));
+
+  if (hostSnap.exists()) {
+    const data = hostSnap.val();
+
+    hostName = data.nama || data.appName || "-";
+    hostProfile = data.profil || hostProfile;
+
+    usersCache[hostId] = hostName;
+    usersCache["profile_" + hostId] = hostProfile;
+  }
+}
+
+   const sortedRefs = Object.entries(hostData)
+  .sort((a, b) => (b[1].createdAt || 0) - (a[1].createdAt || 0));
+
+for (const [refId, d] of sortedRefs) {
+
+
+      const card = document.createElement("div");
+
+
+window.referralData[refId] = {
+  ...d,
+  refId,
+  hostId
+};
+
+window.referralHostMap[refId] = hostId;
+
+
+
+      card.className = "card";
+
+card.innerHTML = `
+  <div class="name"><i class="fa fa-user"></i> ${d.nama}</div>
+
+  <div class="row">
+    <i class="fa fa-envelope"></i> ${d.email}
+  </div>
+
+  <div class="row">
+  <i class="fa fa-clock"></i>
+  ${formatWaktu(d.createdAt)}
+</div>
+
+<div class="row">
+  <img src="${d.profil || 'https://via.placeholder.com/30'}" style="width:35px;height:35px;border-radius:50%;vertical-align:middle;margin-left:5px;">
+</div>
+
+  <div class="row bonus">
+    <img src="https://i.ibb.co.com/B2092Y8L/credit.png"
+     style="width:16px;height:16px;vertical-align:middle;margin-right:5px;">Rp ${Number(d.bonus || 0).toLocaleString("id-ID")}
+  </div>
+
+${d.readAdmin === false ? `<div class="badge"><i class="fa fa-bolt"></i> NEW</div>` : ""}
+
+<div class="menu-btn" id="menu-${refId}">
+  <i class="fa fa-bars"></i>
+</div>
+
+<div class="host">
+  <img src="${hostProfile}"
+       style="width:18px;height:18px;border-radius:50%;vertical-align:middle;margin-right:5px;">
+  Pemilik Referral: ${hostName}
+</div>
+
+
+`;
+      list.appendChild(card);
+    }
+  }
+});
+
+
+
+
+
+
+let selectedRefId = null;
+let selectedHostId = null;
+
+document.addEventListener("click", (e) => {
+
+  // klik hamburger
+  if (e.target.closest(".menu-btn")) {
+    const id = e.target.closest(".menu-btn").id.replace("menu-", "");
+    selectedRefId = id;
+
+    document.getElementById("popupMenuBox").style.display = "flex";
+  }
+
+  // close
+  if (e.target.id === "popupCloseBtn") {
+    document.getElementById("popupMenuBox").style.display = "none";
+  }
+
+  // DETAIL
+  if (e.target.id === "popupDetailBtn") {
+const data = window.referralData?.[selectedRefId];
+
+if (!data) {
+  alert("Data tidak ditemukan");
+  return;
+}
+
+alert(
+  "Nama: " + data.nama + "\n" +
+  "Email: " + data.email + "\n" +
+  "Bonus: " + data.bonus + "\n" +
+  "Referral ID: " + data.refId
+);
+  }
+
+  // DELETE
+  if (e.target.id === "popupDeleteBtn") {
+
+    const ok = confirm("Yakin mau hapus data referral ini?");
+    if (!ok) return;
+
+    const hostId = window.referralHostMap?.[selectedRefId];
+
+    if (hostId) {
+      import("https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js")
+        .then(({ remove, ref, getDatabase }) => {
+
+          const db = getDatabase();
+
+          remove(ref(db, "referralHistory/" + hostId + "/" + selectedRefId));
+
+        });
+    }
+
+    document.getElementById("popupMenuBox").style.display = "none";
+  }
+});
+
+
+
+function formatWaktu(timestamp) {
+  if (!timestamp) return "-";
+
+  const date = new Date(timestamp);
+
+  const tgl = String(date.getDate()).padStart(2, "0");
+  const bln = String(date.getMonth() + 1).padStart(2, "0");
+  const thn = date.getFullYear();
+
+  const jam = String(date.getHours()).padStart(2, "0");
+  const menit = String(date.getMinutes()).padStart(2, "0");
+
+  return `${tgl}/${bln}/${thn} pukul ${jam}:${menit} WIB`;
+}
+</script>
+
+
+
+
+
+<div id="popupMenuBox" class="popup-menu">
+  <div class="popup-menu-content">
+    <button id="popupDetailBtn">Detail</button>
+    <button id="popupDeleteBtn" class="danger">Hapus</button>
+    <button id="popupCloseBtn">Tutup</button>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Admin Pengunjung Sender</title>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+
+
+body{
+  font-family:Poppins, Arial;
+  background:#f2f2f2;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+.box{
+  background:#fff;
+  padding:20px;
+  border-radius:12px;
+  width:320px;
+  box-shadow:0 5px 20px rgba(0,0,0,.15);
+}
+
+select,input,button{
+  width:93%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:8px;
+  border:1px solid #ddd;
+  font-size:14px;
+}
+
+button{
+  background:#4CAF50;
+  color:#fff;
+  border:none;
+  font-weight:700;
+  cursor:pointer;
+}
+
+button:active{
+  transform:scale(.98);
+}
+
+
+.search-box {
+  position: relative;
+  margin-top: 10px;
+}
+
+.search-box i {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+  <h3>📩 Kirim Pengunjung</h3>
+
+
+<div class="search-box">
+  <i class="fa fa-search"></i>
+  <input id="searchUser" placeholder="Cari user...">
+</div>
+
+  <select id="userSelect">
+    <option>Loading users...</option>
+  </select>
+
+<input id="messageInput" value="Nila Anjasrani mengunjungi saya...">  <input id="imageInput" placeholder="Link foto (opsional)">
+  <button onclick="sendPengunjung()">
+    Kirim
+  </button>
+
+  <p id="status"></p>
+
+</div>
+
+<script type="module">
+
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  get,
+  push,
+  set
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+/* FIREBASE */
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+  storageBucket: "users-96dc5.appspot.com",
+  messagingSenderId: "483322415863",
+  appId: "1:483322415863:web:1397a8f2e808e66ad9e1f2"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+
+
+
+
+
+/* ================= CEK LOGIN ================= */
+
+const adminData = JSON.parse(localStorage.getItem("adminLogin"));
+
+if (!adminData || adminData.role !== "admin") {
+  window.location.replace("Login_admin.html");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* LOAD USERS2 */
+async function loadUsers(){
+
+  const select = document.getElementById("userSelect");
+
+  // 🔥 fallback awal (biar tidak kosong)
+  select.innerHTML = `<option>Loading users...</option>`;
+
+  try {
+
+    const snap = await get(ref(db, "users2"));
+
+    console.log("USERS2:", snap.val());
+
+    select.innerHTML = "";
+
+    if (!snap.exists()) {
+      select.innerHTML = `<option>Tidak ada users</option>`;
+      return;
+    }
+
+    snap.forEach(child => {
+
+      const id = child.key;
+      const data = child.val();
+
+      const option = document.createElement("option");
+      option.value = id;
+      option.textContent = data.nama || id;
+
+      select.appendChild(option);
+
+    });
+
+  } catch (err) {
+    console.log("ERROR LOAD USERS:", err);
+    select.innerHTML = `<option>Error load users</option>`;
+  }
+}
+
+window.sendPengunjung = async function(){
+
+  const userId = document.getElementById("userSelect").value;
+  const message = document.getElementById("messageInput").value;
+  const image = document.getElementById("imageInput").value;
+  const status = document.getElementById("status");
+
+  if(!userId || !message){
+    status.innerText = "❌ pilih user & isi pesan";
+    return;
+  }
+
+  try {
+
+    // 🔥 PUSH (bukan set)
+const newRef = push(
+  ref(db, `fithnerchats/pengunjung/${userId}`)
+);
+
+await set(newRef, {
+  foto: image || "message_see_me_item_icon.png",
+  isiChat: message,
+  time: Date.now(),
+  read: false
+});
+
+    status.innerText = "✅ berhasil dikirim";
+
+  } catch(err){
+    console.log(err);
+    status.innerText = "❌ gagal kirim";
+  }
+
+};
+/* AUTO LOAD */
+loadUsers();
+  
+
+/* ================= OPEN DROPDOWN ON SEARCH ================= */
+document.getElementById("searchUser").addEventListener("focus", function () {
+  const select = document.getElementById("userSelect");
+
+  select.size = select.options.length;
+});
+
+document.getElementById("userSelect").addEventListener("blur", function () {
+  this.size = 1;
+});
+
+
+document.getElementById("searchUser").addEventListener("input", function () {
+
+  const keyword = this.value.toLowerCase();
+  const select = document.getElementById("userSelect");
+
+  Array.from(select.options).forEach(opt => {
+
+    const text = opt.textContent.toLowerCase();
+
+    if (text.includes(keyword)) {
+      opt.style.display = "";
+    } else {
+      opt.style.display = "none";
+    }
+
+  });
+
+});
+
+
+</script>
+
+</body>
+</html>

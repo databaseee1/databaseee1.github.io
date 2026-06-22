@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>My Akun</title>
+
+<style>
+
+
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none !important;
+}
+
+/* hilangkan highlight saat klik/focus */
+button, a, div, span, img {
+  outline: none !important;
+}
+
+
+img {
+
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+
+
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins', sans-serif;
+}
+
+body{
+background:#ffffff;
+padding-bottom:80px;
+font-family:'Poppins', sans-serif;
+}
+
+/* CARD PROFILE */
+.profile-card{
+padding:18px;
+border-radius:18px;
+margin:12px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+    margin-top: 40px;
+
+}
+
+.left{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.avatar{
+width:60px;
+height:60px;
+border-radius:50%;
+background:#ddd;
+overflow:hidden;
+}
+
+.avatar img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.name{
+font-weight:bold;
+}
+
+.info{
+font-size:12px;
+color:#777;
+margin-top:3px;
+}
+
+/* BADGE */
+.badge{
+font-size:11px;
+background:linear-gradient(45deg,#ff4d8d,#7a5cff);
+color:white;
+padding:1px 8px;
+border-radius:20px;
+display:inline-block;
+margin-top:5px;
+}
+
+.edit{
+  position: relative;
+}
+
+.edit img{
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+    cursor: pointer;
+    position: relative;
+    top: -55px;
+}
+
+/* CREDIT CARD */
+.credit-card{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 22px;
+
+  padding: 24px 15px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+  margin: 12px; /* INI YANG BIKIN ADA JARAK KIRI KANAN */
+}
+
+.credit-left{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:20px;
+  font-weight:bold;
+  color:#6c2cff;
+}
+
+.saldo-icon{
+  width:30px;
+  height:30px;
+  object-fit:contain;
+}
+
+
+
+#saldo{
+  font-weight: bold;
+  color: #8d3efa;
+}
+
+
+.credit-btn{
+padding: 12px 15px;
+    border-radius: 50px;
+    background: #8100ff;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+/* MENU */
+.menu{
+  margin:12px;
+  padding:8px 0;
+  display:flex;
+  flex-direction:column;
+  gap:5px; 
+}
+
+.item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 16px;
+  cursor:pointer;
+  margin-bottom:8px; /* jarak ke bawah */
+  border-radius:12px;
+
+}
+
+.item:last-child{
+  margin-bottom:0;
+}
+
+
+
+.left-item{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:14px;
+color:#333;
+}
+
+.icon{
+width:22px;
+height:22px;
+}
+
+/* BOTTOM NAV */
+#bottomNav {
+  position: fixed;
+  bottom: 10px;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 0;
+  z-index: 9999;
+
+}
+
+#bottomNav .nav-item {
+  text-align: center;
+  flex: 1;
+  cursor: pointer;
+  user-select: none;
+}
+
+#bottomNav img {
+  width: 38px;
+}
+
+.nav-item.active .nav-icon {
+  transform: scale(1.1);
+  transition: 0.2s;
+}
+
+/* small text */
+small{
+font-size:11px;
+color:#999;
+}
+
+.country{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #666;
+  padding: 4px 0; 
+}
+
+.country .icon{
+  width: 15px;
+  height: 15px;
+  border-radius: 10px; 
+}
+
+
+   .age{
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 4px;
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      margin-top: 5px;
+    }
+
+
+
+.level-row{
+  display:flex;
+  align-items:center;
+      width: 195%;
+}
+
+.verify{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  background:#e5e5e575;
+  padding:2px 6px;
+  border-radius:6px;
+  font-size:12px;
+  color:#9932ff;
+
+  margin-left:auto; /* INI KUNCI KE UJUNG KANAN */
+}
+
+.verify img{
+  width:18px;
+  height:18px;
+  border-radius:4px;
+}
+
+
+
+#loadingScreen{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:999999;
+}
+
+.spinner{
+  width:24px;
+  height:24px;
+  border:3px solid #eee;
+  border-top:3px solid #8a00ff;
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+  from{transform:rotate(0deg);}
+  to{transform:rotate(360deg);}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- LOADING -->
+
+
+
+
+<!-- PROFILE -->
+<div class="profile-card">
+  <div class="left">
+    <div class="avatar">
+      <img id="foto" src="default_pic_100.png">
+    </div>
+
+    <div>
+      <div class="name" id="nama">-</div>
+<div class="age" style="font-size:14px; color:#444;">
+  <img id="genderIcon" class="icon" alt="Gender"
+       src="im_reward_state_outdate.png"
+       style="width:18px; height:18px;">
+  <span id="umur">0</span>
+</div>
+
+<div class="country">
+  <img src="indonesialogo.png" class="icon" alt="Flag"> Indonesia
+</div>
+
+<div class="level-row">
+  <div class="badge" id="levelBadge">Level 0</div>
+
+  <div style="flex:1"></div>
+
+  <div class="verify">
+    <img id="statusIcon" src="loading2 - Copy.png" alt="Status">
+    <span id="statusVerifikasi">Memuat</span>
+  </div>
+</div>
+</div>
+  </div>
+
+  <div class="edit">
+  <img src="assets/images/edit_profile_icon.png"
+     alt="edit"
+     style="cursor:pointer;"
+     onclick="window.location.href='edit_my_data.html'">
+
+</div>
+</div>
+
+<!-- CREDIT -->
+<div class="credit-card">
+<div class="credit-left">
+  <img src="assets/images/credit.png" class="saldo-icon">
+  <span id="saldo">0</span>
+</div>
+<div class="credit-btn" onclick="window.location.href='My_Credits.html'">
+  Credits
+</div>
+</div>
+
+<!-- MENU -->
+<div class="menu">
+
+<div class="item" onclick="window.location.href='token_saya.html'">
+  <div class="left-item">
+    <img class="icon" src="assets/images/rokensaya.png">
+    Token Saya
+  </div>
+
+<div style="display:flex;align-items:center;gap:6px;">
+  <img src="token_wrap.png" style="width:16px;height:16px;">
+
+  <span id="coinValue">0</span>
+
+  <img src="right_arrow_gray.png" style="width:16px;height:16px;">
+</div>
+</div>
+
+<div class="item" onclick="window.location.href='setelan_obrolan.html'">
+  <div class="left-item">
+    <img class="icon" src="assets/images/setelenobrolan.png">
+    Setelan Obrolan
+  </div>
+  <img src="right_arrow_gray.png" style="width:16px;height:16px;">
+</div>
+
+<div class="item" onclick="window.location.href='level_saya.html'">
+  <div class="left-item">
+    <img class="icon" src="assets/images/levelsaya.png">
+    Level Saya
+  </div>
+  <img src="right_arrow_gray.png" style="width:16px;height:16px;">
+</div>
+
+<div class="item" onclick="window.location.href='rating_saya.html'">
+  <div class="left-item">
+    <img class="icon" src="assets/images/ratingsaya.png">
+    Rating Saya
+  </div>
+  <img src="right_arrow_gray.png" style="width:16px;height:16px;">
+</div>
+
+<div class="item" onclick="window.location.href='My_Credits.html'">
+  <div class="left-item">
+    <img class="icon" src="assets/images/menjadivip.png">
+    Hasil Agency
+  </div>
+  <img src="right_arrow_gray.png" style="width:16px;height:16px;">
+</div>
+
+<div class="item" onclick="window.location.href='undang_vip.html'">
+  <div class="left-item">
+    <img class="icon" src="assets/images/undang.png">
+    Undang Untuk VIP
+  </div>
+  <img src="right_arrow_gray.png" style="width:16px;height:16px;">
+</div>
+
+<div class="item" onclick="window.location.href='setelan_agency.html'">
+  <div class="left-item">
+    <img class="icon" src="assets/images/setelanaplikasi.png">
+    Setelan Agency
+  </div>
+  <img src="right_arrow_gray.png" style="width:16px;height:16px;">
+</div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+<div id="bottomNav">
+
+  <div class="nav-item" onclick="goNav(this,'home.html','home')">
+    <img class="nav-icon"
+         src="destiny_icon_normal.png"
+         data-default="destiny_icon_normal.png"
+         data-active="destiny_icon_selected.png">
+  </div>
+
+  <div class="nav-item" onclick="goNav(this,'dunia.html','dunia')">
+    <img class="nav-icon"
+         src="match_icon_normal.png"
+         data-default="match_icon_normal.png"
+         data-active="match_icon_selected.png">
+  </div>
+
+  <div class="nav-item" onclick="goNav(this,'inbox.html','inbox')">
+    <img class="nav-icon"
+         src="msg_icon_normal.png"
+         data-default="msg_icon_normal.png"
+         data-active="msg_icon_selected.png"
+         style="width:38px;">
+  </div>
+
+  <div class="nav-item" onclick="goNav(this,'my_akun.html','saya')">
+    <img class="nav-icon"
+         src="mine_icon_normal.png"
+         data-default="mine_icon_normal.png"
+         data-active="mine_icon_selected.png">
+  </div>
+
+</div>
+
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  get,
+  update
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* ================= FIREBASE ================= */
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* ================= SESSION ================= */
+const loginRaw = localStorage.getItem("user");
+
+if (!loginRaw || loginRaw === "null") {
+  window.location.replace("login.html");
+}
+
+const login = JSON.parse(loginRaw);
+
+if (!login?.userId) {
+  localStorage.clear();
+  sessionStorage.clear();
+  window.location.replace("login.html");
+}
+
+
+
+
+
+
+async function checkUserStatus() {
+  try {
+
+    const snap = await get(ref(db, "Statusakun_host/" + login.userId));
+
+    if (!snap.exists()) return;
+
+    const data = snap.val();
+    const status = data.status;
+
+    if (status === "banned" || status === "suspend") {
+
+      // hapus session
+      localStorage.removeItem("user");
+      sessionStorage.clear();
+
+      // redirect paksa
+      window.location.replace("status_akun.html");
+    }
+
+  } catch (err) {
+    console.log("status check error:", err);
+  }
+}
+
+// jalankan sekali saat halaman dibuka
+checkUserStatus();
+
+// OPTIONAL 🔥 auto cek tiap 5 detik (biar realtime)
+setInterval(checkUserStatus, 5000);
+
+
+
+
+
+
+
+
+
+const coinSpan = document.querySelector("#coinValue");
+
+async function loadCoin() {
+
+  const snap = await get(
+    ref(db, `users2/${login.userId}`)
+  );
+
+  if (snap.exists()) {
+    const data = snap.val();
+
+    const coin = data.coin || 0;
+
+    if (coinSpan) {
+      coinSpan.textContent = coin.toLocaleString("id-ID");
+    }
+  } else {
+    if (coinSpan) {
+      coinSpan.textContent = "0";
+    }
+  }
+}
+
+loadCoin();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function updateLastActive(page = "My_akun") {
+  update(ref(db, "users2/" + login.userId), {
+    lastActive: Date.now(),
+    currentPage: page
+  });
+}
+setInterval(() => {
+  updateLastActive();
+}, 60000); // 1 menit
+
+
+
+
+["click", "touchstart", "keydown"].forEach(evt => {
+  document.addEventListener(evt, () => {
+    updateLastActive();
+  }, { passive: true });
+});
+
+updateLastActive();
+updateLastActive("My_akun");
+
+
+
+
+
+
+
+
+
+
+
+/* ================= SAFE SET ================= */
+function safeSet(id, value){
+  const el = document.getElementById(id);
+  if (el) el.innerText = value ?? "-";
+}
+
+function setImg(id, src){
+  const el = document.getElementById(id);
+  if (el) el.src = src;
+}
+
+/* ================= RESET ================= */
+safeSet("nama", "");
+safeSet("email", "-");
+safeSet("wa", "-");
+safeSet("saldo", "0");
+safeSet("bank", "-");
+safeSet("rek", "-");
+safeSet("namarek", "-");
+safeSet("levelBadge", "Level");
+
+/* ================= LOAD USER (FIX TOTAL) ================= */
+async function loadUser() {
+  try {
+
+    const snap = await get(ref(db, "users2"));
+    if (!snap.exists()) return;
+
+    const userId = login.userId;
+
+    let foundUser = null;
+
+    /* 🔥 langsung cari pakai key (FAST + NO BUG) */
+    snap.forEach((childSnap) => {
+      if (childSnap.key === userId) {
+        foundUser = childSnap.val();
+      }
+    });
+
+    if (!foundUser) return;
+
+    /* ================= FILL DATA ================= */
+    const setText = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val ?? "-";
+    };
+
+    setText("nama", foundUser.nama);
+    setText("email", foundUser.email);
+    setText("wa", foundUser.wa);
+    setText("umur", foundUser.umur);
+    setText("bank", foundUser.bank);
+    setText("rek", foundUser.noRek);
+    setText("namarek", foundUser.namaRek);
+     setText("levelBadge", foundUser.level || "Level 1");
+
+
+
+
+
+const CREDIT_RATE = 171.1;
+
+function formatSaldo(saldoRupiah){
+
+  saldoRupiah = Number(saldoRupiah || 0);
+
+  // 🔥 jika sudah 1 juta → M
+  if(saldoRupiah >= 1000000){
+
+    const juta = saldoRupiah / 1000000;
+
+    return Number.isInteger(juta)
+      ? juta + "M"
+      : juta.toFixed(1) + "M";
+  }
+
+  // 🔥 jika masih kecil → credits (DESIMAL)
+  const credits = saldoRupiah / CREDIT_RATE;
+
+  return credits.toFixed(1);
+}
+setText(
+  "saldo",
+  formatSaldo(foundUser.saldo)
+);
+
+
+
+   
+
+    /* ================= FOTO ================= */
+    const foto = document.getElementById("foto");
+    if (foto) {
+      foto.src = foundUser.profil || "default_pic_100.png";
+    }
+
+    /* ================= GENDER ================= */
+    const genderIcon = document.getElementById("genderIcon");
+    if (genderIcon && foundUser.jk) {
+      genderIcon.src = foundUser.jk.toLowerCase().includes("laki")
+        ? "assets/images/male_icon_new_3.png"
+        : "assets/images/female_icon_new_3.png";
+    }
+
+    /* ================= STATUS ================= */
+    const icon = document.getElementById("statusIcon");
+    const text = document.getElementById("statusVerifikasi");
+
+    if (icon && text) {
+      const verified = foundUser.verified === true;
+
+      icon.src = verified
+        ? "verifikasi.png"
+        : "profile_verify_icon.png";
+
+      text.innerText = verified ? "Diverifikasi" : "Unverified";
+
+      if (!verified) text.style.color = "rgb(248 143 5)";
+    }
+
+  } catch (err) {
+    console.log("Error load user:", err);
+  }
+}
+
+loadUser();
+
+
+
+document.getElementById("statusVerifikasi").onclick = function () {
+  window.location.href = "Verifikasi.html";
+};
+
+
+
+/* ================= NAV ================= */
+window.goNav = function (el, url) {
+  document.querySelectorAll("#bottomNav .nav-item")
+    .forEach(i => i.classList.remove("active"));
+
+  el.classList.add("active");
+
+  setTimeout(() => {
+    window.location.href = url;
+  }, 150);
+};
+
+/* ================= AUTO NAV ================= */
+document.addEventListener("DOMContentLoaded", () => {
+
+  const items = document.querySelectorAll("#bottomNav .nav-item");
+
+  let mine = null;
+
+  items.forEach(item => {
+    if (item.getAttribute("onclick")?.includes("my_akun.html")) {
+      mine = item;
+    }
+  });
+
+  if (!mine) mine = items[items.length - 1];
+
+  if (mine) {
+    mine.classList.add("active");
+
+    const img = mine.querySelector(".nav-icon");
+    if (img) img.src = img.dataset.active;
+  }
+});
+
+
+
+
+
+
+/* ================= (NO zoom) ================= */
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
+document.addEventListener("selectstart", e => e.preventDefault());
+
+/* ❌ BLOCK ZOOM KEYBOARD (Ctrl + / - / 0) */
+document.addEventListener("keydown", function (e) {
+  if (
+    (e.ctrlKey && e.key === "+") ||
+    (e.ctrlKey && e.key === "-") ||
+    (e.ctrlKey && e.key === "0") ||
+    (e.ctrlKey && e.key === "=")
+  ) {
+    e.preventDefault();
+  }
+});
+
+/* BLOCK PINCH ZOOM (mobile) */
+document.addEventListener("gesturestart", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gesturechange", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gestureend", function (e) {
+  e.preventDefault();
+});
+/* ================= (NO zoom) ================= */
+
+
+</script>
+
+</body>
+</html>

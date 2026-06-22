@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+
+  <style>
+    body{
+      font-family:Arial;
+      background:#f5f5f5;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      height:100vh;
+    }
+
+    .box{
+      width:300px;
+      padding:20px;
+      background:#fff;
+      border-radius:12px;
+      box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    input{
+      width:100%;
+      padding:10px;
+      margin:8px 0;
+      border:1px solid #ddd;
+      border-radius:8px;
+      outline:none;
+    }
+
+    button{
+      width:100%;
+      padding:10px;
+      background:#007bff;
+      color:#fff;
+      border:none;
+      border-radius:8px;
+      cursor:pointer;
+    }
+
+    button:hover{
+      background:#0056b3;
+    }
+
+    .err{
+      color:red;
+      font-size:13px;
+      margin-top:5px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="box">
+  <h3>Login</h3>
+
+  <input type="text" id="emailInput" placeholder="Email">
+  <input type="password" id="passwordInput" placeholder="Password (WA)">
+
+  <button onclick="login()">Masuk</button>
+
+  <div class="err" id="err"></div>
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain:"users-96dc5.firebaseapp.com",
+  databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:"users-96dc5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* ================= NORMALISASI ================= */
+function normalize(str){
+  return String(str || "")
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "_");
+}
+
+function normalizeWA(wa){
+  if(!wa) return "";
+  wa = String(wa).trim().replace("+", "");
+
+  if(wa.startsWith("0")){
+    wa = "62" + wa.slice(1);
+  }
+
+  return wa;
+}
+
+/* ================= LOGIN ================= */
+window.login = async function () {
+
+  const emailInput = document.getElementById("emailInput").value.trim().toLowerCase();
+  const passInput = document.getElementById("passwordInput").value.trim();
+  const err = document.getElementById("err");
+
+  err.innerText = "";
+
+  if (!emailInput || !passInput) {
+    err.innerText = "Isi email & password";
+    return;
+  }
+
+  try {
+
+    const snap = await get(ref(db, "users1"));
+
+    let foundUser = null;
+
+    snap.forEach(child => {
+
+      const d = child.val();
+
+      const dbEmail = normalize(d.email);
+      const dbWa = normalizeWA(d.wa);
+      const inputWa = normalizeWA(passInput);
+
+      /* ================= RULE LOGIN =================
+         EMAIL HARUS SAMA + WA HARUS SAMA
+      */
+      if (dbEmail === normalize(emailInput) && dbWa === inputWa) {
+
+        foundUser = {
+          uid: d.uid || d.userId || child.key,
+          userId: d.userId || d.uid || child.key,
+          email: d.email,
+          wa: d.wa,
+
+          // semua data users1 disimpan full
+          ...d
+        };
+
+      }
+
+    });
+
+    if (foundUser) {
+
+      /* ================= SIMPAN SESSION ================= */
+      localStorage.setItem("user", JSON.stringify(foundUser));
+
+      window.location.href = "users_host.html";
+
+    } else {
+      err.innerText = "Email atau WA salah";
+    }
+
+  } catch (e) {
+    console.log(e);
+    err.innerText = "Server error";
+  }
+
+};
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <title>CS Servant</title>
+
+  <style>
+body{
+  margin:0;
+  font-family:Arial;
+  display:flex;
+  height:100vh;
+  overflow:hidden;
+}
+
+    /* LEFT PANEL */
+    #userList {
+      width: 30%;
+      border-right: 1px solid #ddd;
+      overflow-y: auto;
+    }
+
+    .user-item {
+      display: flex;
+      padding: 10px;
+      cursor: pointer;
+      border-bottom: 1px solid #eee;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-item:hover {
+      background: #f5f5f5;
+    }
+
+    .user-item img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    /* RIGHT PANEL */
+#chatBox{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  height:100vh;
+  position: relative;
+}
+
+    #messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px;
+      background: #fafafa;
+    }
+
+    .msg {
+      padding: 8px 12px;
+      margin: 5px 0;
+      border-radius: 10px;
+      max-width: 60%;
+    }
+
+    .me {
+      background: #d1ffd6;
+      margin-left: auto;
+    }
+
+    .them {
+      background: #fff;
+    }
+
+    #inputBox {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #ddd;
+      margin-bottom: 40px;
+    }
+
+    #inputBox input {
+      flex: 1;
+      padding: 10px;
+    }
+
+    #inputBox button {
+      padding: 10px 15px;
+    }
+
+
+
+
+    #userList{
+  width:320px;
+  min-width:370px;
+  background:#fff;
+  border-right:1px solid #e5e7eb;
+  overflow-y:auto;
+  transition:.25s;
+      margin-top: 70px;
+}
+
+#userList.hidden{
+  width:0;
+  min-width:0;
+  overflow:hidden;
+  border-right:none;
+}
+
+.sidebar-header{
+  height:60px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 16px;
+  border-bottom:1px solid #eee;
+  position:sticky;
+  top:0;
+  background:#fff;
+  z-index:5;
+}
+
+.sidebar-title{
+  font-size:16px;
+  font-weight:700;
+}
+
+.close-sidebar{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  font-size:18px;
+}
+
+.close-sidebar:hover{
+  background:#f3f4f6;
+}
+
+#mobileOpenBtn{
+  position:fixed;
+  left:10px;
+  top:10px;
+  width:40px;
+  height:40px;
+  border-radius:10px;
+  background:#7c3aed;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  z-index:999;
+  font-size:20px;
+}
+
+.user-item{
+  display:flex;
+  gap:12px;
+  padding:12px;
+  border-bottom:1px solid #f1f1f1;
+}
+
+.user-item{
+  transition:.2s;
+}
+.user-item:hover{
+  background:#f3f4f6;
+}
+
+.user-item img{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+.msg{
+  padding:10px 14px;
+  border-radius:14px;
+  margin:8px 0;
+  max-width:70%;
+  word-break:break-word;
+}
+
+.me{
+  background:#7c3aed;
+  color:white;
+  margin-left:auto;
+}
+
+.them{
+  background:white;
+  border:1px solid #eee;
+}
+
+#messages{
+  flex:1;
+  overflow-y:auto;
+  background:#f7f8fc;
+}
+
+
+#bottomBar{
+  background:#fff;
+  border-top:1px solid #eee;
+  display:flex;
+  flex-direction:column;
+}
+
+#inputBox{
+  display:flex;
+  gap:10px;
+  padding:10px;
+}
+
+#inputBox input{
+  flex:1;
+  min-width:0;
+  border-radius: 10px;
+}
+
+#inputBox button{
+  border:none;
+  background:#7c3aed;
+  color:white;
+  border-radius:10px;
+  padding:0 20px;
+  cursor:pointer;
+}
+
+
+
+#chatHeader{
+  height:60px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  font-size:16px;
+  background:#fff;
+  border-bottom:1px solid #e5e5e5;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+
+#actionBar{
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  padding:6px 0;
+  margin-bottom: 70px;
+  position: relative;
+}
+@media (max-width:768px){
+
+  #userList{
+    width:100%;
+    position:absolute;
+    z-index:10;
+  }
+
+  #actionBar i{
+    width:36px;
+    height:36px;
+    font-size:16px;
+  }
+
+}
+
+#actionBar i:hover{
+  background:#f3f4f6;
+}
+
+
+
+
+#templateModal{
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.4);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index: 9999999;
+}
+
+.modalBox{
+  background:white;
+  padding:20px;
+  border-radius:10px;
+  width:300px;
+}
+
+.modalBox input,
+.modalBox textarea{
+  width: 100%;
+  margin: 6px 0;
+  padding: 10px;
+  box-sizing: border-box; 
+  display: block;
+  height: 42px; 
+}
+
+
+.modalBox textarea{
+  width: 100%;
+  margin: 6px 0;
+  padding: 10px;
+  box-sizing: border-box;
+
+  min-height: 220px; 
+  resize: vertical;  
+}
+
+
+#suggestBox{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 380px;
+  background: white;
+  border-top: 1px solid #eee;
+  border-bottom: 8px solid #eee;
+  z-index: 9999;
+
+  max-height: 320px;   /* 🔥 batas 8 item */
+  overflow-y: auto;    /* 🔥 bisa scroll */
+}
+
+
+.suggest-item{
+  padding: 12px;
+  margin: 6px 10px;   /* 👈 jarak antar item */
+  background: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid #f1f1f1;
+}
+
+
+
+
+
+
+
+
+
+
+/* ===== FIX IMAGE MESSAGE ===== */
+.msg img{
+  display:block;
+  width:100%;
+  max-width:180px;
+  border-radius:12px;
+}
+
+/* penting: supaya empty text + foto tetap terlihat */
+.msg:empty{
+  display:block;
+}
+
+/* override agar image-only message tetap punya space */
+.msg.them,
+.msg.me{
+  min-height: 20px;
+}
+
+
+
+
+#moreMenuBox{
+  position: absolute;
+  right: 0px;
+  bottom: 150px; /* selalu di atas actionBar */
+
+  width: 170px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+
+  display: none;
+  flex-direction: column;
+  z-index: 99999;
+}
+
+.more-item{
+  padding: 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.more-item:hover{
+  background: #f2f2f2;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#timeModal{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999999;
+}
+
+.timeBox{
+  width: 90%;
+  max-width: 420px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px;
+}
+
+.timeBox input,
+.timeBox textarea{
+  width: 100%;
+  margin: 6px 0;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.timeBox textarea{
+  min-height: 180px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* overlay */
+#ab-overlay_918273,
+.ab-overlay_918273{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+/* box */
+.ab-box_918273{
+  width: 260px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  font-family: sans-serif;
+}
+
+/* title */
+.ab-title_918273{
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+/* item */
+.ab-item_918273{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  margin-bottom: 15px;
+}
+
+/* button */
+.ab-actions_918273{
+  text-align: center;
+}
+
+.ab-actions_918273 button{
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  background: #111;
+  color: #fff;
+  font-size: 12px;
+}
+  </style>
+</head>
+
+<body>
+
+
+
+
+
+    <div id="mobileOpenBtn" onclick="toggleSidebar()">
+  ☰
+</div>
+
+
+
+<div id="userList">
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-title">
+      Customer Service
+    </div>
+
+    <div class="close-sidebar"
+         onclick="toggleSidebar()">
+      ✕
+    </div>
+
+  </div>
+
+</div>
+
+<!-- RIGHT -->
+<div id="chatBox">
+
+  <div id="chatHeader">
+    Pilih pengguna
+  </div>
+
+  <div id="messages"></div>
+
+  <div id="inputBox">
+    <input id="msgInput" placeholder="Reply..." />
+    <button onclick="sendReply()">Send</button>
+  </div>
+
+
+
+  <div id="actionBar">
+  <i class="fa fa-image" onclick="pickImage()"></i>
+   <i class="fa fa-plus" onclick="openTemplateForm()"></i>
+  <i class="fa fa-microphone" onclick="voiceMsg()"></i>
+ <i class="fa fa-ellipsis-h" onclick="moreMenu(event)"></i>
+
+  <div id="moreMenuBox">
+<div class="more-item" onclick="openTimeModal()">Atur Waktu</div>
+<div class="more-item" onclick="openAdminBusyPopup()">Jam kerja</div>
+    <div class="more-item">Demo 2</div>
+    <div class="more-item">Demo 3</div>
+    <div class="more-item">Demo 4</div>
+  </div>
+
+</div>
+
+
+<div id="templateModal" style="display:none;">
+  <div class="modalBox">
+
+    <h3>Tambah Pesan Auto</h3>
+
+    <input id="tplCode" placeholder="code contoh /1">
+    <textarea id="tplText" placeholder="isi pesan"></textarea>
+
+    <button onclick="saveTemplate()">Simpan</button>
+    <button onclick="closeTemplateForm()">Tutup</button>
+
+
+
+
+
+
+  </div>
+</div>
+    <div id="suggestBox" style="display:none;"></div>
+
+
+</div>
+
+
+
+
+
+
+
+<div id="timeModal" style="display:none;">
+  <div class="timeBox">
+
+    <h3>Atur Waktu Antrian</h3>
+
+    <label>Waktu tunggu (menit)</label>
+    <input id="waitTime" type="number" value="4">
+
+    <label>Pesan</label>
+    <textarea id="waitMsg">
+Terhubung dengan Layanan Kemanusiaan...
+
+Permintaan Anda untuk layanan manusia sedang dalam antrian.
+
+Perkiraan waktu {{time}} menit, mohon bersabar~
+    </textarea>
+
+    <button onclick="saveWaitSetting()">Simpan</button>
+    <button onclick="closeTimeModal()">Tutup</button>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- FIREBASE -->
+<script type="module">
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  onValue,
+  push,
+  set,
+  get,
+  update
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* ================= FIREBASE CONFIG ================= */
+/* FIREBASE */
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+
+/* ================= CEK LOGIN ================= */
+
+const adminData = JSON.parse(localStorage.getItem("adminLogin"));
+
+if (!adminData || adminData.role !== "admin") {
+  window.location.replace("Login_admin.html");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* ================= GLOBAL ================= */
+let selectedUser = null;
+
+/* ================= LOAD USERS (cs_inbox) ================= */
+const userList = document.getElementById("userList");
+
+onValue(ref(db, "cs_inbox"), (snap) => {
+
+  let users = [];
+
+  snap.forEach(child => {
+    users.push({
+      id: child.key,
+      ...child.val()
+    });
+  });
+  // 🔥 SORT: yang terbaru / belum chat di atas
+  users.sort((a, b) => {
+    return (b.lastTime || 0) - (a.lastTime || 0);
+  });
+
+  userList.innerHTML = "";
+
+  users.forEach(d => {
+
+    const div = document.createElement("div");
+    div.className = "user-item";
+
+    div.onclick = () =>
+      openChat(d.id, d.nama || "Pengguna");
+
+    div.innerHTML = `
+      <img src="${d.profil || 'https://via.placeholder.com/40'}">
+      <div>
+        <div><b>${d.nama || "Pengguna"}</b></div>
+        <div style="font-size:12px;color:#666;">
+          ${d.lastMessage || ""}
+        </div>
+      </div>
+    `;
+
+    userList.appendChild(div);
+  });
+
+});
+
+/* ================= OPEN CHAT ================= */
+function openChat(userId, nama) {
+
+  document.getElementById(
+    "chatHeader"
+  ).textContent = nama;
+
+if(window.innerWidth < 900){
+  document
+    .getElementById("userList")
+    .classList.add("hidden");
+}
+
+
+  selectedUser = userId;
+const header =
+  document.getElementById("chatHeader");
+  const messagesBox = document.getElementById("messages");
+  messagesBox.innerHTML = "";
+
+  const chatRef = ref(db, `fithnerchats/customer_service/${userId}`);
+
+onValue(chatRef, (snap) => {
+
+  const messagesBox = document.getElementById("messages");
+  messagesBox.innerHTML = "";
+
+  const messages = [];
+
+snap.forEach(child => {
+  const m = child.val();
+
+  // 🔥 ONLY VALID CHAT MESSAGE
+  if (!m.time) return;
+
+  messages.push(m);
+});
+
+  messages.sort((a,b)=> (a.time||0)-(b.time||0));
+
+  messages.forEach(m => {
+
+    const div = document.createElement("div");
+    div.className = "msg " + (m.sender === "admin" ? "me" : "them");
+
+    div.innerHTML = `
+      ${m.foto ? `
+        <img src="${m.foto}"
+          style="
+            width:180px;
+            max-width:100%;
+            border-radius:12px;
+            display:block;
+            margin-bottom:6px;
+          ">
+      ` : ""}
+
+      ${m.text ? `<div>${m.text}</div>` : ""}
+    `;
+
+    messagesBox.appendChild(div);
+  });
+
+  messagesBox.scrollTop = messagesBox.scrollHeight;
+});
+
+}
+
+
+
+
+
+
+
+
+
+
+
+/* ================= SEND REPLY ================= */
+window.sendReply = async function() {
+
+  const input = document.getElementById("msgInput");
+  const text = input.value.trim();
+
+  if (!text || !selectedUser) return;
+
+  const msgRef = push(
+    ref(db, `fithnerchats/customer_service/${selectedUser}`)
+  );
+
+  await set(msgRef, {
+    text: text,
+    sender: "admin",
+    time: Date.now(),
+    read: false
+  });
+
+  // UPDATE INBOX USER
+  await update(
+    ref(db, `cs_inbox/${selectedUser}`),
+    {
+      lastMessage: text,
+      lastTime: Date.now(),
+      unread: true
+    }
+  );
+
+  input.value = "";
+};
+
+
+
+
+
+
+const CLOUD_NAME = "dowoq4a0i";
+const UPLOAD_PRESET = "fotousershost";
+
+
+window.pickImage = function(){
+
+  const input = document.createElement("input");
+
+  input.type = "file";
+  input.accept = "image/*";
+
+  input.onchange = async(e)=>{
+
+    const file = e.target.files[0];
+
+    if(!file) return;
+
+    const formData = new FormData();
+
+    formData.append("file",file);
+    formData.append("upload_preset",UPLOAD_PRESET);
+
+
+    const upload = await fetch(
+      `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+      {
+        method:"POST",
+        body:formData
+      }
+    );
+
+
+    const data = await upload.json();
+
+
+    if(!data.secure_url){
+      alert("Upload gagal");
+      return;
+    }
+
+
+    const login = JSON.parse(
+      localStorage.getItem("user")
+    );
+
+
+    const userId = login.userId;
+
+
+    const snap = await get(
+      ref(db,"Users/"+userId)
+    );
+
+
+    const userData = snap.exists()
+      ? snap.val()
+      : {};
+
+
+await set(
+  push(ref(db, `fithnerchats/customer_service/${selectedUser}`)),
+  {
+    text:"",
+    foto:data.secure_url,
+    sender:"admin",
+    time:Date.now(),
+    read:false
+  }
+);
+
+
+await update(
+  ref(db, `cs_inbox/${selectedUser}`),
+  {
+    lastMessage: "📷 Foto",
+    lastTime: Date.now(),
+    unread: true
+  }
+);
+
+
+
+
+    console.log("gambar terkirim");
+  };
+  input.click();
+
+}
+
+
+
+
+
+
+
+
+
+function renderSuggestions(list){
+  const box = document.getElementById("suggestBox");
+  if (!box) return;
+
+  box.style.display = "block";
+
+  box.innerHTML = list.map(t => `
+    <div class="suggest-item" data-text="${t.text}">
+      <b>${t.code}</b> - ${t.text
+        .replace(/\n/g, " ")
+        .slice(0, 60)}
+    </div>
+  `).join("");
+
+  // klik item
+  box.querySelectorAll(".suggest-item").forEach(el => {
+    el.onclick = function (e) {
+      e.stopPropagation();
+      applyTemplate(el.dataset.text);
+    };
+  });
+}
+
+function hideSuggestion(){
+  const box = document.getElementById("suggestBox");
+  if (box) box.style.display = "none";
+}
+
+window.applyTemplate = function(text){
+  document.getElementById("msgInput").value = text;
+  hideSuggestion();
+};
+
+
+/* ================= CLICK OUTSIDE ================= */
+document.addEventListener("click", function (e) {
+  const box = document.getElementById("suggestBox");
+  const input = document.getElementById("msgInput");
+
+  if (!box || !input) return;
+
+  if (box.contains(e.target) || input.contains(e.target)) return;
+
+  hideSuggestion();
+});
+
+
+/* ================= FIREBASE ================= */
+let templates = [];
+
+onValue(ref(db, "templates"), (snap) => {
+  templates = [];
+
+  snap.forEach(child => {
+    templates.push({
+      id: child.key,
+      ...child.val()
+    });
+  });
+
+  const input = document.getElementById("msgInput");
+
+  input.oninput = () => {
+  const val = input.value.trim().toLowerCase();
+
+  // ======================
+  // 1. "/" → semua list
+  // ======================
+  if (val === "/") {
+    renderSuggestions(templates);
+    return;
+  }
+
+  // ======================
+  // 2. "1/" atau "2/" → match code EXACT
+  // ======================
+  if (val.endsWith("/")) {
+    const filtered = templates.filter(t =>
+      t.code.toLowerCase() === val
+    );
+
+    if (filtered.length > 0) {
+      renderSuggestions(filtered);
+    } else {
+      hideSuggestion();
+    }
+    return;
+  }
+
+  // ======================
+  // 3. selain itu hide
+  // ======================
+  hideSuggestion();
+};
+});
+
+
+
+
+window.saveTemplate = async function() {
+  const code = document.getElementById("tplCode").value;
+  const text = document.getElementById("tplText").value;
+
+  const id = Date.now();
+
+  await set(ref(db, `templates/${id}`), {
+    code,
+    text
+  });
+
+  closeTemplateForm();
+};
+
+window.openTemplateForm = function(){
+  document.getElementById("templateModal").style.display = "flex";
+}
+
+window.closeTemplateForm = function(){
+  document.getElementById("templateModal").style.display = "none";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+window.toggleSidebar = function() {
+
+  const sidebar =
+    document.getElementById("userList");
+
+  sidebar.classList.toggle("hidden");
+
+};
+
+
+
+
+
+
+
+
+
+window.moreMenu = function(event){
+
+  const menu = document.getElementById("moreMenuBox");
+
+  if(menu.style.display === "flex"){
+    menu.style.display = "none";
+    return;
+  }
+
+  menu.style.display = "flex";
+};
+
+
+
+document.addEventListener("click", function(e){
+
+  const menu = document.getElementById("moreMenuBox");
+  const icon = document.querySelector(".fa-ellipsis-h");
+
+  const clickedIcon = icon && icon.contains(e.target);
+  const clickedMenu = menu && menu.contains(e.target);
+
+  if (!clickedIcon && !clickedMenu) {
+    menu.style.display = "none";
+  }
+
+});
+
+
+
+
+
+window.openTimeModal = function(){
+  document.getElementById("timeModal").style.display = "flex";
+};
+
+window.closeTimeModal = function(){
+  document.getElementById("timeModal").style.display = "none";
+};
+
+window.saveWaitSetting = async function(){
+
+  const time = document.getElementById("waitTime").value;
+  let msg = document.getElementById("waitMsg").value;
+
+  msg = msg.replace("{{time}}", time);
+
+  if(!selectedUser) return alert("Pilih user dulu");
+
+  // 🔥 SIMPAN KE CHAT UTAMA USER (BIAR TIDAK HILANG SAAT RELOAD)
+  const refMsg = push(
+    ref(db, `fithnerchats/customer_service/${selectedUser}`)
+  );
+
+  await set(refMsg, {
+    text: msg,
+    sender: "system",
+    type: "queue_notice",
+    time: Date.now(),
+    read: false
+  });
+
+  closeTimeModal();
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================
+   ADMIN BUSY REF (WAJIB DI ATAS)
+========================= */
+const adminBusyRef = ref(db, "system/admin_status");
+
+
+/* =========================
+   AUTO LOAD STATUS (BIAR CEKLIS SAAT RELOAD)
+========================= */
+onValue(adminBusyRef, (snap) => {
+
+  const data = snap.val() || {};
+  const checkbox = document.getElementById("adminBusyCheck_918273");
+
+  if (!checkbox) return;
+
+  checkbox.checked = data.busy === true;
+
+});
+
+
+/* =========================
+   OPEN POPUP
+========================= */
+window.openAdminBusyPopup = function () {
+  document.getElementById("adminBusyModal_918273").style.display = "flex";
+};
+
+
+/* =========================
+   CLOSE POPUP
+========================= */
+window.closeAdminBusyPopup = function () {
+  document.getElementById("adminBusyModal_918273").style.display = "none";
+};
+
+
+/* =========================
+   BUTTON OPEN POPUP
+========================= */
+
+
+/* =========================
+   CHANGE STATUS (CHECKBOX)
+========================= */
+document.getElementById("adminBusyCheck_918273")
+.addEventListener("change", async (e) => {
+
+  const isBusy = e.target.checked;
+
+  await set(adminBusyRef, {
+    busy: isBusy,
+    mode: isBusy ? "busy" : "active",
+    updatedAt: Date.now()
+  });
+
+});
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="adminBusyModal_918273" class="ab-overlay_918273">
+
+  <div class="ab-box_918273">
+
+    <div class="ab-title_918273">
+      Status Admin
+    </div>
+
+    <label class="ab-item_918273">
+      <input type="checkbox" id="adminBusyCheck_918273">
+      <span>Admin Sibuk</span>
+    </label>
+
+    <div class="ab-actions_918273">
+      <button onclick="closeAdminBusyPopup()">Tutup</button>
+    </div>
+
+  </div>
+
+</div>
+</body>
+</html>

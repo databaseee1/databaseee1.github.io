@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Users Host</title>
+
+  <style>
+    body{
+      margin:0;
+      font-family:Arial;
+      background:#f5f6f8;
+    }
+
+    .container{
+      padding:20px;
+    }
+
+    .title{
+      font-size:20px;
+      font-weight:bold;
+      margin-bottom:20px;
+    }
+
+    .menu{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:15px;
+    }
+
+    .card{
+      background:#fff;
+      padding:20px;
+      border-radius:12px;
+      text-align:center;
+      cursor:pointer;
+      box-shadow:0 3px 10px rgba(0,0,0,0.08);
+      transition:0.2s;
+      text-decoration:none;
+      color:inherit;
+    }
+
+    .card:hover{
+      transform:scale(1.03);
+    }
+
+    .icon{
+      font-size:25px;
+      margin-bottom:8px;
+    }
+
+    .label{
+      font-size:14px;
+      font-weight:600;
+    }
+
+    .logout{
+      margin-top:20px;
+      padding:10px 15px;
+      border:none;
+      border-radius:8px;
+      background:red;
+      color:white;
+      cursor:pointer;
+    }
+
+
+
+    .pesan-card{
+  position:relative;
+}
+
+.badge{
+  position:absolute;
+  top:10px;
+  right:10px;
+
+  min-width:20px;
+  height:20px;
+
+  padding:0 6px;
+
+  background:#ff3b30;
+  color:#fff;
+
+  border-radius:20px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:11px;
+  font-weight:700;
+}
+
+
+
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="title">Users Host</div>
+
+  <div class="menu">
+<a class="card pesan-card" href="pesan.html">
+  <span id="pesanBadge" class="badge" style="display:none;">
+    0
+  </span>
+  <div class="icon">📩</div>
+  <div class="label">Pesan</div>
+</a>
+
+    <a class="card" href="Servant.html">
+      <div class="icon">📞</div>
+      <div class="label">CS TIME</div>
+    </a>
+
+    <a class="card" href="video.html">
+      <div class="icon">🎥</div>
+      <div class="label">Video Call</div>
+    </a>
+
+    <a class="card" href="add.html">
+      <div class="icon">➕</div>
+      <div class="label">Tambahkan Diri</div>
+    </a>
+
+  </div>
+
+  <button class="logout" onclick="logout()">Logout</button>
+
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  get,
+  onValue
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+const firebaseConfig = {
+  apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain:"users-96dc5.firebaseapp.com",
+  databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:"users-96dc5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* ================= LOGIN ================= */
+const user = JSON.parse(localStorage.getItem("user"));
+
+/* ================= GUARD (WAJIB LOGIN) ================= */
+if (!user) {
+  window.location.href = "loginhostpro.html";
+}
+
+/* ================= NORMALIZE ================= */
+function norm(v){
+  return String(v || "").toLowerCase().trim();
+}
+
+function normWA(wa){
+  if(!wa) return "";
+  wa = String(wa).replace("+", "").trim();
+  if(wa.startsWith("0")) wa = "62" + wa.slice(1);
+  return wa;
+}
+
+/* ================= VERIFY USERS1 ================= */
+async function verifyUser(){
+
+  try {
+
+    const snap = await get(ref(db, "users1"));
+
+    let found = false;
+
+    snap.forEach(child => {
+
+      const d = child.val();
+
+      const ok =
+        norm(d.uid) === norm(user.uid || user.userId) ||
+        norm(d.email) === norm(user.email) ||
+        normWA(d.wa) === normWA(user.wa);
+
+      if (ok) found = true;
+
+    });
+
+    if (!found) {
+
+      alert("Akses ditolak! Anda bukan users1");
+
+      localStorage.removeItem("user");
+      window.location.href = "loginhostpro.html";
+
+    } else {
+      console.log("ACCESS GRANTED");
+    }
+
+  } catch (e) {
+    console.log(e);
+    alert("Server error");
+    window.location.href = "loginhostpro.html";
+  }
+
+}
+
+verifyUser();
+
+
+
+
+
+
+const badge = document.getElementById("pesanBadge");
+
+onValue(ref(db, "chats"), (snap) => {
+
+  const chats = snap.val() || {};
+
+  let totalUnread = 0;
+
+  Object.entries(chats).forEach(([chatId, chat]) => {
+
+    // hanya chat milik user login
+    if(!chatId.includes(user.uid)) return;
+
+    if(!chat.history) return;
+
+    Object.values(chat.history).forEach(msg => {
+
+      const sender =
+        msg.senderId ||
+        msg.sender ||
+        "";
+
+      if(
+        sender !== user.uid &&
+        msg.read === false
+      ){
+        totalUnread++;
+      }
+
+    });
+
+  });
+
+  if(totalUnread > 0){
+
+    badge.style.display = "flex";
+    badge.textContent = totalUnread;
+
+  }else{
+
+    badge.style.display = "none";
+
+  }
+
+});
+
+
+
+
+
+
+
+/* ================= LOGOUT ================= */
+window.logout = function () {
+
+  localStorage.removeItem("user");
+  localStorage.removeItem("chatId");
+  localStorage.removeItem("pesanId");
+
+  window.location.href = "loginhostpro.html";
+};
+
+</script>
+
+</body>
+</html>
