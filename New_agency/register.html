@@ -2,8 +2,8 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <title>PT. Agency Tigohost Indonesia</title>
 
@@ -12,44 +12,41 @@
 
 <!-- OPEN GRAPH -->
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://www.tigohost.asia/">
-
+<meta property="og:url" content="https://www.tigohost.asia/New_agency/Login.html">
 <meta property="og:title" content="PT. Agency Tigohost Indonesia">
-
-<meta property="og:description"
-content="Platform resmi pendaftaran host dan top up coin terpercaya di Indonesia.">
-
-<meta property="og:image"
-content="https://www.tigohost.asia/agencylogo.png">
-
-<meta property="og:image:secure_url"
-content="https://www.tigohost.asia/agencylogo.png">
-
-<meta property="og:image:type" content="image/webp">
+<meta property="og:description" content="Platform resmi pendaftaran host dan top up coin terpercaya di Indonesia.">
+<meta property="og:image" content="https://www.tigohost.asia/agencylogo.png">
+<meta property="og:image:secure_url" content="https://www.tigohost.asia/agencylogo.png">
+<meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-
 <meta property="og:site_name" content="Tigohost Indonesia">
 
 <!-- TWITTER -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="PT. Agency Tigohost Indonesia">
-<meta name="twitter:description"
-content="Platform resmi daftar host & top up coin terpercaya di Indonesia.">
-
-<meta name="twitter:image"
-content="https://www.tigohost.asia/agencylogo.png">
+<meta name="twitter:description" content="Platform resmi daftar host & top up coin terpercaya di Indonesia.">
+<meta name="twitter:image" content="https://www.tigohost.asia/agencylogo.png">
 
 <!-- ICON -->
-<link rel="icon"
-href="https://www.tigohost.asia/agencylogo.png">
+<link rel="icon" href="https://www.tigohost.asia/agencylogo.png">
 
-<!-- MOBILE COLOR -->
+<!-- PWA MANIFEST (IMPORTANT FIX) -->
+<link rel="manifest" href="/New_agency/manifest.json?v=2">
+
+<!-- FORCE THEME -->
 <meta name="theme-color" content="#7c3aed">
-  <!-- CHART JS -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
+<!-- ANTI CACHE (IMPORTANT) -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 
+<!-- FONT AWESOME -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<!-- CHART JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
@@ -1826,6 +1823,17 @@ document.addEventListener("gestureend", function (e) {
 });
 /* ================= (NO zoom) ================= */
 
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.getRegistrations().then(function(registrations) {
+    for (let registration of registrations) {
+      registration.unregister();
+    }
+  }).then(() => {
+    navigator.serviceWorker.register("/New_agency/service-worker.js?v=2")
+      .then(() => console.log("SW terbaru aktif"))
+      .catch(err => console.log(err));
+  });
+}
 
 
 </script>
