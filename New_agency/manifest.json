@@ -12,13 +12,13 @@
 
   "icons": [
     {
-      "src": "ic_launcher_foreground.png",
+      "src": "favicon-96x96.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "ic_launcher_foreground.png",
+      "src": "launchericon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
