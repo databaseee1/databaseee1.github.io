@@ -1,11 +1,11 @@
-const CACHE_NAME = "Tigoapp.v5"; // 
+const CACHE_NAME = "Tigoapp.v6"; // 
 
 const urlsToCache = [
   "/New_agency/Login.html",
   "/New_agency/register.html",
   "/New_agency/manifest.json",
   "/New_agency/launchericon-192x192.png",
-  "/New_agency/launchericon-512x512.png",
+  "/New_agency/ic_launcher_foreground.png",
   "/New_agency/offline.html"
 ];
 
