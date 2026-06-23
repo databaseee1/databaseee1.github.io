@@ -1,7 +1,7 @@
 {
   "name": "Tigoapp",
   "short_name": "Tigo",
-  "start_url": "/New_agency/Login.html",
+  "start_url": "/New_agency/login.html",
   "scope": "/New_agency/",
   "display": "standalone",
   "background_color": "#ffffff",
