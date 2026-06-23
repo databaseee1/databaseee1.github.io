@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin Contact Footer</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+body{
+  font-family:Poppins,sans-serif;
+  background:#f5f6fb;
+  margin:0;
+  padding:20px;
+}
+
+.container{
+  max-width:700px;
+  margin:auto;
+}
+
+.card{
+  background:#fff;
+  padding:15px;
+  border-radius:12px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.08);
+  margin-bottom:15px;
+}
+
+input{
+  width:95%;
+  padding:10px;
+  margin:6px 0;
+  border-radius:8px;
+  border:1px solid #ddd;
+}
+
+button{
+  width:100%;
+  padding:10px;
+  border:none;
+  background:#6c3cff;
+  color:#fff;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+/* LIST */
+.item{
+  background:#fff;
+  padding:12px;
+  border-radius:12px;
+  margin-bottom:10px;
+  box-shadow:0 3px 10px rgba(0,0,0,0.05);
+}
+
+.item b{
+  display:block;
+  margin-bottom:4px;
+}
+
+.item small{
+  color:#666;
+}
+
+/* ACTION */
+.actions{
+  margin-top:10px;
+  display:flex;
+  gap:8px;
+}
+
+.actions button{
+  width:50%;
+  font-size:12px;
+}
+
+/* ================= MODAL ================= */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:99999;
+}
+
+.modal-box{
+  width:90%;
+  max-width:500px;
+  background:#fff;
+  border-radius:12px;
+  padding:15px;
+}
+
+.close{
+  float:right;
+  cursor:pointer;
+  font-size:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Admin Contact Footer</h2>
+
+<div class="card">
+  <input id="agencyResmi" placeholder="Agency Resmi">
+  <input id="aplikasiSerupa" placeholder="Aplikasi Serupa">
+  <input id="contact" placeholder="Contact">
+  <input id="interaksiPengguna" placeholder="Interaksi Pengguna">
+  <input id="kantorPusat" placeholder="Kantor Pusat">
+  <input id="kategori" placeholder="Kategori">
+  <input id="namaPerusahaan" placeholder="Nama Perusahaan">
+  <input id="orderCoin" placeholder="Order Coin">
+  <input id="pusatCabang" placeholder="Pusat Cabang">
+  <input id="situsTopup" placeholder="Situs Topup">
+  <input id="status" placeholder="Status">
+  <input id="team" placeholder="Team">
+  <input id="whatsappDarurat" placeholder="WhatsApp Darurat">
+
+  <button onclick="saveData()">Simpan / Update</button>
+</div>
+
+<div id="list"></div>
+
+</div>
+
+<!-- MODAL -->
+<div id="editModal" class="modal">
+
+  <div class="modal-box">
+
+    <span class="close" onclick="closeModal()">×</span>
+
+    <h3>Edit Data</h3>
+
+    <input id="e_agencyResmi">
+    <input id="e_aplikasiSerupa">
+    <input id="e_contact">
+    <input id="e_interaksiPengguna">
+    <input id="e_kantorPusat">
+    <input id="e_kategori">
+    <input id="e_namaPerusahaan">
+    <input id="e_orderCoin">
+    <input id="e_pusatCabang">
+    <input id="e_situsTopup">
+    <input id="e_status">
+    <input id="e_team">
+    <input id="e_whatsappDarurat">
+
+    <button onclick="saveEdit()">Simpan</button>
+
+  </div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  update
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain:"users-96dc5.firebaseapp.com",
+  databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:"users-96dc5",
+  storageBucket:"users-96dc5.appspot.com",
+  messagingSenderId:"483322415863",
+  appId:"1:483322415863:web:1397a8f2e808e66ad9e1f2"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* LOGIN */
+const adminData = JSON.parse(localStorage.getItem("adminLogin"));
+if (!adminData || adminData.role !== "admin") {
+  window.location.replace("Login_admin.html");
+}
+
+const dbRef = ref(db,"informasi_perusahaan/company_info");
+
+/* LOAD */
+let currentData = {};
+
+onValue(dbRef,(snap)=>{
+
+  currentData = snap.val() || {};
+
+  document.getElementById("list").innerHTML = `
+    <div class="item">
+      <b>${currentData.agencyResmi || ""}</b>
+      <small>${currentData.kategori || ""}</small>
+
+      <div class="actions">
+        <button onclick="openEdit()">Edit</button>
+      </div>
+    </div>
+  `;
+
+});
+
+/* SAVE NEW / UPDATE */
+window.saveData = function(){
+  update(dbRef,{
+    agencyResmi:agencyResmi.value,
+    aplikasiSerupa:aplikasiSerupa.value,
+    contact:contact.value,
+    interaksiPengguna:interaksiPengguna.value,
+    kantorPusat:kantorPusat.value,
+    kategori:kategori.value,
+    namaPerusahaan:namaPerusahaan.value,
+    orderCoin:orderCoin.value,
+    pusatCabang:pusatCabang.value,
+    situsTopup:situsTopup.value,
+    status:status.value,
+    team:team.value,
+    whatsappDarurat:whatsappDarurat.value
+  });
+};
+
+/* MODAL */
+window.openEdit = function(){
+
+  document.getElementById("editModal").style.display="flex";
+
+  e_agencyResmi.value = currentData.agencyResmi || "";
+  e_aplikasiSerupa.value = currentData.aplikasiSerupa || "";
+  e_contact.value = currentData.contact || "";
+  e_interaksiPengguna.value = currentData.interaksiPengguna || "";
+  e_kantorPusat.value = currentData.kantorPusat || "";
+  e_kategori.value = currentData.kategori || "";
+  e_namaPerusahaan.value = currentData.namaPerusahaan || "";
+  e_orderCoin.value = currentData.orderCoin || "";
+  e_pusatCabang.value = currentData.pusatCabang || "";
+  e_situsTopup.value = currentData.situsTopup || "";
+  e_status.value = currentData.status || "";
+  e_team.value = currentData.team || "";
+  e_whatsappDarurat.value = currentData.whatsappDarurat || "";
+};
+
+window.closeModal = function(){
+  document.getElementById("editModal").style.display="none";
+};
+
+window.saveEdit = function(){
+
+  update(dbRef,{
+    agencyResmi:e_agencyResmi.value,
+    aplikasiSerupa:e_aplikasiSerupa.value,
+    contact:e_contact.value,
+    interaksiPengguna:e_interaksiPengguna.value,
+    kantorPusat:e_kantorPusat.value,
+    kategori:e_kategori.value,
+    namaPerusahaan:e_namaPerusahaan.value,
+    orderCoin:e_orderCoin.value,
+    pusatCabang:e_pusatCabang.value,
+    situsTopup:e_situsTopup.value,
+    status:e_status.value,
+    team:e_team.value,
+    whatsappDarurat:e_whatsappDarurat.value
+  });
+
+  closeModal();
+};
+
+</script>
+
+</body>
+</html>

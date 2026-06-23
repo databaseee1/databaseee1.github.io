@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Template Chat Admin</title>
+
+<style>
+body{
+  font-family: Arial;
+  margin:0;
+  background:#f6f7fb;
+  padding:20px;
+}
+
+.header{
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:15px;
+}
+
+/* FORM */
+.card{
+  background:#fff;
+  padding:15px;
+  border-radius:12px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.08);
+  margin-bottom:20px;
+}
+
+input, textarea{
+  width:95%;
+  padding:12px;
+  margin:8px 0;
+  border:1px solid #ddd;
+  border-radius:10px;
+  outline:none;
+}
+
+button{
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  background:#7c3aed;
+  color:#fff;
+  font-weight:600;
+  width:100%;
+}
+
+/* LIST */
+.item{
+  background:#fff;
+  padding:12px;
+  border-radius:12px;
+  margin-bottom:10px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.06);
+}
+
+.item small{
+  color:#777;
+}
+
+/* BUTTON */
+.row-btn{
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+}
+
+.btn-edit{
+  flex:1;
+  background:#2196f3;
+}
+
+.btn-del{
+  flex:1;
+  background:#ff3b3b;
+}
+
+/* POPUP */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.5);
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
+
+.modal-box{
+  width:90%;
+  max-width:400px;
+  background:#fff;
+  padding:15px;
+  border-radius:12px;
+}
+
+.close{
+  text-align:right;
+  cursor:pointer;
+  font-size:18px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">Template Chat Admin</div>
+
+<!-- FORM TAMBAH -->
+<div class="card">
+  <input id="code" placeholder="Code (contoh: 1/)">
+  <textarea id="text" placeholder="Isi chat template"></textarea>
+  <button onclick="addTemplate()">Tambah</button>
+</div>
+
+<!-- LIST -->
+<div id="list"></div>
+
+<!-- MODAL EDIT -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+
+    <div class="close" onclick="closeModal()">✖</div>
+
+    <input id="editCode">
+    <textarea id="editText"></textarea>
+
+    <button onclick="saveEdit()">Simpan</button>
+
+  </div>
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  push,
+  set,
+  update,
+  remove
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+/* FIREBASE */
+const firebaseConfig = {
+  apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain:"users-96dc5.firebaseapp.com",
+  databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:"users-96dc5",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* LOGIN ADMIN */
+const adminData = JSON.parse(localStorage.getItem("adminLogin"));
+
+if(!adminData || adminData.role !== "admin"){
+  window.location.href = "Login_admin.html";
+}
+
+/* STATE */
+let editId = "";
+
+/* ADD */
+window.addTemplate = function(){
+
+  const code = document.getElementById("code").value;
+  const text = document.getElementById("text").value;
+
+  if(!code || !text) return alert("Isi lengkap!");
+
+  const newRef = push(ref(db,"templates"));
+
+  set(newRef,{
+    code,
+    text,
+    createdAt:Date.now()
+  });
+
+  document.getElementById("code").value="";
+  document.getElementById("text").value="";
+};
+
+/* LOAD */
+const list = document.getElementById("list");
+
+onValue(ref(db,"templates"),(snap)=>{
+
+  list.innerHTML="";
+  const data = snap.val();
+  if(!data) return;
+
+  Object.entries(data).forEach(([id,val])=>{
+
+    list.innerHTML += `
+      <div class="item">
+        <b>${val.code}</b><br>
+        <small>${val.text}</small>
+
+        <div class="row-btn">
+          <button class="btn-edit" onclick="edit('${id}')">Edit</button>
+          <button class="btn-del" onclick="del('${id}')">Hapus</button>
+        </div>
+      </div>
+    `;
+  });
+
+});
+
+/* EDIT */
+window.edit = function(id){
+
+  editId = id;
+
+  const snapRef = ref(db,"templates/"+id);
+
+  import("https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js")
+  .then(async fb=>{
+
+    const { get } = fb;
+    const d = await get(snapRef);
+
+    document.getElementById("editCode").value = d.val().code;
+    document.getElementById("editText").value = d.val().text;
+
+    document.getElementById("modal").style.display="flex";
+  });
+};
+
+window.saveEdit = function(){
+
+  update(ref(db,"templates/"+editId),{
+    code:document.getElementById("editCode").value,
+    text:document.getElementById("editText").value
+  });
+
+  closeModal();
+};
+
+window.closeModal = function(){
+  document.getElementById("modal").style.display="none";
+};
+
+/* DELETE */
+window.del = function(id){
+
+  if(!confirm("Hapus template ini?")) return;
+
+  remove(ref(db,"templates/"+id));
+};
+
+</script>
+
+</body>
+</html>

@@ -217,6 +217,39 @@ background:#ddd;
     id="namaPemosting"
     placeholder="Nama Pemosting">
 
+
+
+
+    <input
+type="text"
+id="profil"
+placeholder="Link Profil (avatar)">
+
+
+<input
+type="text"
+id="linkTujuan"
+placeholder="Link Tujuan (opsional)">
+
+
+
+
+
+<textarea
+id="sliderInput"
+placeholder="Link slider (1 per baris)">
+</textarea>
+
+
+
+
+
+<select id="verifikasi">
+  <option value="false">Tidak Terverifikasi</option>
+  <option value="true">Terverifikasi</option>
+</select>
+
+
     <input
     type="date"
     id="tanggal">
@@ -248,6 +281,33 @@ id="editJudul">
 <input
 type="text"
 id="editNama">
+
+
+
+<input
+type="text"
+id="editLinkTujuan"
+placeholder="Link Tujuan">
+
+<select id="editVerifikasi">
+  <option value="false">Tidak Terverifikasi</option>
+  <option value="true">Terverifikasi</option>
+</select>
+
+<input
+type="text"
+id="editProfil"
+placeholder="Link Profil">
+
+
+
+<textarea
+id="editSlider"
+placeholder="Link slider (1 per baris)">
+</textarea>
+
+
+
 
 <input
 type="date"
@@ -346,13 +406,24 @@ const newRef =
 push(ref(db,"Mypostingan"));
 
 set(newRef,{
-judul,
-namaPemosting:nama,
-tanggal,
-deskripsi,
-like:0,
-komentar:0,
-timestamp:Date.now()
+  judul,
+  namaPemosting:nama,
+  tanggal,
+  deskripsi,
+  profil: document.getElementById("profil").value.trim() || "",
+  linkTujuan: document.getElementById("linkTujuan").value.trim() || "",
+  Verifikasi: document.getElementById("verifikasi").value === "true",
+
+slider: document
+  .getElementById("sliderInput")
+  .value
+  .split(/[\n,]/)   // 🔥 bisa ENTER atau koma
+  .map(x => x.trim())
+  .filter(x => x.startsWith("http")),
+
+  like:0,
+  komentar:0,
+  timestamp:Date.now()
 });
 
 document.getElementById("judul").value="";
@@ -502,6 +573,21 @@ d.judul || "";
 document.getElementById("editNama").value =
 d.namaPemosting || "";
 
+
+document.getElementById("editSlider").value =
+(d.slider || []).join("\n");
+
+
+document.getElementById("editLinkTujuan").value =
+d.linkTujuan || "";
+
+document.getElementById("editVerifikasi").value =
+String(d.Verifikasi || false);
+
+document.getElementById("editProfil").value =
+d.profil || "";
+
+
 document.getElementById("editTanggal").value =
 d.tanggal || "";
 
@@ -522,23 +608,24 @@ document
 update(
 ref(db,"Mypostingan/"+currentEditId),
 {
+  judul: document.getElementById("editJudul").value,
+  namaPemosting: document.getElementById("editNama").value,
+  tanggal: document.getElementById("editTanggal").value,
+  deskripsi: document.getElementById("editDeskripsi").value,
+  profil: document.getElementById("editProfil").value.trim() || "",
 
-judul:
-document.getElementById("editJudul").value,
-
-namaPemosting:
-document.getElementById("editNama").value,
-
-tanggal:
-document.getElementById("editTanggal").value,
-
-deskripsi:
-document.getElementById("editDeskripsi").value
+  linkTujuan: document.getElementById("editLinkTujuan").value.trim() || "",
+  Verifikasi: document.getElementById("editVerifikasi").value === "true",
+  
+slider: document
+  .getElementById("editSlider")
+  .value
+  .split(/[\n,]/)   // support ENTER + koma
+  .map(x => x.trim())
+  .filter(x => x.startsWith("http"))
 
 }
-
 );
-
 closeModal();
 
 };

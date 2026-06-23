@@ -1,4 +1,4 @@
-<button id="addLinkBtn">Tambah Link Tujuan Semua Post</button>
+<button id="addSliderBtn">Tambah Slider Dummy</button>
 
 <script type="module">
 
@@ -21,48 +21,43 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-/* POOL LINK RANDOM */
-const links = [
-  "https://tigohost.asia",
-  "https://google.com",
-  "https://youtube.com",
-  "https://example.com",
-  "https://github.com"
+const sliderBtn = document.getElementById("addSliderBtn");
+
+const sliderDummy = [
+  "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d",
+  "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+  "https://images.unsplash.com/photo-1495567720989-cebdbdd97913",
+  "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e",
+  "https://images.unsplash.com/photo-1501785888041-af3ef285b470"
 ];
 
-function getRandomLink() {
-  return links[Math.floor(Math.random() * links.length)];
-}
-
-const addLinkBtn = document.getElementById("addLinkBtn");
-
-addLinkBtn.addEventListener("click", async () => {
+sliderBtn.addEventListener("click", async () => {
 
   try {
+
     const snap = await get(ref(db, "Mypostingan"));
 
-    if (!snap.exists()) {
-      alert("Tidak ada data postingan");
+    if(!snap.exists()){
+      alert("Tidak ada postingan");
       return;
     }
 
     const updates = {};
 
     snap.forEach(child => {
-      const key = child.key;
+      const id = child.key;
 
-      updates[`Mypostingan/${key}/linkTujuan`] = getRandomLink();
+      updates[`Mypostingan/${id}/slider`] = sliderDummy;
     });
 
     await update(ref(db), updates);
 
-    alert("Semua postingan berhasil ditambahkan link random!");
+    alert("Semua postingan berhasil ditambahkan slider!");
 
   } catch (err) {
     console.error(err);
-    alert("Gagal update semua postingan");
+    alert("Gagal update slider");
   }
 
 });
-
 </script>

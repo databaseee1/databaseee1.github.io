@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin BannerHot</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+body{
+  font-family:Poppins,sans-serif;
+  background:#f5f6fb;
+  margin:0;
+  padding:20px;
+}
+
+.container{
+  max-width:650px;
+  margin:auto;
+}
+
+/* FORM */
+.card{
+  background:#fff;
+  padding:15px;
+  border-radius:12px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.08);
+  margin-bottom:15px;
+}
+
+input{
+  width:95%;
+  padding:10px;
+  margin:6px 0;
+  border-radius:8px;
+  border:1px solid #ddd;
+}
+
+button{
+  width:100%;
+  padding:10px;
+  border:none;
+  background:#6c3cff;
+  color:#fff;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+/* LIST */
+.item{
+  background:#fff;
+  padding:12px;
+  border-radius:12px;
+  margin-bottom:10px;
+  box-shadow:0 3px 10px rgba(0,0,0,0.05);
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.item img{
+  width:80px;
+  height:50px;
+  object-fit:cover;
+  border-radius:8px;
+}
+
+.info{
+  flex:1;
+}
+
+.info small{
+  display:block;
+  color:#666;
+  font-size:12px;
+}
+
+/* BUTTON */
+.actions button{
+  width:auto;
+  padding:6px 10px;
+  font-size:12px;
+  margin-left:5px;
+}
+
+/* ================= MODAL ================= */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:99999;
+}
+
+.modal-box{
+  width:90%;
+  max-width:420px;
+  background:#fff;
+  border-radius:12px;
+  padding:15px;
+}
+
+.modal-box h3{
+  margin-top:0;
+}
+
+.close{
+  float:right;
+  cursor:pointer;
+  font-size:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Admin BannerHot</h2>
+
+<!-- FORM ADD -->
+<div class="card">
+  <input id="foto" placeholder="Link Foto Banner">
+  <input id="link" placeholder="Link Tujuan">
+  <input id="oleh" placeholder="Diperbaharui Oleh">
+
+  <button onclick="addBanner()">Tambah Banner</button>
+</div>
+
+<!-- LIST -->
+<div id="list"></div>
+
+</div>
+
+<!-- ================= MODAL EDIT ================= -->
+<div id="editModal" class="modal">
+
+  <div class="modal-box">
+
+    <span class="close" onclick="closeModal()">×</span>
+
+    <h3>Edit Banner</h3>
+
+    <input id="e_foto" placeholder="Link Foto">
+    <input id="e_link" placeholder="Link Tujuan">
+    <input id="e_oleh" placeholder="Diperbaharui Oleh">
+
+    <button onclick="saveEdit()">Simpan</button>
+
+  </div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  push,
+  set,
+  onValue,
+  update,
+  remove
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+/* FIREBASE */
+const firebaseConfig = {
+  apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain:"users-96dc5.firebaseapp.com",
+  databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:"users-96dc5",
+  storageBucket:"users-96dc5.appspot.com",
+  messagingSenderId:"483322415863",
+  appId:"1:483322415863:web:1397a8f2e808e66ad9e1f2"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* ================= LOGIN ================= */
+const adminData = JSON.parse(localStorage.getItem("adminLogin"));
+
+if (!adminData || adminData.role !== "admin") {
+  window.location.replace("Login_admin.html");
+}
+
+/* ================= ADD ================= */
+window.addBanner = function(){
+
+  const newRef = push(ref(db,"BANNERHOT"));
+
+  set(newRef,{
+    foto: document.getElementById("foto").value,
+    link: document.getElementById("link").value,
+    diperbaharuiOleh: document.getElementById("oleh").value
+  });
+
+  document.getElementById("foto").value="";
+  document.getElementById("link").value="";
+  document.getElementById("oleh").value="";
+};
+
+/* ================= LOAD ================= */
+const list = document.getElementById("list");
+
+onValue(ref(db,"BANNERHOT"),(snap)=>{
+
+  list.innerHTML="";
+
+  snap.forEach(child=>{
+
+    const d = child.val();
+    const id = child.key;
+
+    list.innerHTML += `
+      <div class="item">
+        <img src="${d.foto}">
+        <div class="info">
+          <b>${d.diperbaharuiOleh}</b>
+          <small>${d.link}</small>
+        </div>
+
+        <div class="actions">
+          <button onclick="openEdit('${id}','${d.foto}','${d.link}','${d.diperbaharuiOleh}')">Edit</button>
+          <button onclick="hapus('${id}')">Hapus</button>
+        </div>
+      </div>
+    `;
+  });
+
+});
+
+/* ================= EDIT ================= */
+let editId = "";
+
+window.openEdit = function(id,foto,link,oleh){
+
+  editId = id;
+
+  document.getElementById("e_foto").value = foto;
+  document.getElementById("e_link").value = link;
+  document.getElementById("e_oleh").value = oleh;
+
+  document.getElementById("editModal").style.display = "flex";
+};
+
+window.closeModal = function(){
+  document.getElementById("editModal").style.display = "none";
+};
+
+window.saveEdit = function(){
+
+  update(ref(db,"BANNERHOT/"+editId),{
+    foto: document.getElementById("e_foto").value,
+    link: document.getElementById("e_link").value,
+    diperbaharuiOleh: document.getElementById("e_oleh").value
+  });
+
+  closeModal();
+};
+
+/* ================= DELETE ================= */
+window.hapus = function(id){
+
+  if(confirm("Hapus banner ini?")){
+
+    remove(ref(db,"BANNERHOT/"+id));
+
+  }
+
+};
+
+</script>
+
+</body>
+</html>

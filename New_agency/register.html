@@ -53,57 +53,28 @@
 body {
   font-family: 'Poppins', sans-serif;
   background: #f6f7fb;
-  padding: 0;
+  padding: 5px;
   margin: 0;
   margin-bottom: 90px;
   overflow-x: hidden;
+  position: relative;
 }
 
 
 /* layer warna atas */
-body::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -10%;
-  width: 120%;
-  height: 390px;
-
-  background:
-    linear-gradient(135deg, #d6d6d6, #5200ff),
-
-    repeating-linear-gradient(
-      120deg,
-      rgba(255,255,255,0.35) 0px,
-      rgba(255,255,255,0.35) 1px,
-      transparent 1px,
-      transparent 12px
-    );
-
-  background-blend-mode: overlay;
-
-  border-radius: 0 0 55% 55%;
-
-}
-
 
 /* potongan putih curve */
-body::after {
-  content: "";
-  position: absolute;
-  top: 300px;
-  left: -15%;
-
-  width: 130%;
-  height: 150px;
-
-  background: #f6f7fb;
-
-  border-radius: 50% 50% 0 0;
-
-  z-index: -1;
+body::after{
+  content:"";
+  position:fixed;
+  top:300px;
+  left:0;
+  width:100%;
+  height:150px;
+  background:#f6f7fb;
+  border-radius:50% 50% 0 0;
+  z-index:-1;
 }
-
 
 /* pastikan isi di atas layer */
 body > * {
@@ -601,7 +572,7 @@ select option{
     border-radius:12px;
     font-size:14px;
     font-weight:600;
-    z-index:99999;
+    z-index:9999999999;
     opacity:0;
     transition:.35s;
     box-shadow:0 10px 30px rgba(0,0,0,.25);
@@ -1064,7 +1035,7 @@ select option{
   line-height:1.5;
   color:#111;
   letter-spacing:-0.3px;
-  background:#fff;
+  background:#ffffff00;
 }
 
 .article-title span{
@@ -1154,6 +1125,80 @@ select option{
 #jk{
   padding-left: 30px;
 }
+
+
+
+
+
+
+#mp_slider_popup_9283{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+}
+
+#mp_slider_overlay_9283{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.7);
+}
+
+#mp_slider_box_9283{
+  position:relative;
+  width:90%;
+  max-width:500px;
+  margin:80px auto;
+  background:#ffffff00;
+  border-radius:12px;
+  padding:10px;
+  z-index:2;
+  text-align:center;
+}
+
+#mp_slider_view_9283{
+  position:relative;
+  width:100%;
+  height:420px;
+  overflow:hidden;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+#mp_slider_view_9283 img{
+  width:100%;
+  height:90%;
+  max-width:100%;
+  object-fit:contain;
+  border-radius:10px;
+  display:block;
+  pointer-events:none;
+}
+
+#mp_slider_prev_9283,
+#mp_slider_next_9283{
+  font-size:28px;
+  cursor:pointer;
+  padding:18px;        
+  min-width:50px;    
+  min-height:50px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:10;
+  user-select:none;
+      color: #ffffff;
+}
+
+#mp_slider_close_9283{
+  position:absolute;
+  top:5px;
+  right:10px;
+  font-size:0px;
+  cursor:pointer;
+}
+
 
 </style>
 </head>
@@ -1677,7 +1722,8 @@ const realtimeDb = getDatabase(app);
 
 
 
-
+let sliderData9283 = [];
+let sliderIndex9283 = 0;
 
 const track = document.getElementById("Bannerhot32_track");
 
@@ -2019,36 +2065,23 @@ document.addEventListener("click", async (e) => {
 
   const icon = likeBtn.querySelector("i");
 
-  if(likedBy[safeIP]){
+if(likedBy[safeIP]){
 
-    delete likedBy[safeIP];
-    likes = Math.max(0, likes - 1);
+  delete likedBy[safeIP];
+  likes = Math.max(0, likes - 1);
 
-    icon.className = "fa-regular fa-heart";
+} else {
 
-  } else {
+  likedBy[safeIP] = true;
+  likes += 1;
 
-    likedBy[safeIP] = true;
-    likes += 1;
+  showNotif3289("Berhasil memberikan Like");
+}
 
-    icon.className = "fa-solid fa-heart";
-    icon.style.color = "#ff0000";
-
- const wrap = likeBtn;
-
-wrap.classList.add("boom");
-
-setTimeout(() => {
-  wrap.classList.remove("boom");
-}, 400);
-
-    showNotif3289("Berhasil memberikan Like");
-  }
-
-  await update(postRef, {
-    like: likes,
-    likedBy: likedBy
-  });
+await update(postRef, {
+  like: likes,
+  likedBy: likedBy
+});
 
 });
 
@@ -2085,6 +2118,19 @@ function loadPosts3289(){
     });
 }
 
+
+
+function limitWords(text, limit = 30){
+  if(!text) return "";
+  const words = text.split(" ");
+  if(words.length <= limit) return text;
+
+  return words.slice(0, limit).join(" ") + "...";
+}
+
+
+
+
 function renderPosts3289(){
 
   listPostingan.innerHTML = "";
@@ -2098,7 +2144,9 @@ function renderPosts3289(){
     const liked = post.likedBy?.[currentIP3289] === true;
 
     listPostingan.innerHTML += `
-      <div id="mp_post_card">
+      <div id="mp_post_card"
+     onclick='openSlider9283(${JSON.stringify(post.slider || [])})'
+     style="cursor:pointer;">
 
         <div id="mp_post_header" 
      onclick="openLink3289('${post.linkTujuan || ''}')"
@@ -2129,13 +2177,27 @@ function renderPosts3289(){
         </div>
 
         <div id="mp_judul">${post.judul}</div>
-        <div id="mp_deskripsi">${post.deskripsi}</div>
+        <div class="mp_deskripsi">
+  <div class="desc-short">
+    ${limitWords(post.deskripsi, 30)}
+  </div>
+
+  <div class="view-detail"
+       onclick="toggleDetail3289('${post.id}')"
+       style="color:#6c3cff;cursor:pointer;font-size:13px;margin-top:5px;">
+    View detail
+  </div>
+
+  <div class="desc-full" id="detail-${post.id}" style="display:none;margin-top:8px;">
+    ${post.deskripsi}
+  </div>
+</div>
 
         <div id="mp_post_footer">
-          <span class="mp_action_like3289">
-            <i class="${liked ? "fa-solid" : "fa-regular"} fa-heart"
-               style="color:${liked ? "#ff0000" : ""}">
-            </i>
+          <span class="mp_action_like3289" data-id="${post.id}">
+<i class="fa-${liked ? "solid" : "regular"} fa-heart"
+   style="${liked ? "color:#ff0000" : ""}">
+</i>
             ${formatLike3289(post.like || 0)}
           </span>
 
@@ -2201,18 +2263,62 @@ window.openLink3289 = function(link){
   window.open(link, "_blank");
 }
 
+window.toggleDetail3289 = function(id){
+
+  const el = document.getElementById("detail-" + id);
+
+  if(!el) return;
+
+  if(el.style.display === "none"){
+    el.style.display = "block";
+  } else {
+    el.style.display = "none";
+  }
+
+}
 
 
 
+window.openSlider9283 = function(slider){
+
+  if(!slider || slider.length === 0) return;
+
+  sliderData9283 = slider;
+  sliderIndex9283 = 0;
+
+  document.getElementById("mp_slider_popup_9283").style.display = "block";
+
+  renderSlider9283();
+
+}
+
+function renderSlider9283(){
+  document.getElementById("mp_slider_img_9283").src =
+    sliderData9283[sliderIndex9283];
+}
 
 
+document.getElementById("mp_slider_prev_9283").onclick = () => {
+  if(sliderIndex9283 > 0){
+    sliderIndex9283--;
+    renderSlider9283();
+  }
+};
+
+document.getElementById("mp_slider_next_9283").onclick = () => {
+  if(sliderIndex9283 < sliderData9283.length - 1){
+    sliderIndex9283++;
+    renderSlider9283();
+  }
+};
 
 
-
-
-
-
-
+document.getElementById("mp_slider_overlay_9283").addEventListener("click", () => {
+  closeSlider9283();
+});
+window.closeSlider9283 = function(){
+  document.getElementById("mp_slider_popup_9283").style.display = "none";
+}
 
 
 
@@ -2768,6 +2874,39 @@ window.compnystore32_toggleInfo = function () {
 
   </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+<div id="mp_slider_popup_9283" style="display:none;">
+  
+  <div id="mp_slider_overlay_9283"></div>
+
+  <div id="mp_slider_box_9283">
+
+    <div id="mp_slider_close_9283" onclick="closeSlider9283()">×</div>
+
+    <div id="mp_slider_view_9283">
+
+      <i class="fa-solid fa-chevron-left" id="mp_slider_prev_9283"></i>
+
+      <img id="mp_slider_img_9283" src="">
+
+      <i class="fa-solid fa-chevron-right" id="mp_slider_next_9283"></i>
+
+    </div>
+
+  </div>
+
+</div>
+
 
 
 </body>

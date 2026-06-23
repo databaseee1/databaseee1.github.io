@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin Logo Aplikasi</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+body{
+  font-family:Poppins,sans-serif;
+  background:#f5f6fb;
+  margin:0;
+  padding:20px;
+}
+
+.container{
+  max-width:600px;
+  margin:auto;
+}
+
+.card{
+  background:#fff;
+  padding:15px;
+  border-radius:12px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.08);
+  margin-bottom:15px;
+}
+
+input, textarea{
+  width:95%;
+  padding:10px;
+  margin:6px 0;
+  border-radius:8px;
+  border:1px solid #ddd;
+}
+
+button{
+  width:100%;
+  padding:10px;
+  border:none;
+  background:#6c3cff;
+  color:#fff;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.list{
+  margin-top:20px;
+}
+
+.item{
+  background:#fff;
+  padding:12px;
+  border-radius:12px;
+  margin-bottom:10px;
+  box-shadow:0 3px 10px rgba(0,0,0,0.05);
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.item img{
+  width:50px;
+  height:50px;
+  object-fit:contain;
+  border-radius:10px;
+  background:#f2f2f2;
+}
+
+.item .info{
+  flex:1;
+}
+
+.actions button{
+  width:auto;
+  padding:6px 10px;
+  font-size:12px;
+  margin-left:5px;
+}
+
+/* ================= MODAL ================= */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:99999;
+}
+
+.modal-box{
+  width:90%;
+  max-width:420px;
+  background:#fff;
+  border-radius:12px;
+  padding:15px;
+}
+
+.modal-box h3{
+  margin-top:0;
+}
+
+.close{
+  float:right;
+  cursor:pointer;
+  font-size:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Admin Logo Aplikasi</h2>
+
+<!-- FORM ADD -->
+<div class="card">
+  <input id="aplikasi" placeholder="Nama aplikasi">
+  <input id="nama" placeholder="Nama tampil">
+  <input id="logo" placeholder="Link logo">
+  <textarea id="note" placeholder="Note"></textarea>
+
+  <button onclick="addData()">Tambah</button>
+</div>
+
+<!-- LIST -->
+<div id="list"></div>
+
+</div>
+
+<!-- ================= MODAL EDIT ================= -->
+<div id="editModal" class="modal">
+
+  <div class="modal-box">
+
+    <span class="close" onclick="closeModal()">×</span>
+
+    <h3>Edit Data</h3>
+
+    <input id="e_aplikasi" placeholder="Nama aplikasi">
+    <input id="e_nama" placeholder="Nama">
+    <input id="e_logo" placeholder="Logo URL">
+    <textarea id="e_note" placeholder="Note"></textarea>
+
+    <button onclick="saveEdit()">Simpan</button>
+
+  </div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  push,
+  set,
+  onValue,
+  update,
+  remove
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain:"users-96dc5.firebaseapp.com",
+  databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:"users-96dc5",
+  storageBucket:"users-96dc5.appspot.com",
+  messagingSenderId:"483322415863",
+  appId:"1:483322415863:web:1397a8f2e808e66ad9e1f2"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* LOGIN */
+const adminData = JSON.parse(localStorage.getItem("adminLogin"));
+if (!adminData || adminData.role !== "admin") {
+  window.location.replace("Login_admin.html");
+}
+
+/* ADD */
+window.addData = function(){
+  const newRef = push(ref(db,"Logo-aplikasi"));
+
+  set(newRef,{
+    aplikasi:document.getElementById("aplikasi").value,
+    nama:document.getElementById("nama").value,
+    logo:document.getElementById("logo").value,
+    note:document.getElementById("note").value
+  });
+};
+
+/* LOAD */
+const list = document.getElementById("list");
+
+onValue(ref(db,"Logo-aplikasi"),(snap)=>{
+
+  list.innerHTML="";
+
+  snap.forEach(child=>{
+
+    const d = child.val();
+    const id = child.key;
+
+    list.innerHTML += `
+      <div class="item">
+        <img src="${d.logo}">
+        <div class="info">
+          <b>${d.aplikasi}</b>
+          <small>${d.nama}</small>
+          <p>${d.note || ""}</p>
+        </div>
+
+        <div class="actions">
+          <button onclick="openEdit('${id}','${d.aplikasi}','${d.nama}','${d.logo}','${d.note}')">Edit</button>
+          <button onclick="hapus('${id}')">Hapus</button>
+        </div>
+      </div>
+    `;
+  });
+
+});
+
+/* ================= EDIT MODAL ================= */
+let editId = "";
+
+window.openEdit = function(id,aplikasi,nama,logo,note){
+
+  editId = id;
+
+  document.getElementById("e_aplikasi").value = aplikasi;
+  document.getElementById("e_nama").value = nama;
+  document.getElementById("e_logo").value = logo;
+  document.getElementById("e_note").value = note;
+
+  document.getElementById("editModal").style.display = "flex";
+};
+
+window.closeModal = function(){
+  document.getElementById("editModal").style.display = "none";
+};
+
+window.saveEdit = function(){
+
+  update(ref(db,"Logo-aplikasi/"+editId),{
+    aplikasi:document.getElementById("e_aplikasi").value,
+    nama:document.getElementById("e_nama").value,
+    logo:document.getElementById("e_logo").value,
+    note:document.getElementById("e_note").value
+  });
+
+  closeModal();
+};
+
+/* DELETE */
+window.hapus = function(id){
+  if(confirm("Hapus data ini?")){
+    remove(ref(db,"Logo-aplikasi/"+id));
+  }
+};
+
+</script>
+
+</body>
+</html>
