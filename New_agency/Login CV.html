@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<meta name="application-name" content="Tigoapp">
+<meta name="theme-color" content="#ffffff">
+
+<title>Tigohost - Login</title>
+
+<link rel="manifest" href="/New_agency/manifest.json">
+
+<style>
+
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none !important;
+}
+
+
+button, a, div, span, img {
+  outline: none !important;
+}
+
+
+img {
+  pointer-events: none;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+
+
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+
+
+/* BACKGROUND */
+/* BACKGROUND */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+
+/* background image (dari upload kamu) */
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("Desainlog.png") center/cover no-repeat;
+  filter: blur(8px) brightness(0.6);
+  transform: scale(1.1);
+}
+
+/* DARK OVERLAY */
+body::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgb(0 0 0 / 27%);
+}
+
+/* MAIN CARD */
+.container {
+  position: relative;
+  z-index: 2;
+  width: 340px;
+  text-align: center;
+  color: white;
+      margin-bottom: 60px;
+}
+
+/* TITLE */
+.title {
+  font-size: 70px;
+  font-weight: 800;
+  margin-bottom: 50px;
+  letter-spacing: 1px;
+}
+
+/* FORM LOGIN (JANGAN DIUBAH JS NYA) */
+.card {
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 20px;
+  border-radius: 18px;
+  backdrop-filter: blur(12px);
+}
+
+input {
+  width: 90%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 50px;
+  background: #949595;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+
+  display: flex;            /* 🔥 ini wajib */
+  align-items: center;      /* sejajar vertikal */
+  justify-content: center;  /* tengah horizontal */
+  gap: 8px;                 /* jarak icon & teks */
+}
+
+button .icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+
+/* ERROR */
+#error {
+  color: #ff6b6b;
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+/* SOCIAL BUTTONS */
+.social {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.social button {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 🔥 ini kunci utama */
+  gap: 10px;
+  padding: 14px 20px;
+  text-align: center;
+}
+
+.social .icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+
+.fb { background: #1877f2; }
+.google { background: #ea4335; }
+.email { background: #a855f7; }
+.twitter { background: #1da1f2; }
+
+/* TOAST */
+#toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #22c55e;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 13px;
+  opacity: 0;
+  transition: 0.3s;
+  z-index: 10;
+}
+
+
+.spinner {
+  width: 30px;
+  height: 30px;
+  border: 4px solid #ccc;
+  border-top: 4px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 10px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+
+
+
+.footer-agree {
+  margin-top: 15px;
+  font-size: 12px;
+  color: #ddd;
+}
+
+.agree-box {
+  display: flex;
+  align-items: center;   /* 🔥 ubah dari flex-start */
+  gap: 6px;              /* kecilkan jarak */
+  cursor: pointer;
+  line-height: 1.2;
+}
+
+/* hapus margin yang bikin turun */
+.checkmark {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #888;
+  border-radius: 4px;
+  position: relative;
+  flex-shrink: 0;
+  margin-top: 0;         /* 🔥 penting: hapus ini */
+}
+
+/* text rapikan */
+.footer-agree .text {
+  color: #ccc;
+  margin: 0;
+  padding: 0;
+}
+
+/* hide checkbox default */
+.agree-box input {
+  display: none;
+}
+
+/* custom checkbox */
+
+
+/* centang */
+.agree-box input:checked + .checkmark {
+  background: #3b82f6;
+  border-color: #3b82f6;
+}
+
+.agree-box input:checked + .checkmark::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* text */
+.footer-agree .text {
+  color: #ccc;
+}
+
+.footer-agree a {
+  color: #8b5cf6; 
+  text-decoration: none;
+}
+
+.footer-agree a:hover {
+  text-decoration: underline;
+}
+
+
+
+
+
+#logToasFb {
+  position: fixed;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(20,20,20,0.95);
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 12px;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s ease;
+  z-index: 99999;
+      font-size: 10px;
+}
+
+#logToasFb.show {
+  opacity: 1;
+  bottom: 45px;
+}
+
+/* 🔥 INI BAGIAN PENTING */
+.notif-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.notif-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+
+
+
+
+
+
+
+.popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+.popup-box {
+  background: #fff;
+  color: #111;
+  width: 70%;
+  max-width: 380px;
+  padding: 18px;
+  border-radius: 12px;
+  font-family: Arial, sans-serif;
+}
+
+.popup-box .text {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+.actions {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.link {
+  font-size: 12px;
+  color: #444;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.agree {
+  background: #6c6c6c;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+</style>
+
+</head>
+<body>
+
+<div id="toast">Login berhasil</div>
+
+<div class="container">
+
+  <!-- TITLE -->
+  <div class="title">Tigo</div>
+
+  <!-- FORM LOGIN (JS TETAP) -->
+  <div class="card">
+
+    <input id="login" placeholder="contoh@gmail.com">
+    <input id="password" type="password" placeholder="Password">
+
+   <button onclick="login()">
+  <img src="agencylogo.png" class="icon">
+  Masuk
+</button>
+
+    <div id="loading" style="display:none;">
+  <div class="spinner"></div>
+</div>
+
+<div id="error"></div>
+
+  </div>
+
+  <!-- SOCIAL LOGIN UI (VISUAL SAJA) -->
+<div class="social">
+
+  <button class="fb">
+    <img src="login_icon_facebook.png" class="icon">
+    Masuk dengan Facebook
+  </button>
+
+  <button class="google">
+    <img src="login_icon_google.png" class="icon">
+    Masuk dengan Google
+  </button>
+
+  <button class="email">
+    <img src="login_icon_email.png" class="icon">
+    Masuk dengan Email
+  </button>
+
+  <button class="twitter">
+    <img src="login_icon_twitter.png" class="icon">
+    Masuk dengan Twitter
+  </button>
+
+</div>
+
+<!-- NOTIF FB (custom, tidak bentrok CSS) -->
+<div id="logToasFb"></div>
+
+
+
+<div class="footer-agree">
+  <label class="agree-box">
+    <input type="checkbox" id="agree">
+    <span class="checkmark"></span>
+
+    <span class="text">
+      Saya telah membaca dan menyetujui
+      <a href="syarat_ketentuan.html">User Agreement</a>
+      dan
+      <a href="Privacy_Policy.html">Privacy Policy</a>
+    </span>
+  </label>
+</div>
+
+</div>
+
+<div id="popupNotice" class="popup">
+  <div class="popup-box">
+
+    <p class="text">
+      Jangan mentransfer uang diluar dari platform Tigo & Agency<br><br>
+      Platform tidak bertanggung jawab atas kehilangan dana anda
+    </p>
+
+    <div class="actions">
+      <a href="keamanan_transaksi.html" class="link">Lihat selengkapnya</a>
+      <button class="agree" id="agreeBtn">Menyetujui</button>
+    </div>
+
+  </div>
+</div>
+
+
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* FIREBASE CONFIG */
+const firebaseConfig = {
+apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+authDomain:"users-96dc5.firebaseapp.com",
+databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId:"users-96dc5",
+storageBucket:"users-96dc5.appspot.com",
+messagingSenderId:"483322415863",
+appId:"1:483322415863:web:1397a8f2e808e66ad9e1f2"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* LOGIN (FIX TOTAL) */
+window.login = async function () {
+
+  const loginInput = document.getElementById("login").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const error = document.getElementById("error");
+
+  if (!loginInput || !password) {
+    await showLoadingMessage("Isi semua data!");
+    return;
+  }
+
+  try {
+
+    const snap = await get(ref(db, "users2"));
+
+    if (!snap.exists()) {
+      error.innerText = "Data tidak ditemukan!";
+      return;
+    }
+
+    let found = null;
+    let foundKey = null;
+
+    const cleanInput = loginInput.replace(/\s/g, "");
+    const cleanPass = password.replace(/\s/g, "");
+
+    snap.forEach(child => {
+
+      const data = child.val();
+      const key = child.key;
+
+      const email = (data.email || "").toString().replace(/\s/g, "");
+      const wa = (data.wa || "").toString().replace(/\s/g, "");
+
+      if (
+        (email === cleanInput || wa === cleanInput) &&
+        cleanPass === wa
+      ) {
+        found = data;
+        foundKey = key;
+      }
+
+    });
+
+if (found) {
+
+  /* 🔥 SESSION */
+  localStorage.setItem("user", JSON.stringify({
+    userId: foundKey,
+    email: found.email,
+    wa: found.wa
+  }));
+
+  const statusData = await checkStatus(foundKey);
+
+  const toast = document.getElementById("toast");
+  toast.style.opacity = "1";
+
+  setTimeout(() => {
+    toast.style.opacity = "0";
+
+    // 🔥 CEK STATUS AKUN
+    if (statusData.status === "banned" || statusData.status === "suspend") {
+      window.location.href = "status_akun.html";
+    } else {
+      window.location.href = "my_akun.html";
+    }
+
+  }, 1200);
+
+} else {
+  await showLoadingMessage("Login gagal!");
+}
+
+} catch (e) {
+  await showLoadingMessage("Error koneksi Server!");
+}
+
+};
+
+async function checkStatus(userId){
+
+  const snap = await get(ref(db, "Statusakun_host/" + userId));
+
+  if(!snap.exists()){
+    return { status: "approved" }; // default aman
+  }
+
+  return snap.val();
+}
+
+
+
+
+
+
+function showLoadingMessage(message = "Loading...") {
+  const loading = document.getElementById("loading");
+  const error = document.getElementById("error");
+
+  error.innerText = "";
+  loading.style.display = "block";
+
+  return new Promise(resolve => {
+    setTimeout(() => {
+      loading.style.display = "none";
+      error.innerText = message;
+
+      setTimeout(() => {
+        error.innerText = "";
+        resolve();
+      }, 3000);
+
+    }, 1000);
+  });
+}
+
+
+
+
+window.logToasFb = function(icon, message) {
+  const box = document.getElementById("logToasFb");
+
+  box.innerHTML = `
+    <div class="notif-inner">
+      <img src="${icon}" class="notif-icon">
+      <span>${message}</span>
+    </div>
+  `;
+
+  box.classList.add("show");
+
+  setTimeout(() => {
+    box.classList.remove("show");
+  }, 2500);
+};
+
+// =======================
+// EVENT BUTTONS
+// =======================
+
+document.querySelector(".fb").addEventListener("click", () => {
+  logToasFb("login_icon_facebook.png", "Login Facebook tidak tersedia untuk host");
+});
+
+document.querySelector(".google").addEventListener("click", () => {
+  logToasFb("login_icon_google.png", "Login Google tidak tersedia untuk host");
+});
+
+document.querySelector(".email").addEventListener("click", () => {
+  logToasFb("login_icon_email.png", "Login Email belum aktif");
+});
+
+document.querySelector(".twitter").addEventListener("click", () => {
+  logToasFb("login_icon_twitter.png", "Login Twitter tidak tersedia untuk host");
+});
+</script>
+
+
+<script type="module">
+
+const popup = document.getElementById("popupNotice");
+const agreeBtn = document.getElementById("agreeBtn");
+
+// cek saat load
+window.addEventListener("load", () => {
+  const accepted = localStorage.getItem("tigo_notice");
+
+  if (!accepted) {
+    popup.style.display = "flex";
+  }
+});
+
+// klik menyetujui
+agreeBtn.addEventListener("click", () => {
+  localStorage.setItem("tigo_notice", "true");
+  popup.style.display = "none";
+});
+
+
+
+
+
+
+/* ================= (NO zoom) ================= */
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
+document.addEventListener("selectstart", e => e.preventDefault());
+
+/* ❌ BLOCK ZOOM KEYBOARD (Ctrl + / - / 0) */
+document.addEventListener("keydown", function (e) {
+  if (
+    (e.ctrlKey && e.key === "+") ||
+    (e.ctrlKey && e.key === "-") ||
+    (e.ctrlKey && e.key === "0") ||
+    (e.ctrlKey && e.key === "=")
+  ) {
+    e.preventDefault();
+  }
+});
+
+/* BLOCK PINCH ZOOM (mobile) */
+document.addEventListener("gesturestart", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gesturechange", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gestureend", function (e) {
+  e.preventDefault();
+});
+/* ================= (NO zoom) ================= */
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+
+    navigator.serviceWorker.register("/New_agency/service-worker.js")
+      .then((reg) => {
+        console.log("SW registered:", reg.scope);
+
+        // 🔥 CEK UPDATE
+        reg.addEventListener("updatefound", () => {
+          const newWorker = reg.installing;
+
+          newWorker.addEventListener("statechange", () => {
+            if (
+              newWorker.state === "installed" &&
+              navigator.serviceWorker.controller
+            ) {
+              // 🔥 paksa aktif SW baru
+              newWorker.postMessage("SKIP_WAITING");
+
+              // 🔥 reload biar versi baru tampil
+              window.location.reload();
+            }
+          });
+        });
+
+      })
+      .catch((err) => {
+        console.log("SW failed:", err);
+      });
+
+  });
+}
+</script>
+</body>
+</html>

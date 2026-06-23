@@ -404,13 +404,13 @@ document.getElementById("confirmLogoutBtn").onclick = () => {
   window.name = "";
 
   setTimeout(() => {
-    window.location.replace("login.html");
+    window.location.replace("Login.html");
   }, 150);
 };
 
 /* LOGIN */
 const login = JSON.parse(localStorage.getItem("user"));
-if (!login) window.location.href = "login.html";
+if (!login) window.location.href = "Login.html";
 
 const userKey = login.email || login.wa;
 
