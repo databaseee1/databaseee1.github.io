@@ -1,0 +1,1896 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>PT. Agency Tigohost Indonesia</title>
+
+<!-- SEO -->
+<meta name="description" content="Platform resmi daftar host & top up coin terpercaya di Indonesia.">
+
+<!-- OPEN GRAPH -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.tigohost.asia/New_agency/Login.html">
+<meta property="og:title" content="PT. Agency Tigohost Indonesia">
+<meta property="og:description" content="Platform resmi pendaftaran host dan top up coin terpercaya di Indonesia.">
+<meta property="og:image" content="https://www.tigohost.asia/agencylogo.png">
+<meta property="og:image:secure_url" content="https://www.tigohost.asia/agencylogo.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Tigohost Indonesia">
+
+<!-- TWITTER -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PT. Agency Tigohost Indonesia">
+<meta name="twitter:description" content="Platform resmi daftar host & top up coin terpercaya di Indonesia.">
+<meta name="twitter:image" content="https://www.tigohost.asia/agencylogo.png">
+
+<!-- ICON -->
+<link rel="icon" href="https://www.tigohost.asia/agencylogo.png">
+
+<!-- PWA MANIFEST (IMPORTANT FIX) -->
+<link rel="manifest" href="/New_agency/manifest.json?v=2">
+
+<!-- FORCE THEME -->
+<meta name="theme-color" content="#7c3aed">
+
+<!-- ANTI CACHE (IMPORTANT) -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
+<!-- FONT AWESOME -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<!-- CHART JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body{
+  font-family:'Poppins',sans-serif;
+  background:#f6f7fb;
+  padding:0;
+  margin-bottom: 90px;
+}
+
+
+body{
+  font-family:'Poppins',sans-serif;
+  background:#f6f7fb;
+  padding:0;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none !important;
+}
+
+/* hilangkan highlight saat klik/focus */
+button, a, div, span, img {
+  outline: none !important;
+}
+
+
+img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+
+
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+
+#bottomNav99navigasi{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:60px;
+  background:#7c3aed;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  box-shadow:0 -2px 10px rgba(0,0,0,0.1);
+  z-index:99999;
+}
+
+.nav-item99navigasi{
+  flex:1;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+}
+
+.nav-item99navigasi img{
+  height:36px;
+  object-fit:contain;
+  transition:0.2s;
+}
+
+.nav-item99navigasi.active99navigasi img{
+  opacity:1;
+  transform:scale(1.1);
+}
+
+
+.container{
+  max-width:520px;
+  margin:auto;
+  background:#8d57ff;
+  padding:20px;
+  border-radius:16px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.08);
+  margin-top:80px;
+}
+
+/* GRID 2 KOLOM */
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+/* FIELD WRAPPER */
+.field{
+  display:flex;
+  flex-direction:column;
+}
+
+/* LABEL TITLE */
+.field label{
+  font-size:13px;
+  font-weight:600;
+  margin-bottom:4px;
+  color:#ffffff;
+}
+
+/* SUB TEXT */
+.field small{
+  font-size:11px;
+  color:#c3c3c3;
+  margin-bottom:6px;
+}
+
+/* INPUT STYLE */
+input, select{
+  width:90%;
+  padding:10px 12px;
+  border:1px solid #e0e0e0;
+  border-radius:50px;
+  outline:none;
+  font-size:14px;
+  transition:0.2s;
+  background:#fafafa;
+}
+
+input:focus, select:focus{
+  border-color:#4a90e2;
+  background:#fff;
+}
+
+/* FULL WIDTH (UPLOAD & BUTTON) */
+.full{
+  grid-column:1 / -1;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  background:#bd00c7;
+  color:#fff;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:600;
+  margin-top:8px;
+  transition:0.2s;
+}
+
+button:hover{
+  opacity:0.9;
+}
+
+/* IMAGE PREVIEW */
+/* TOMBOL UPLOAD */
+.upload-photo-btn{
+  width:50px;
+  cursor:pointer;
+  display:block;
+}
+
+/* PREVIEW */
+.preview{
+  width:70px;
+  height:70px;
+  object-fit:cover;
+  border-radius:10px;
+  border:1px solid #ddd;
+  display:none;
+}
+.upload-photo-btn:active{
+  transform:scale(.98);
+}
+
+.toast{
+  position:fixed;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%) translateY(-100px);
+  background:#ef4444;
+  color:#fff;
+  padding:14px 18px;
+  border-radius:12px;
+  font-size:14px;
+  font-weight:500;
+  box-shadow:0 10px 25px rgba(0,0,0,.15);
+  z-index:999999;
+  transition:.3s;
+  opacity:0;
+  max-width:90%;
+  text-align:center;
+}
+
+.toast.show{
+  transform:translateX(-50%) translateY(0);
+  opacity:1;
+}
+
+
+
+select:invalid{
+  color:#999;
+}
+
+select option{
+  color:#000;
+}
+
+
+/* HEADER */
+.header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:9999;
+  background:#7c3aed;
+  padding:15px 20px;
+  box-shadow:0 2px 10px rgba(0,0,0,.08);
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+/* TITLE */
+.title-wrap{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.title-logo{
+  width:38px;
+  height:38px;
+  object-fit:contain;
+}
+
+.title-wrap h3{
+  margin:0;
+  font-size:14px;
+  font-weight:700;
+  color:#fff;
+}
+
+/* HAMBURGER ICON */
+.menu-icon{
+  font-size:25px;
+  color:#fff;
+  cursor:pointer;
+  user-select:none;
+}
+
+/* OVERLAY */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.4);
+  display:none;
+  z-index:9998;
+}
+
+/* SIDEBAR */
+.sidebar{
+  position:fixed;
+  top:0;
+  left:-360px;
+  width:260px;
+  height:100%;
+  background:#fff;
+  z-index:9999;
+  padding:20px;
+  transition:0.3s ease;
+  overflow-y:auto;
+  border-radius: 10px;
+}
+
+/* SIDEBAR TITLE */
+.sidebar h3{
+  margin-top:0;
+  font-size:16px;
+  font-weight:700;
+}
+
+/* SIDEBAR LINKS */
+.sidebar a{
+  display:block;
+  padding:10px 0;
+  text-decoration:none;
+  color:#333;
+  border-bottom:1px solid #eee;
+  font-size:14px;
+  transition:0.2s;
+}
+
+.sidebar a:hover{
+  color:#7c3aed;
+  padding-left:5px;
+}
+
+select:invalid{
+  color:#999;
+}
+
+select option{
+  color:#000;
+}
+
+
+
+
+
+
+.host-box {
+  border: 2px solid #6A0DAD; /* ungu */
+  background: #f9f9ff;       /* abu keunguan */
+  padding: 15px;
+  border-radius: 12px;
+  margin: 20px 0;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.host-box h3 {
+  text-align: center;
+  color: #6A0DAD;
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+/* Grid foto: 5 kolom agar box lebih kecil */
+.foto-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 kolom */
+  gap: 10px; /* jarak dikit lebih rapat */
+  margin: 20px 0;
+}
+
+/* Box foto lebih kecil */
+.foto-box {
+  aspect-ratio: 1 / 1;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  max-width: 100%; /* biar responsive */
+}
+
+/* Hover efek */
+.foto-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Gambar */
+.foto-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px; /* bisa 12px saja untuk lebih kecil */
+}
+.foto-box:hover { transform: scale(1.05); }
+.foto-box img { width: 100%; height: 100%; border-radius: 30px; object-fit: cover; }
+
+
+
+
+
+
+
+/* container kosong */
+#mp_empty{
+    text-align:center;
+    padding:20px;
+    color:#888;
+    font-size:14px;
+}
+
+/* card postingan */
+#mp_post_card{
+    background:#fff;
+    border-radius:12px;
+    padding:12px;
+    margin:10px 0;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* header */
+#mp_post_header{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:8px;
+}
+
+/* avatar */
+#mp_avatar{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  overflow:hidden;
+  background:#7c3aed;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  font-size:16px;
+}
+
+#mp_avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+/* user info */
+#mp_user_info{
+    display:flex;
+    flex-direction:column;
+}
+
+#mp_nama{
+    font-weight:600;
+    font-size:14px;
+    color:#111;
+}
+
+#mp_tanggal{
+    font-size:12px;
+    color:#777;
+}
+
+/* judul */
+#mp_judul{
+    font-size:15px;
+    font-weight:600;
+    margin:8px 0 4px;
+    color:#111;
+}
+
+/* deskripsi */
+#mp_deskripsi{
+    font-size:14px;
+    color:#444;
+    line-height:1.4;
+}
+
+/* footer */
+#mp_post_footer{
+    display:flex;
+    justify-content:space-between;
+    margin-top:10px;
+    padding-top:8px;
+    border-top:1px solid #eee;
+}
+
+/* action button */
+#mp_action_like,
+#mp_action_comment,
+#mp_action_share{
+    font-size:13px;
+    color:#555;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:5px;
+    transition:0.2s;
+}
+
+#mp_action_like:hover,
+#mp_action_comment:hover,
+#mp_action_share:hover{
+    color:#111;
+}
+
+
+
+
+.muted {
+  text-align: center;
+  color: #666;
+  margin-bottom: 20px;
+  font-size: 10px;
+
+  /* tambahan untuk jadi box */
+  background: #f9f9f9;   /* warna latar */
+  border: 1px solid #ddd; /* garis kotak */
+  padding: 12px;          /* ruang dalam */
+  border-radius: 8px;     /* sudut melengkung */
+  display: inline-block;  /* supaya kotaknya pas dengan teks */
+}
+
+
+
+
+.guest-notif{
+    position:fixed;
+    top:20px;
+    left:50%;
+    transform:translateX(-50%) translateY(-100px);
+    background:#ffffff;
+    color:#3b3b3b;
+    padding:14px 20px;
+    border-radius:12px;
+    font-size:14px;
+    font-weight:600;
+    z-index:99999;
+    opacity:0;
+    transition:.35s;
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+.guest-notif.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+}
+
+
+.popup{
+  position:fixed;
+  inset:0;
+  display:none;
+  flex-direction:column;
+  z-index:10000;
+
+  background:#fff;
+
+  height:100vh;
+  overflow:hidden; /* penting */
+}
+/* HEADER STICKY */
+.popup-header{
+  display:flex;
+   flex-shrink:0;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px;
+  background:#7c3aed;
+  color:#fff;
+  position:sticky;
+  top:0;
+  z-index:2;
+}
+
+.popup-header h3{
+  margin:0;
+  font-size:15px;
+}
+
+.popup-header span{
+  cursor:pointer;
+  font-size:20px;
+}
+
+/* CONTENT FULL */
+/* CONTENT SCROLL FIX */
+#infoContainer{
+  flex:1;
+  overflow-y:auto;
+  padding:15px;
+  height: 100vh;
+
+
+}
+/* ITEM STYLE */
+#infoContainer p{
+  font-size:13px;
+  margin:10px 0;
+  padding:12px;
+  background:#f6f6f6;
+  border-radius:10px;
+  word-break:break-word;
+}
+
+#infoContainer b{
+  color:#7c3aed;
+}
+
+
+.card-wrap02{
+  display:flex;
+  gap:10px;
+  padding:10px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+}
+
+.card02{
+  min-width:60px;
+  height:60px;
+  flex:0 0 auto;
+  border-radius:12px;
+  overflow:hidden;
+  background:#eee;
+  scroll-snap-align:start;
+  box-shadow:0 3px 10px rgba(0,0,0,.1);
+
+  position:relative; /* penting */
+}
+
+.card02 img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* NAMA DI DALAM FOTO */
+.name02{
+  position:absolute;
+  bottom:5px;
+  left:5px;
+  font-size:10px;
+  color:#9a00ff;
+  font-weight:600;
+  background:rgb(255 255 255);
+  padding:2px 5px;
+  border-radius:6px;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+
+
+
+
+.btn-wrap3289{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  flex-wrap:nowrap; 
+}
+
+#btnDiskusi3289,
+#btnRank3289{
+  background:#00b894;
+  color:#fff;
+  padding:10px 14px;
+  border:none;
+  border-radius:8px;
+  font-size:13px;
+  font-weight:bold;
+  cursor:pointer;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+
+  box-shadow:0 4px 6px rgba(0,0,0,0.3);
+  white-space:nowrap;
+}
+
+/* beda warna tiap tombol */
+#btnRank3289{
+  background:#6c5ce7;
+}
+
+/* icon */
+#btnDiskusi3289 img,
+#btnRank3289 img{
+  width:22px;
+  height:22px;
+  display:block;
+}
+
+
+@keyframes boom3289 {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.6) rotate(-10deg);
+  }
+  60% {
+    transform: scale(1.3) rotate(10deg);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+
+
+.like-wrap3289.boom {
+  animation: boom3289 0.4s ease;
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- HEADER -->
+<!-- HEADER -->
+<div class="header">
+  <div class="title-wrap">
+    <img src="score_icon_wrap.png" class="title-logo">
+    <h3>PT AGENCY TIGOHSOT INDONESIA</h3>
+  </div>
+
+  <i class="fa-solid fa-sliders menu-icon" id="menuBtn"></i>
+</div>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay"></div>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+
+  <h3>MENU</h3>
+
+  <a href="tentang.html">Tentang</a>
+  <a href="#" id="kontakBtn">Kontak</a>
+  <a href="syarat_ketentuan.html">Syarat & Ketentuan</a>
+  <a href="tentang_host.html">Tentang Host</a>
+  <a href="tentang_agency.html">Tentang Agency</a>
+  <a href="tentang_topup.html">Tentang Top Up</a>
+  <a href="tentang_aplikasi.html">Tentang Aplikasi</a><br>
+  <h3>Tutorial</h3>
+  <a href="cara_deposit.html">Cara Deposit Akun Host</a>
+  <a href="cara_topup_coin.html">Cara Top Up Coin</a>
+  <a href="cara_gabung_agency.html">Cara Gabung Agency</a>
+  <a href="cara_lapor_agency.html">Cara Lapor Agency</a>
+  <a href="cara_refund_coin.html">Cara Refund Coin</a>
+
+</div>
+
+
+<div class="container">
+
+<p class="muted">Lengkapi data berikut untuk mendaftar sebagai Host Agency TIGOHOST. Setelah mengirim, status akan muncul otomatis.</p>
+
+<div class="form-grid">
+
+  <div class="field">
+    <label>Nama</label>
+    <input id="nama" placeholder="Contoh: Jhon cold">
+  </div>
+
+  <div class="field">
+    <label>Nama Rekening</label>
+    <input id="namaRek" placeholder="Nama Rekening">
+  </div>
+
+<div class="field">
+  <label>Bank / E-Wallet</label>
+
+  <select id="bank" required>
+
+    <option value="" selected disabled>
+    Bank / E-Wallet
+    </option>
+
+    <!-- BANK -->
+    <option>BCA</option>
+    <option>BRI</option>
+    <option>BNI</option>
+    <option>Bank Mandiri</option>
+    <option>Bank Syariah Indonesia (BSI)</option>
+    <option>CIMB Niaga</option>
+    <option>Permata Bank</option>
+    <option>Bank Danamon</option>
+    <option>BTN</option>
+    <option>Bank Mega</option>
+    <option>OCBC NISP</option>
+    <option>Maybank Indonesia</option>
+    <option>Panin Bank</option>
+    <option>Bank Neo Commerce</option>
+    <option>SeaBank</option>
+    <option>Jago</option>
+    <option>Allo Bank</option>
+    <option>Bank Jatim</option>
+    <option>Bank Sumut</option>
+    <option>Bank Nagari</option>
+    <option>Bank DKI</option>
+    <option>Bank Kaltimtara</option>
+
+    <!-- E-WALLET -->
+    <option>DANA</option>
+    <option>OVO</option>
+    <option>GoPay</option>
+    <option>ShopeePay</option>
+    <option>LinkAja</option>
+    <option>iSaku</option>
+    <option>Flip</option>
+    <option>AstraPay</option>
+    <option>MotionPay</option>
+    <option>Sakuku BCA</option>
+
+  </select>
+</div>
+
+  <div class="field">
+    <label>No Rekening</label>
+    <input id="noRek" placeholder="1234567890">
+  </div>
+
+<div class="field">
+  <label>Jenis Kelamin</label>
+  <select id="jk" required>
+
+    <option value="" selected disabled>
+      Jenis Kelamin
+    </option>
+
+    <option value="Laki-laki">Laki-laki</option>
+    <option value="Perempuan">Perempuan</option>
+
+  </select>
+</div>
+
+  <div class="field">
+    <label>Umur</label>
+    <input id="umur" placeholder="Contoh: 21">
+  </div>
+
+  <div class="field full">
+    <label>App Name</label>
+    <small>Nama aplikasi</small>
+    <input id="appName" placeholder="Username">
+  </div>
+
+  <div class="field full">
+    <label>WhatsApp</label>
+    <small>Nomor aktif untuk verifikasi</small>
+    <input id="wa" placeholder="08xxxxxxxxxx">
+  </div>
+
+  <div class="field full">
+    <label>Email</label>
+    <small>Masukkan email aktif</small>
+    <input id="email" placeholder="example@gmail.com">
+  </div>
+
+<div class="field full">
+<label>Foto Profil</label>
+  <img
+    src="im_image.png"
+    id="uploadBtn"
+    class="upload-photo-btn"
+    onclick="chooseImage()"
+  >
+
+  <img
+    id="preview"
+    class="preview"
+  >
+
+  <input
+    type="file"
+    id="imageInput"
+    accept="image/*"
+    style="display:none"
+  >
+
+</div>
+
+  <div class="field full">
+    <button onclick="register()">Daftar</button>
+  </div>
+
+</div>
+
+<!-- GRID FOTO -->
+<div class="foto-grid" id="fotoGrid"></div>
+
+</div>
+
+
+
+<div style="display:flex; justify-content:center; gap:10px; background:#d8d8d8; margin-top:30px;">
+  <!-- 🔹 Tombol Lihat Total Data -->
+  <button onclick="window.location.href='https://www.tigohost.asia/analisist%20data%20host/'" 
+    style="
+      background:#B600FF; 
+      color:#fff; 
+      padding:12px 25px; 
+      border:none; 
+      border-radius:8px; 
+      font-size:14px; 
+      font-weight:bold;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      box-shadow:0 4px 6px rgba(0,0,0,0.3);
+    ">
+    <img src="msg_icon_friend.png" alt="Logo" style="
+      width:25px; 
+      height:25px; 
+      filter:brightness(0) invert(1);
+    "> 
+    Lihat Total Data
+  </button>
+
+  <!-- 🔹 Tombol Lihat Bukti Host -->
+  <button onclick="openPopupBukti()" 
+    style="
+      background:#0096FF; 
+      color:#fff; 
+      padding:12px 25px; 
+      border:none; 
+      border-radius:8px; 
+      font-size:14px; 
+      font-weight:bold;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      box-shadow:0 4px 6px rgba(0,0,0,0.3);
+    ">
+    <img src="float_video_1_f.png" alt="Logo" style="
+      width:25px; 
+      height:25px; 
+    "> 
+    Lihat Bukti Host
+  </button>
+</div>
+
+<button onclick="window.location.href='https://www.tigohost.asia/app.tigohost.html'" 
+  style="
+    background:#0096FF; 
+    color:#fff; 
+    padding:12px 25px; 
+    border:none; 
+    border-radius:8px; 
+    font-size:14px; 
+    font-weight:bold;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    box-shadow:0 4px 6px rgba(0,0,0,0.3);
+  ">
+  <img src="ic_launcher - Copy.png" alt="Logo" style="width:25px; height:25px;"> 
+  Tigo Aplikasi
+</button>
+
+
+<button onclick="window.location.href='perjanjian_pembayaran_akun.html'" 
+  style="
+    background:#0096FF; 
+    color:#fff; 
+    padding:12px 25px; 
+    border:none; 
+    border-radius:8px; 
+    font-size:14px; 
+    font-weight:bold;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    box-shadow:0 4px 6px rgba(0,0,0,0.3);
+  ">
+  <img src="agencylogo.png" alt="Logo" style="width:25px; height:25px; border-radius: 5px;"> 
+  Syarat Menjadi Host
+</button>
+
+
+
+<div class="btn-wrap3289">
+
+  <!-- Diskusi -->
+  <button id="btnDiskusi3289" onclick="window.location.href='https://www.tigohost.asia/forumdiskusi/'">
+    <img src="certification_award_icon_1.png">
+    <span>Diskusi Pengguna</span>
+  </button>
+
+  <!-- Peringkat -->
+  <button id="btnRank3289" onclick="window.location.href='https://www.tigohost.asia/allhost/allhost.html'">
+    <img src="jing_hao - Copy.png">
+    <span>Penghasilan Host</span>
+  </button>
+
+</div>
+
+
+
+
+
+
+<div class="card-wrap02" id="cardWrap02"></div>
+
+
+<div id="listPostingan"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="bottomNav99navigasi">
+
+  <!-- KIRI -->
+  <div class="nav-item99navigasi" onclick="goSale99navigasi()">
+    <img src="Kotak.png" alt="">
+  </div>
+
+  <!-- TENGAH -->
+  <div class="nav-item99navigasi active99navigasi" onclick="goMatch99navigasi()">
+    <img src="match_icon_normal.png" alt="">
+  </div>
+
+  <!-- KANAN -->
+  <div class="nav-item99navigasi" onclick="goMine99navigasi()">
+    <img src="mine_icon_normal.png" alt="">
+  </div>
+
+</div>
+
+
+
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  push,
+  set,
+  get,
+  update,
+  onValue,
+  remove,
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+
+
+/* FIREBASE */
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const realtimeDb = getDatabase(app);
+
+
+
+const wrap02 = document.getElementById("cardWrap02");
+
+// AMBIL DATA USERS
+const usersRef = ref(db, "users2");
+
+onValue(usersRef, (snap) => {
+  wrap02.innerHTML = "";
+
+  const users = [];
+
+  snap.forEach(child => {
+    users.push(child.val());
+  });
+
+  // BALIK URUTAN (TERBARU DI DEPAN)
+  users.reverse();
+
+  users.forEach(data => {
+    const img = data.profil || "splash_icon.png";
+
+    wrap02.innerHTML += `
+      <div class="card02">
+        <img src="${img}">
+        <div class="name02">${data.appName || "User"}</div>
+      </div>
+    `;
+  });
+});
+
+
+const fotoGrid = document.getElementById("fotoGrid");
+
+onValue(ref(realtimeDb, "allhost"), (snap) => {
+    const data = snap.val();
+
+    fotoGrid.innerHTML = "";
+
+    if (!data) {
+        fotoGrid.innerHTML = `<div class="empty">Belum ada host</div>`;
+        return;
+    }
+
+    const items = Object.entries(data)
+        .sort((a, b) => {
+            return (b[1].penghasilanMingguIni || 0) - (a[1].penghasilanMingguIni || 0);
+        })
+        .slice(0, 10); // 🔥 top 10
+
+    items.forEach(([id, val]) => {
+
+        fotoGrid.innerHTML += `
+        <div class="foto-box"
+        onclick="window.location.href='https://www.tigohost.asia/allhost/allhost.html?id=${id}'">
+
+            <img src="${val.foto || 'https://via.placeholder.com/300'}" alt="${val.profil || 'host'}">
+
+        </div>
+        `;
+    });
+});
+
+
+
+
+document.addEventListener("click", (e) => {
+
+  if(e.target.closest(".mp_action_comment")){
+    window.showGuestNotif(e);
+  }
+
+  if(e.target.closest(".mp_action_share")){
+    window.showGuestNotif(e);
+  }
+
+});
+
+window.showGuestNotif = function(e){
+
+    e.stopPropagation();
+
+    const notif = document.getElementById("guestNotif");
+
+    notif.classList.add("show");
+
+    clearTimeout(window.notifTimer);
+
+    window.notifTimer = setTimeout(()=>{
+        notif.classList.remove("show");
+    },2500);
+
+}
+
+
+
+function formatLike3289(num){
+  if(num >= 1000000){
+    return (num/1000000).toFixed(1).replace(/\.0$/, "") + "Jt";
+  }
+  if(num >= 1000){
+    return (num/1000).toFixed(1).replace(/\.0$/, "") + "k";
+  }
+  return num;
+}
+
+
+
+const likeCooldown3289 = {};
+const COOLDOWN_TIME = 60 * 1000; // 1 menit
+let currentIP3289 = null;
+
+async function initIP3289(){
+  try {
+    const res = await fetch("https://api.ipify.org?format=json");
+    const data = await res.json();
+    currentIP3289 = data.ip.replace(/\./g, "_");
+
+    // 🔥 setelah IP siap, baru render ulang
+    loadPosts3289();
+
+  } catch {
+    currentIP3289 = "unknown_ip";
+    loadPosts3289();
+  }
+}
+
+initIP3289();
+
+document.addEventListener("click", async (e) => {
+
+  const likeBtn = e.target.closest(".mp_action_like3289");
+  if(!likeBtn) return;
+
+  const postId = likeBtn.dataset.id;
+  const safeIP = currentIP3289;
+
+  if(!safeIP) return;
+
+  // ⛔ ANTI SPAM 1 MENIT
+  const key = postId + "_" + safeIP;
+  const now = Date.now();
+
+  if(likeCooldown3289[key] && now - likeCooldown3289[key] < COOLDOWN_TIME){
+    showNotif3289("Tunggu 1 menit sebelum klik lagi");
+    return;
+  }
+
+  likeCooldown3289[key] = now;
+
+  const postRef = ref(db, "Mypostingan/" + postId);
+  const snap = await get(postRef);
+
+  if(!snap.exists()) return;
+
+  const data = snap.val();
+
+  let likes = Number(data.like) || 0;
+  let likedBy = data.likedBy || {};
+
+  const icon = likeBtn.querySelector("i");
+
+  if(likedBy[safeIP]){
+
+    delete likedBy[safeIP];
+    likes = Math.max(0, likes - 1);
+
+    icon.className = "fa-regular fa-heart";
+
+  } else {
+
+    likedBy[safeIP] = true;
+    likes += 1;
+
+    icon.className = "fa-solid fa-heart";
+    icon.style.color = "#ff0000";
+
+ const wrap = likeBtn;
+
+wrap.classList.add("boom");
+
+setTimeout(() => {
+  wrap.classList.remove("boom");
+}, 400);
+
+    showNotif3289("Berhasil memberikan Like");
+  }
+
+  await update(postRef, {
+    like: likes,
+    likedBy: likedBy
+  });
+
+});
+
+
+
+const listPostingan = document.getElementById("listPostingan");
+
+function loadPosts3289(){
+
+  onValue(ref(realtimeDb,"Mypostingan"),(snap)=>{
+
+    const data = snap.val();
+
+    if(!data){
+      listPostingan.innerHTML = `<div id="mp_empty">Belum ada postingan</div>`;
+      return;
+    }
+
+    let posts = [];
+
+    Object.entries(data).forEach(([id,val])=>{
+      posts.push({ id, ...val });
+    });
+
+    posts.sort((a,b)=>
+      Number(b.timestamp || 0) - Number(a.timestamp || 0)
+    );
+
+    listPostingan.innerHTML = "";
+
+    posts.forEach(post=>{
+
+      const liked = post.likedBy?.[currentIP3289] === true;
+
+      listPostingan.innerHTML += `
+        <div id="mp_post_card">
+
+          <div id="mp_post_header">
+
+            <div id="mp_avatar">
+              ${
+                post.profil
+                  ? `<img src="${post.profil}">`
+                  : (post.namaPemosting?.charAt(0) || "A")
+              }
+            </div>
+
+            <div id="mp_user_info">
+              <div id="mp_nama">${post.namaPemosting}</div>
+              <div id="mp_tanggal">${post.tanggal}</div>
+            </div>
+
+          </div>
+
+          <div id="mp_judul">${post.judul}</div>
+          <div id="mp_deskripsi">${post.deskripsi}</div>
+
+          <div id="mp_post_footer">
+
+<span class="mp_action_like3289 like-wrap3289" data-id="${post.id}">
+  <i class="${liked ? "fa-solid" : "fa-regular"} fa-heart"
+     style="color:${liked ? "#ff0000" : ""}">
+  </i>
+
+  ${formatLike3289(post.like || 0)}
+</span>
+
+<span class="mp_action_comment">
+  <i class="fa-regular fa-comment"></i>
+  ${post.komentar || 0}
+</span>
+
+<span class="mp_action_share">
+  <i class="fa-regular fa-share-from-square"></i>
+  Bagikan
+</span>
+
+          </div>
+
+        </div>
+      `;
+    });
+
+  });
+}
+
+
+
+function showNotif3289(text){
+  let div = document.createElement("div");
+
+  div.innerText = text;
+  div.style.position = "fixed";
+  div.style.bottom = "20px";
+  div.style.left = "50%";
+  div.style.transform = "translateX(-50%)";
+  div.style.background = "#000";
+  div.style.color = "#fff";
+  div.style.padding = "10px 15px";
+  div.style.borderRadius = "8px";
+  div.style.zIndex = "99999";
+  div.style.fontSize = "13px";
+
+  document.body.appendChild(div);
+
+  setTimeout(() => {
+    div.remove();
+  }, 2000);
+}
+
+
+
+
+
+
+
+
+
+
+/* CLOUDINARY */
+let profileUrl = "";
+
+/* ================= IMAGE UPLOAD ================= */
+window.chooseImage = function () {
+
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = "image/*";
+
+  input.onchange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "fotousershost");
+
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/dowoq4a0i/image/upload",
+      { method: "POST", body: formData }
+    );
+
+    const data = await res.json();
+    profileUrl = data.secure_url;
+
+    const preview = document.getElementById("preview");
+
+    if (preview) {
+      preview.src = profileUrl;
+      preview.style.display = "block";
+    }
+
+    /* OPTIONAL: sembunyikan tombol kalau ada */
+    const uploadBtn = document.getElementById("uploadBtn");
+    if (uploadBtn) {
+      uploadBtn.style.display = "none";
+    }
+
+  };
+
+  input.click();
+};
+
+
+function normalizeEmail(email){
+  return email.trim().toLowerCase();
+}
+
+/* ================= REGISTER ================= */
+window.register = async function(){
+
+const nama = document.getElementById("nama").value;
+const namaRek = document.getElementById("namaRek").value;
+const bank = document.getElementById("bank").value;
+const noRek = document.getElementById("noRek").value;
+const jk = document.getElementById("jk").value;
+const appName = document.getElementById("appName").value;
+const umur = document.getElementById("umur").value;
+const wa = document.getElementById("wa").value;
+const email = document.getElementById("email").value;
+
+if(
+  !nama || !namaRek || !bank || !noRek || !jk ||
+  !umur || !appName || !wa || !email || !profileUrl
+){
+  showToast("Mohon lengkapi seluruh data dan foto profil.");
+  return;
+}
+
+/* 🔥 NORMALISASI EMAIL */
+const cleanEmail = normalizeEmail(email);
+
+/* 🔥 CEK EMAIL SUDAH ADA ATAU BELUM */
+const snap = await get(ref(db, "users2"));
+
+let exists = false;
+
+snap.forEach(child => {
+  const data = child.val();
+  if(data.email && normalizeEmail(data.email) === cleanEmail){
+    exists = true;
+  }
+});
+
+if(exists){
+  showToast("Email sudah terdaftar, silahkan gunakan email lain");
+  return;
+}
+
+/* ================= REGISTER ================= */
+const userData = {
+  nama,
+  namaRek,
+  bank,
+  noRek,
+  jk,
+  appName,
+  umur,
+  wa,
+  email: cleanEmail,
+  profil: profileUrl || "",
+  read: false,
+  saldo: 0,
+  jumlahTagihan: 0,
+  level: "Level 0",
+  statush: "host",
+  verified: false,
+  createdAt: Date.now(),
+};
+
+
+
+const newRef = push(ref(db, "users2"));
+await set(newRef, userData);
+
+showToast("Pendaftaran berhasil!");
+
+
+
+/* ================= REFERRAL SYSTEM ================= */
+const urlParams = new URLSearchParams(window.location.search);
+const refCode = urlParams.get("ref");
+
+if (refCode) {
+  try {
+    // ambil pemilik referral
+    const refSnap = await get(ref(db, "refcodes/" + refCode));
+
+    if (refSnap.exists()) {
+      const hostId = refSnap.val().hostId;
+
+      // ambil data user yang baru daftar (opsional info)
+  /* BONUS RANDOM */
+const minBonus = 321052;
+const maxBonus = 420000;
+
+const bonus =
+  Math.floor(
+    Math.random() * (maxBonus - minBonus + 1)
+  ) + minBonus;
+
+
+
+ /* ================= RIWAYAT REFERRAL ================= */
+
+  const referralHistoryRef = push(
+    ref(db, `referralHistory/${hostId}`)
+  );
+
+  await set(referralHistoryRef, {
+    userId: newRef.key,
+    nama: nama || "-",
+    wa: wa || "-",
+    email: email || "-",
+    bonus: bonus,
+    profil: profileUrl || "",
+    createdAt: Date.now(),
+    read: false,
+    readAdmin: false
+  });
+
+
+
+/* TAMBAH SALDO HOST */
+const hostSnap = await get(
+  ref(db, "users2/" + hostId)
+);
+
+if (hostSnap.exists()) {
+
+  const hostData = hostSnap.val();
+
+  const saldoLama =
+    Number(hostData.saldo || 0);
+
+  const saldoBaru =
+    saldoLama + bonus;
+
+  await update(
+    ref(db, "users2/" + hostId),
+    {
+      saldo: saldoBaru
+    }
+  );
+}
+
+const notifText =
+  `Selamat, users baru mendaftar sebagai host. Komisi sebesar Rp ${bonus.toLocaleString("id-ID")} telah berhasil kamu peroleh dan diproses ke akun anda. Silakan periksa secara berkala.`;
+
+
+
+      // push ke notifikasi host
+      const notifRef = push(
+        ref(db, `fithnerchats/notifikasi/${hostId}/withdraw`)
+      );
+
+      await set(notifRef, {
+        text: notifText,
+        read: false,
+        time: Date.now(),
+        profil: "notifikasi.png"
+      });
+    }
+
+  } catch (err) {
+    console.log("Referral notif error:", err);
+  }
+}
+
+
+
+
+
+/* 🔥 AKALIN: hapus semua session browser terkait login */
+localStorage.clear();
+sessionStorage.clear();
+
+/* optional: kalau ada cache user tertentu */
+localStorage.removeItem("user");
+
+/* tampilkan popup sukses */
+const popup = document.getElementById("successPopup");
+
+if (popup) {
+  popup.style.display = "flex";
+}
+
+};
+
+
+window.goHome = function(){
+  window.location.href = "https://www.tigohost.asia/";
+};
+
+
+window.showToast = function(text){
+
+  const toast = document.getElementById("toast");
+
+  toast.innerText = text;
+  toast.classList.add("show");
+
+  setTimeout(()=>{
+    toast.classList.remove("show");
+  },3000);
+
+};
+
+
+
+
+const sidebar = document.getElementById("sidebar");
+const overlay = document.getElementById("overlay");
+const menuBtn = document.getElementById("menuBtn");
+
+
+let isOpen = false;
+
+// TOGGLE MENU
+menuBtn.addEventListener("click", () => {
+  isOpen = !isOpen;
+
+  if (isOpen) {
+    sidebar.style.left = "0";
+    overlay.style.display = "block";
+  } else {
+    sidebar.style.left = "-360px";
+    overlay.style.display = "none";
+  }
+});
+
+// CLOSE MENU (klik luar)
+overlay.addEventListener("click", () => {
+  isOpen = false;
+  sidebar.style.left = "-360px";
+  overlay.style.display = "none";
+});
+
+// KONTAK (tidak pindah halaman)
+const kontakBtn = document.getElementById("kontakBtn");
+const popup = document.getElementById("popupKontak");
+const closePopup = document.getElementById("closePopup");
+const infoContainer = document.getElementById("infoContainer");
+
+function openPopup(){
+  popup.style.display = "flex";
+}
+
+function close(){
+  popup.style.display = "none";
+}
+
+// OPEN
+kontakBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  const dataRef = ref(db, "informasi_perusahaan/company_info");
+
+  onValue(dataRef, (snap) => {
+    const data = snap.val();
+
+    infoContainer.innerHTML = "";
+
+    if(!data){
+      infoContainer.innerHTML = "<p>Data kosong</p>";
+      return;
+    }
+
+    Object.entries(data).forEach(([key, value]) => {
+      infoContainer.innerHTML += `
+        <p><b>${key}</b><br>${value}</p>
+      `;
+    });
+
+    openPopup();
+  });
+});
+
+// CLOSE
+closePopup.addEventListener("click", close);
+
+// klik ESC (opsional keren)
+document.addEventListener("keydown", (e) => {
+  if(e.key === "Escape") close();
+});
+
+
+
+
+
+
+
+
+
+window.scrollTop99navigasi = function () {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+};
+
+
+/* ================= SALE (NO SCROLL) ================= */
+window.goSale99navigasi = function () {
+  window.location.href = "sale.html";
+};
+
+
+/* ================= MATCH (SCROLL ONLY HERE) ================= */
+window.goMatch99navigasi = function () {
+
+  window.scrollTop99navigasi();
+
+  setTimeout(() => {
+    window.location.href = "#";
+  }, 300);
+
+};
+
+
+/* ================= MINE (NO SCROLL) ================= */
+window.goMine99navigasi = function () {
+  window.location.href = "login.html";
+};
+
+
+
+
+/* ================= (NO zoom) ================= */
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
+document.addEventListener("selectstart", e => e.preventDefault());
+
+/* ❌ BLOCK ZOOM KEYBOARD (Ctrl + / - / 0) */
+document.addEventListener("keydown", function (e) {
+  if (
+    (e.ctrlKey && e.key === "+") ||
+    (e.ctrlKey && e.key === "-") ||
+    (e.ctrlKey && e.key === "0") ||
+    (e.ctrlKey && e.key === "=")
+  ) {
+    e.preventDefault();
+  }
+});
+
+/* ❌ BLOCK PINCH ZOOM (mobile) */
+document.addEventListener("gesturestart", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gesturechange", function (e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gestureend", function (e) {
+  e.preventDefault();
+});
+/* ================= (NO zoom) ================= */
+
+
+
+</script>
+
+
+<div id="successPopup" style="
+  display:none;
+  position:fixed;
+  top:0;left:0;
+  right:0;bottom:0;
+  background:rgba(0,0,0,.6);
+  justify-content:center;
+  align-items:center;
+  z-index:99999;
+">
+  <div style="
+    background:#fff;
+    padding:25px;
+    border-radius:16px;
+    text-align:center;
+    width:80%;
+    max-width:300px;
+  ">
+  <i class="fa fa-check-circle" style="font-size:40px;color:#22c55e;margin-bottom:10px;"></i>
+    <h3>Pendaftaran Terkirim</h3>
+
+    <p style="font-size:13px; line-height:1.5; color:#444;">
+      Pendaftaran Anda telah berhasil dikirim ke platform Tigo App melalui PT Agency Tigohost Indonesia.
+      Tim verifikasi akan melakukan pemeriksaan data dan penentuan status akun dalam waktu maksimal 2 hari kerja.
+      Mohon menunggu dengan sabar. Informasi lebih lanjut akan disampaikan setelah proses verifikasi selesai.
+    </p>
+
+    <button onclick="goHome()" style="
+      margin-top:15px;
+      padding:10px 15px;
+      border:none;
+      background:#bd00c7;
+      color:#fff;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:600;
+    ">
+      Mengerti
+    </button>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+  <div id="guestNotif" class="guest-notif">
+    Pengunjung tidak dapat memberikan aksi ini
+</div>
+
+
+
+<div class="popup" id="popupKontak">
+  <div class="popup-card">
+
+    <div class="popup-header">
+      <h3>Informasi Perusahaan</h3>
+      <span id="closePopup">✕</span>
+    </div>
+
+    <div id="infoContainer"></div>
+
+  </div>
+</div>
+
+
+</body>
+</html>
