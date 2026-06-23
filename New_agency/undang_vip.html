@@ -726,10 +726,10 @@ window.generateLink = async function(){
   generatedCode = makeCode();
 
   /* 🔥 FIX URL CLEAN */
-  generatedLink = new URL(
-    "/register.html?ref=" + generatedCode,
-    window.location.origin
-  ).href;
+generatedLink = new URL(
+  "/New_agency/register.html?ref=" + generatedCode,
+  window.location.origin
+).href;
 
   const box = document.getElementById("linkBox");
   if(box) box.innerText = getShortLink(generatedLink);
