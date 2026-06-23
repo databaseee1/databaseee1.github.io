@@ -1,4 +1,4 @@
-const CACHE_NAME = "Tigoapp.v5"; // 🔥 naikkan versi tiap update
+const CACHE_NAME = "Tigoapp.v5"; // 
 
 const urlsToCache = [
   "/New_agency/Login.html",
