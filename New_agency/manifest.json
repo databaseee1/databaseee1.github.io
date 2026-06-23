@@ -12,7 +12,7 @@
 
   "icons": [
     {
-      "src": "ic_launcher_foreground.png",
+      "src": "apple-touch-icon.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
