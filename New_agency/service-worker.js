@@ -5,7 +5,7 @@ const urlsToCache = [
   "/New_agency/register.html",
   "/New_agency/manifest.json",
   "/New_agency/launchericon-192x192.png",
-  "/New_agency/apple-touch-icon.png",
+  "/New_agency/launchericon-512x512.png",
   "/New_agency/offline.html"
 ];
 
