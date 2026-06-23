@@ -45,6 +45,53 @@ img {
 
 
 
+#splash{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+
+  /* BACKGROUND GAMBAR ASLI (NO BLUR) */
+  background: url("ic_launcher_background.png") center/cover no-repeat;
+
+  animation: fadeIn 0.5s ease;
+}
+
+/* OPTIONAL: biar logo tetap keliatan jelas */
+/* overlay gelap tipis */
+#splash::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: rgba(0,0,0,0.25);
+}
+
+/* logo */
+#splash img{
+  position:relative;
+  z-index:2;
+  width:120px;
+  height:120px;
+  border-radius:20px;
+}
+
+/* FOOTER TEXT */
+#splash .footer{
+  position:absolute;
+  bottom:25px;
+  width:100%;
+  text-align:center;
+
+  color:white;
+  font-size:16px;
+  z-index:2;
+}
+
+
 /* BACKGROUND */
 /* BACKGROUND */
 body {
@@ -56,31 +103,48 @@ body {
   align-items: center;
   position: relative;
   overflow: hidden;
-}
 
+  /* penting biar animasi jalan halus */
+  min-height: 100vh;
+}
 * {
   font-family: 'Poppins', sans-serif;
 }
 
 
-/* background image (dari upload kamu) */
+
+/* WRAPPER BACKGROUND */
 body::before {
   content: "";
-  position: absolute;
+  position: fixed;
   inset: 0;
-  background: url("Desainlog.png") center/cover no-repeat;
+
+  background: url("Desainlog.png") repeat-y;
+  background-size: cover;
+
   filter: blur(8px) brightness(0.6);
   transform: scale(1.1);
+
+  animation: scrollDown 12s linear infinite;
 }
 
 /* DARK OVERLAY */
 body::after {
   content: "";
-  position: absolute;
+  position: fixed;
   inset: 0;
   background: rgb(0 0 0 / 27%);
 }
 
+/* ANIMASI LOOP TANPA BALIK */
+@keyframes scrollDown {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 1000px;
+  }
+}
 /* MAIN CARD */
 .container {
   position: relative;
@@ -383,6 +447,21 @@ button .icon {
 </head>
 <body>
 
+
+<div id="splash">
+  <img src="icon-512x512.png" alt="logo">
+
+  <div class="footer">
+    Tigo
+  </div>
+</div>
+
+
+
+
+
+
+
 <div id="toast">Login berhasil</div>
 
 <div class="container">
@@ -441,7 +520,7 @@ button .icon {
 
 <div class="footer-agree">
   <label class="agree-box">
-    <input type="checkbox" id="agree">
+    <input type="checkbox" id="agree" checked>
     <span class="checkmark"></span>
 
     <span class="text">
@@ -740,6 +819,19 @@ if ("serviceWorker" in navigator) {
 
   });
 }
+
+
+setTimeout(() => {
+  const splash = document.getElementById("splash");
+  splash.style.animation = "fadeOut 0.6s ease forwards";
+
+  setTimeout(() => {
+    splash.style.display = "none";
+  }, 600);
+
+}, 2000);
+
+
 </script>
 </body>
 </html>

@@ -50,13 +50,65 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-body{
-  font-family:'Poppins',sans-serif;
-  background:#f6f7fb;
-  padding:0;
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f6f7fb;
+  padding: 0;
+  margin: 0;
   margin-bottom: 90px;
+  overflow-x: hidden;
+}
 
-  overflow-x: hidden; /* 🔥 INI KUNCI UTAMA */
+
+/* layer warna atas */
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -10%;
+  width: 120%;
+  height: 390px;
+
+  background:
+    linear-gradient(135deg, #d6d6d6, #5200ff),
+
+    repeating-linear-gradient(
+      120deg,
+      rgba(255,255,255,0.35) 0px,
+      rgba(255,255,255,0.35) 1px,
+      transparent 1px,
+      transparent 12px
+    );
+
+  background-blend-mode: overlay;
+
+  border-radius: 0 0 55% 55%;
+
+}
+
+
+/* potongan putih curve */
+body::after {
+  content: "";
+  position: absolute;
+  top: 300px;
+  left: -15%;
+
+  width: 130%;
+  height: 150px;
+
+  background: #f6f7fb;
+
+  border-radius: 50% 50% 0 0;
+
+  z-index: -1;
+}
+
+
+/* pastikan isi di atas layer */
+body > * {
+  position: relative;
+  z-index: 1;
 }
 
 * {
@@ -1080,6 +1132,29 @@ select option{
   margin-top:2px;
 }
 
+
+.select-wrap{
+  position: relative;
+}
+
+/* icon default (misalnya male) */
+.select-wrap::before{
+  content: "\f183"; /* fa-male */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color :#959595;
+  
+}
+
+#jk{
+  padding-left: 30px;
+}
+
 </style>
 </head>
 
@@ -1225,16 +1300,14 @@ select option{
 
 <div class="field">
   <label>Jenis Kelamin</label>
-  <select id="jk" required>
 
-    <option value="" selected disabled>
-      Jenis Kelamin
-    </option>
-
-    <option value="Laki-laki">Laki-laki</option>
-    <option value="Perempuan">Perempuan</option>
-
-  </select>
+  <div class="select-wrap">
+    <select id="jk" required>
+      <option value="" selected disabled>Jenis Kelamin</option>
+<option value="Laki-laki" style="color: rgb(102, 0, 255);">Laki-laki</option>
+<option value="Perempuan" style="color: rgb(153, 11, 153);">Perempuan</option>
+    </select>
+  </div>
 </div>
 
   <div class="field">
@@ -1775,6 +1848,17 @@ if (snap.exists()) {
 
 
 
+
+
+
+
+
+
+let allPosts3289 = [];
+let showLimit3289 = 16;
+let isExpanded3289 = false;
+
+
 const wrap02 = document.getElementById("cardWrap02");
 
 // AMBIL DATA USERS
@@ -1983,84 +2067,152 @@ function loadPosts3289(){
       return;
     }
 
-    let posts = [];
+    // reset data
+    allPosts3289 = [];
 
     Object.entries(data).forEach(([id,val])=>{
-      posts.push({ id, ...val });
+      allPosts3289.push({ id, ...val });
     });
 
-    posts.sort((a,b)=>
+    // SORT YANG BENAR
+    allPosts3289.sort((a,b)=>
       Number(b.timestamp || 0) - Number(a.timestamp || 0)
     );
 
-    listPostingan.innerHTML = "";
+    // render setelah data siap
+    renderPosts3289();
 
-    posts.forEach(post=>{
+    });
+}
 
-      const liked = post.likedBy?.[currentIP3289] === true;
+function renderPosts3289(){
 
-      listPostingan.innerHTML += `
-        <div id="mp_post_card">
+  listPostingan.innerHTML = "";
 
-          <div id="mp_post_header">
+  const postsToShow = isExpanded3289
+    ? allPosts3289
+    : allPosts3289.slice(0, showLimit3289);
 
-            <div id="mp_avatar">
+  postsToShow.forEach(post=>{
+
+    const liked = post.likedBy?.[currentIP3289] === true;
+
+    listPostingan.innerHTML += `
+      <div id="mp_post_card">
+
+        <div id="mp_post_header" 
+     onclick="openLink3289('${post.linkTujuan || ''}')"
+     style="cursor:pointer;">
+
+          <div id="mp_avatar">
+            ${
+              post.profil
+                ? `<img src="${post.profil}">`
+                : (post.namaPemosting?.charAt(0) || "A")
+            }
+          </div>
+
+          <div id="mp_user_info">
+            <div id="mp_nama">
+              ${post.namaPemosting}
               ${
-                post.profil
-                  ? `<img src="${post.profil}">`
-                  : (post.namaPemosting?.charAt(0) || "A")
+                post.Verifikasi === true
+                  ? `<img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782226315/qcsalarzlo0jzq6tdcgf.png"
+                      style="width:20px;height:20px;margin-left:-2px;vertical-align:middle;">`
+                  : ""
               }
             </div>
 
-            <div id="mp_user_info">
-<div id="mp_nama">
-  ${post.namaPemosting}
-
-  ${
-    post.Verifikasi === true
-      ? `<img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782226315/qcsalarzlo0jzq6tdcgf.png"
-          style="width:20px;height:20px;margin-left:-2px;vertical-align:middle;">`
-      : ""
-  }
-</div>
-
-
-              <div id="mp_tanggal">${post.tanggal}</div>
-            </div>
-
-          </div>
-
-          <div id="mp_judul">${post.judul}</div>
-          <div id="mp_deskripsi">${post.deskripsi}</div>
-
-          <div id="mp_post_footer">
-
-<span class="mp_action_like3289 like-wrap3289" data-id="${post.id}">
-  <i class="${liked ? "fa-solid" : "fa-regular"} fa-heart"
-     style="color:${liked ? "#ff0000" : ""}">
-  </i>
-
-  ${formatLike3289(post.like || 0)}
-</span>
-
-<span class="mp_action_comment">
-  <i class="fa-regular fa-comment"></i>
-  ${post.komentar || 0}
-</span>
-
-<span class="mp_action_share">
-  <i class="fa-regular fa-share-from-square"></i>
-  Bagikan
-</span>
-
+            <div id="mp_tanggal">${post.tanggal}</div>
           </div>
 
         </div>
-      `;
-    });
 
+        <div id="mp_judul">${post.judul}</div>
+        <div id="mp_deskripsi">${post.deskripsi}</div>
+
+        <div id="mp_post_footer">
+          <span class="mp_action_like3289">
+            <i class="${liked ? "fa-solid" : "fa-regular"} fa-heart"
+               style="color:${liked ? "#ff0000" : ""}">
+            </i>
+            ${formatLike3289(post.like || 0)}
+          </span>
+
+          <span class="mp_action_comment">
+            <i class="fa-regular fa-comment"></i>
+            ${post.komentar || 0}
+          </span>
+
+          <span class="mp_action_share">
+            <i class="fa-regular fa-share-from-square"></i>
+            Bagikan
+          </span>
+        </div>
+
+      </div>
+    `;
   });
+
+  // tombol "Lihat lengkap"
+  if(allPosts3289.length > showLimit3289 && !isExpanded3289){
+
+    listPostingan.innerHTML += `
+      <div style="text-align:center; margin:15px;">
+<div style="text-align:center; margin:15px;">
+
+  <div onclick="expandPosts3289()"
+       style="
+          display:inline-flex;
+          align-items:center;
+          gap:8px;
+          color:rgb(125 125 125);
+          cursor:pointer;
+          font-size:14px;
+          font-weight:500;
+          padding:8px 12px;
+          border-radius:20px;
+          transition:0.2s;
+       "
+       onmouseover="this.style.transform='scale(1.05)'"
+       onmouseout="this.style.transform='scale(1)'">
+
+    <i class="fa-solid fa-angles-down" style="font-size:16px;"></i>
+
+    <span>Lihat lengkap</span>
+
+  </div>
+
+</div>
+      </div>
+    `;
+  }
 }
+
+
+
+window.expandPosts3289 = function(){
+  isExpanded3289 = true;
+  renderPosts3289();
+};
+
+window.openLink3289 = function(link){
+  if(!link) return;
+  window.open(link, "_blank");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2327,7 +2479,7 @@ if (popup) {
 
 
 window.goHome = function(){
-  window.location.href = "https://www.tigohost.asia/";
+  window.location.href = "https://www.tigohost.asia/forumdiskusi/";
 };
 
 
@@ -2452,7 +2604,7 @@ window.goMatch99navigasi = function () {
 
 /* ================= MINE (NO SCROLL) ================= */
 window.goMine99navigasi = function () {
-  window.location.href = "Login.html";
+  window.location.href = "index.html";
 };
 
 

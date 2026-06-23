@@ -1,6 +1,4 @@
-<button id="bannerhot_generate">
-  Generate 10 Banner HOT
-</button>
+<button id="addLinkBtn">Tambah Link Tujuan Semua Post</button>
 
 <script type="module">
 
@@ -9,10 +7,8 @@ import {
   getDatabase,
   ref,
   get,
-  update,
-  set
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+  update
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 /* FIREBASE */
 const firebaseConfig = {
@@ -25,35 +21,48 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-document.getElementById("bannerhot_generate").addEventListener("click", async () => {
+/* POOL LINK RANDOM */
+const links = [
+  "https://tigohost.asia",
+  "https://google.com",
+  "https://youtube.com",
+  "https://example.com",
+  "https://github.com"
+];
 
-  const snap = await get(ref(db, "BANNERHOT"));
+function getRandomLink() {
+  return links[Math.floor(Math.random() * links.length)];
+}
 
-  // biar cuma 1x generate
-  if (snap.exists()) {
-    alert("BANNERHOT sudah dibuat!");
-    return;
-  }
+const addLinkBtn = document.getElementById("addLinkBtn");
 
-  const dummy = [];
+addLinkBtn.addEventListener("click", async () => {
 
-  for (let i = 1; i <= 10; i++) {
+  try {
+    const snap = await get(ref(db, "Mypostingan"));
 
-    dummy.push({
-      foto: `https://picsum.photos/800/400?random=${i}`,
-      link: `https://www.tigohost.asia/banner/${i}`,
-      diperbaharuiOleh: "Tigo"
+    if (!snap.exists()) {
+      alert("Tidak ada data postingan");
+      return;
+    }
+
+    const updates = {};
+
+    snap.forEach(child => {
+      const key = child.key;
+
+      updates[`Mypostingan/${key}/linkTujuan`] = getRandomLink();
     });
 
+    await update(ref(db), updates);
+
+    alert("Semua postingan berhasil ditambahkan link random!");
+
+  } catch (err) {
+    console.error(err);
+    alert("Gagal update semua postingan");
   }
-
-  for (let i = 0; i < dummy.length; i++) {
-
-    await set(ref(db, `BANNERHOT/${i + 1}`), dummy[i]);
-
-  }
-
-  alert("10 Banner HOT berhasil dibuat!");
 
 });
+
 </script>
