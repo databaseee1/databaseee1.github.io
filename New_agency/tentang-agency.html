@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tentang Agency</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f4f6f9;
+  color:#2c3e50;
+}
+
+/* HEADER */
+.header{
+  background:#ffffff;
+  padding:15px;
+  font-size:16px;
+  font-weight:bold;
+  text-align:center;
+  position:sticky;
+  top:0;
+  z-index:10;
+  border-bottom:1px solid #eee;
+}
+
+/* CONTAINER */
+.container{
+  padding:15px;
+}
+
+/* CARD */
+.card{
+  background:#fff;
+  border-radius:14px;
+  padding:15px;
+  margin-bottom:12px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* TITLE */
+.title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:14px;
+  font-weight:bold;
+  margin-bottom:10px;
+}
+
+/* ICON BULAT */
+.icon{
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  background:#00b894;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:14px;
+}
+
+/* TEXT */
+p{
+  font-size:13px;
+  line-height:1.6;
+  margin:0;
+}
+
+ul{
+  padding-left:18px;
+  margin:0;
+}
+
+li{
+  font-size:13px;
+  margin-bottom:8px;
+  line-height:1.5;
+}
+
+.highlight{
+  background:#f1f2f6;
+  padding:10px;
+  border-radius:10px;
+  font-size:13px;
+  line-height:1.6;
+}
+
+
+
+/* =========================
+   FOTO GRID (TOP HOST)
+========================= */
+
+#fotoGrid{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding:15px;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+}
+
+#fotoGrid::-webkit-scrollbar{
+  display:none;
+}
+
+.foto-box{
+  flex:0 0 auto;
+  width:120px;
+  height:120px;
+  border-radius:14px;
+  overflow:hidden;
+  cursor:pointer;
+  border:2px solid #e5e7eb;
+  transition:.3s;
+  scroll-snap-align:start;
+  background:#fff;
+}
+
+.foto-box:hover{
+  transform:scale(1.05);
+  box-shadow:0 6px 18px rgba(0,0,0,.15);
+}
+
+.foto-box img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.empty{
+  padding:20px;
+  text-align:center;
+  color:#888;
+  font-size:14px;
+}
+
+
+/* =========================
+   POST LIST WRAPPER
+========================= */
+
+#listPostingan{
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+  padding:15px;
+}
+
+
+/* =========================
+   POST CARD
+========================= */
+
+#mp_post_card{
+  background:#fff;
+  border-radius:18px;
+  padding:16px;
+  box-shadow:0 4px 15px rgba(0,0,0,.08);
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+#mp_post_header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:12px;
+}
+
+#mp_avatar{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#6c3cff,#4d7dff);
+  color:#fff;
+  font-weight:bold;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+#mp_nama{
+  font-weight:700;
+  font-size:15px;
+}
+
+#mp_tanggal{
+  font-size:12px;
+  color:#777;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+#mp_judul{
+  font-size:18px;
+  font-weight:700;
+  margin-bottom:8px;
+}
+
+#mp_deskripsi{
+  color:#555;
+  line-height:1.6;
+  margin-bottom:15px;
+}
+
+
+/* =========================
+   FOOTER ACTION
+========================= */
+
+#mp_post_footer{
+  display:flex;
+  gap:20px;
+  align-items:center;
+  border-top:1px solid #eee;
+  padding-top:12px;
+}
+
+#mp_post_footer span{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:#64748b;
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  user-select:none;
+  transition:.2s;
+}
+
+#mp_post_footer span:hover{
+  opacity:.7;
+}
+
+
+/* ICON COLORS */
+#mp_action_like i{
+  color:#ff3b5c;
+}
+
+#mp_action_comment i{
+  color:#4d7dff;
+}
+
+#mp_action_share i{
+  color:#64748b;
+}
+
+
+/* =========================
+   GUEST NOTIF
+========================= */
+
+.guest-notif{
+  position:fixed;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%) translateY(-100px);
+  background:#111827;
+  color:#fff;
+  padding:14px 20px;
+  border-radius:12px;
+  font-size:14px;
+  font-weight:600;
+  z-index:99999;
+  opacity:0;
+  transition:.35s;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+.guest-notif.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+
+
+
+
+
+</style>
+</head>
+
+<body>
+
+  <div id="guestNotif" class="guest-notif">
+    Pengunjung tidak dapat memberikan aksi ini
+</div>
+
+
+<div class="header">
+  <i class="fa fa-building"></i> TENTANG AGENCY
+</div>
+
+
+
+
+<div class="container">
+
+  <!-- AGENCY -->
+  <div class="card">
+    <div class="title">
+      <div class="icon"><i class="fa fa-handshake"></i></div>
+      Tentang Agency
+    </div>
+    <p>
+      Agency berperan sebagai mitra resmi dalam pengelolaan host pada platform live 1 vs 1.
+      Agency bertugas membantu proses rekrutmen, pembinaan, serta pengelolaan host agar berjalan profesional, aman, dan terstruktur.
+    </p>
+  </div>
+
+  <!-- LIVE 1 VS 1 -->
+  <div class="card">
+    <div class="title">
+      <div class="icon"><i class="fa fa-video"></i></div>
+      Tentang Live 1 vs 1
+    </div>
+
+    <p>
+      Aplikasi Live 1 vs 1 merupakan platform hiburan digital yang memungkinkan pengguna melakukan interaksi
+      melalui video call pribadi dengan host secara langsung.
+    </p>
+
+    <div class="highlight">
+      Konsep ini berbeda dengan live streaming umum karena hanya melibatkan <b>1 pengguna dan 1 host</b>,
+      sehingga interaksi menjadi lebih eksklusif, personal, dan interaktif.
+    </div>
+  </div>
+
+
+
+<li>TOP PENGHASILAN MINGGU INI</li>
+<!-- GRID FOTO -->
+<div class="foto-grid" id="fotoGrid"></div>
+</div>
+
+
+
+
+  <!-- FITUR -->
+  <div class="card">
+    <div class="title">
+      <div class="icon"><i class="fa fa-star"></i></div>
+      Fitur Utama
+    </div>
+
+    <ul>
+      <li><i class="fa fa-video"></i> Video Call Privat antara host dan pengguna</li>
+      <li><i class="fa fa-coins"></i> Sistem koin sebagai alat transaksi digital</li>
+      <li><i class="fa fa-gift"></i> Hadiah virtual sebagai bentuk apresiasi pengguna</li>
+      <li><i class="fa fa-calendar"></i> Event khusus untuk meningkatkan interaksi</li>
+      <li><i class="fa fa-wallet"></i> Gaji mingguan berdasarkan jam tayang host</li>
+    </ul>
+  </div>
+
+  <!-- PERAN AGENCY -->
+  <div class="card">
+    <div class="title">
+      <div class="icon"><i class="fa fa-sitemap"></i></div>
+      Peran Agency
+    </div>
+
+    <ul>
+      <li><i class="fa fa-user-plus"></i> Perekrut host baru untuk platform</li>
+      <li><i class="fa fa-chalkboard-user"></i> Pendampingan dan pelatihan host</li>
+      <li><i class="fa fa-link"></i> Penghubung resmi antara host dan platform</li>
+      <li><i class="fa fa-money-bill"></i> Pengelola penghasilan host secara transparan</li>
+    </ul>
+  </div>
+
+  <!-- AGENCY TIGOHOST -->
+  <div class="card">
+    <div class="title">
+      <div class="icon"><i class="fa fa-building"></i></div>
+      Agency Tigohost Indonesia
+    </div>
+
+    <p>
+      Sejak tahun 2016, PT. Agency Tigohost Indonesia telah menjadi mitra dalam industri hiburan digital live 1 vs 1.
+      Agency ini telah membantu ribuan host berkembang secara profesional dan mendapatkan penghasilan dari platform.
+    </p>
+
+    <div class="highlight">
+      Dengan sistem manajemen yang terstruktur, agency memastikan setiap host mendapatkan pelatihan,
+      pendampingan, serta dukungan profesional untuk meningkatkan kualitas performa.
+    </div>
+  </div>
+
+</div>
+
+
+
+
+<div id="listPostingan"></div>
+
+
+
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+addDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+getStorage,
+ref as storageRef,
+uploadBytes,
+getDownloadURL
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+import {
+getDatabase,
+ref,
+onValue
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSy....",
+  authDomain: "users-96dc5.firebaseapp.com",
+  projectId: "users-96dc5",
+  storageBucket: "users-96dc5.appspot.com",
+  messagingSenderId: "483322415863",
+  appId: "1:483322415863:web:xxxxxx",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app"
+};
+
+const app = initializeApp(firebaseConfig);
+
+const firestore = getFirestore(app);
+const storage = getStorage(app);
+const realtimeDb = getDatabase(app);
+
+
+/* =======================
+   FOTO GRID (TOP HOST)
+======================= */
+
+const fotoGrid = document.getElementById("fotoGrid");
+
+if (fotoGrid) {
+
+onValue(ref(realtimeDb, "allhost"), (snap) => {
+
+    const data = snap.val();
+
+    fotoGrid.innerHTML = "";
+
+    if (!data) {
+        fotoGrid.innerHTML = `<div class="empty">Belum ada host</div>`;
+        return;
+    }
+
+    const items = Object.entries(data)
+        .sort((a, b) => (b[1].penghasilanMingguIni || 0) - (a[1].penghasilanMingguIni || 0))
+        .slice(0, 10);
+
+    fotoGrid.innerHTML = items.map(([id, val]) => `
+        <div class="foto-box"
+        onclick="window.location.href='https://www.tigohost.asia/allhost/allhost.html?id=${id}'">
+
+            <img src="${val.foto || 'https://via.placeholder.com/300'}" alt="${val.profil || 'host'}">
+
+        </div>
+    `).join("");
+
+});
+
+}
+
+
+/* =======================
+   POSTINGAN LIST
+======================= */
+
+const listPostingan = document.getElementById("listPostingan");
+
+if (listPostingan) {
+
+onValue(ref(realtimeDb,"Mypostingan"), (snap) => {
+
+    const data = snap.val();
+
+    if (!data) {
+        listPostingan.innerHTML = `
+        <div id="mp_empty">
+            Belum ada postingan
+        </div>`;
+        return;
+    }
+
+    const posts = Object.entries(data)
+        .map(([id, val]) => ({ id, ...val }))
+        .sort((a, b) => (Number(b.timestamp) || 0) - (Number(a.timestamp) || 0));
+
+    listPostingan.innerHTML = posts.map(post => `
+        <div id="mp_post_card">
+
+            <div id="mp_post_header">
+
+                <div id="mp_avatar">
+                    ${post.namaPemosting?.charAt(0) || "A"}
+                </div>
+
+                <div id="mp_user_info">
+                    <div id="mp_nama">${post.namaPemosting || "-"}</div>
+                    <div id="mp_tanggal">${post.tanggal || "-"}</div>
+                </div>
+
+            </div>
+
+            <div id="mp_judul">${post.judul || ""}</div>
+
+            <div id="mp_deskripsi">${post.deskripsi || ""}</div>
+
+            <div id="mp_post_footer">
+
+                <span id="mp_action_like" onclick="showGuestNotif(event)">
+                    <i class="fa-regular fa-heart"></i>
+                    ${post.like || 0}
+                </span>
+
+                <span id="mp_action_comment" onclick="showGuestNotif(event)">
+                    <i class="fa-regular fa-comment"></i>
+                    ${post.komentar || 0}
+                </span>
+
+                <span id="mp_action_share" onclick="showGuestNotif(event)">
+                    <i class="fa-regular fa-share-from-square"></i>
+                    Bagikan
+                </span>
+
+            </div>
+
+        </div>
+    `).join("");
+
+});
+
+}
+
+
+/* =======================
+   NOTIF GUEST
+======================= */
+
+window.showGuestNotif = function(e){
+
+    if (e) e.stopPropagation();
+
+    const notif = document.getElementById("guestNotif");
+
+    if (!notif) return;
+
+    notif.classList.add("show");
+
+    clearTimeout(window.notifTimer);
+
+    window.notifTimer = setTimeout(() => {
+        notif.classList.remove("show");
+    }, 2500);
+
+};
+
+</script>
+
+
+
+</body>
+</html>

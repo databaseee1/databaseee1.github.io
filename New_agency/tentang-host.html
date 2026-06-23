@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tentang Host</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f4f6f9;
+  color:#2c3e50;
+}
+
+/* HEADER */
+.header{
+  background:#fff;
+  padding:15px;
+  text-align:center;
+  font-weight:bold;
+  font-size:16px;
+  position:sticky;
+  top:0;
+  border-bottom:1px solid #eee;
+  z-index:10;
+}
+
+/* CONTAINER */
+.container{
+  padding:15px;
+}
+
+/* CARD */
+.card{
+  background:#fff;
+  border-radius:14px;
+  padding:15px;
+  margin-bottom:12px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* TITLE */
+.title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:14px;
+  font-weight:bold;
+  margin-bottom:10px;
+}
+
+/* ICON */
+.icon{
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  background:#00b894;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:14px;
+}
+
+/* TEXT */
+p{
+  font-size:13px;
+  line-height:1.6;
+  margin:0;
+}
+
+/* BOX STYLE */
+.box{
+  padding:12px;
+  border-radius:10px;
+  margin-top:10px;
+  font-size:13px;
+  line-height:1.6;
+}
+
+/* WARNA BOX */
+.blue{ background:#dff9fb; border-left:4px solid #00a8ff; }
+.green{ background:#eafaf1; border-left:4px solid #2ecc71; }
+.yellow{ background:#fff8e1; border-left:4px solid #f1c40f; }
+.red{ background:#fdecea; border-left:4px solid #e74c3c; }
+
+ul{
+  padding-left:18px;
+  margin:0;
+}
+
+li{
+  font-size:13px;
+  margin-bottom:8px;
+  line-height:1.5;
+}
+
+/* BADGE WARNING */
+.badge{
+  display:inline-block;
+  padding:3px 8px;
+  border-radius:6px;
+  font-size:11px;
+  font-weight:bold;
+  color:#fff;
+  background:#e74c3c;
+}
+
+
+
+
+
+
+
+/* =========================
+   FOTO GRID (TOP HOST)
+========================= */
+
+#fotoGrid{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding:15px;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+}
+
+#fotoGrid::-webkit-scrollbar{
+  display:none;
+}
+
+.foto-box{
+  flex:0 0 auto;
+  width:120px;
+  height:120px;
+  border-radius:14px;
+  overflow:hidden;
+  cursor:pointer;
+  border:2px solid #e5e7eb;
+  transition:.3s;
+  scroll-snap-align:start;
+  background:#fff;
+}
+
+.foto-box:hover{
+  transform:scale(1.05);
+  box-shadow:0 6px 18px rgba(0,0,0,.15);
+}
+
+.foto-box img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.empty{
+  padding:20px;
+  text-align:center;
+  color:#888;
+  font-size:14px;
+}
+
+
+/* =========================
+   POST LIST WRAPPER
+========================= */
+
+#listPostingan{
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+  padding:15px;
+}
+
+
+/* =========================
+   POST CARD
+========================= */
+
+#mp_post_card{
+  background:#fff;
+  border-radius:18px;
+  padding:16px;
+  box-shadow:0 4px 15px rgba(0,0,0,.08);
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+#mp_post_header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:12px;
+}
+
+#mp_avatar{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#6c3cff,#4d7dff);
+  color:#fff;
+  font-weight:bold;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+#mp_nama{
+  font-weight:700;
+  font-size:15px;
+}
+
+#mp_tanggal{
+  font-size:12px;
+  color:#777;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+#mp_judul{
+  font-size:18px;
+  font-weight:700;
+  margin-bottom:8px;
+}
+
+#mp_deskripsi{
+  color:#555;
+  line-height:1.6;
+  margin-bottom:15px;
+}
+
+
+/* =========================
+   FOOTER ACTION
+========================= */
+
+#mp_post_footer{
+  display:flex;
+  gap:20px;
+  align-items:center;
+  border-top:1px solid #eee;
+  padding-top:12px;
+}
+
+#mp_post_footer span{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:#64748b;
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  user-select:none;
+  transition:.2s;
+}
+
+#mp_post_footer span:hover{
+  opacity:.7;
+}
+
+
+/* ICON COLORS */
+#mp_action_like i{
+  color:#ff3b5c;
+}
+
+#mp_action_comment i{
+  color:#4d7dff;
+}
+
+#mp_action_share i{
+  color:#64748b;
+}
+
+
+/* =========================
+   GUEST NOTIF
+========================= */
+
+.guest-notif{
+  position:fixed;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%) translateY(-100px);
+  background:#111827;
+  color:#fff;
+  padding:14px 20px;
+  border-radius:12px;
+  font-size:14px;
+  font-weight:600;
+  z-index:99999;
+  opacity:0;
+  transition:.35s;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+.guest-notif.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+
+</style>
+</head>
+
+<body>
+
+
+  <div id="guestNotif" class="guest-notif">
+    Pengunjung tidak dapat memberikan aksi ini
+</div>
+
+
+<div class="header">
+  <i class="fa fa-user"></i> TENTANG HOST
+</div>
+
+<div class="container">
+
+  <!-- INTRO -->
+  <div class="card">
+    <div class="title">
+      <div class="icon"><i class="fa fa-video"></i></div>
+      Menjadi Host di Aplikasi Live 1 vs 1
+    </div>
+
+    <p>
+      Aplikasi live 1 vs 1 adalah platform hiburan digital yang memberikan peluang penghasilan bagi host melalui interaksi video call pribadi dengan pengguna.
+    </p>
+
+    <div class="box blue">
+      Konsep ini memungkinkan host berinteraksi secara langsung, lebih personal, dan memberikan pengalaman hiburan eksklusif kepada pengguna.
+    </div>
+  </div>
+
+  <!-- APA ITU HOST -->
+  <div class="card">
+    <div class="title">
+      <div class="icon"><i class="fa fa-user-tie"></i></div>
+      Apa Itu Host
+    </div>
+
+    <p>
+      Host adalah pengguna yang melakukan siaran langsung atau video call 1 vs 1 dengan penonton.
+      Tugas utama host adalah menghibur, berinteraksi, dan menciptakan suasana yang nyaman.
+    </p>
+  </div>
+
+  <!-- KEUNTUNGAN -->
+  <div class="card">
+    <div class="title">
+      <div class="icon"><i class="fa fa-star"></i></div>
+      Keuntungan Menjadi Host
+    </div>
+
+    <div class="box green">
+      <ul>
+        <li>Fleksibel: bisa live kapan saja dan di mana saja</li>
+        <li>Target minimal 1 jam per hari</li>
+        <li>Penghasilan meningkat jika melebihi target</li>
+        <li>Interaksi langsung dengan pengguna</li>
+        <li>Bonus dari gift & agency resmi</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SYARAT -->
+  <div class="card">
+    <div class="title">
+      <div class="icon"><i class="fa fa-clipboard-list"></i></div>
+      Syarat Menjadi Host
+    </div>
+
+    <div class="box yellow">
+      <ul>
+        <li>Minimal usia 20 tahun ke atas</li>
+        <li>Data diri harus lengkap dan valid</li>
+        <li>Memiliki perangkat kamera & internet stabil</li>
+        <li>Sudah terdaftar di aplikasi resmi</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TIPS -->
+  <div class="card">
+    <div class="title">
+      <div class="icon"><i class="fa fa-lightbulb"></i></div>
+      Tips Agar Sukses
+    </div>
+
+    <div class="box blue">
+      <ul>
+        <li>Tampil percaya diri dan ramah</li>
+        <li>Bangun interaksi aktif dengan pengguna</li>
+        <li>Konsisten online setiap hari</li>
+        <li>Jaga kualitas kamera dan suara</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SYARAT & KETENTUAN -->
+  <div class="card">
+    <div class="title">
+      <div class="icon"><i class="fa fa-file-contract"></i></div>
+      Syarat & Ketentuan Host
+    </div>
+
+    <div class="box green">
+      <ul>
+        <li>Aktif minimal 1 jam per hari</li>
+        <li>Data rekening harus valid</li>
+        <li>Wajib membaca aturan aplikasi</li>
+        <li>Deposit awal Rp 500.000 (dapat ditarik kembali)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- LARANGAN -->
+  <div class="card">
+    <div class="title">
+      <div class="icon"><i class="fa fa-ban"></i></div>
+      <span class="badge">LARANGAN</span> Host
+    </div>
+
+    <div class="box red">
+      <ul>
+        <li>Dilarang merekam layar saat video call</li>
+        <li>Dilarang melakukan percakapan tidak pantas</li>
+        <li>Dilarang melakukan cheat atau kecurangan</li>
+        <li>Dilarang memaksa pengguna</li>
+        <li>Dilarang menggunakan kamera hitam</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+<li>TOP PENGHASILAN MINGGU INI</li>
+<!-- GRID FOTO -->
+<div class="foto-grid" id="fotoGrid"></div>
+</div>
+
+<div id="listPostingan"></div>
+
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+addDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+getStorage,
+ref as storageRef,
+uploadBytes,
+getDownloadURL
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+import {
+getDatabase,
+ref,
+onValue
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSy....",
+  authDomain: "users-96dc5.firebaseapp.com",
+  projectId: "users-96dc5",
+  storageBucket: "users-96dc5.appspot.com",
+  messagingSenderId: "483322415863",
+  appId: "1:483322415863:web:xxxxxx",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app"
+};
+
+const app = initializeApp(firebaseConfig);
+
+const firestore = getFirestore(app);
+const storage = getStorage(app);
+const realtimeDb = getDatabase(app);
+
+
+/* =======================
+   FOTO GRID (TOP HOST)
+======================= */
+
+const fotoGrid = document.getElementById("fotoGrid");
+
+if (fotoGrid) {
+
+onValue(ref(realtimeDb, "allhost"), (snap) => {
+
+    const data = snap.val();
+
+    fotoGrid.innerHTML = "";
+
+    if (!data) {
+        fotoGrid.innerHTML = `<div class="empty">Belum ada host</div>`;
+        return;
+    }
+
+    const items = Object.entries(data)
+        .sort((a, b) => (b[1].penghasilanMingguIni || 0) - (a[1].penghasilanMingguIni || 0))
+        .slice(0, 10);
+
+    fotoGrid.innerHTML = items.map(([id, val]) => `
+        <div class="foto-box"
+        onclick="window.location.href='https://www.tigohost.asia/allhost/allhost.html?id=${id}'">
+
+            <img src="${val.foto || 'https://via.placeholder.com/300'}" alt="${val.profil || 'host'}">
+
+        </div>
+    `).join("");
+
+});
+
+}
+
+
+/* =======================
+   POSTINGAN LIST
+======================= */
+
+const listPostingan = document.getElementById("listPostingan");
+
+if (listPostingan) {
+
+onValue(ref(realtimeDb,"Mypostingan"), (snap) => {
+
+    const data = snap.val();
+
+    if (!data) {
+        listPostingan.innerHTML = `
+        <div id="mp_empty">
+            Belum ada postingan
+        </div>`;
+        return;
+    }
+
+    const posts = Object.entries(data)
+        .map(([id, val]) => ({ id, ...val }))
+        .sort((a, b) => (Number(b.timestamp) || 0) - (Number(a.timestamp) || 0));
+
+    listPostingan.innerHTML = posts.map(post => `
+        <div id="mp_post_card">
+
+            <div id="mp_post_header">
+
+                <div id="mp_avatar">
+                    ${post.namaPemosting?.charAt(0) || "A"}
+                </div>
+
+                <div id="mp_user_info">
+                    <div id="mp_nama">${post.namaPemosting || "-"}</div>
+                    <div id="mp_tanggal">${post.tanggal || "-"}</div>
+                </div>
+
+            </div>
+
+            <div id="mp_judul">${post.judul || ""}</div>
+
+            <div id="mp_deskripsi">${post.deskripsi || ""}</div>
+
+            <div id="mp_post_footer">
+
+                <span id="mp_action_like" onclick="showGuestNotif(event)">
+                    <i class="fa-regular fa-heart"></i>
+                    ${post.like || 0}
+                </span>
+
+                <span id="mp_action_comment" onclick="showGuestNotif(event)">
+                    <i class="fa-regular fa-comment"></i>
+                    ${post.komentar || 0}
+                </span>
+
+                <span id="mp_action_share" onclick="showGuestNotif(event)">
+                    <i class="fa-regular fa-share-from-square"></i>
+                    Bagikan
+                </span>
+
+            </div>
+
+        </div>
+    `).join("");
+
+});
+
+}
+
+
+/* =======================
+   NOTIF GUEST
+======================= */
+
+window.showGuestNotif = function(e){
+
+    if (e) e.stopPropagation();
+
+    const notif = document.getElementById("guestNotif");
+
+    if (!notif) return;
+
+    notif.classList.add("show");
+
+    clearTimeout(window.notifTimer);
+
+    window.notifTimer = setTimeout(() => {
+        notif.classList.remove("show");
+    }, 2500);
+
+};
+
+</script>
+
+
+</body>
+</html>

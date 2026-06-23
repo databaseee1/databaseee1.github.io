@@ -1,7 +1,7 @@
 const CACHE_NAME = "Tigoapp.v6"; // 
 
 const urlsToCache = [
-  "/New_agency/Login.html",
+  "/New_agency/login.html",
   "/New_agency/register.html",
   "/New_agency/manifest.json",
   "/New_agency/launchericon-192x192.png",

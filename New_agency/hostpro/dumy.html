@@ -1,8 +1,6 @@
-<button onclick="tambahUserIdSemua()">
-Tambah userId Semua User
+<button id="bannerhot_generate">
+  Generate 10 Banner HOT
 </button>
-
-
 
 <script type="module">
 
@@ -27,36 +25,35 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-async function tambahUserIdSemua() {
+document.getElementById("bannerhot_generate").addEventListener("click", async () => {
 
-  const snap = await get(ref(db, "users1"));
+  const snap = await get(ref(db, "BANNERHOT"));
 
-  if (!snap.exists()) {
-    alert("users1 kosong");
+  // biar cuma 1x generate
+  if (snap.exists()) {
+    alert("BANNERHOT sudah dibuat!");
     return;
   }
 
-  let total = 0;
+  const dummy = [];
 
-  snap.forEach(child => {
+  for (let i = 1; i <= 10; i++) {
 
-    const key = child.key; // user_001
+    dummy.push({
+      foto: `https://picsum.photos/800/400?random=${i}`,
+      link: `https://www.tigohost.asia/banner/${i}`,
+      diperbaharuiOleh: "Tigo"
+    });
 
-    update(
-      ref(db, "users1/" + key),
-      {
-        userId: key
-      }
-    );
+  }
 
-    total++;
-  });
+  for (let i = 0; i < dummy.length; i++) {
 
-  alert(
-    total +
-    " user berhasil ditambahkan field userId"
-  );
-}
+    await set(ref(db, `BANNERHOT/${i + 1}`), dummy[i]);
 
-window.tambahUserIdSemua = tambahUserIdSemua;
+  }
+
+  alert("10 Banner HOT berhasil dibuat!");
+
+});
 </script>

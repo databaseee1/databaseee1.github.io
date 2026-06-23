@@ -32,7 +32,7 @@
 <link rel="icon" href="https://www.tigohost.asia/agencylogo.png">
 
 <!-- PWA MANIFEST (IMPORTANT FIX) -->
-<link rel="manifest" href="/New_agency/manifest.json?v=2">
+<link rel="manifest" href="/New_agency/manifest.json">
 
 <!-- FORCE THEME -->
 <meta name="theme-color" content="#7c3aed">
@@ -55,13 +55,8 @@ body{
   background:#f6f7fb;
   padding:0;
   margin-bottom: 90px;
-}
 
-
-body{
-  font-family:'Poppins',sans-serif;
-  background:#f6f7fb;
-  padding:0;
+  overflow-x: hidden; /* 🔥 INI KUNCI UTAMA */
 }
 
 * {
@@ -131,7 +126,7 @@ img {
   padding:20px;
   border-radius:16px;
   box-shadow:0 10px 25px rgba(0,0,0,0.08);
-  margin-top:80px;
+  margin-top:40px;
 }
 
 /* GRID 2 KOLOM */
@@ -738,6 +733,353 @@ select option{
   animation: boom3289 0.4s ease;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+#bankshow03_root {
+  width: 100%;
+}
+
+#bankshow03_list {
+  display: flex;
+  overflow-x: auto;
+  gap: 12px;
+  padding: 10px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+#bankshow03_list::-webkit-scrollbar {
+  display: none;
+}
+
+#bankshow03_list img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  flex: 0 0 auto;
+  border-radius: 10px;
+  scroll-snap-align: start;
+}
+
+
+
+
+/* FOOTER */
+#compnystore32_footer {
+  background: #ffffff;
+  border-top: 2px solid #7c3aed;
+  padding: 16px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+#compnystore32_footer_title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #7c3aed;
+}
+
+#compnystore32_footer_sub {
+  font-size: 12px;
+  color: #555;
+  margin-top: 4px;
+}
+
+#compnystore32_footer_links {
+  margin-top: 10px;
+}
+
+#compnystore32_footer_links button {
+  background: #7c3aed;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#compnystore32_footer_bottom {
+  margin-top: 12px;
+  font-size: 11px;
+  color: #888;
+}
+
+/* POPUP */
+#compnystore32_info_panel {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+#compnystore32_info_card {
+  width: 90%;
+  max-width: 420px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  border-top: 4px solid #7c3aed;
+}
+
+#compnystore32_title {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #111;
+}
+
+.compnystore32_item {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.compnystore32_item span {
+  font-size: 12px;
+  color: #777;
+}
+
+.compnystore32_item p {
+  margin: 0;
+  font-weight: bold;
+  color: #111;
+}
+
+#compnystore32_close {
+  margin-top: 12px;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background: #6a00c7;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+
+
+
+
+.inner {
+  padding: 0px;
+}
+
+#Logoaplikasi32_root {
+  width: 100%;
+   padding: 10px 0 10px 0;
+  overflow-x: hidden; /* 🔥 lebih spesifik dari hidden */
+}
+
+#Logoaplikasi32_list {
+  display: flex;
+  gap: 1px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+
+  width: 100%;
+  max-width: 100%;   /* 🔥 kunci utama */
+  box-sizing: border-box; /* 🔥 penting */
+}
+
+/* hide scrollbar */
+#Logoaplikasi32_list::-webkit-scrollbar {
+  display: none;
+}
+
+/* card */
+.Logoaplikasi32_card {
+  flex: 0 0 auto;
+  width: 70px;
+  background: #ffffff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  text-align: center;
+  padding: 10px;
+  scroll-snap-align: start;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* image */
+.Logoaplikasi32_card img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+/* name */
+.Logoaplikasi32_name {
+  margin-top: 1px;
+  font-size: 10px;
+  font-weight: bold;
+  color: #111;
+}
+
+
+
+
+
+
+.banner_update_by{
+  font-size:11px;
+  color:#ffffff;
+  text-align:center;
+  margin-top:0px;
+  font-family:Poppins, sans-serif;
+  background: #834af8;
+}
+
+#Bannerhot32_root{
+  width:100%;
+  max-width:100%;
+  padding:10px;
+  box-sizing:border-box;
+
+  margin-top:80px;
+}
+
+#Bannerhot32_viewport{
+  width:100%;
+  overflow:hidden;
+  border-radius:14px;
+  background:#f5f5f5;
+}
+
+#Bannerhot32_track{
+  display:flex;
+  transition:transform .4s ease;
+  width:100%;
+}
+
+.Bannerhot32_item{
+  min-width:100%;
+  flex-shrink:0;
+}
+
+.Bannerhot32_item a{
+  display:block;
+  width:100%;
+}
+
+.Bannerhot32_item img{
+  width:100%;
+  aspect-ratio: 4 / 3; /* 🔥 1024x768 */
+  display:block;
+  object-fit:cover; /* atau contain kalau mau full tanpa crop */
+  border-radius:14px;
+  
+  
+  
+
+}
+/* Tablet */
+@media (max-width:768px){
+  .Bannerhot32_item img{
+    height:140px;
+  }
+}
+
+/* HP */
+@media (max-width:480px){
+  #Bannerhot32_root{
+    padding:0px;
+  }
+
+  .Bannerhot32_item img{
+    height:120px;
+    border-radius:1px;
+  }
+}
+
+
+
+
+.article-title{
+  padding:18px 16px;
+  font-size:22px;
+  font-weight:700;
+  line-height:1.5;
+  color:#111;
+  letter-spacing:-0.3px;
+  background:#fff;
+}
+
+.article-title span{
+  color:#e53935;
+  font-weight:800;
+}
+
+.menu-title{
+  display:flex;
+  align-items:center;
+  gap:1px;
+  margin-bottom: 30px;
+}
+
+.menu-title img{
+  width:32px;
+  height:32px;
+  object-fit:contain;
+}
+
+.menu-title h3{
+  margin:0;
+  font-size:20px;
+  font-weight:700;
+}
+
+
+
+
+.pwa-install-box{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  cursor:pointer;
+  user-select:none;
+  background: #f1f1f1;
+  border-radius: 50px;
+    margin-top: 20px;
+}
+
+.pwa-install-box:active{
+  transform:scale(.98);
+}
+
+.pwa-logo{
+  width:50px;
+  height:50px;
+  border-radius:12px;
+  object-fit:cover;
+}
+
+.pwa-text{
+  flex:1;
+}
+
+.pwa-title{
+  font-size:15px;
+  font-weight:700;
+  color:#111;
+}
+
+.pwa-subtitle{
+  font-size:12px;
+  color:#666;
+  margin-top:2px;
+}
+
 </style>
 </head>
 
@@ -761,26 +1103,58 @@ select option{
 <!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
 
+<div class="menu-title">
+  <img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782229628/ha0ammjo4xgbt229abtu.png" alt="Logo">
   <h3>MENU</h3>
+</div>
 
-  <a href="tentang.html">Tentang</a>
+  <a href="tentang-aplikasi.html">Tentang</a>
   <a href="#" id="kontakBtn">Kontak</a>
   <a href="syarat_ketentuan.html">Syarat & Ketentuan</a>
-  <a href="tentang_host.html">Tentang Host</a>
-  <a href="tentang_agency.html">Tentang Agency</a>
-  <a href="tentang_topup.html">Tentang Top Up</a>
-  <a href="tentang_aplikasi.html">Tentang Aplikasi</a><br>
+  <a href="tentang-host.html">Tentang Host</a>
+  <a href="tentang-agency.html">Tentang Agency</a>
+  <a href="tentang-topup.html">Tentang Top Up</a>
+  <a href="#">New Menu</a><br>
   <h3>Tutorial</h3>
-  <a href="cara_deposit.html">Cara Deposit Akun Host</a>
-  <a href="cara_topup_coin.html">Cara Top Up Coin</a>
-  <a href="cara_gabung_agency.html">Cara Gabung Agency</a>
+  <a href="#">Cara Deposit Akun Host</a>
+  <a href="#">Cara Top Up Coin</a>
+  <a href="cara_kerja_agency.html">Cara Gabung Agency</a>
   <a href="cara_lapor_agency.html">Cara Lapor Agency</a>
-  <a href="cara_refund_coin.html">Cara Refund Coin</a>
+  <a href="#">Cara Refund Coin</a>
 
+
+
+<div class="pwa-install-box" id="installPWA">
+
+  <img src="icon-96x96.png" class="pwa-logo">
+
+  <div class="pwa-text">
+    <div class="pwa-title">Tigo</div>
+    <div class="pwa-subtitle">Instal sekarang</div>
+  </div>
+
+</div>
+</div>
+
+
+<div id="Bannerhot32_root">
+  <div id="Bannerhot32_viewport">
+    <div id="Bannerhot32_track"></div>
+  </div>
+</div>
+
+
+
+<div class="article-title">
+  Masalah Klasik yang Sering Menggerogoti Efisiensi Strategi
+  <span>Live Host 1vs1</span>
+  Anda.
 </div>
 
 
 <div class="container">
+
+  
 
 <p class="muted">Lengkapi data berikut untuk mendaftar sebagai Host Agency TIGOHOST. Setelah mengirim, status akan muncul otomatis.</p>
 
@@ -921,6 +1295,15 @@ select option{
 </div>
 
 
+<div id="Logoaplikasi32_root">
+  <div class="inner">
+    <div id="Logoaplikasi32_list">...</div>
+  </div>
+</div>
+
+
+
+
 
 <div style="display:flex; justify-content:center; gap:10px; background:#d8d8d8; margin-top:30px;">
   <!-- 🔹 Tombol Lihat Total Data -->
@@ -1038,7 +1421,9 @@ select option{
 
 <div id="listPostingan"></div>
 
-
+<div id="bankshow03_root">
+  <div id="bankshow03_list"></div>
+</div>
 
 
 
@@ -1083,6 +1468,109 @@ select option{
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<footer id="compnystore32_footer">
+
+  <div id="compnystore32_footer_top">
+    <div id="compnystore32_footer_title">TigoHost Agency</div>
+    <div id="compnystore32_footer_sub">Platform resmi Tigo Live Co., Limited</div>
+  </div>
+
+<button onclick="compnystore32_toggleInfo()">
+  Informasi Perusahaan
+</button>
+
+  <div id="compnystore32_footer_bottom">
+    © 2026 TigoHost. All Rights Reserved.
+  </div>
+
+</footer>
+
+<!-- POPUP INFO -->
+<div id="compnystore32_info_panel">
+  <div id="compnystore32_info_card">
+
+    <h2 id="compnystore32_title">Informasi Perusahaan</h2>
+
+    <div id="compnystore32_list">
+
+      <div class="compnystore32_item">
+        <span>Nama Perusahaan</span>
+        <p>Tigo Live Co., Limited</p>
+      </div>
+
+      <div class="compnystore32_item">
+        <span>Agency Resmi</span>
+        <p>PT. AGENCY TIGOHOST INDONESIA</p>
+      </div>
+
+      <div class="compnystore32_item">
+        <span>Kantor Pusat</span>
+        <p>Kwun Tong, Hong Kong</p>
+      </div>
+
+      <div class="compnystore32_item">
+        <span>Cabang</span>
+        <p>Batam Center, Kepulauan Riau</p>
+      </div>
+
+      <div class="compnystore32_item">
+        <span>WhatsApp Darurat</span>
+        <p>+6565464554</p>
+      </div>
+
+      <div class="compnystore32_item">
+        <span>Status</span>
+        <p>Aktif</p>
+      </div>
+
+    </div>
+
+    <button id="compnystore32_close" onclick="compnystore32_toggleInfo()">
+      Tutup
+    </button>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -1114,6 +1602,179 @@ const realtimeDb = getDatabase(app);
 
 
 
+
+
+
+
+const track = document.getElementById("Bannerhot32_track");
+
+let index = 0;
+let banners = [];
+
+async function loadBannerHot() {
+
+  const snap = await get(ref(db, "BANNERHOT"));
+
+  if (!snap.exists()) return;
+
+  banners = [];
+
+  snap.forEach((child) => {
+    banners.push(child.val());
+  });
+
+  render();
+  startAutoSlide();
+}
+
+function render() {
+
+  track.innerHTML = "";
+
+  banners.forEach((item, i) => {
+
+    const div = document.createElement("div");
+    div.className = "Bannerhot32_item";
+
+div.innerHTML = `
+  <a href="${item.link}" target="_blank">
+    <img src="${item.foto}" alt="banner">
+  </a>
+
+  ${
+    item.diperbaharuiOleh
+      ? `<div class="banner_update_by">
+           Diperbarui oleh: ${item.diperbaharuiOleh}
+         </div>`
+      : ""
+  }
+`;
+
+    track.appendChild(div);
+
+  });
+
+  updateSlider();
+}
+
+function updateSlider() {
+
+  const items = document.querySelectorAll(".Bannerhot32_item");
+
+  items.forEach((el, i) => {
+    el.classList.remove("active");
+  });
+
+  if (items[index]) {
+    items[index].classList.add("active");
+  }
+
+  const offset = -index * 100;
+  track.style.transform = `translateX(${offset}%)`;
+}
+
+function nextSlide() {
+
+  index++;
+
+  if (index >= banners.length) {
+    index = 0;
+  }
+
+  updateSlider();
+}
+
+function startAutoSlide() {
+  setInterval(() => {
+    nextSlide();
+  }, 3500);
+}
+
+loadBannerHot();
+
+
+
+
+
+
+
+
+
+
+
+
+const list = document.getElementById("Logoaplikasi32_list");
+
+async function loadLogoAplikasi() {
+
+  const snap = await get(ref(db, "Logo-aplikasi"));
+
+  if (!snap.exists()) return;
+
+  list.innerHTML = "";
+
+  snap.forEach((child) => {
+
+    const data = child.val();
+
+    const card = document.createElement("div");
+    card.className = "Logoaplikasi32_card";
+
+    card.innerHTML = `
+      <img src="${data.logo}" alt="logo">
+      <div class="Logoaplikasi32_name">${data.nama}</div>
+    `;
+
+    list.appendChild(card);
+
+  });
+
+}
+
+loadLogoAplikasi();
+
+
+
+const box = document.getElementById("bankshow03_list");
+
+const snap = await get(ref(db, "BANK_EWALLET"));
+
+if (snap.exists()) {
+
+  box.innerHTML = "";
+
+  let count = 0;
+
+  snap.forEach((child) => {
+
+    if (count >= 100) return;
+
+    const data = child.val();
+
+    if (data.logo) {
+
+      const imgId = `bankshow03_${child.key}`;
+
+      const img = document.createElement("img");
+      img.id = imgId;
+      img.src = data.logo;
+      img.alt = "bank logo";
+
+      box.appendChild(img);
+
+      count++;
+    }
+
+  });
+
+}
+
+
+
+
+
+
+
 const wrap02 = document.getElementById("cardWrap02");
 
 // AMBIL DATA USERS
@@ -1137,7 +1798,7 @@ onValue(usersRef, (snap) => {
     wrap02.innerHTML += `
       <div class="card02">
         <img src="${img}">
-        <div class="name02">${data.appName || "User"}</div>
+        <div class="name02">${data.appName || "vIP"}</div>
       </div>
     `;
   });
@@ -1352,7 +2013,18 @@ function loadPosts3289(){
             </div>
 
             <div id="mp_user_info">
-              <div id="mp_nama">${post.namaPemosting}</div>
+<div id="mp_nama">
+  ${post.namaPemosting}
+
+  ${
+    post.Verifikasi === true
+      ? `<img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782226315/qcsalarzlo0jzq6tdcgf.png"
+          style="width:20px;height:20px;margin-left:-2px;vertical-align:middle;">`
+      : ""
+  }
+</div>
+
+
               <div id="mp_tanggal">${post.tanggal}</div>
             </div>
 
@@ -1752,12 +2424,6 @@ document.addEventListener("keydown", (e) => {
 
 
 
-
-
-
-
-
-
 window.scrollTop99navigasi = function () {
   window.scrollTo({
     top: 0,
@@ -1768,7 +2434,7 @@ window.scrollTop99navigasi = function () {
 
 /* ================= SALE (NO SCROLL) ================= */
 window.goSale99navigasi = function () {
-  window.location.href = "sale.html";
+  window.location.href = "https://www.tigohost.asia/topup-coin/";
 };
 
 
@@ -1822,6 +2488,67 @@ document.addEventListener("gestureend", function (e) {
   e.preventDefault();
 });
 /* ================= (NO zoom) ================= */
+
+let deferredPrompt = null;
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+
+  console.log("PWA siap diinstall");
+
+  deferredPrompt = e;
+});
+
+document.getElementById("installPWA").onclick = async () => {
+
+  console.log("BUTTON CLICK");
+
+  if (!deferredPrompt) {
+    alert("Aplikasi belum siap diinstall.");
+    return;
+  }
+
+  deferredPrompt.prompt();
+
+  const result =
+    await deferredPrompt.userChoice;
+
+  console.log(result.outcome);
+
+  deferredPrompt = null;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+window.compnystore32_toggleInfo = function () {
+  const panel = document.getElementById("compnystore32_info_panel");
+
+  if (panel.style.display === "flex") {
+    panel.style.opacity = "0";
+    setTimeout(() => {
+      panel.style.display = "none";
+    }, 200);
+  } else {
+    panel.style.display = "flex";
+    setTimeout(() => {
+      panel.style.opacity = "1";
+    }, 10);
+  }
+};
+
+
 
 
 </script>
