@@ -286,6 +286,17 @@ id="editNama">
 
 <input
 type="text"
+id="editLike"
+placeholder="Contoh: 832.3k atau 1.2jt">
+
+<input
+type="text"
+id="editKomentar"
+placeholder="Contoh: 500k atau 2jt">
+
+
+<input
+type="text"
 id="editLinkTujuan"
 placeholder="Link Tujuan">
 
@@ -584,6 +595,11 @@ d.linkTujuan || "";
 document.getElementById("editVerifikasi").value =
 String(d.Verifikasi || false);
 
+
+
+
+
+
 document.getElementById("editProfil").value =
 d.profil || "";
 
@@ -593,6 +609,15 @@ d.tanggal || "";
 
 document.getElementById("editDeskripsi").value =
 d.deskripsi || "";
+
+
+document.getElementById("editLike").value =
+d.like || 0;
+
+document.getElementById("editKomentar").value =
+d.komentar || 0;
+
+
 
 document.getElementById("editModal")
 .style.display="flex";
@@ -614,6 +639,14 @@ ref(db,"Mypostingan/"+currentEditId),
   deskripsi: document.getElementById("editDeskripsi").value,
   profil: document.getElementById("editProfil").value.trim() || "",
 
+like: parseJumlah(
+  document.getElementById("editLike").value
+),
+
+komentar: parseJumlah(
+  document.getElementById("editKomentar").value
+),
+
   linkTujuan: document.getElementById("editLinkTujuan").value.trim() || "",
   Verifikasi: document.getElementById("editVerifikasi").value === "true",
   
@@ -629,6 +662,32 @@ slider: document
 closeModal();
 
 };
+
+
+
+function parseJumlah(v) {
+  if (!v) return 0;
+
+  v = String(v)
+    .trim()
+    .toLowerCase()
+    .replace(",", ".");
+
+  if (v.endsWith("k")) {
+    return Math.round(parseFloat(v) * 1000);
+  }
+
+  if (v.endsWith("jt")) {
+    return Math.round(parseFloat(v) * 1000000);
+  }
+
+  if (v.endsWith("m")) {
+    return Math.round(parseFloat(v) * 1000000);
+  }
+
+  return Number(v) || 0;
+}
+
 
 
 window.closeModal = ()=>{
