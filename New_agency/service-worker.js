@@ -1,15 +1,16 @@
 const CACHE_NAME = "Tigoapp.v9";
 
-const urlsToCache = [
-  "/",
-  "/Login.html",
-  "/register.html",
-  "/manifest.json",
-  "/launchericon-192x192.png",
-  "/launchericon-512x512.png",
-  "/offline.html"
-];
+const BASE_PATH = "/New_agency";
 
+const urlsToCache = [
+  `${BASE_PATH}/`,
+  `${BASE_PATH}/Login.html`,
+  `${BASE_PATH}/register.html`,
+  `${BASE_PATH}/manifest.json`,
+  `${BASE_PATH}/launchericon-192x192.png`,
+  `${BASE_PATH}/launchericon-512x512.png`,
+  `${BASE_PATH}/offline.html`
+];
 
 // ================= INSTALL =================
 self.addEventListener("install", (event) => {
@@ -58,12 +59,14 @@ self.addEventListener("fetch", (event) => {
       })
       .catch(() => {
         return caches.match(event.request).then((res) => {
-          return res || caches.match("/New_agency/offline.html");
+          return (
+            res ||
+            caches.match(`${BASE_PATH}/offline.html`)
+          );
         });
       })
   );
 });
-
 
 // ================= AUTO UPDATE =================
 self.addEventListener("message", (event) => {
