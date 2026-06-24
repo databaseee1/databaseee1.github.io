@@ -117,7 +117,7 @@ gap:6px;
 
 .card{
 height:290px;
-border-radius:24px;
+border-radius:8px;
 overflow:hidden;
 position:relative;
 background:#ddd;
@@ -185,8 +185,8 @@ border-radius:50%;
 }
 
 .chat-icon{
-  width:28px;
-  height:28px;
+  width:38px;
+  height:38px;
   object-fit:contain;
 }
 .flag{
@@ -210,7 +210,7 @@ border-radius:50%;
   width:100%;
   height:100%;
   object-fit:cover;
-  border-radius:16px;
+  border-radius:8px;
   display:block;
 }
 
@@ -252,7 +252,7 @@ border-radius:50%;
   display: flex;
   justify-content: space-around;
   padding: 8px 0;
-  z-index: 9999; /* biar selalu di atas konten */
+  z-index: 999999999; /* biar selalu di atas konten */
   border-top: 1px solid #ffffff;
 }
 
@@ -281,6 +281,11 @@ margin-top:-5px;
   transform: scale(1.1);
   transition: 0.2s;
 }
+
+
+
+
+
 
 .toast{
   position:fixed;
@@ -338,7 +343,7 @@ margin-top:-5px;
   left:0;
   width:100%;
   height:100%;
-  background:#fff;
+  background:#0000002f;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -349,7 +354,7 @@ margin-top:-5px;
   width:24px;
   height:24px;
   border:3px solid #eee;
-  border-top:3px solid #8a00ff;
+  border-top:3px solid #000000;
   border-radius:50%;
   animation:spin .8s linear infinite;
 }
@@ -358,6 +363,125 @@ margin-top:-5px;
   from{transform:rotate(0deg);}
   to{transform:rotate(360deg);}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ================= PEOPLE GRID LOADING 9283 ================= */
+
+/* ================= PEOPLE LOADING FIX ================= */
+
+#ppl_loading_9283{
+  width:100%;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  grid-column:1/-1;
+  gap:6px;
+}
+
+.ppl_item_9283{
+  height:290px;
+  border-radius:24px;
+  overflow:hidden;
+  position:relative;
+  background:#f2f2f2;
+}
+
+/* area foto */
+.ppl_avatar_9283{
+  width:100%;
+  height:100%;
+  background:linear-gradient(
+    90deg,
+    #eeeeee 25%,
+    #dddddd 50%,
+    #eeeeee 75%
+  );
+  background-size:400% 100%;
+  animation:ppl_loading_anim_9283 1.3s infinite;
+}
+
+/* info kiri bawah */
+.ppl_text_box_9283{
+  position:absolute;
+  left:10px;
+  bottom:14px;
+}
+
+.ppl_name_9283{
+  width:90px;
+  height:14px;
+  border-radius:20px;
+  margin-bottom:10px;
+  background:linear-gradient(
+    90deg,
+    #f8f8f8 25%,
+    #e5e5e5 50%,
+    #f8f8f8 75%
+  );
+  background-size:400% 100%;
+  animation:ppl_loading_anim_9283 1.3s infinite;
+}
+
+.ppl_text_9283{
+  width:60px;
+  height:10px;
+  border-radius:20px;
+  background:linear-gradient(
+    90deg,
+    #f8f8f8 25%,
+    #e5e5e5 50%,
+    #f8f8f8 75%
+  );
+  background-size:400% 100%;
+  animation:ppl_loading_anim_9283 1.3s infinite;
+}
+
+/* tombol chat palsu */
+.ppl_chat_9283{
+  position:absolute;
+  right:14px;
+  bottom:9px;
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:linear-gradient(
+    90deg,
+    #ffffff 25%,
+    #ececec 50%,
+    #ffffff 75%
+  );
+  background-size:400% 100%;
+  animation:ppl_loading_anim_9283 1.3s infinite;
+}
+
+@keyframes ppl_loading_anim_9283{
+  0%{
+    background-position:100% 0;
+  }
+  100%{
+    background-position:-100% 0;
+  }
+}
+
+
+.profile-photo{
+  content-visibility:auto;
+}
+
+
 </style>
 </head>
 <body>
@@ -381,39 +505,126 @@ margin-top:-5px;
 
 
 
-<div class="people-grid" id="peopleGrid"></div>
+<div class="people-grid" id="peopleGrid">
 
+  <div id="ppl_loading_9283">
 
+    <!-- 1 -->
+    <div class="ppl_item_9283">
+      <div class="ppl_avatar_9283"></div>
+      <div class="ppl_text_box_9283">
+        <div class="ppl_name_9283"></div>
+        <div class="ppl_text_9283"></div>
+      </div>
+      <div class="ppl_chat_9283"></div>
+    </div>
+
+    <!-- 2 -->
+    <div class="ppl_item_9283">
+      <div class="ppl_avatar_9283"></div>
+      <div class="ppl_text_box_9283">
+        <div class="ppl_name_9283"></div>
+        <div class="ppl_text_9283"></div>
+      </div>
+      <div class="ppl_chat_9283"></div>
+    </div>
+
+    <!-- 3 -->
+    <div class="ppl_item_9283">
+      <div class="ppl_avatar_9283"></div>
+      <div class="ppl_text_box_9283">
+        <div class="ppl_name_9283"></div>
+        <div class="ppl_text_9283"></div>
+      </div>
+      <div class="ppl_chat_9283"></div>
+    </div>
+
+    <!-- 4 -->
+    <div class="ppl_item_9283">
+      <div class="ppl_avatar_9283"></div>
+      <div class="ppl_text_box_9283">
+        <div class="ppl_name_9283"></div>
+        <div class="ppl_text_9283"></div>
+      </div>
+      <div class="ppl_chat_9283"></div>
+    </div>
+
+    <!-- 5 -->
+    <div class="ppl_item_9283">
+      <div class="ppl_avatar_9283"></div>
+      <div class="ppl_text_box_9283">
+        <div class="ppl_name_9283"></div>
+        <div class="ppl_text_9283"></div>
+      </div>
+      <div class="ppl_chat_9283"></div>
+    </div>
+
+    <!-- 6 -->
+    <div class="ppl_item_9283">
+      <div class="ppl_avatar_9283"></div>
+      <div class="ppl_text_box_9283">
+        <div class="ppl_name_9283"></div>
+        <div class="ppl_text_9283"></div>
+      </div>
+      <div class="ppl_chat_9283"></div>
+    </div>
+
+    <!-- 7 -->
+    <div class="ppl_item_9283">
+      <div class="ppl_avatar_9283"></div>
+      <div class="ppl_text_box_9283">
+        <div class="ppl_name_9283"></div>
+        <div class="ppl_text_9283"></div>
+      </div>
+      <div class="ppl_chat_9283"></div>
+    </div>
+
+    <!-- 8 -->
+    <div class="ppl_item_9283">
+      <div class="ppl_avatar_9283"></div>
+      <div class="ppl_text_box_9283">
+        <div class="ppl_name_9283"></div>
+        <div class="ppl_text_9283"></div>
+      </div>
+      <div class="ppl_chat_9283"></div>
+    </div>
+
+  </div>
+
+</div>
 
 
 
 
 <!-- NAV BAWAH -->
-<!-- NAVIGASI BAWAH (selalu tampil) -->
 <div id="bottomNav">
 
-  <div class="nav-item" onclick="window.location.href='home.html'">
+  <div class="nav-item"
+       onclick="goNav(this,'home.html')">
     <img class="nav-icon"
          src="destiny_icon_normal.png"
          data-default="destiny_icon_normal.png"
          data-active="destiny_icon_selected.png">
   </div>
 
-  <div class="nav-item" onclick="window.location.href='dunia.html'">
+  <div class="nav-item"
+       onclick="goNav(this,'dunia.html')">
     <img class="nav-icon"
          src="match_icon_normal.png"
          data-default="match_icon_normal.png"
          data-active="match_icon_selected.png">
   </div>
 
-  <div class="nav-item" onclick="window.location.href='inbox.html'">
+  <div class="nav-item"
+       onclick="goNav(this,'inbox.html')">
     <img class="nav-icon"
          src="msg_icon_normal.png"
          data-default="msg_icon_normal.png"
          data-active="msg_icon_selected.png">
   </div>
 
-  <div class="nav-item" onclick="window.location.href='my_akun.html'">
+  <div class="nav-item"
+       onclick="goNav(this,'my_akun.html')">
     <img class="nav-icon"
          src="mine_icon_normal.png"
          data-default="mine_icon_normal.png"
@@ -421,7 +632,6 @@ margin-top:-5px;
   </div>
 
 </div>
-
 
 
 
@@ -467,7 +677,7 @@ if(
   !userLogin.email ||
   !userLogin.wa
 ){
-  window.location.href = "login.html";
+  window.location.href = "Login.html";
   throw new Error("Belum login");
 }
 
@@ -505,16 +715,24 @@ updateLastActive("Home");
 
 
 
-
-
 const loadingScreen = document.getElementById("loadingScreen");
 const peopleGrid = document.getElementById("peopleGrid");
 
+const CACHE_KEY = "peopleCache_v1";
+
+// tampilkan cache dulu (kalau ada)
+const cache = localStorage.getItem(CACHE_KEY);
+if (cache) {
+  try {
+    peopleGrid.innerHTML = cache;
+    loadingScreen.style.display = "none";
+  } catch (e) {}
+}
+
 onValue(ref(db, "Users"), (snapshot) => {
 
-  peopleGrid.innerHTML = "";
-
   if (!snapshot.exists()) {
+    peopleGrid.innerHTML = "";
     loadingScreen.style.display = "none";
     return;
   }
@@ -531,6 +749,8 @@ onValue(ref(db, "Users"), (snapshot) => {
   // random
   users.sort(() => Math.random() - 0.5);
 
+  let html = "";
+
   users.forEach((item) => {
 
     const user = item.data;
@@ -540,35 +760,58 @@ onValue(ref(db, "Users"), (snapshot) => {
         ? user.foto[0]
         : "https://via.placeholder.com/400x600";
 
-    peopleGrid.innerHTML += `
-      <div class="card"
-           onclick="window.location.href='Profil_users.html?id=${item.id}'">
+ html += `
+  <div class="card"
+       onclick="window.location.href='Profil_users.html?id=${item.id}'">
 
-        <img src="${foto}" class="profile-photo">
+    <img
+      src="${foto}"
+      class="profile-photo"
+      loading="lazy"
+      decoding="async"
+    >
 
-        <div class="card-info">
+    <div class="card-info">
 
-          <div class="name">
-            <div class="online"></div>
-            ${user.nama || "User"}
-          </div>
+<div class="name">
+  <div class="online"></div>
+  ${
+    (user.nama || "User").length > 9
+      ? (user.nama || "User").substring(0, 9) + "..."
+      : (user.nama || "User")
+  }
+</div>
 
-          <div class="country">
-            <img src="${user.negaraLogo || 'indonesialogo.png'}" class="flag">
-            ${user.negara || "Indonesia"}
-          </div>
-
-        </div>
-
-        <div class="chat-btn">
-          <img src="destiny_icon_video_call.png" class="chat-icon">
-        </div>
-
+      <div class="country">
+        <img
+          src="${user.negaraLogo || 'indonesialogo.png'}"
+          class="flag"
+          loading="lazy"
+        >
+        ${user.negara || "Indonesia"}
       </div>
-    `;
+
+    </div>
+
+<div class="chat-btn"
+     onclick="event.stopPropagation(); openVideoCall('${item.id}')">
+  <img
+    src="destiny_icon_video_call.png"
+    class="chat-icon"
+    loading="lazy"
+  >
+</div>
+
+  </div>
+`;
   });
 
-  // 🔥 HILANGKAN LOADING SETELAH SEMUA RENDER SELESAI
+  // render sekali saja
+  peopleGrid.innerHTML = html;
+
+  // simpan ke browser
+  localStorage.setItem(CACHE_KEY, html);
+
   loadingScreen.style.display = "none";
 });
 
@@ -577,33 +820,67 @@ onValue(ref(db, "Users"), (snapshot) => {
 
 function setActiveNav(el) {
 
-  // Reset semua nav ke icon normal
-  document.querySelectorAll('#bottomNav .nav-item').forEach(item => {
-    item.classList.remove('active');
+  document.querySelectorAll('#bottomNav .nav-item')
+    .forEach(item => {
 
-    const img = item.querySelector('.nav-icon');
-    if(img){
-      img.src = img.dataset.default;
-    }
-  });
+      item.classList.remove('active');
 
-  // Aktifkan nav yang diklik
+      const img =
+        item.querySelector('.nav-icon');
+
+      if (img) {
+        img.src = img.dataset.default;
+      }
+    });
+
   el.classList.add('active');
 
-  const activeImg = el.querySelector('.nav-icon');
-  if(activeImg){
-    activeImg.src = activeImg.dataset.active;
+  const activeImg =
+    el.querySelector('.nav-icon');
+
+  if (activeImg) {
+    activeImg.src =
+      activeImg.dataset.active;
   }
 }
 
-// Aktif pertama kali (Play)
-window.onload = function(){
-  const firstNav = document.querySelector('#bottomNav .nav-item');
-  if(firstNav){
-    setActiveNav(firstNav);
-  }
-}
+window.goNav = function(el, url) {
 
+  setActiveNav(el);
+
+  setTimeout(() => {
+    window.location.href = url;
+  }, 30);
+};
+
+/* AKTIF OTOMATIS SAAT REFRESH */
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+
+    const page =
+      window.location.pathname
+        .split("/")
+        .pop()
+        .toLowerCase();
+
+    document
+      .querySelectorAll(
+        "#bottomNav .nav-item"
+      )
+      .forEach(item => {
+
+        const click =
+          item.getAttribute("onclick") || "";
+
+        if (
+          click.toLowerCase().includes(page)
+        ) {
+          setActiveNav(item);
+        }
+      });
+  }
+);
 
 
 
@@ -632,6 +909,70 @@ document.querySelectorAll(".tab").forEach(el => {
     });
   }
 });
+
+
+window.openVideoCall = async function(targetId){
+
+  try {
+
+    const login =
+      JSON.parse(localStorage.getItem("user"));
+
+    if (!login?.userId) {
+      location.href = "Login.html";
+      return;
+    }
+
+    // data user yang dipilih
+    const targetSnap =
+      await get(ref(db, "Users/" + targetId));
+
+    let nama = "Unknown";
+    let profil = "";
+    let negara = "Indonesia";
+    let level = 0;
+
+    if (targetSnap.exists()) {
+      const target = targetSnap.val();
+
+      nama = target.nama || "Unknown";
+      profil = target.foto?.[0] || "";
+      negara = target.negara || "Indonesia";
+      level = target.level || 0;
+    }
+
+    const logData = {
+      userId: login.userId,
+
+      nama: nama,
+      profil: profil,
+      negara: negara,
+      level: level,
+
+      logo: "destiny_icon_video_call.png",
+      status: "Panggilan Dibatalkan",
+      waktu: new Date().toLocaleString("id-ID"),
+
+      targetId: targetId
+    };
+
+    await push(
+      ref(db, "Logpanggilan"),
+      logData
+    );
+
+  } catch(err){
+    console.log("LOG ERROR:", err);
+  }
+
+  window.location.href =
+    "Panggilan_video.html?id=" + targetId;
+};
+
+
+
+
+
 
 
 

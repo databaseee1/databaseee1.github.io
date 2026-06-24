@@ -58,6 +58,12 @@ video{
   background:#000;
 }
 
+
+#localVideo{
+  transform: scaleX(-1);
+}
+
+
 /* TOP RIGHT PROFILE */
 .top-right{
   position:absolute;
@@ -229,6 +235,7 @@ video{
   border:none;
   outline:none;
   font-size:13px;
+  background: #7e7e7e3b;
 }
 
 .chat-input button{
@@ -562,7 +569,152 @@ to{
 }
 
 
+.call-user-mini{
+  position:absolute;
+  top:50px;
+  left:10px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  z-index:100;
+}
 
+.call-user-photo{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+.call-user-name{
+  color:#fff;
+  font-size:14px;
+  font-weight:600;
+}
+
+
+
+.call-user-name-row{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.call-free-text{
+  font-size:10px;
+  color:#fff;
+  background:rgba(255,255,255,0.2);
+  padding:2px 6px;
+  border-radius:20px;
+  white-space:nowrap;
+}
+
+
+
+.call-user-row{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  color:#fff;
+  font-size:11px;
+}
+
+.call-user-flag{
+  width:14px;
+  height:14px;
+  border-radius:50%;
+}
+
+.call-user-level{
+  color:#ffd700;
+  font-size:11px;
+}
+
+
+
+
+.call-user-loading{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.fake-photo{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:linear-gradient(
+    90deg,
+    #3b3b3b 25%,
+    #555 50%,
+    #3b3b3b 75%
+  );
+  background-size:400% 100%;
+  animation:userSkeleton 1.2s infinite;
+}
+
+.fake-info{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+
+.fake-name{
+  width:90px;
+  height:12px;
+  border-radius:20px;
+  background:linear-gradient(
+    90deg,
+    #3b3b3b 25%,
+    #555 50%,
+    #3b3b3b 75%
+  );
+  background-size:400% 100%;
+  animation:userSkeleton 1.2s infinite;
+}
+
+.fake-country{
+  width:60px;
+  height:10px;
+  border-radius:20px;
+  background:linear-gradient(
+    90deg,
+    #3b3b3b 25%,
+    #555 50%,
+    #3b3b3b 75%
+  );
+  background-size:400% 100%;
+  animation:userSkeleton 1.2s infinite;
+}
+
+.fake-level{
+  width:40px;
+  height:10px;
+  border-radius:20px;
+  background:linear-gradient(
+    90deg,
+    #3b3b3b 25%,
+    #555 50%,
+    #3b3b3b 75%
+  );
+  background-size:400% 100%;
+  animation:userSkeleton 1.2s infinite;
+}
+
+@keyframes userSkeleton{
+  0%{
+    background-position:100% 0;
+  }
+  100%{
+    background-position:-100% 0;
+  }
+}
+
+#callUserReal{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
 
 </style>
 </head>
@@ -592,7 +744,7 @@ to{
       Akun anda belum diverifikasi
     </div>
 
-   <button onclick="location.href='Verifikasi_akun.html'">Pergi Verifikasi</button>
+   <button onclick="location.href='Verifikasi.html'">Pergi Verifikasi</button>
 
     <!-- 🔥 BUTTON BARU -->
 <button id="maybeBtn" type="button">
@@ -619,15 +771,69 @@ to{
   <!-- TOP RIGHT PROFILE -->
 <div class="top-bar">
 
-  <!-- LEFT TOKEN -->
   <div class="top-left">
     <img src="credit.png">
     <span id="saldoToken">Rp 0</span>
   </div>
 
+
+<div class="call-user-mini" id="callUserMini">
+
+  <div id="callUserLoading" class="call-user-loading">
+    <div class="fake-photo"></div>
+
+    <div class="fake-info">
+      <div class="fake-name"></div>
+      <div class="fake-country"></div>
+      <div class="fake-level"></div>
+    </div>
+  </div>
+
+ <div id="callUserReal" style="display:none;">
+
+  <img id="fotoUser"
+       src="default-profile.png"
+       class="call-user-photo">
+
+  <div class="call-user-info">
+
+    <div class="call-user-name-row">
+
+      <div id="namaUser"
+           class="call-user-name">
+        User
+      </div>
+
+      <div class="call-free-text">
+        Panggilan gratis
+      </div>
+
+    </div>
+
+    <div class="call-user-row">
+      <img id="negaraLogoUser"
+           src="indonesialogo.png"
+           class="call-user-flag">
+
+      <span id="negaraUser">
+        Indonesia
+      </span>
+    </div>
+
+    <div id="levelUser"
+         class="call-user-level">
+      Lv0
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+
   <!-- RIGHT GIFT -->
   <div class="top-right" onclick="openGift()" style="cursor:pointer;">
-    <img src="im_gift_select.png" alt="gift">
+    <img src="game_room_gift_func_icon.png" alt="gift">
   </div>
 
 </div>
@@ -745,7 +951,60 @@ updateLastActive("Panggilan_video");
 
 
 
+// ================= USER YANG DIAJAK VIDEO CALL =================
+const params = new URLSearchParams(window.location.search);
+const targetUserId = params.get("id");
 
+// 🔥 Jika masuk dari Users (ada ?id=...), sembunyikan tombol Skip
+const skipBtn = document.querySelector(".bottom-right");
+
+if (targetUserId && skipBtn) {
+  skipBtn.style.display = "none";
+}
+
+async function loadTargetUser() {
+  try {
+    if (!targetUserId) return;
+
+    const snap = await get(ref(db, "Users/" + targetUserId));
+
+    if (!snap.exists()) return;
+
+    const user = snap.val();
+
+    const nama = user.nama || "User";
+    const negara = user.negara || "Indonesia";
+    const level = `Level ${user.level ?? 0}`;
+    const foto = user.foto?.[0] || "default-profile.png";
+    const negaraLogo =
+      user.negaraLogo || "indonesialogo.png";
+
+    const fotoEl =
+      document.getElementById("fotoUser");
+    const namaEl =
+      document.getElementById("namaUser");
+    const negaraEl =
+      document.getElementById("negaraUser");
+    const levelEl =
+      document.getElementById("levelUser");
+    const negaraLogoEl =
+      document.getElementById("negaraLogoUser");
+
+    if (fotoEl) fotoEl.src = foto;
+    if (namaEl) namaEl.textContent = nama;
+    if (negaraEl) negaraEl.textContent = negara;
+    if (levelEl) levelEl.textContent = level;
+    if (negaraLogoEl) negaraLogoEl.src = negaraLogo;
+
+    document.getElementById("callUserLoading").style.display = "none";
+    document.getElementById("callUserReal").style.display = "flex";
+
+  } catch (err) {
+    console.log("ERROR loadTargetUser:", err);
+  }
+}
+
+loadTargetUser();
 
 
 

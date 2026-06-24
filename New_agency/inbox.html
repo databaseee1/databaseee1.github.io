@@ -250,7 +250,7 @@ font-size: 12px;
   display: flex;
   justify-content: space-around;
   padding: 8px 0;
-  z-index: 9999;
+  z-index: 99999999;
 
 }
 
@@ -276,7 +276,7 @@ font-size: 12px;
   left:0;
   width:100%;
   height:100%;
-  background:#fff;
+  background:#00000018;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -287,7 +287,7 @@ font-size: 12px;
   width:24px;
   height:24px;
   border:3px solid #eee;
-  border-top:3px solid #8a00ff;
+  border-top:3px solid #000000;
   border-radius:50%;
   animation:spin .8s linear infinite;
 }
@@ -408,22 +408,127 @@ font-size: 12px;
   gap:4px;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ================= LOADING CHAT ================= */
+
+#ceklog332bnue_loading{
+  width:100%;
+}
+
+
+.ceklog332bnue_item{
+  display:flex;
+  align-items:center;
+  padding:12px;
+  gap:12px;
+}
+
+
+.ceklog332bnue_avatar,
+.ceklog332bnue_name,
+.ceklog332bnue_msg,
+.ceklog332bnue_time,
+.ceklog332bnue_badge{
+
+  background:linear-gradient(
+    90deg,
+    #f0f0f0 25%,
+    #e3e3e3 50%,
+    #f0f0f0 75%
+  );
+
+  background-size:400% 100%;
+  animation:ceklog332bnue_anim 1.3s infinite;
+}
+
+
+
+.ceklog332bnue_avatar{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+}
+
+
+
+.ceklog332bnue_text{
+  flex:1;
+}
+
+
+.ceklog332bnue_name{
+  width:120px;
+  height:12px;
+  border-radius:10px;
+  margin-bottom:8px;
+}
+
+
+.ceklog332bnue_msg{
+  width:180px;
+  height:10px;
+  border-radius:10px;
+}
+
+
+.ceklog332bnue_right{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:8px;
+}
+
+
+.ceklog332bnue_time{
+  width:40px;
+  height:10px;
+  border-radius:10px;
+}
+
+
+.ceklog332bnue_badge{
+  width:22px;
+  height:22px;
+  border-radius:50%;
+}
+
+
+
+@keyframes ceklog332bnue_anim{
+
+0%{
+ background-position:100% 0;
+}
+
+100%{
+ background-position:-100% 0;
+}
+
+}
 </style>
 </head>
+
+
 
 <body>
 <div id="loadingScreen">
   <div class="spinner"></div>
 </div>
-
-
-
-
-
-
-
-
-
 
 
 
@@ -474,10 +579,77 @@ font-size: 12px;
 
 <div id="chatPanel">
 
-  <div class="list" id="list"></div>
-  <div id="chatList"></div>
+
+<div class="list" id="list">
+
+
+<div id="ceklog332bnue_loading">
+
+
+
+<!-- 1 -->
+<div class="ceklog332bnue_item">
+<div class="ceklog332bnue_avatar"></div>
+
+<div class="ceklog332bnue_text">
+<div class="ceklog332bnue_name"></div>
+<div class="ceklog332bnue_msg"></div>
+</div>
+
+<div class="ceklog332bnue_right">
+<div class="ceklog332bnue_time"></div>
+<div class="ceklog332bnue_badge"></div>
+</div>
+</div>
+
+
+
+<!-- 2 -->
+<div class="ceklog332bnue_item">
+<div class="ceklog332bnue_avatar"></div>
+<div class="ceklog332bnue_text">
+<div class="ceklog332bnue_name"></div>
+<div class="ceklog332bnue_msg"></div>
+</div>
+<div class="ceklog332bnue_right">
+<div class="ceklog332bnue_time"></div>
+<div class="ceklog332bnue_badge"></div>
+</div>
+</div>
+
+
+
+<!-- 3 -->
+<div class="ceklog332bnue_item">
+<div class="ceklog332bnue_avatar"></div>
+<div class="ceklog332bnue_text">
+<div class="ceklog332bnue_name"></div>
+<div class="ceklog332bnue_msg"></div>
+</div>
+<div class="ceklog332bnue_right">
+<div class="ceklog332bnue_time"></div>
+<div class="ceklog332bnue_badge"></div>
+</div>
+</div>
+
+
+
+
 
 </div>
+
+
+
+</div>
+
+
+<div id="chatList"></div>
+
+
+</div>
+
+
+
 
 
 <div id="callBox" style="display:none;">
@@ -575,7 +747,7 @@ const list = document.getElementById("list");
 
 /* ================= LOGIN ================= */
 const login = JSON.parse(localStorage.getItem("user"));
-if (!login) window.location.href = "login.html";
+if (!login) window.location.href = "Login.html";
 
 const myId = cleanId(login.email || login.wa || login.uid);
 
@@ -982,10 +1154,10 @@ if (key === "notifikasi") {
         ${key !== "customer_service" ? `<div class="msg">${d._lastText || ""}</div>` : ""}
       </div>
 
-      <div class="chat-right">
-        ${d._badge > 0 ? `<div class="badge">${d._badge}</div>` : ""}
-        ${d.time ? `<div class="chat-time">${d.time}</div>` : ""}
-      </div>
+ <div class="chat-right">
+  ${d.time ? `<div class="chat-time">${d.time}</div>` : ""}
+  ${d._badge > 0 ? `<div class="badge">${d._badge}</div>` : ""}
+</div>
 
     </div>`;
   }
@@ -1262,17 +1434,19 @@ const lastText =
                     : ""}
                 </div>
 
-                <div class="chat-time"
-                  style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;padding-top:2px;">
+              <div class="chat-time"
+  style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;padding-top:2px;">
 
-                  ${unreadCount > 0
-                    ? `<div class="badge">${unreadCount}</div>`
-                    : `<div style="height:16px;"></div>`
-                  }
+  <div style="font-size:12px;opacity:.7;">
+    ${formatTime(lastTime)}
+  </div>
 
-                  <div style="font-size:12px;opacity:.7;">
-                    ${formatTime(lastTime)}
-                  </div>
+  ${unreadCount > 0
+    ? `<div class="badge">${unreadCount}</div>`
+    : `<div style="height:16px;"></div>`
+  }
+
+
 
                 </div>
 

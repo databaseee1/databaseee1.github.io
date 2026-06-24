@@ -218,7 +218,7 @@ body{
   left:0;
   width:100%;
   height:100%;
-  background:#fff;
+  background:rgba(152, 152, 152, 0.068);
   display:flex;
   justify-content:center;
   align-items:center;
@@ -229,7 +229,7 @@ body{
   width:24px;
   height:24px;
   border:3px solid #eee;
-  border-top:3px solid #8a00ff;
+  border-top:3px solid #000000;
   border-radius:50%;
   animation:spin .8s linear infinite;
 }
@@ -256,6 +256,44 @@ body{
   height:20px;
 }
 
+
+
+
+
+#carouselFake{
+  display:flex;
+  gap:0;
+}
+
+.fake-carousel-item{
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  flex:0 0 auto;
+  border:1px solid #cfcfcf;
+
+  background:linear-gradient(
+    90deg,
+    #e0e0e0 25%,
+    #cfcfcf 50%,
+    #e0e0e0 75%
+  );
+
+  background-size:400% 100%;
+  animation:carouselFakeAnim 1.3s infinite;
+}
+
+@keyframes carouselFakeAnim{
+  0%{
+    background-position:100% 0;
+  }
+  100%{
+    background-position:-100% 0;
+  }
+}
+
+
+
 </style>
 </head>
 
@@ -281,8 +319,21 @@ body{
 <div id="carouselContainer">
   <div id="carouselTrack">
 
+    <div id="carouselFake">
+      <div class="fake-carousel-item"></div>
+      <div class="fake-carousel-item"></div>
+      <div class="fake-carousel-item"></div>
+      <div class="fake-carousel-item"></div>
+      <div class="fake-carousel-item"></div>
+      <div class="fake-carousel-item"></div>
+    </div>
+
   </div>
 </div>
+
+
+
+
 
 <!-- BUTTON -->
 <div class="btn">
@@ -305,26 +356,53 @@ body{
   </div>
 </div>
 
+
+
+
 <!-- BOTTOM NAV -->
 <div id="bottomNav">
 
-  <div class="nav-item" onclick="goNav(this,'home.html')">
-    <img class="nav-icon" src="destiny_icon_normal.png" data-default="destiny_icon_normal.png" data-active="destiny_icon_selected.png">
+  <div class="nav-item"
+       data-page="home.html"
+       onclick="goNav(this,'home.html')">
+    <img class="nav-icon"
+         src="destiny_icon_normal.png"
+         data-default="destiny_icon_normal.png"
+         data-active="destiny_icon_selected.png">
   </div>
 
-  <div class="nav-item" onclick="goNav(this,'dunia.html')">
-    <img class="nav-icon" src="match_icon_normal.png" data-default="match_icon_normal.png" data-active="match_icon_selected.png">
+  <div class="nav-item"
+       data-page="dunia.html"
+       onclick="goNav(this,'dunia.html')">
+    <img class="nav-icon"
+         src="match_icon_normal.png"
+         data-default="match_icon_normal.png"
+         data-active="match_icon_selected.png">
   </div>
 
-  <div class="nav-item" onclick="goNav(this,'inbox.html')">
-    <img class="nav-icon" src="msg_icon_normal.png" data-default="msg_icon_normal.png" data-active="msg_icon_selected.png">
+  <div class="nav-item"
+       data-page="inbox.html"
+       onclick="goNav(this,'inbox.html')">
+    <img class="nav-icon"
+         src="msg_icon_normal.png"
+         data-default="msg_icon_normal.png"
+         data-active="msg_icon_selected.png">
   </div>
 
-  <div class="nav-item" onclick="goNav(this,'my_akun.html')">
-    <img class="nav-icon" src="mine_icon_normal.png" data-default="mine_icon_normal.png" data-active="mine_icon_selected.png">
+  <div class="nav-item"
+       data-page="my_akun.html"
+       onclick="goNav(this,'my_akun.html')">
+    <img class="nav-icon"
+         src="mine_icon_normal.png"
+         data-default="mine_icon_normal.png"
+         data-active="mine_icon_selected.png">
   </div>
 
 </div>
+
+
+
+
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -476,10 +554,49 @@ function shuffleArray(arr){
 
 
 
-
+const FOTO_CACHE_KEY = "fotoglobal_cache_v1";
 
 async function loadFotoGlobal() {
 
+  const track = document.getElementById("carouselTrack");
+  const fake = document.getElementById("carouselFake");
+
+  // =====================
+  // TAMPILKAN CACHE DULU
+  // =====================
+  const cache = localStorage.getItem(FOTO_CACHE_KEY);
+
+  if (cache) {
+    try {
+      let urls = JSON.parse(cache);
+
+urls = shuffleArray(urls);
+
+document.getElementById("carouselFake")?.remove();
+track.innerHTML = "";
+
+      urls.forEach(item => {
+        const url =
+          typeof item === "string"
+            ? item
+            : item.url;
+
+        const div = document.createElement("div");
+        div.className = "carousel-item";
+        div.innerHTML = `
+          <img src="${url}" loading="lazy">
+        `;
+        track.appendChild(div);
+      });
+
+    } catch (e) {
+      console.log("Cache error:", e);
+    }
+  }
+
+  // =====================
+  // AMBIL DATA TERBARU FIREBASE
+  // =====================
   const snap = await get(ref(db, "fotoglobal"));
 
   if (!snap.exists()) return;
@@ -487,61 +604,63 @@ async function loadFotoGlobal() {
   const data = snap.val();
   let urls = Object.values(data);
 
-// acak setiap refresh
+  // simpan cache
+  localStorage.setItem(
+    FOTO_CACHE_KEY,
+    JSON.stringify(urls)
+  );
+
 urls = shuffleArray(urls);
 
-  const track = document.getElementById("carouselTrack");
+document.getElementById("carouselFake")?.remove();
+track.innerHTML = "";
 
-  track.innerHTML = "";
-
-  // 🔥 tampilkan dulu 10 gambar pertama (biar langsung muncul)
+  // tampilkan 10 dulu
   const firstBatch = urls.slice(0, 10);
 
   firstBatch.forEach(item => {
-    const url = typeof item === "string" ? item : item.url;
+    const url =
+      typeof item === "string"
+        ? item
+        : item.url;
 
     const div = document.createElement("div");
     div.className = "carousel-item";
-    div.innerHTML = `<img src="${url}">`;
+    div.innerHTML = `
+      <img src="${url}" loading="lazy">
+    `;
     track.appendChild(div);
   });
 
-  // 🔥 delay render sisanya (background)
+  // sisanya belakangan
   setTimeout(() => {
 
     const rest = urls.slice(10);
 
     rest.forEach(item => {
-      const url = typeof item === "string" ? item : item.url;
+      const url =
+        typeof item === "string"
+          ? item
+          : item.url;
 
       const div = document.createElement("div");
       div.className = "carousel-item";
-      div.innerHTML = `<img src="${url}">`;
+      div.innerHTML = `
+        <img src="${url}" loading="lazy">
+      `;
       track.appendChild(div);
     });
 
   }, 200);
 
-
-
-
-
-  // tunggu browser render
-  await new Promise(resolve =>
-    requestAnimationFrame(resolve)
+  await new Promise(r =>
+    requestAnimationFrame(r)
   );
 
-  await new Promise(resolve =>
-    requestAnimationFrame(resolve)
+  await new Promise(r =>
+    requestAnimationFrame(r)
   );
-
- 
-
 }
-
-
-
-
 
 
 
@@ -654,39 +773,74 @@ requestAnimationFrame(scaleLoop);
 
 
 
-window.goNav = function(el, url) {
 
-  document.querySelectorAll("#bottomNav .nav-item").forEach(i => {
-    i.classList.remove("active");
 
-    const img = i.querySelector("img");
-    if (img) img.src = img.dataset.default;
-  });
+
+
+
+
+
+
+
+
+
+function setActiveNav(el) {
+
+  document.querySelectorAll("#bottomNav .nav-item")
+    .forEach(item => {
+
+      item.classList.remove("active");
+
+      const img = item.querySelector(".nav-icon");
+      if (img) {
+        img.src = img.dataset.default;
+      }
+    });
+
+  if (!el) return;
 
   el.classList.add("active");
 
-  const img = el.querySelector("img");
-  if (img) img.src = img.dataset.active;
+  const activeImg =
+    el.querySelector(".nav-icon");
+
+  if (activeImg) {
+    activeImg.src =
+      activeImg.dataset.active;
+  }
+}
+
+window.goNav = function(el, url) {
+
+  setActiveNav(el);
+
+  localStorage.setItem(
+    "activeNavPage",
+    url
+  );
 
   setTimeout(() => {
     window.location.href = url;
-  }, 150);
+  }, 30);
 };
-window.addEventListener("DOMContentLoaded", () => {
 
-  const items = document.querySelectorAll("#bottomNav .nav-item");
+window.addEventListener(
+  "DOMContentLoaded",
+  () => {
 
-  if (items.length > 1) {
-    items[1].classList.add("active");
+    const currentPage =
+      window.location.pathname
+        .split("/")
+        .pop();
 
-    const img = items[1].querySelector("img");
-    if (img) img.src = img.dataset.active;
+    const active =
+      document.querySelector(
+        `#bottomNav .nav-item[data-page="${currentPage}"]`
+      );
+
+    setActiveNav(active);
   }
-
-});
-/* AUTO ACTIVE */
-document.querySelectorAll(".nav-item")[1].classList.add("active");
-
+);
 
 
 /* ================= (NO zoom) ================= */

@@ -2,7 +2,8 @@
 <html>
 <head>
   <title>Login</title>
-
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body{
       font-family:Arial;
@@ -22,7 +23,7 @@
     }
 
     input{
-      width:100%;
+      width:95%;
       padding:10px;
       margin:8px 0;
       border:1px solid #ddd;
@@ -49,6 +50,132 @@
       font-size:13px;
       margin-top:5px;
     }
+
+
+
+.login-wrap{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.account-icon{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  box-shadow:0 2px 8px rgba(0,0,0,.15);
+}
+
+.account-icon i{
+  font-size:18px;
+  color:#333;
+}
+
+
+
+
+#allacount32h3{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:99999;
+}
+
+.allacount32h3_box{
+  width:90%;
+  max-width:400px;
+  max-height:80vh;
+  overflow:auto;
+  background:#fff;
+  border-radius:15px;
+}
+
+.allacount32h3_header{
+  padding:15px;
+  font-weight:bold;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid #eee;
+}
+
+#accountList{
+  padding:10px;
+}
+
+.acc-card{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  padding:10px;
+  border-radius:12px;
+  cursor:pointer;
+  margin-bottom:10px;
+  border:1px solid #eee;
+}
+
+.acc-card:hover{
+  background:#f7f7f7;
+}
+
+.acc-card img{
+  width:55px;
+  height:55px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+.acc-info{
+  flex:1;
+}
+
+.acc-name{
+  font-weight:bold;
+}
+
+.acc-email,
+.acc-wa{
+  font-size:13px;
+  color:#666;
+}
+
+#giftSelectedList{
+  margin-top:15px;
+}
+
+.acc-card{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  border:1px solid #eee;
+  border-radius:12px;
+  padding:10px;
+  margin-bottom:10px;
+}
+
+.acc-card img{
+  width:55px;
+  height:55px;
+  border-radius:10px;
+  object-fit:cover;
+}
+
+.acc-info{
+  flex:1;
+}
+
+.acc-name{
+  font-weight:bold;
+}
+
   </style>
 </head>
 
@@ -60,7 +187,150 @@
   <input type="text" id="emailInput" placeholder="Email">
   <input type="password" id="passwordInput" placeholder="Password (WA)">
 
-  <button onclick="login()">Masuk</button>
+
+
+
+
+
+
+  
+<div class="login-wrap">
+
+  <button onclick="login()">
+    Masuk
+  </button>
+
+  <div class="account-icon"
+       onclick="openAccount()">
+    <i class="fa-solid fa-user"></i>
+  </div>
+
+</div>
+
+
+
+
+
+
+<div id="allacount32h3">
+
+  <div class="allacount32h3_box">
+
+    <div class="allacount32h3_header">
+      Pilih Akun
+      <i class="fa-solid fa-xmark"
+         onclick="closeAccount()"></i>
+    </div>
+
+    <div id="accountList"></div>
+
+
+
+
+  </div>
+
+</div>
+
+
+<div class="register-btn-wrap">
+  <button onclick="showRegisterTab()">
+    Daftar Akun
+  </button>
+</div>
+
+
+<div id="registerTab" style="display:none;padding:15px;">
+<h3>DAFTAR AKUN</h3>
+  <input id="regNama" placeholder="Nama Lengkap">
+  <input id="regEmail" placeholder="Email">
+  <input id="regWa" placeholder="WhatsApp">
+  <input id="regUmur" placeholder="Umur">
+
+  <select id="regJk">
+    <option value="laki-laki">Laki-laki</option>
+    <option value="perempuan">Perempuan</option>
+  </select>
+
+  <input id="regNegara" value="Indonesia">
+  <input id="regNegaraLogo" value="indonesialogo.png">
+
+  <input id="regLevel" value="0">
+  <input id="regLevelLogo"
+         value="user_level_0_icon.png">
+
+<h4>Gift User</h4>
+
+<div id="giftSelectedList"></div>
+
+<button
+  type="button"
+  onclick="openGiftPicker()">
+  + Tambah Gift
+</button>
+
+<!-- POPUP PILIH GIFT -->
+<div id="giftPicker" style="
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.5);
+  z-index:999999;
+">
+
+  <div style="
+    width:90%;
+    max-width:400px;
+    max-height:80vh;
+    overflow:auto;
+    background:#fff;
+    margin:40px auto;
+    border-radius:15px;
+    padding:15px;
+  ">
+
+    <div style="
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:15px;
+      font-weight:bold;
+    ">
+      <span>Pilih Gift</span>
+
+      <button
+        type="button"
+        onclick="
+          document.getElementById('giftPicker').style.display='none'
+        ">
+        ✕
+      </button>
+    </div>
+
+    <div id="giftPickerList"></div>
+
+  </div>
+</div>
+
+
+  <input id="regStatush" value="host">
+
+  <input id="regFoto"
+         placeholder="Link Foto Profil">
+
+  <input id="regHashtag1"
+         placeholder="#hashtag 1">
+
+  <input id="regHashtag2"
+         placeholder="#hashtag 2">
+
+  <button onclick="registerAccount()">
+    Buat Akun
+  </button>
+
+</div>
+
+
+
 
   <div class="err" id="err"></div>
 </div>
@@ -68,7 +338,14 @@
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+import {
+  getDatabase,
+  ref,
+  get,
+  set
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
   apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
@@ -121,6 +398,7 @@ window.login = async function () {
 
     snap.forEach(child => {
 
+      
       const d = child.val();
 
       const dbEmail = normalize(d.email);
@@ -162,6 +440,407 @@ window.login = async function () {
     err.innerText = "Server error";
   }
 
+};
+
+
+
+
+
+
+
+
+
+
+
+window.openAccount = async function(){
+
+  document.getElementById(
+    "allacount32h3"
+  ).style.display = "flex";
+
+  const list =
+    document.getElementById("accountList");
+
+  list.innerHTML = "Loading...";
+
+  try{
+
+    const snap =
+      await get(ref(db,"users1"));
+
+    if(!snap.exists()){
+      list.innerHTML = "Tidak ada akun";
+      return;
+    }
+
+    list.innerHTML = "";
+
+    // 🔥 Ambil semua user dulu
+    const users = [];
+
+    snap.forEach(child=>{
+      users.push({
+        id: child.key,
+        ...child.val()
+      });
+    });
+
+    // 🔥 Laki-laki di atas
+    users.sort((a,b)=>{
+
+      const aLaki =
+        (a.jk || "").toLowerCase() === "laki-laki";
+
+      const bLaki =
+        (b.jk || "").toLowerCase() === "laki-laki";
+
+      if(aLaki && !bLaki) return -1;
+      if(!aLaki && bLaki) return 1;
+
+      return 0;
+    });
+
+    // 🔥 Baru render
+    users.forEach(d=>{
+
+      const foto =
+        d.profil ||
+        d.foto ||
+        "https://ui-avatars.com/api/?name=User";
+
+      const div =
+        document.createElement("div");
+
+      div.className = "acc-card";
+
+      div.innerHTML = `
+        <img src="${foto}">
+
+        <div class="acc-info">
+          <div class="acc-name">
+            ${d.nama || "User"}
+          </div>
+
+          <div class="acc-email">
+            Email : ${d.email || "-"}
+          </div>
+
+          <div class="acc-wa">
+            WA : ${d.wa || "-"}
+          </div>
+        </div>
+      `;
+
+      div.onclick = () => {
+
+        document.getElementById(
+          "emailInput"
+        ).value = d.email || "";
+
+        document.getElementById(
+          "passwordInput"
+        ).value = d.wa || "";
+
+        closeAccount();
+      };
+
+      list.appendChild(div);
+    });
+
+  }catch(err){
+    console.log(err);
+    list.innerHTML = "Gagal memuat akun";
+  }
+};
+
+window.closeAccount = function(){
+  document.getElementById(
+    "allacount32h3"
+  ).style.display = "none";
+};
+
+
+
+
+
+let selectedGifts = {};
+
+window.registerAccount = async function(){
+
+  const nama =
+    document.getElementById("regNama").value.trim();
+
+  const email =
+    document.getElementById("regEmail").value.trim();
+
+  const wa =
+    document.getElementById("regWa").value.trim();
+
+  const umur =
+    document.getElementById("regUmur").value.trim();
+
+  const jk =
+    document.getElementById("regJk").value;
+
+  const negara =
+    document.getElementById("regNegara").value.trim();
+
+  const negaraLogo =
+    document.getElementById("regNegaraLogo").value.trim();
+
+  const level =
+    document.getElementById("regLevel").value.trim();
+
+  const levelLogo =
+    document.getElementById("regLevelLogo").value.trim();
+
+  const statush =
+    document.getElementById("regStatush").value.trim();
+
+  const foto =
+    document.getElementById("regFoto").value.trim();
+
+  const hashtag1 =
+    document.getElementById("regHashtag1").value.trim();
+
+  const hashtag2 =
+    document.getElementById("regHashtag2").value.trim();
+
+  if(!nama || !email || !wa){
+    alert("Lengkapi data.");
+    return;
+  }
+
+  const snap =
+    await get(ref(db,"users1"));
+
+  const total =
+    snap.exists()
+      ? Object.keys(snap.val()).length + 1
+      : 1;
+
+  const uid =
+    "user_" +
+    String(total).padStart(3,"0");
+
+  const data = {
+  createdAt: Date.now(),
+
+  email,
+  wa,
+  nama,
+  umur,
+  jk,
+
+  uid,
+  userId: uid,
+
+  level,
+  levelLogo,
+
+  negara,
+  negaraLogo,
+
+  saldo: 0,
+  statush,
+
+  foto: [
+    foto ||
+    "https://ui-avatars.com/api/?name=" +
+    encodeURIComponent(nama)
+  ],
+
+  hashtags: [
+    hashtag1,
+    hashtag2
+  ].filter(Boolean),
+
+  gifts: selectedGifts
+};
+
+  await set(
+    ref(db,"users1/"+uid),
+    data
+  );
+
+  alert("Akun berhasil dibuat.");
+};
+
+
+
+
+
+
+
+
+
+window.addGiftToList = function(g, total){
+
+  if (!total || total <= 0) return;
+
+  const key =
+    g.name
+      .toLowerCase()
+      .replace(/\s+/g, "_");
+
+  if (selectedGifts[key]) {
+    selectedGifts[key].total += Number(total);
+  } else {
+    selectedGifts[key] = {
+      image: g.img,
+      name: g.name,
+      total: Number(total)
+    };
+  }
+
+  window.renderSelectedGift();
+};
+
+
+
+
+
+window.openGiftPicker = async function() {
+
+  const box =
+    document.getElementById("giftPicker");
+
+  const list =
+    document.getElementById("giftPickerList");
+
+  box.style.display = "block";
+  list.innerHTML = "Loading...";
+
+  const snap =
+    await get(ref(db, "Gift"));
+
+  if (!snap.exists()) {
+    list.innerHTML = "Tidak ada gift";
+    return;
+  }
+
+  list.innerHTML = "";
+
+  snap.forEach(child => {
+
+    const g = child.val();
+
+    const div =
+      document.createElement("div");
+
+    div.className = "acc-card";
+
+    div.innerHTML = `
+      <img src="${g.img}">
+      <div class="acc-info">
+        <div class="acc-name">
+          ${g.name}
+        </div>
+        <div>
+          ${g.price}
+        </div>
+      </div>
+    `;
+
+    div.onclick = () => {
+
+      const total = prompt(
+        "Jumlah gift " + g.name,
+        "1"
+      );
+
+      if (!total) return;
+
+      window.addGiftToList(
+        g,
+        Number(total)
+      );
+    };
+
+    list.appendChild(div);
+  });
+};
+
+
+
+
+window.renderSelectedGift = function () {
+
+  const box =
+    document.getElementById(
+      "giftSelectedList"
+    );
+
+  if (!box) return;
+console.log(selectedGifts);
+  box.innerHTML = "";
+
+  Object.keys(selectedGifts)
+    .forEach(key => {
+
+      const g = selectedGifts[key];
+
+      const div =
+        document.createElement("div");
+
+      div.className = "acc-card";
+
+      div.innerHTML = `
+        <img src="${g.image}">
+
+        <div class="acc-info">
+          <div class="acc-name">
+            ${g.name}
+          </div>
+
+          <div>
+            x${g.total}
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onclick="removeGift('${key}')">
+          Hapus
+        </button>
+      `;
+
+      box.appendChild(div);
+    });
+};
+
+
+
+// hapus gift
+window.removeGift = function(key){
+
+  delete selectedGifts[key];
+
+  window.renderSelectedGift();
+};
+
+
+
+
+
+
+
+
+
+
+window.showRegisterTab = function(){
+
+  document.getElementById(
+    "accountList"
+  ).style.display = "none";
+
+  document.querySelector(
+    ".register-btn-wrap"
+  ).style.display = "none";
+
+  document.getElementById(
+    "registerTab"
+  ).style.display = "block";
 };
 
 </script>
