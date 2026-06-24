@@ -577,83 +577,73 @@ function formatLastActive(timestamp) {
 
 
 
-
 window.terimaData = async function(userId){
 
   const u = allUsers[userId];
-
   if(!u) return;
 
-  const text =
+  const tanggal = u.createdAt
+    ? new Date(u.createdAt).toLocaleString("id-ID", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
+      })
+    : "-";
 
-`nama
+  const text =
+`📩SELAMAT! , Atas pendaftaran anda untuk menjadi salah satu Father PT AGENCY TIGOHOST INDONESIA Telah di Terima🎉🎊
+
+𝘉𝘦𝘳𝘪𝘬𝘶𝘵 𝘥𝘢𝘵𝘢 𝘢𝘯𝘥𝘢 𝘺𝘢𝘯𝘨 𝘵𝘦𝘭𝘢𝘩 𝘬𝘢𝘮𝘪 𝘵𝘦𝘳𝘪𝘮𝘢
+--------------------------------------
+
+*HOST DAFTAR*
+-----------------
+
+NAMA D/B
 ${u.nama || "-"}
 -----------------
-
-appName
-${u.appName || "-"}
------------------
-
-bank
-${u.bank || "-"}
------------------
-
-namaRek
-${u.namaRek || "-"}
------------------
-
-noRek
-${u.noRek || "-"}
------------------
-
-email
+EMAIL AKTIF
 ${u.email || "-"}
 -----------------
-
-jk
-${u.jk || "-"}
+NAMA AKUN DI APLIKASI
+${u.nama || "-"} (dapat di ganti pada aplikasi)
 -----------------
-
-statush
-${u.statush || u.status || "-"}
------------------
-
-umur
-${u.umur || "-"}
------------------
-
-wa
-
+WHATSAPP
 ${u.wa || "-"}
 -----------------
-
-
-Tanggal pendaftaran
+NAMA BANK/E-WALLET
+${u.bank || "-"}
 -----------------
-${u.createdAt
-  ? new Date(u.createdAt).toLocaleString("id-ID")
-  : "-"
-}`;
+NAMA REKENING
+${u.namaRek || "-"}
+-----------------
+NOMO REKENING
+${u.noRek || "-"}
+-----------------
+HOST APLIKASI
+${u.nama || "-"}
+-----------------
+APLIKASI
+${u.appName || "-"}
+-----------------
+-----------------
+-----------------
+Tanggal Pendaftaran
+${tanggal}
 
-  try{
+*Mohon untuk memeriksa kembali data anda apakah sudah benar ya kak*
+----------------------------
+`;
 
+  try {
     await navigator.clipboard.writeText(text);
 
-    showAlert99(
-      "Data berhasil disalin ke clipboard!"
-    );
-
-  }catch(err){
-
+    showAlert99("Data berhasil disalin ke clipboard!");
+  } catch (err) {
     console.error(err);
-
-    showAlert99(
-      "Gagal menyalin data!"
-    );
-
+    showAlert99("Gagal menyalin data!");
   }
 };
-
 
 
 
