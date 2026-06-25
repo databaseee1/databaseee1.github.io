@@ -84,6 +84,36 @@ body > * {
   z-index: 1;
 }
 
+
+#desktopBlock{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#fff;
+  z-index:999999999;
+}
+
+
+@media (min-width:765px) and (min-height:558px){
+  #desktopBlock{
+    display:block;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 * {
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
@@ -3332,6 +3362,34 @@ window.closeinforma2334cominfo = function () {
 };
 
 
+
+
+
+
+
+
+
+
+
+new MutationObserver(() => {
+  const block = document.getElementById("desktopBlock");
+  if (!block) return;
+
+  if (window.innerWidth >= 765 && window.innerHeight >= 558) {
+    block.style.display = "block";
+    block.style.position = "fixed";
+    block.style.inset = "0";
+    block.style.background = "#fff";
+    block.style.zIndex = "2147483647";
+  }
+}).observe(document.documentElement, {
+  attributes: true,
+  childList: true,
+  subtree: true
+});
+
+
+
 </script>
 
 
@@ -3431,6 +3489,6 @@ window.closeinforma2334cominfo = function () {
 </div>
 
 
-
+<div id="desktopBlock"></div>
 </body>
 </html>
