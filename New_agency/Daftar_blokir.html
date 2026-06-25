@@ -126,12 +126,12 @@ const login = JSON.parse(localStorage.getItem("user"));
 
 if(!login || !login.userId){
   alert("Silakan login terlebih dahulu");
-  window.location.href = "login.html";
+  window.location.href = "Login.html";
 }
 
 if(!login.userId){
   localStorage.clear();
-  window.location.href = "login.html";
+  window.location.href = "Login.html";
 }
 
 

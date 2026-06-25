@@ -244,7 +244,7 @@ const db = getDatabase(app);
 const loginRaw = localStorage.getItem("user");
 
 if (!loginRaw || loginRaw === "null") {
-  location.href = "login.html";
+  location.href = "Login.html";
 }
 
 const login = JSON.parse(loginRaw);
@@ -252,7 +252,7 @@ const login = JSON.parse(loginRaw);
 if (!login.userId) {
   localStorage.clear();
   sessionStorage.clear();
-  location.href = "login.html";
+  location.href = "Login.html";
 }
 
 
