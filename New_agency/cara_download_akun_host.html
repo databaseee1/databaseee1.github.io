@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cara Download Aplikasi</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+body{
+  font-family:'Poppins',sans-serif;
+  background:#fff;
+  color:#111;
+}
+
+.header{
+  position:sticky;
+  top:0;
+  height:60px;
+  background:#fff;
+  border-bottom:1px solid #eee;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:100;
+}
+
+.header i{
+  position:absolute;
+  left:18px;
+  font-size:22px;
+  color:#111;
+  cursor:pointer;
+}
+
+.header-title{
+  font-size:20px;
+  font-weight:700;
+  color:#111;
+}
+
+.container{
+  padding:20px;
+  max-width:900px;
+  margin:auto;
+}
+
+.card{
+  background:#fff;
+  border:1px solid #eee;
+  border-radius:20px;
+  padding:18px;
+  box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.desc{
+  color:#555;
+  line-height:1.7;
+  margin-bottom:20px;
+}
+
+.tutorial-img{
+  width:100%;
+  display:block;
+  border-radius:20px;
+  cursor:zoom-in;
+  box-shadow:0 10px 30px rgba(0,0,0,.12);
+  transition:.3s;
+}
+
+.tutorial-img:hover{
+  transform:scale(1.02);
+}
+
+/* FULL PREVIEW */
+.image-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.95);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:99999;
+  overflow:hidden;
+}
+
+.image-modal.show{
+  display:flex;
+}
+
+#fullImage{
+  max-width:95vw;
+  max-height:95vh;
+  object-fit:contain;
+  transition:transform .25s ease;
+  transform-origin:center center;
+  cursor:zoom-in;
+  user-select:none;
+}
+
+.close-btn{
+  position:absolute;
+  top:20px;
+  right:20px;
+  width:45px;
+  height:45px;
+  border:none;
+  border-radius:50%;
+  background:rgba(255,255,255,.15);
+  color:#fff;
+  font-size:24px;
+  cursor:pointer;
+  backdrop-filter:blur(10px);
+}
+
+.hint{
+  text-align:center;
+  margin-top:15px;
+  color:#888;
+  font-size:14px;
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <i class="fa-solid fa-angle-left"
+     onclick="history.back()"></i>
+<div class="header">
+  <h2>Cara Download Aplikasi</h2>
+</div>
+</div>
+<div class="container">
+  <div class="card">
+
+    <p class="desc">
+      Silakan lihat gambar tutorial di bawah ini untuk mengetahui langkah-langkah
+      Cara Download Aplikasi. Tekan gambar untuk melihat dalam ukuran penuh
+      dan lakukan zoom pada bagian yang ingin diperbesar.
+    </p>
+
+    <img
+      src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782390697/ccophhvi5hdrmu2kpcrv.jpg"
+      class="tutorial-img"
+      onclick="openImage(this.src)"
+    >
+
+    <div class="hint">
+      Tekan gambar untuk melihat penuh dan zoom.
+    </div>
+
+  </div>
+</div>
+
+<!-- FULL IMAGE -->
+<div class="image-modal" id="imageModal">
+  <button class="close-btn" onclick="closeImage()">✕</button>
+  <img id="fullImage">
+</div>
+
+<script>
+let zoom = 1;
+
+function openImage(src){
+  const img = document.getElementById("fullImage");
+  img.src = src;
+  img.style.transform = "scale(1)";
+  img.style.transformOrigin = "center center";
+  zoom = 1;
+
+  document.getElementById("imageModal")
+    .classList.add("show");
+}
+
+function closeImage(){
+  document.getElementById("imageModal")
+    .classList.remove("show");
+}
+
+const modal = document.getElementById("imageModal");
+const img = document.getElementById("fullImage");
+
+/* klik area hitam = tutup */
+modal.addEventListener("click", e=>{
+  if(e.target === modal){
+    closeImage();
+  }
+});
+
+
+img.addEventListener("click", e=>{
+  e.stopPropagation();
+
+  const rect = img.getBoundingClientRect();
+  const x = ((e.clientX - rect.left) / rect.width) * 100;
+  const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+  if(zoom === 1){
+    zoom = 3;
+    img.style.transformOrigin = `${x}% ${y}%`;
+    img.style.transform = `scale(${zoom})`;
+    img.style.cursor = "zoom-out";
+  }else{
+    zoom = 1;
+    img.style.transformOrigin = "center center";
+    img.style.transform = "scale(1)";
+    img.style.cursor = "zoom-in";
+  }
+});
+</script>
+
+</body>
+</html>

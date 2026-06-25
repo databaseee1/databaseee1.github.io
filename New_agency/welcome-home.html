@@ -1,0 +1,903 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tigo - Video Chat & Meet | PT TIGOHOST INDONESIA</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#000;
+  color:#fff;
+  overflow-x:hidden;
+}
+
+/* ===========================
+   VIDEO & GALAXY BACKGROUND
+=========================== */
+
+#bgVideo{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:-3;
+  transition:opacity .15s linear;
+}
+
+#galaxy{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:-2;
+}
+
+.overlay{
+  position:fixed;
+  inset:0;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,.2),
+      rgba(0,0,0,.5),
+      rgba(0,0,0,.9)
+    );
+  z-index:-1;
+}
+
+/* ===========================
+   HERO
+=========================== */
+
+.hero{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:25px;
+  margin-bottom: -200px;
+}
+
+.hero-card{
+  width:min(850px,100%);
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.15);
+  backdrop-filter:blur(18px);
+  border-radius:35px;
+  padding:40px;
+  text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,.35);
+}
+
+.logo{
+  width:95px;
+  height:95px;
+  border-radius:25px;
+  margin:auto;
+  margin-bottom:20px;
+  object-fit:cover;
+}
+
+.hero-card h1{
+  font-size:clamp(32px,6vw,58px);
+  margin-bottom:12px;
+}
+
+.hero-card h3{
+  color:#e0e0e0;
+  margin-bottom:20px;
+  font-size:clamp(18px,3vw,25px);
+}
+
+.hero-card p{
+  color:#ddd;
+  line-height:1.9;
+  font-size:16px;
+}
+
+/* ===========================
+   CONTENT
+=========================== */
+
+.content{
+  padding:80px 18px 120px;
+}
+
+.box{
+  max-width:900px;
+  margin:0 auto 35px;
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:30px;
+  padding:30px;
+  box-shadow:0 15px 40px rgba(0,0,0,.3);
+}
+
+.box h2{
+  font-size:28px;
+  margin-bottom:18px;
+}
+
+.box p{
+  color:#ddd;
+  line-height:1.9;
+}
+
+.box ul{
+  margin-top:15px;
+  padding-left:20px;
+}
+
+.box li{
+  margin-bottom:10px;
+  color:#ddd;
+  line-height:1.8;
+}
+
+/* ===========================
+   ANIMATION
+=========================== */
+
+.reveal{
+  opacity:0;
+  transition:1s;
+}
+
+.from-top{
+  transform:translateY(-120px);
+}
+
+.from-bottom{
+  transform:translateY(120px);
+}
+
+.from-right{
+  transform:translateX(180px);
+}
+
+.reveal.show{
+  opacity:1;
+  transform:none;
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media (max-width:700px){
+
+  .hero-card{
+    padding:30px 22px;
+  }
+
+  .box{
+    padding:24px;
+  }
+
+  .box h2{
+    font-size:24px;
+  }
+}
+
+
+
+
+
+
+
+
+
+.photo-slider{
+  position:relative;
+  width:100%;
+  height:420px;
+  overflow:hidden;
+  margin:40px 0;
+}
+
+.slide-img{
+  position:absolute;
+  top:50%;
+  width:min(900px,92vw);
+  max-height:90%;
+  object-fit:cover;
+  border-radius:35px;
+  box-shadow:0 25px 70px rgba(0,0,0,.45);
+  opacity:0;
+  will-change:transform,left,opacity;
+}
+
+.enter{
+  animation:enter 3.5s cubic-bezier(.22,.61,.36,1) forwards;
+}
+
+.leave{
+  animation:leave 3.5s cubic-bezier(.22,.61,.36,1) forwards;
+}
+
+@keyframes enter{
+
+  0%{
+    left:120%;
+    transform:
+      translate(-50%,-50%)
+      scale(.92);
+    opacity:0;
+  }
+
+  100%{
+    left:50%;
+    transform:
+      translate(-50%,-50%)
+      scale(1);
+    opacity:1;
+  }
+}
+
+@keyframes leave{
+
+  0%{
+    left:50%;
+    transform:
+      translate(-50%,-50%)
+      scale(1);
+    opacity:1;
+  }
+
+  100%{
+    left:-20%;
+    transform:
+      translate(-50%,-50%)
+      scale(.92);
+    opacity:0;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+.hero-2{
+  position:relative;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  padding:25px;
+  isolation:isolate; /* penting */
+}
+
+.section-video{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:0;
+      border-radius: 30px;
+}
+
+
+
+.hero-2::before{
+  content:"";
+  position:absolute;
+  top:-150px;
+  left:0;
+  width:100%;
+  height:200px;
+  z-index:2;
+  pointer-events:none;
+
+  background:
+    linear-gradient(
+      to bottom,
+      #000 0%,
+      rgba(0,0,0,.8) 30%,
+      rgba(0,0,0,.3) 70%,
+      transparent 100%
+    );
+}
+
+
+.section-overlay{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  background:
+    linear-gradient(
+      to bottom,
+
+      rgba(0,0,0,0) 0%,
+      rgba(0,0,0,.15) 12%,
+      rgba(140,30,180,.45) 45%,
+      rgba(0,0,0,.85) 100%
+    );
+}
+
+.hero-2 .hero-card{
+  position:relative;
+  z-index:2;
+}
+
+
+
+
+.logo-switch{
+  position:relative;
+  width:220px;
+  height:100px;
+  margin:auto;
+}
+
+.logo-swap{
+  position:absolute;
+  top:0;
+  width:90px;
+  height:90px;
+  object-fit:cover;
+  border-radius:25px;
+  transition:
+    left .8s ease,
+    transform .8s ease;
+}
+
+#logo1{
+  left:0;
+}
+
+#logo2{
+  left:130px;
+}
+</style>
+</head>
+<body>
+
+<!-- VIDEO BACKGROUND -->
+<video id="bgVideo" autoplay muted loop playsinline>
+  <source src="v_ban_v1.mp4" type="video/mp4">
+</video>
+
+<!-- GALAXY -->
+<canvas id="galaxy"></canvas>
+
+<div class="overlay"></div>
+
+<!-- HERO -->
+<section class="hero">
+
+  <div class="hero-card reveal from-top">
+
+<div class="logo-switch">
+
+  <img
+    id="logo1"
+    class="logo-swap"
+    src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782393045/ipeofcnx5jyb7pzwqtlt.jpg"
+  >
+
+  <img
+    id="logo2"
+    class="logo-swap"
+    src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782393140/fclf3fnlx4qfbj7gluv4.png"
+  >
+
+</div>
+
+    <h1>Tigo - Video Chat & Meet</h1>
+
+    <h3>PT TIGOHOST INDONESIA</h3>
+
+    <p>
+      Tigo merupakan platform video chat dan live streaming
+      modern yang menghubungkan pengguna dari berbagai negara
+      melalui interaksi video secara real-time, aman, dan
+      menyenangkan.
+    </p>
+
+  </div>
+
+
+  
+</section>
+
+
+
+<div class="photo-slider">
+  <img id="img1" class="slide-img">
+  <img id="img2" class="slide-img">
+</div>
+
+
+
+<!-- CONTENT -->
+<section class="content">
+
+  <div class="box reveal from-bottom">
+    <h2>Tentang Kami</h2>
+
+    <p>
+      PT TIGOHOST INDONESIA merupakan mitra pengelolaan host
+      dan agency yang berfokus pada pengembangan talenta live
+      streaming di Indonesia dengan sistem profesional,
+      transparan, dan terpercaya.
+    </p>
+  </div>
+
+  <div class="box reveal from-right">
+    <h2>Layanan Kami</h2>
+
+    <ul>
+      <li>Pengelolaan Host Live Streaming</li>
+      <li>Pembinaan dan Pengembangan Agency</li>
+      <li>Sistem Penarikan Saldo Host</li>
+      <li>Dukungan Operasional 24 Jam</li>
+      <li>Keamanan dan Verifikasi Akun</li>
+      <li>Pendampingan Host Profesional</li>
+    </ul>
+  </div>
+
+  <div class="box reveal from-bottom">
+    <h2>Visi Kami</h2>
+
+    <p>
+      Menjadi perusahaan pengelolaan host live streaming
+      terpercaya di Indonesia dengan menghadirkan layanan
+      profesional, inovatif, dan berorientasi pada
+      perkembangan digital masa depan.
+    </p>
+  </div>
+
+  <div class="box reveal from-right">
+    <h2>Misi Kami</h2>
+
+    <p>
+      Membangun ekosistem live streaming yang sehat, aman,
+      dan menguntungkan bagi seluruh host dan agency yang
+      bergabung bersama PT TIGOHOST INDONESIA.
+    </p>
+  </div>
+
+</section>
+
+<!-- SECTION VIDEO KEDUA -->
+<section class="hero hero-2">
+
+  <video
+    class="section-video"
+    autoplay
+    muted
+    loop
+    playsinline>
+    <source src="v_ban_v2.mp4" type="video/mp4">
+  </video>
+
+  <div class="section-overlay"></div>
+
+  <div class="hero-card reveal from-bottom">
+    <h1>PT TIGOHOST INDONESIA</h1>
+
+    <p>
+      Kami berkomitmen memberikan layanan
+      pengelolaan host dan agency yang
+      profesional, aman, dan terpercaya.
+    </p>
+  </div>
+
+</section>
+
+
+
+<script type="module">
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  get
+}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+
+/* FIREBASE */
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getDatabase(app);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+async function loadSlider(){
+
+  const snap =
+    await get(ref(db,"fotoglobal"));
+
+  if(!snap.exists()) return;
+
+  const photos =
+    Object.values(snap.val())
+      .filter(x => x.url);
+
+  if(!photos.length) return;
+
+  const img1 =
+    document.getElementById("img1");
+
+  const img2 =
+    document.getElementById("img2");
+
+  let active = img1;
+  let next = img2;
+
+  let photoQueue = [];
+
+  function shuffle(arr){
+
+    for(
+      let i = arr.length - 1;
+      i > 0;
+      i--
+    ){
+
+      const j =
+        Math.floor(
+          Math.random() * (i + 1)
+        );
+
+      [arr[i], arr[j]] =
+      [arr[j], arr[i]];
+    }
+
+    return arr;
+  }
+
+  function getNextPhoto(){
+
+    if(photoQueue.length === 0){
+      photoQueue =
+        shuffle([...photos]);
+    }
+
+    return photoQueue.shift();
+  }
+
+  function showNext(){
+
+    const photo =
+      getNextPhoto();
+
+    next.src = photo.url;
+
+    next.className =
+      "slide-img enter";
+
+    active.classList.remove(
+      "enter"
+    );
+
+    active.classList.add(
+      "leave"
+    );
+
+    setTimeout(()=>{
+
+      active.className =
+        "slide-img";
+
+      active.style.left =
+        "120%";
+
+      active.style.opacity =
+        "0";
+
+      [active,next] =
+        [next,active];
+
+    },3500);
+  }
+
+  /* FOTO PERTAMA LANGSUNG JALAN */
+  active.src =
+    getNextPhoto().url;
+
+  active.className =
+    "slide-img enter";
+
+  /* mulai overlap */
+  setInterval(
+    showNext,
+    2500
+  );
+}
+
+loadSlider();
+
+</script>
+
+
+<script>
+/* ======================
+   FADE VIDEO ON SCROLL
+====================== */
+/* ======================
+   FADE VIDEO ON SCROLL
+====================== */
+
+const video =
+document.getElementById("bgVideo");
+
+window.addEventListener("scroll", () => {
+
+  const y = window.scrollY;
+
+  const opacity =
+    Math.max(0, 1 - (y / 700));
+
+  video.style.opacity = opacity;
+
+  revealItems();
+});
+
+/* ======================
+   REVEAL ANIMATION
+====================== */
+
+const reveals =
+document.querySelectorAll(".reveal");
+
+function revealItems(){
+
+  const trigger =
+    innerHeight * 0.85;
+
+  reveals.forEach(el => {
+
+    const rect =
+      el.getBoundingClientRect();
+
+    if(
+      rect.top < trigger &&
+      rect.bottom > 0
+    ){
+      el.classList.add("show");
+    }else{
+      el.classList.remove("show");
+    }
+
+  });
+}
+
+window.addEventListener(
+  "scroll",
+  revealItems
+);
+
+window.addEventListener(
+  "resize",
+  revealItems
+);
+
+revealItems();
+
+/* ======================
+   GALAXY CANVAS
+====================== */
+
+const canvas =
+document.getElementById("galaxy");
+
+const ctx =
+canvas.getContext("2d");
+
+function resize(){
+
+  canvas.width =
+    innerWidth;
+
+  canvas.height =
+    innerHeight;
+}
+
+resize();
+
+window.addEventListener(
+  "resize",
+  resize
+);
+
+/* lebih banyak bintang */
+const stars = [];
+
+for(let i = 0; i < 420; i++){
+
+  stars.push({
+
+    x:
+      Math.random() *
+      canvas.width,
+
+    y:
+      Math.random() *
+      canvas.height,
+
+    r:
+      Math.random() * 2.8,
+
+    /* lebih cepat */
+    s:
+      1 +
+      Math.random() * 1.5
+
+  });
+}
+
+function animate(){
+
+  ctx.clearRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  ctx.fillStyle =
+    "#ffffff";
+
+  stars.forEach(star => {
+
+    ctx.beginPath();
+
+    ctx.arc(
+      star.x,
+      star.y,
+      star.r,
+      0,
+      Math.PI * 2
+    );
+
+    ctx.fill();
+
+    star.y += star.s;
+
+    /* sedikit gerakan samping */
+    star.x +=
+      Math.sin(
+        star.y * 0.01
+      ) * 0.15;
+
+    if(
+      star.y >
+      canvas.height + 20
+    ){
+
+      star.y = -20;
+
+      star.x =
+        Math.random() *
+        canvas.width;
+    }
+
+  });
+
+  requestAnimationFrame(
+    animate
+  );
+}
+
+animate();
+
+
+
+
+const section2 =
+document.querySelector(".hero-2");
+
+const video2 =
+document.querySelector(".section-video");
+
+window.addEventListener("scroll", () => {
+
+  const rect =
+    section2.getBoundingClientRect();
+
+  // mulai fade setelah section sudah cukup masuk
+  const start =
+    innerHeight * 0.3;
+
+  const end =
+    -innerHeight * 0.8;
+
+  const progress =
+    (rect.top - end) /
+    (start - end);
+
+  const opacity =
+    Math.max(
+      0,
+      Math.min(1, progress)
+    );
+
+  video2.style.opacity =
+    opacity;
+});
+
+
+
+
+const logo1 =
+document.getElementById("logo1");
+
+const logo2 =
+document.getElementById("logo2");
+
+let swapped = false;
+
+setInterval(()=>{
+
+  swapped = !swapped;
+
+  if(swapped){
+
+    logo1.style.left =
+      "130px";
+
+    logo2.style.left =
+      "0";
+
+  }else{
+
+    logo1.style.left =
+      "0";
+
+    logo2.style.left =
+      "130px";
+  }
+
+},2000);
+</script>
+
+</body>
+</html>
+

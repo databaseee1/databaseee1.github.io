@@ -343,7 +343,21 @@ select option{
   transition:0.3s ease;
   overflow-y:auto;
   border-radius: 10px;
+      margin-bottom: 0px;
+    margin-top: 0px;
 }
+
+.sidebar{
+  height:calc(100vh - 70px);
+}
+
+.sidebar{
+  overflow-y:auto;
+  overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-y;
+}
+
 
 /* SIDEBAR TITLE */
 .sidebar h3{
@@ -1032,19 +1046,71 @@ select option{
 
 
 .article-title{
-  padding:18px 16px;
+  position:relative;
+  overflow:hidden;
+
+  padding:25px 20px;
+  margin-top:10px;
+  border-radius:20px;
+
   font-size:22px;
   font-weight:700;
   line-height:1.5;
-  color:#111;
   letter-spacing:-0.3px;
-  background:#ffffff00;
+  color:#fff;
+
+  min-height:160px;
+
+  display:flex;
+  align-items:center;
+}
+
+.article-video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:0;
+}
+
+.article-overlay{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(0,0,0,.45),
+      rgba(124,58,237,.45),
+      rgba(0,0,0,.65)
+    );
+  z-index:1;
+}
+
+.article-text{
+  position:relative;
+  z-index:2;
 }
 
 .article-title span{
-  color:#e53935;
+  color:#ffd54f;
   font-weight:800;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .menu-title{
   display:flex;
@@ -1574,6 +1640,7 @@ select option{
   <h3>Tutorial</h3>
 
   <a href="cara_deposit_akun_host.html">Cara Deposit Akun Host</a>
+    <a href="cara_download_akun_host.html">Cara Download Aplikasi Host</a>
   <a href="cara_topup_coin.html">Cara Top Up Coin</a>
   <a href="cara_gabung_agency.html">Cara Gabung Agency</a>
   <a href="Layanan_pelanggan.html">Cara Lapor Agency</a>
@@ -1705,9 +1772,26 @@ Informasi di atas digunakan sebagai kontak resmi perusahaan untuk keperluan pend
 
 
 <div class="article-title">
-  Masalah Klasik yang Sering Menggerogoti Efisiensi Strategi
-  <span>Live Host 1vs1</span>
-  Anda.
+
+  <video
+    class="article-video"
+    autoplay
+    muted
+    loop
+    playsinline>
+    <source
+      src="https://res.cloudinary.com/dowoq4a0i/video/upload/v1781119955/a6bc5t96qcgi7su3tfi2.mp4"
+      type="video/mp4">
+  </video>
+
+  <div class="article-overlay"></div>
+
+  <div class="article-text">
+    Masalah Klasik yang Sering Menggerogoti Efisiensi Strategi
+    <span>Live Host 1vs1</span>
+    Anda.
+  </div>
+
 </div>
 
 
@@ -1907,7 +1991,8 @@ Informasi di atas digunakan sebagai kontak resmi perusahaan untuk keperluan pend
   </button>
 
   <!-- 🔹 Tombol Lihat Bukti Host -->
-  <button onclick="openPopupBukti()" 
+  <!-- 🔹 Tombol Lihat Bukti Host -->
+<button onclick="window.location.href='welcome-home.html'" 
     style="
       background:#0096FF; 
       color:#fff; 
@@ -1922,13 +2007,15 @@ Informasi di atas digunakan sebagai kontak resmi perusahaan untuk keperluan pend
       gap:8px;
       box-shadow:0 4px 6px rgba(0,0,0,0.3);
     ">
-    <img src="float_video_1_f.png" alt="Logo" style="
+    <img src="ic_origin_checked.png" alt="Logo" style="
       width:25px; 
       height:25px; 
     "> 
-    Lihat Bukti Host
+    Open To home
   </button>
 </div>
+
+
 
 <button onclick="window.location.href='https://www.tigohost.asia/app.tigohost.html'" 
   style="
@@ -3394,6 +3481,12 @@ new MutationObserver(() => {
   childList: true,
   subtree: true
 });
+
+
+
+
+
+
 
 
 </script>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Laporan Keamanan</title>
+
+<style>
+
+
+
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none !important;
+}
+
+/* hilangkan highlight saat klik/focus */
+button, a, div, span, img {
+  outline: none !important;
+}
+
+
+img {
+
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+
+
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+
+
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background:#ffffff;
+  color:#000000;
+}
+
+.container{
+  max-width:500px;
+  margin:auto;
+  padding: 10px;
+}
+
+.header{
+  font-size:20px;
+  font-weight:bold;
+  text-align:center;
+  padding:20px 0;
+}
+
+.card{
+  background:#ffffff;
+  border-radius:12px;
+  padding:15px;
+  margin-top:15px;
+}
+
+label{
+  font-size:13px;
+  color:#bbb;
+  display:block;
+  margin-bottom:5px;
+}
+
+input, textarea, select{
+  width:90%;
+  padding:12px;
+  border-radius:8px;
+  border:1px solid #ffffff;
+  background:#f9f9f9;
+  color:#616161;
+  outline:none;
+  margin-bottom:10px;
+}
+
+textarea{
+  resize:none;
+  height:120px;
+}
+
+button{
+  padding:12px;
+  border:none;
+  border-radius:20px;
+  background:#e8e8e8;
+  color:#b738ec;
+  cursor:pointer;
+}
+
+button:active{
+  transform:scale(0.98);
+}
+
+.note{
+  font-size:12px;
+  color:#777;
+  line-height:1.5;
+  margin-top:10px;
+}
+
+.footer{
+  text-align:center;
+  font-size:11px;
+  color:#555;
+  margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    Laporan Keamanan
+  </div>
+
+  <div class="card">
+
+    <label>Nama Pelapor</label>
+    <input type="text" id="nama" placeholder="Masukkan nama kamu">
+
+    <label>ID User yang Dilaporkan</label>
+    <input type="text" id="target" placeholder="User ID / Username">
+
+    <label>Kategori Laporan</label>
+    <select id="kategori">
+      <option>Spam</option>
+      <option>Penyalahgunaan Akun</option>
+      <option>Penipuan</option>
+      <option>Konten Tidak Pantas</option>
+      <option>Gangguan / Harassment</option>
+      <option>Masalah Teknis</option>
+       <option>Kamera kosong</option>
+        <option>Informasi palsu</option>
+         <option>pornografi</option>
+          <option>Lainnya</option>
+    </select>
+
+    <label>Deskripsi</label>
+    <textarea id="deskripsi" placeholder="Jelaskan masalah secara detail..."></textarea>
+
+    <button onclick="kirimLaporan()">Kirim Laporan</button>
+
+    <div class="note">
+      Semua laporan akan ditinjau oleh sistem   <a href="javascript:void(0)" onclick="openCS()" style="color:blue;text-decoration:underline;">
+    Layanan Pelanggan
+  </a>
+      Penyalahgunaan laporan dapat mengakibatkan pembatasan akun.
+    </div>
+
+  </div>
+
+  <div class="footer">
+    © Tigo | PT AGENCY TIGOHOST INDONESIA
+  </div>
+
+</div>
+
+<script>
+function kirimLaporan(){
+
+  const nama = document.getElementById("nama").value;
+  const target = document.getElementById("target").value;
+  const kategori = document.getElementById("kategori").value;
+  const deskripsi = document.getElementById("deskripsi").value;
+
+  if(!nama || !target || !deskripsi){
+    alert("Lengkapi semua data!");
+    return;
+  }
+
+  // simulasi kirim
+  alert("Laporan berhasil dikirim. Tim akan meninjau segera.");
+
+  document.getElementById("nama").value = "";
+  document.getElementById("target").value = "";
+  document.getElementById("deskripsi").value = "";
+}
+
+
+function openCS(){
+
+  // arahkan ke chat layanan pelanggan
+  localStorage.setItem("pesanId", "customer_service");
+
+  // pindah ke halaman chat kamu
+  window.location.href = "pesan_lengkap.html";
+}
+</script>
+
+</body>
+</html>

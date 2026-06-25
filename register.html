@@ -1031,39 +1031,86 @@ select option{
 
 
 
+#desktopBlock{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#fff;
+  z-index:999999999;
+}
+
+
+@media (min-width:765px) and (min-height:558px){
+  #desktopBlock{
+    display:block;
+  }
+}
+
+
+
+
+
+
 .article-title{
-  padding:18px 16px;
+  position:relative;
+  overflow:hidden;
+
+  padding:25px 20px;
+  margin-top:10px;
+  border-radius:20px;
   font-size:22px;
   font-weight:700;
   line-height:1.5;
-  color:#111;
   letter-spacing:-0.3px;
-  background:#ffffff00;
+  color:#fff;
+
+  min-height:160px;
+
+  display:flex;
+  align-items:center;
+}
+
+.article-video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:0;
+}
+
+.article-overlay{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(0,0,0,.45),
+      rgba(124,58,237,.45),
+      rgba(0,0,0,.65)
+    );
+  z-index:1;
+}
+
+.article-text{
+  position:relative;
+  z-index:2;
 }
 
 .article-title span{
-  color:#e53935;
+  color:#ffd54f;
   font-weight:800;
 }
 
-.menu-title{
-  display:flex;
-  align-items:center;
-  gap:1px;
-  margin-bottom: 30px;
-}
 
-.menu-title img{
-  width:32px;
-  height:32px;
-  object-fit:contain;
-}
 
-.menu-title h3{
-  margin:0;
-  font-size:20px;
-  font-weight:700;
-}
+
+
+
+
 
 
 
@@ -1545,6 +1592,7 @@ select option{
   <h3>Tutorial</h3>
 
   <a href="#">Cara Deposit Akun Host</a>
+  <a href="cara_download_akun_host.html">Cara Download Aplikasi Host</a>
   <a href="#">Cara Top Up Coin</a>
   <a href="cara_kerja_agency.html">Cara Gabung Agency</a>
   <a href="cara_lapor_agency.html">Cara Lapor Agency</a>
@@ -1675,11 +1723,32 @@ Informasi di atas digunakan sebagai kontak resmi perusahaan untuk keperluan pend
 
 
 
+
 <div class="article-title">
-  Masalah Klasik yang Sering Menggerogoti Efisiensi Strategi
-  <span>Live Host 1vs1</span>
-  Anda.
+
+  <video
+    class="article-video"
+    autoplay
+    muted
+    loop
+    playsinline>
+    <source
+      src="https://res.cloudinary.com/dowoq4a0i/video/upload/v1781119955/a6bc5t96qcgi7su3tfi2.mp4"
+      type="video/mp4">
+  </video>
+
+  <div class="article-overlay"></div>
+
+  <div class="article-text">
+    Masalah Klasik yang Sering Menggerogoti Efisiensi Strategi
+    <span>Live Host 1vs1</span>
+    Anda.
+  </div>
+
 </div>
+
+
+
 
 
 <div class="container">
@@ -3332,6 +3401,32 @@ window.closeinforma2334cominfo = function () {
 };
 
 
+
+
+
+
+
+new MutationObserver(() => {
+  const block = document.getElementById("desktopBlock");
+  if (!block) return;
+
+  if (window.innerWidth >= 765 && window.innerHeight >= 558) {
+    block.style.display = "block";
+    block.style.position = "fixed";
+    block.style.inset = "0";
+    block.style.background = "#fff";
+    block.style.zIndex = "2147483647";
+  }
+}).observe(document.documentElement, {
+  attributes: true,
+  childList: true,
+  subtree: true
+});
+
+
+
+
+
 </script>
 
 
@@ -3431,6 +3526,6 @@ window.closeinforma2334cominfo = function () {
 </div>
 
 
-
+<div id="desktopBlock"></div>
 </body>
 </html>

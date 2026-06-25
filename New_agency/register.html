@@ -1060,40 +1060,58 @@ select option{
 
 
 
-
 .article-title{
-  padding:18px 16px;
+  position:relative;
+  overflow:hidden;
+
+  padding:25px 20px;
+  margin-top:10px;
+  border-radius:20px;
+
   font-size:22px;
   font-weight:700;
   line-height:1.5;
-  color:#111;
   letter-spacing:-0.3px;
-  background:#ffffff00;
+  color:#fff;
+
+  min-height:160px;
+
+  display:flex;
+  align-items:center;
+}
+
+.article-video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:0;
+}
+
+.article-overlay{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(0,0,0,.45),
+      rgba(124,58,237,.45),
+      rgba(0,0,0,.65)
+    );
+  z-index:1;
+}
+
+.article-text{
+  position:relative;
+  z-index:2;
 }
 
 .article-title span{
-  color:#e53935;
+  color:#ffd54f;
   font-weight:800;
 }
 
-.menu-title{
-  display:flex;
-  align-items:center;
-  gap:1px;
-  margin-bottom: 30px;
-}
-
-.menu-title img{
-  width:32px;
-  height:32px;
-  object-fit:contain;
-}
-
-.menu-title h3{
-  margin:0;
-  font-size:20px;
-  font-weight:700;
-}
 
 
 
@@ -1535,6 +1553,7 @@ select option{
   100%{
     background-position:-100% 0;
   }
+
 }
 </style>
 </head>
@@ -1575,9 +1594,10 @@ select option{
   <h3>Tutorial</h3>
 
   <a href="cara_deposit_akun_host.html">Cara Deposit Akun Host</a>
+  <a href="cara_download_akun_host.html">Cara Download Aplikasi Host</a>
   <a href="cara_topup_coin.html">Cara Top Up Coin</a>
   <a href="cara_gabung_agency.html">Cara Gabung Agency</a>
-  <a href="cara_lapor_agency.html">Cara Lapor Agency</a>
+  <a href="Layanan_pelanggan.html">Cara Lapor Agency</a>
   <a href="cara_refund_coin.html">Cara Refund Coin</a>
 
 
@@ -1705,11 +1725,30 @@ Informasi di atas digunakan sebagai kontak resmi perusahaan untuk keperluan pend
 
 
 
+
 <div class="article-title">
-  Masalah Klasik yang Sering Menggerogoti Efisiensi Strategi
-  <span>Live Host 1vs1</span>
-  Anda.
+
+  <video
+    class="article-video"
+    autoplay
+    muted
+    loop
+    playsinline>
+    <source
+      src="https://res.cloudinary.com/dowoq4a0i/video/upload/v1781119955/a6bc5t96qcgi7su3tfi2.mp4"
+      type="video/mp4">
+  </video>
+
+  <div class="article-overlay"></div>
+
+  <div class="article-text">
+    Masalah Klasik yang Sering Menggerogoti Efisiensi Strategi
+    <span>Live Host 1vs1</span>
+    Anda.
+  </div>
+
 </div>
+
 
 
 <div class="container">
@@ -1908,7 +1947,7 @@ Informasi di atas digunakan sebagai kontak resmi perusahaan untuk keperluan pend
   </button>
 
   <!-- 🔹 Tombol Lihat Bukti Host -->
-  <button onclick="openPopupBukti()" 
+<button onclick="window.location.href='welcome-home.html'" 
     style="
       background:#0096FF; 
       color:#fff; 
@@ -1923,11 +1962,11 @@ Informasi di atas digunakan sebagai kontak resmi perusahaan untuk keperluan pend
       gap:8px;
       box-shadow:0 4px 6px rgba(0,0,0,0.3);
     ">
-    <img src="float_video_1_f.png" alt="Logo" style="
+    <img src="ic_origin_checked.png" alt="Logo" style="
       width:25px; 
       height:25px; 
     "> 
-    Lihat Bukti Host
+    Open To home
   </button>
 </div>
 
