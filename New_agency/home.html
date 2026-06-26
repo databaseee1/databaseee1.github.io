@@ -2,6 +2,9 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
+<link
+  href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+  rel="stylesheet">
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -11,7 +14,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
 <style>
 
-
+*{
+  font-family:'Poppins',sans-serif;
+}
 
 * {
   -webkit-tap-highlight-color: transparent;
@@ -46,13 +51,13 @@ img {
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial,sans-serif;
 }
 
 body{
 background:#fff;
 padding-bottom:90px;
 padding-top:80px;
+font-family:'Poppins',sans-serif;
 }
 
 /* HEADER */
@@ -71,7 +76,7 @@ padding-top:80px;
     font-weight: bold;
 
     background: #fff;
-    z-index: 999;
+    z-index: 999999999;
 }
 
 .tabs{
@@ -373,9 +378,47 @@ margin-top:-5px;
 
 
 
+.user-status-badge{
+  position:absolute;
+  top:10px;
+  left:10px;
+  z-index:5;
 
+  padding:5px 10px;
+  border-radius:9px;
 
+  font-size:12px;
+  font-weight:500;
 
+  display:flex;
+  align-items:center;
+  gap:5px;
+
+}
+
+.status-online{
+  background:rgb(163 163 163 / 41%);
+  color:#fff;
+}
+
+.status-busy{
+  background:rgb(163 163 163 / 41%);
+  color:#fff;
+}
+
+.status-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#00ff59;
+}
+
+.status-dot-busy{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#ff2b2b;
+}
 
 
 
@@ -480,6 +523,72 @@ margin-top:-5px;
 .profile-photo{
   content-visibility:auto;
 }
+
+
+
+
+
+
+
+
+
+
+
+.status2-badge{
+  display:inline-block;
+
+  padding:1px 5px;
+  margin-bottom:3px;
+
+  background:#ff3b30;
+  color:#fff;
+
+  font-size:10px;
+  font-weight:700;
+  font-family:'Poppins',sans-serif;
+  line-height:1.1;
+
+  border-radius:3px;
+
+  width:fit-content;
+  max-width:70px;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+
+
+
+
+
+.showchat238{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.35);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:999999;
+}
+
+.showchat238.show{
+  display:flex;
+}
+
+.showchat238-box{
+  background:#43434357;
+  padding:14px 18px;
+  border-radius:14px;
+  font-size:14px;
+  font-weight:600;
+  color:#ffffff;
+  max-width:280px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,.15);
+}
+
 
 
 </style>
@@ -664,7 +773,75 @@ const db = getDatabase(app);
 
 
 
+function setActiveNav(el) {
 
+  document.querySelectorAll('#bottomNav .nav-item')
+    .forEach(item => {
+
+      item.classList.remove('active');
+
+      const img =
+        item.querySelector('.nav-icon');
+
+      if (img) {
+        img.src = img.dataset.default;
+      }
+    });
+
+  if (!el) return;
+
+  el.classList.add('active');
+
+  const activeImg =
+    el.querySelector('.nav-icon');
+
+  if (activeImg) {
+    activeImg.src =
+      activeImg.dataset.active;
+  }
+}
+
+window.goNav = function(el, url) {
+
+  setActiveNav(el);
+
+  setTimeout(() => {
+    window.location.href = url;
+  }, 30);
+};
+
+function restoreActiveNav() {
+
+  const page =
+    window.location.pathname
+      .split("/")
+      .pop()
+      .toLowerCase();
+
+  document
+    .querySelectorAll(
+      "#bottomNav .nav-item"
+    )
+    .forEach(item => {
+
+      const click =
+        (item.getAttribute("onclick") || "")
+          .toLowerCase();
+
+      if (click.includes(page)) {
+        setActiveNav(item);
+      }
+    });
+}
+
+/* LANGSUNG JALAN */
+restoreActiveNav();
+
+/* JAGA-JAGA SETELAH SEMUA ELEMENT SIAP */
+window.addEventListener(
+  "load",
+  restoreActiveNav
+);
 
 
 /* WAJIB LOGIN */
@@ -685,6 +862,46 @@ console.log(
   "Login:",
   userLogin.nama
 );
+
+
+
+
+
+
+
+
+let myJk = null;
+
+try{
+  const mySnap =
+    await get(
+      ref(
+        db,
+        "users2/" +
+        userLogin.userId
+      )
+    );
+
+  if(mySnap.exists()){
+    myJk =
+      mySnap.val().jk || null;
+  }
+}catch(e){
+  console.log(
+    "Gagal ambil jk login:",
+    e
+  );
+}
+
+console.log(
+  "JK Login:",
+  myJk
+);
+
+
+
+
+
 
 
 
@@ -751,9 +968,31 @@ onValue(ref(db, "Users"), (snapshot) => {
 
   let html = "";
 
-  users.forEach((item) => {
 
-    const user = item.data;
+  
+
+users.forEach((item) => {
+
+  const user = item.data;
+
+  // filter lawan jenis
+  if(myJk === "Perempuan"){
+    if(user.jk !== "Laki-laki"){
+      return;
+    }
+  }
+
+  if(myJk === "Laki-laki"){
+    if(user.jk !== "Perempuan"){
+      return;
+    }
+  }
+
+
+
+
+
+
 
     const foto =
       user.foto && user.foto.length
@@ -764,6 +1003,18 @@ onValue(ref(db, "Users"), (snapshot) => {
   <div class="card"
        onclick="window.location.href='Profil_users.html?id=${item.id}'">
 
+
+<div class="user-status-badge ${
+  user.online ? 'status-online' : 'status-busy'
+}">
+  ${
+    user.online
+      ? '<span class="status-dot"></span> Online'
+      : '<span class="status-dot-busy"></span> Busy'
+  }
+</div>
+
+
     <img
       src="${foto}"
       class="profile-photo"
@@ -773,8 +1024,31 @@ onValue(ref(db, "Users"), (snapshot) => {
 
     <div class="card-info">
 
+
+
+
+
+  ${
+    user.status2
+      ? `
+      <div class="status2-badge">
+        ${user.status2}
+      </div>
+      `
+      : ""
+  }
+
+
+
+
+
+
 <div class="name">
-  <div class="online"></div>
+    ${
+    user.online
+      ? '<div class="online"></div>'
+      : ''
+  }
   ${
     (user.nama || "User").length > 9
       ? (user.nama || "User").substring(0, 9) + "..."
@@ -793,14 +1067,36 @@ onValue(ref(db, "Users"), (snapshot) => {
 
     </div>
 
+
+
+
+
+
 <div class="chat-btn"
-     onclick="event.stopPropagation(); openVideoCall('${item.id}')">
+     onclick="
+       event.stopPropagation();
+       ${
+         user.online
+           ? `openVideoCall('${item.id}')`
+           : `showchat238('${user.status2 || ""}')`
+       }
+     ">
   <img
-    src="destiny_icon_video_call.png"
+    src="${
+      user.online
+        ? 'destiny_icon_video_call.png'
+        : 'destiny_icon_msg_chat.png'
+    }"
     class="chat-icon"
     loading="lazy"
   >
 </div>
+
+
+
+
+
+
 
   </div>
 `;
@@ -813,74 +1109,10 @@ onValue(ref(db, "Users"), (snapshot) => {
   localStorage.setItem(CACHE_KEY, html);
 
   loadingScreen.style.display = "none";
+  restoreActiveNav();
 });
 
 
-
-
-function setActiveNav(el) {
-
-  document.querySelectorAll('#bottomNav .nav-item')
-    .forEach(item => {
-
-      item.classList.remove('active');
-
-      const img =
-        item.querySelector('.nav-icon');
-
-      if (img) {
-        img.src = img.dataset.default;
-      }
-    });
-
-  el.classList.add('active');
-
-  const activeImg =
-    el.querySelector('.nav-icon');
-
-  if (activeImg) {
-    activeImg.src =
-      activeImg.dataset.active;
-  }
-}
-
-window.goNav = function(el, url) {
-
-  setActiveNav(el);
-
-  setTimeout(() => {
-    window.location.href = url;
-  }, 30);
-};
-
-/* AKTIF OTOMATIS SAAT REFRESH */
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
-
-    const page =
-      window.location.pathname
-        .split("/")
-        .pop()
-        .toLowerCase();
-
-    document
-      .querySelectorAll(
-        "#bottomNav .nav-item"
-      )
-      .forEach(item => {
-
-        const click =
-          item.getAttribute("onclick") || "";
-
-        if (
-          click.toLowerCase().includes(page)
-        ) {
-          setActiveNav(item);
-        }
-      });
-  }
-);
 
 
 
@@ -941,20 +1173,22 @@ window.openVideoCall = async function(targetId){
       level = target.level || 0;
     }
 
-    const logData = {
-      userId: login.userId,
+const logData = {
+  userId: login.userId,
 
-      nama: nama,
-      profil: profil,
-      negara: negara,
-      level: level,
+  nama: nama,
+  profil: profil,
+  negara: negara,
+  level: level,
 
-      logo: "destiny_icon_video_call.png",
-      status: "Panggilan Dibatalkan",
-      waktu: new Date().toLocaleString("id-ID"),
+  logo: "destiny_icon_video_call.png",
+  status: "Panggilan Dibatalkan",
+  waktu: new Date().toLocaleString("id-ID"),
 
-      targetId: targetId
-    };
+  targetId: targetId,
+
+  read: false
+};
 
     await push(
       ref(db, "Logpanggilan"),
@@ -1009,11 +1243,62 @@ document.addEventListener("gestureend", function (e) {
 /* ================= (NO zoom) ================= */
 
 
+window.showchat238 = function(
+  status2 = "",
+  busy = false
+){
 
+  const box =
+    document.querySelector(
+      "#showchat238 .showchat238-box"
+    );
+
+  const isHost =
+    status2 === "Host";
+
+  if(busy){
+
+    box.textContent =
+      isHost
+        ? "Host sedang dalam panggilan lain."
+        : "Pengguna sedang dalam panggilan lain.";
+
+  }else{
+
+    box.textContent =
+      isHost
+        ? "Host sedang sibuk."
+        : "Pengguna sedang offline.";
+
+  }
+
+  const pop =
+    document.getElementById(
+      "showchat238"
+    );
+
+  pop.classList.add("show");
+
+  setTimeout(()=>{
+    pop.classList.remove("show");
+  },2000);
+
+};
 </script>
 <div id="toast" class="toast hidden">
   <img src="logo.png" class="toast-icon">
   <span id="toastText"></span>
 </div>
+
+
+
+<div id="showchat238" class="showchat238">
+  <div class="showchat238-box">
+    User sedang offline atau sibuk.
+  </div>
+</div>
+
+
+
 </body>
 </html>

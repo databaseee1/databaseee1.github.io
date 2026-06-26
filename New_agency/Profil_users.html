@@ -321,18 +321,24 @@ z-index:10;
 }
 
 .gender-age{
-display:flex;
-align-items:center;
-gap:6px;
-
-color:#666;
-font-size:15px;
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:2px 8px;
+  border-radius:20px;
+  font-size:12px;
+  color:#fff;
 }
 
-.gender-age i{
-font-size:16px;
-color:#eb3fff;
+.gender-age.male{
+  background:#2276ff96;
 }
+
+.gender-age.female{
+  background:#ec4899;
+}
+
+
 
 .gift-title{
 margin-top:30px;
@@ -662,8 +668,8 @@ Lv
 
 <div class="user-info">
 
-<div class="gender-age">
-  <i class="fa fa-mars"></i>
+<div id="genderAge" class="gender-age">
+  <i id="genderIcon" class="fa fa-mars"></i>
   <span id="userAge">0</span>
 </div>
 
@@ -847,6 +853,38 @@ onValue(ref(db,"Users/"+userId),(snapshot)=>{
   /* INFO */
   userName.textContent = user.nama || "";
   userAge.textContent = user.umur || "";
+
+
+
+
+const genderBox =
+  document.getElementById("genderAge");
+
+const genderIcon =
+  document.getElementById("genderIcon");
+
+if(user.jk === "Perempuan"){
+
+  genderBox.className =
+    "gender-age female";
+
+  genderIcon.className =
+    "fa fa-venus";
+
+}else{
+
+  genderBox.className =
+    "gender-age male";
+
+  genderIcon.className =
+    "fa fa-mars";
+}
+
+
+
+
+
+
   userLevel.textContent = user.level || "";
 
   const levelBadge = document.getElementById("levelBadge");

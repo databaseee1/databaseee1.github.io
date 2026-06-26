@@ -324,6 +324,413 @@ color:#999;
   to{transform:rotate(360deg);}
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.fake-call-popup{
+  position:fixed;
+  inset:0;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:999999;
+}
+
+#fakeCallCamera{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:0;
+
+  transform: scaleX(-1);
+}
+
+.fake-call-box::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.35);
+  z-index:1;
+}
+
+.call-user-info,
+.call-top-icons,
+.fake-call-center,
+.fake-call-actions{
+  z-index:2;
+}
+
+
+
+
+
+
+
+.call-name-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.call-country-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.fake-call-level{
+  display:flex;
+  align-items:center;
+  gap:4px;
+
+  color:#fff;
+  font-size:10px;
+  padding:2px 4px;
+  border-radius:20px;
+  font-weight:400;
+}
+
+.level-icon{
+  width:14px;
+  height:14px;
+  object-fit:contain;
+}
+
+/* Warna per level */
+.level-0{
+  background:#777;
+}
+
+.level-1{
+  background:#22c55e;
+}
+
+.level-2{
+  background:#3b82f6;
+}
+
+.level-3{
+  background:#a855f7;
+}
+
+.level-4{
+  background:#f59e0b;
+}
+
+.level-5{
+  background:#ef4444;
+}
+
+.level-6{
+  background:linear-gradient(90deg, #b00074, #dd0383);
+}
+
+.level-7{
+  background:linear-gradient(
+    90deg,
+    #00c6ff,
+    #0072ff
+  );
+}
+
+.level-8{
+  background:linear-gradient(
+    90deg,
+    #8e2de2,
+    #ff0080
+  );
+}
+
+.level-9{
+  background:linear-gradient(
+    90deg,
+    #f7971e,
+    #ffd200
+  );
+}
+
+.level-10{
+  background:linear-gradient(
+    90deg,
+    #ff512f,
+    #dd2476
+  );
+}
+
+
+
+
+.fake-call-umur{
+  color:#fff;
+  font-size:12px;
+}
+
+.fake-call-bonus{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  color:#fff;
+  font-size:12px;
+  font-weight:400;
+  text-shadow:0 2px 10px rgba(0,0,0,.5);
+}
+
+.bonus-coin{
+  width:15px;
+  height:15px;
+  object-fit:contain;
+}
+
+
+
+
+
+.call-action-item{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+}
+
+.call-btn-text{
+  color:#fff;
+  font-size:13px;
+  font-weight:500;
+  text-shadow:0 2px 8px rgba(0,0,0,.5);
+}
+
+
+
+
+
+
+
+/* efek gelap */
+.fake-call-box::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.35);
+}
+
+.call-user-info{
+  position:absolute;
+  top:25px;
+  left:20px;
+  display:flex;
+  gap:12px;
+  align-items:center;
+  z-index:2;
+}
+
+
+.call-user-info{
+  display:flex;
+  align-items:center;
+  gap:12px;
+
+  background:rgb(27 27 27 / 7%);
+
+  padding:10px 14px;
+  border-radius:50px;
+
+  width:fit-content;
+}
+
+
+
+
+.fake-call-foto{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  object-fit:cover;
+  border:1px solid #787878;
+}
+
+.call-user-text{
+  color:#fff;
+}
+
+.fake-call-negara span{
+  font-size:12px;
+  font-weight:400;
+  opacity:.9;
+}
+
+
+.fake-call-nama{
+  font-size:14px;
+  font-weight:500;
+}
+
+.fake-call-negara{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  font-size:13px;
+}
+
+.fake-call-negara img{
+  width:10px;
+  height:10px;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+/* kanan atas */
+.call-top-icons{
+  position:absolute;
+  top:25px;
+  right:20px;
+  display:flex;
+  gap:15px;
+  z-index:2;
+}
+
+.call-top-icons img{
+  width:28px;
+  height:28px;
+  object-fit:contain;
+}
+
+/* tengah */
+.fake-call-center{
+  position:absolute;
+  left:50%;
+  top:80%;
+  transform:translate(-50%,-50%);
+  text-align:center;
+  z-index:2;
+}
+
+.fake-call-text{
+  color:#fff;
+  font-size:28px;
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+.fake-call-pesan{
+  color:#fff;
+  font-size:16px;
+}
+
+/* tombol bawah */
+.fake-call-actions{
+  position:absolute;
+  bottom:50px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:90px;
+  z-index:2;
+}
+
+.call-btn-img{
+  width:70px;
+  height:70px;
+  object-fit:contain;
+  cursor:pointer;
+}
+
+@media(max-width:600px){
+
+  .fake-call-actions{
+    gap:140px;
+  }
+
+  .call-btn-img{
+    width:65px;
+    height:65px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.rejctshow37896{
+  position:fixed;
+  left:50%;
+  bottom:90px;
+  transform:translateX(-50%);
+  background:rgba(0,0,0,.85);
+  color:#fff;
+  padding:12px 18px;
+  border-radius:15px;
+  font-size:14px;
+  z-index:999999;
+  display:none;
+}
+
+.connectingCall37896{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:999999;
+}
+
+.connectingCall37896-box{
+  background:rgba(0,0,0,.8);
+  color:#fff;
+  padding:18px 25px;
+  border-radius:20px;
+  font-size:16px;
+}
+
+
+
 </style>
 </head>
 
@@ -496,7 +903,9 @@ import {
   getDatabase,
   ref,
   get,
-  update
+  update,
+  onValue,
+  push
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 /* ================= FIREBASE ================= */
@@ -524,6 +933,7 @@ if (!login?.userId) {
   sessionStorage.clear();
   window.location.replace("Login.html");
 }
+
 
 
 
@@ -560,6 +970,368 @@ checkUserStatus();
 
 // OPTIONAL 🔥 auto cek tiap 5 detik (biar realtime)
 setInterval(checkUserStatus, 5000);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+let fakeStream = null;
+
+/* START CAMERA */
+async function startFakeCamera(){
+
+  try{
+
+    if(fakeStream) return;
+
+    const video =
+      document.getElementById(
+        "fakeCallCamera"
+      );
+
+    if(!video) return;
+
+    fakeStream =
+      await navigator.mediaDevices.getUserMedia({
+        video:{
+          facingMode:"user"
+        },
+        audio:false
+      });
+
+    video.srcObject =
+      fakeStream;
+
+  }catch(err){
+
+    console.log(
+      "Camera gagal:",
+      err
+    );
+
+  }
+}
+
+/* STOP CAMERA */
+function stopFakeCamera(){
+
+  if(fakeStream){
+
+    fakeStream
+      .getTracks()
+      .forEach(track=>{
+        track.stop();
+      });
+
+    fakeStream = null;
+  }
+
+  const video =
+    document.getElementById(
+      "fakeCallCamera"
+    );
+
+  if(video){
+    video.srcObject = null;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+onValue(
+  ref(
+    db,
+    "IncomingCall/" +
+    login.userId
+  ),
+  snap=>{
+
+    if(!snap.exists()){
+
+      fakeCallPopup.style.display =
+        "none";
+
+      stopFakeCamera();
+      return;
+    }
+
+    const d = snap.val();
+
+
+
+window.currentIncomingData = d;
+
+window.currentCallTargetId =
+  d.targetId || "";
+
+window.currentCallerUid =
+  d.callerUid || "";
+
+
+    if(!d.aktif){
+
+      fakeCallPopup.style.display =
+        "none";
+
+      stopFakeCamera();
+      return;
+    }
+
+    fakeCallPopup.style.display =
+      "flex";
+
+    startFakeCamera();
+
+    fakeCallFoto.src =
+      d.foto || "default.png";
+
+fakeCallNama.innerText =
+  (d.nama || "Unknown").length > 5
+    ? (d.nama || "Unknown").substring(0, 5) + "..."
+    : (d.nama || "Unknown");
+
+    fakeCallNegara.innerText =
+      d.negara || "";
+
+    fakeCallNegaraLogo.src =
+      d.negaraLogo || "";
+
+
+
+
+const lv =
+  String(d.level || "0");
+
+const levelIcons = {
+  "0": "user_level_0_icon.png",
+  "1": "user_level_1_icon.png",
+  "2": "user_level_2_icon.png",
+  "3": "user_level_3_icon.png",
+  "4": "user_level_4_icon.png",
+  "5": "user_level_5_icon.png",
+  "6": "user_level_6_icon.png",
+  "7": "user_level_7_icon.png",
+  "8": "user_level_8_male_icon.png",
+  "9": "user_level_9_icon.png",
+  "10": "user_level_10_icon.png"
+};
+
+fakeCallLevel.className =
+  "fake-call-level level-" + lv;
+
+fakeCallLevel.innerHTML = `
+  <img
+    src="${
+      levelIcons[lv] ||
+      "user_level_0_icon.png"
+    }"
+    class="level-icon"
+  >
+  Lv.${lv}
+`;
+
+
+
+
+fakeCallUmur.innerText =
+  (d.umur || "18") + "";
+
+
+fakeCallBonus.innerHTML = `
+  ${d.bonus || "+201"}
+  <img src="credit.png" class="bonus-coin">
+  /menit
+`;
+
+
+    fakeCallPesan.innerText =
+      d.pesan || "";
+  }
+);
+
+
+/* TOLAK */
+window.closeFakeCall =
+async function(){
+
+  document.getElementById(
+    "rejctshow37896"
+  ).style.display =
+    "block";
+
+  setTimeout(()=>{
+    document.getElementById(
+      "rejctshow37896"
+    ).style.display =
+      "none";
+  },2000);
+
+  await saveCallLog(
+    "Panggilan Dibatalkan",
+    "destiny_icon_video_call.png"
+  );
+
+  fakeCallPopup.style.display =
+    "none";
+
+  await update(
+    ref(
+      db,
+      "IncomingCall/" +
+      login.userId
+    ),
+    {
+      aktif:false
+    }
+  );
+};
+
+
+
+
+
+
+window.acceptFakeCall =
+async function(){
+
+  document.getElementById(
+    "connectingCall37896"
+  ).style.display =
+    "flex";
+
+  await saveCallLog(
+    "Panggilan Dijawab",
+    "destiny_icon_video_call.png"
+  );
+
+  await update(
+    ref(
+      db,
+      "IncomingCall/" +
+      login.userId
+    ),
+    {
+      aktif:false
+    }
+  );
+
+  setTimeout(()=>{
+
+    window.location.href =
+      "Panggilan_video.html?id=" +
+      (
+        window.currentIncomingData
+          ?.targetId || ""
+      );
+
+  },1500);
+};
+
+
+
+
+
+
+
+
+
+
+function showReject37896(){
+
+  const box =
+    document.getElementById(
+      "rejctshow37896"
+    );
+
+  box.style.display = "block";
+
+  setTimeout(()=>{
+    box.style.display = "none";
+  },2000);
+}
+
+
+
+async function saveCallLog(
+  status,
+  logo
+){
+
+  try{
+
+    const d =
+      window.currentIncomingData || {};
+
+    const logData = {
+      userId:
+        login.userId,
+
+      nama:
+        d.nama || "",
+
+      profil:
+        d.foto || "",
+
+      negara:
+        d.negara || "",
+
+      level:
+        d.level || 0,
+
+      logo,
+      status,
+
+      waktu:
+        new Date()
+        .toLocaleString("id-ID"),
+
+      targetId:
+        d.targetId || "",
+
+      read:false
+    };
+
+    await push(
+      ref(db,"Logpanggilan"),
+      logData
+    );
+
+  }catch(err){
+    console.log(
+      "LOG ERROR:",
+      err
+    );
+  }
+}
+
+
+
+
+
+
+
 
 
 
@@ -782,6 +1554,26 @@ document.getElementById("statusVerifikasi").onclick = function () {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* ================= NAV ================= */
 window.goNav = function (el, url) {
   document.querySelectorAll("#bottomNav .nav-item")
@@ -854,7 +1646,145 @@ document.addEventListener("gestureend", function (e) {
 /* ================= (NO zoom) ================= */
 
 
+
+
+
+
+
 </script>
+
+
+
+
+
+
+<div id="fakeCallPopup" class="fake-call-popup">
+
+  <div class="fake-call-box">
+
+
+
+<video
+  id="fakeCallCamera"
+  autoplay
+  playsinline
+  muted
+></video>
+
+
+
+
+    <!-- kiri atas -->
+<div class="call-user-info">
+
+  <img
+    id="fakeCallFoto"
+    class="fake-call-foto">
+
+  <div class="call-user-text">
+
+    <div class="call-name-row">
+      <div
+        id="fakeCallNama"
+        class="fake-call-nama">
+      </div>
+
+      <div
+        id="fakeCallLevel"
+        class="fake-call-level">
+      </div>
+    </div>
+
+    <div class="call-country-row">
+
+      <div class="fake-call-negara">
+        <img id="fakeCallNegaraLogo">
+        <span id="fakeCallNegara"></span>
+      </div>
+
+      <div
+        id="fakeCallUmur"
+        class="fake-call-umur">
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+
+    <!-- kanan atas -->
+    <div class="call-top-icons">
+      <img src="video_report_icon.png">
+      <img src="video_close_icon.png">
+    </div>
+
+
+
+    </div>
+
+
+
+
+
+<!-- tengah -->
+<div class="fake-call-center">
+
+<div
+  id="fakeCallBonus"
+  class="fake-call-bonus">
+</div>
+
+</div>
+
+<!-- bawah -->
+<div class="fake-call-actions">
+
+  <div class="call-action-item">
+    <img
+      src="hang_up_icon.png"
+      class="call-btn-img"
+      onclick="closeFakeCall()">
+
+    <div class="call-btn-text">
+      Batal
+    </div>
+  </div>
+
+  <div class="call-action-item">
+    <img
+      src="anwser_be_calling_icon.png"
+      class="call-btn-img"
+      onclick="acceptFakeCall()">
+
+    <div class="call-btn-text">
+      Jawab
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+<div id="rejctshow37896" class="rejctshow37896">
+  Pesan dibatalkan
+</div>
+
+<div id="connectingCall37896" class="connectingCall37896">
+  <div class="connectingCall37896-box">
+    Menghubungkan Panggilan...
+  </div>
+</div>
+
+
 
 </body>
 </html>

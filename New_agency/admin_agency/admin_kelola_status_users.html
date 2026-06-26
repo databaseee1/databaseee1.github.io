@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1">
+
+<title>Kelola Status Users</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Poppins,sans-serif;
+}
+
+body{
+  background:#f6f7fb;
+  padding:15px;
+}
+
+.header{
+  font-size:24px;
+  font-weight:700;
+  margin-bottom:20px;
+}
+
+.section{
+  margin-bottom:35px;
+}
+
+.section-title{
+  font-size:22px;
+  font-weight:700;
+  margin-bottom:15px;
+}
+
+.top-bar{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:15px;
+}
+
+.top-bar button,
+.top-bar select{
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  background:#fff;
+  box-shadow:0 3px 10px rgba(0,0,0,.08);
+  cursor:pointer;
+}
+
+.user-card{
+  background:#fff;
+  border-radius:18px;
+  padding:12px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:10px;
+  box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.user-card img{
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+.user-info{
+  flex:1;
+}
+
+.user-name{
+  font-weight:700;
+  margin-bottom:4px;
+}
+
+.user-status{
+  font-size:13px;
+}
+
+.online{
+  color:#16a34a;
+}
+
+.offline{
+  color:#dc2626;
+}
+
+.checkbox{
+  width:22px;
+  height:22px;
+}
+
+@media(max-width:600px){
+
+  .user-card{
+    padding:10px;
+  }
+
+  .user-card img{
+    width:50px;
+    height:50px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+Kelola Status Users
+</div>
+
+<div class="section">
+
+<div class="section-title">
+Perempuan
+</div>
+
+<div class="top-bar">
+<button onclick="selectAll('Perempuan')">
+Pilih Semua
+</button>
+
+<select onchange="changeStatus(this,'Perempuan')">
+<option value="">
+Aksi
+</option>
+
+<option value="online">
+Set Online
+</option>
+
+<option value="offline">
+Set Offline
+</option>
+</select>
+</div>
+
+<div id="femaleList"></div>
+
+</div>
+
+<div class="section">
+
+<div class="section-title">
+Laki-laki
+</div>
+
+<div class="top-bar">
+<button onclick="selectAll('Laki-laki')">
+Pilih Semua
+</button>
+
+<select onchange="changeStatus(this,'Laki-laki')">
+<option value="">
+Aksi
+</option>
+
+<option value="online">
+Set Online
+</option>
+
+<option value="offline">
+Set Offline
+</option>
+</select>
+</div>
+
+<div id="maleList"></div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  onValue,
+  update
+}
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+/* FIREBASE */
+const firebaseConfig = {
+  apiKey:
+  "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+
+  authDomain:
+  "users-96dc5.firebaseapp.com",
+
+  databaseURL:
+  "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+  projectId:
+  "users-96dc5",
+
+  storageBucket:
+  "users-96dc5.appspot.com",
+
+  messagingSenderId:
+  "483322415863",
+
+  appId:
+  "1:483322415863:web:1397a8f2e808e66ad9e1f2"
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getDatabase(app);
+
+/* LOGIN ADMIN */
+const adminData =
+JSON.parse(
+  localStorage.getItem(
+    "adminLogin"
+  )
+);
+
+if(
+  !adminData ||
+  adminData.role !== "admin"
+){
+  location.replace(
+    "Login_admin.html"
+  );
+}
+
+/* LOAD USERS */
+const femaleList =
+document.getElementById(
+  "femaleList"
+);
+
+const maleList =
+document.getElementById(
+  "maleList"
+);
+
+
+const CACHE_KEY =
+"admin_users_status_cache_v1";
+
+function renderUsers(users){
+
+  femaleList.innerHTML = "";
+  maleList.innerHTML = "";
+
+  users.forEach(item=>{
+
+    const id = item.id;
+    const user = item.data;
+
+    const foto =
+      user.foto?.[0]
+      ||
+      "https://via.placeholder.com/60";
+
+    const html = `
+      <div class="user-card">
+
+        <input
+          class="checkbox"
+          type="checkbox"
+          data-id="${id}"
+          data-jk="${user.jk}"
+        >
+
+        <img src="${foto}">
+
+        <div class="user-info">
+
+          <div class="user-name">
+            ${user.nama || "User"}
+          </div>
+
+          <div class="user-status ${
+            user.online
+            ? "online"
+            : "offline"
+          }">
+
+            ${
+              user.online
+              ? "🟢 Online"
+              : "🔴 Busy"
+            }
+
+          </div>
+
+        </div>
+
+      </div>
+    `;
+
+    if(
+      user.jk ===
+      "Perempuan"
+    ){
+      femaleList.innerHTML += html;
+    }
+    else{
+      maleList.innerHTML += html;
+    }
+
+  });
+
+}
+
+const cache =
+localStorage.getItem(
+  CACHE_KEY
+);
+
+if(cache){
+
+  try{
+
+    renderUsers(
+      JSON.parse(cache)
+    );
+
+  }catch(e){
+    console.log(e);
+  }
+
+}
+onValue(
+  ref(db,"Users"),
+  snap=>{
+
+    if(!snap.exists()){
+      return;
+    }
+
+    const users = [];
+
+    snap.forEach(child=>{
+
+      users.push({
+        id: child.key,
+        data: child.val()
+      });
+
+    });
+
+    renderUsers(users);
+
+    localStorage.setItem(
+      CACHE_KEY,
+      JSON.stringify(users)
+    );
+
+  }
+);
+
+/* PILIH SEMUA */
+window.selectAll =
+function(jk){
+
+  document
+  .querySelectorAll(
+    `input[data-jk="${jk}"]`
+  )
+  .forEach(cb=>{
+
+    cb.checked =
+    !cb.checked;
+
+  });
+};
+
+window.changeStatus = async function(select, jk){
+
+  const value = select.value;
+  if(!value) return;
+
+  const checked = [
+    ...document.querySelectorAll(
+      `input[data-jk="${jk}"]:checked`
+    )
+  ];
+
+  if(checked.length === 0){
+    alert("Pilih user terlebih dahulu.");
+    select.value = "";
+    return;
+  }
+
+  const online =
+    value === "online";
+
+  /* UPDATE SEKALI KE FIREBASE */
+  const updates = {};
+
+  checked.forEach(cb=>{
+    updates[
+      `Users/${cb.dataset.id}/online`
+    ] = online;
+  });
+
+  try{
+
+    await update(
+      ref(db),
+      updates
+    );
+
+    /* UPDATE CACHE TANPA LOAD ULANG */
+    const cache =
+      JSON.parse(
+        localStorage.getItem(
+          CACHE_KEY
+        ) || "[]"
+      );
+
+    checked.forEach(cb=>{
+
+      const item =
+        cache.find(
+          x =>
+            x.id ===
+            cb.dataset.id
+        );
+
+      if(item){
+        item.data.online =
+          online;
+      }
+
+    });
+
+    localStorage.setItem(
+      CACHE_KEY,
+      JSON.stringify(cache)
+    );
+
+    /* RENDER LANGSUNG DARI CACHE */
+    renderUsers(cache);
+
+    alert(
+      `${checked.length} user berhasil diubah.`
+    );
+
+  }catch(err){
+
+    console.log(err);
+    alert("Gagal mengubah status.");
+
+  }
+
+  select.value = "";
+};
+
+</script>
+
+</body>
+</html>

@@ -351,7 +351,21 @@ input{
 }
 
 
+.header-title-admin{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
 
+.header-title-admin h2{
+  margin:0;
+}
+
+.admin-status-icon{
+  font-size:22px;
+  color:#16a34a;
+  cursor:pointer;
+}
 
 
 </style>
@@ -360,7 +374,17 @@ input{
 </head>
 <body>
 
-<h2>ADMIN PANEL USERS</h2>
+<div class="header-title-admin">
+  <h2>ADMIN PANEL USERS</h2>
+
+<i
+  class="fa-solid fa-user-check admin-status-icon"
+  onclick="location.href='admin_kelola_status_users.html'">
+</i>
+</div>
+
+
+
 
 <div id="userList"></div>
 <button class="fab-add" onclick="openAddUser()">
@@ -452,6 +476,19 @@ input{
   <input id="aNegaraLogo" list="negaraLogoList" placeholder="negaraLogo">
 </div>
 
+
+<select id="aJk">
+  <option value="Perempuan">Perempuan</option>
+  <option value="Laki-laki">Laki-laki</option>
+</select>
+
+<select id="aOnline">
+  <option value="true">Online</option>
+  <option value="false">Offline</option>
+</select>
+
+
+
 <datalist id="negaraLogoList">
   <option value="https://i.ibb.co.com/ymjNzsVP/indonesialogo.png">
 </datalist>
@@ -506,6 +543,18 @@ input{
     <input id="editLevelLogo" placeholder="Level Logo">
 
     <hr>
+
+<select id="editJk">
+  <option value="Perempuan">Perempuan</option>
+  <option value="Laki-laki">Laki-laki</option>
+</select>
+
+<select id="editOnline">
+  <option value="true">Online</option>
+  <option value="false">Offline</option>
+</select>
+
+
 
     <h4>Hashtag</h4>
     <div id="hashtagBox"></div>
@@ -621,21 +670,29 @@ window.createUser = async ()=>{
     ? aFoto.value.split(",").map(x=>x.trim())
     : [];
 
-  const data = {
-    uid: uid,
-    createdAt: Date.now(),
+const data = {
+  uid: uid,
+  createdAt: Date.now(),
 
-    nama: aNama.value || "",
-    umur: aUmur.value || "",
-    level: aLevel.value || "",
-    levelLogo: aLevelLogo.value || "",
-    negara: aNegara.value || "",
-    negaraLogo: aNegaraLogo.value || "",
+  nama: aNama.value || "",
+  umur: aUmur.value || "",
+  level: aLevel.value || "",
+  levelLogo: aLevelLogo.value || "",
+  negara: aNegara.value || "",
+  negaraLogo: aNegaraLogo.value || "",
 
-    foto: foto,
-    hashtags: hashtags,
-    gifts: window.tempGifts || {}
-  };
+  jk: aJk.value || "Perempuan",
+  online: aOnline.value === "false"
+    ? false
+    : true,
+
+  foto: foto,
+  hashtags: hashtags,
+  gifts: window.tempGifts || {}
+};
+
+
+
 
   await set(newRef, data);
 
@@ -658,54 +715,125 @@ window.createUser = async ()=>{
    LOAD USERS
 ========================= */
 const userList = document.getElementById("userList");
+const USERS_CACHE =
+  "admin_users_cache_v1";
 
-onValue(ref(db,"Users"), (snap)=>{
-  userList.innerHTML = "";
 
-  snap.forEach(child=>{
-    const user = child.val();
-    const id = child.key;
+const cache =
+  localStorage.getItem(
+    USERS_CACHE
+  );
 
-    const fotoUtama =
-      user.foto && user.foto.length
-        ? user.foto[0]
-        : "https://via.placeholder.com/60";
+if(cache){
 
-    userList.innerHTML += `
-      <div class="user-card">
+  try{
 
-        <div style="display:flex;align-items:center;gap:10px;">
+    userList.innerHTML =
+      cache;
 
-          <img
-            src="${fotoUtama}"
-            onclick="showPhotos('${id}')"
-            style="
-              width:60px;
-              height:60px;
-              object-fit:cover;
-              border-radius:50%;
-              cursor:pointer;
-            "
-          >
+    console.log(
+      "Render dari cache"
+    );
+
+  }catch(e){
+    console.log(e);
+  }
+
+}
+
+
+onValue(
+  ref(db,"Users"),
+  (snap)=>{
+
+    userList.innerHTML = "";
+
+    if(!snap.exists()){
+
+      localStorage.removeItem(
+        USERS_CACHE
+      );
+
+      return;
+    }
+
+    let html = "";
+
+    snap.forEach(child=>{
+
+      const user =
+        child.val();
+
+      const id =
+        child.key;
+
+      const fotoUtama =
+        user.foto &&
+        user.foto.length
+          ? user.foto[0]
+          : "https://via.placeholder.com/60";
+
+      html += `
+        <div class="user-card">
+
+          <div style="
+            display:flex;
+            align-items:center;
+            gap:10px;
+          ">
+
+            <img
+              src="${fotoUtama}"
+              onclick="showPhotos('${id}')"
+              style="
+                width:60px;
+                height:60px;
+                object-fit:cover;
+                border-radius:50%;
+                cursor:pointer;
+              "
+            >
+
+            <div>
+              <b>${user.nama}</b>
+              (${user.umur})
+              <br>
+              Level:
+              ${user.level}
+            </div>
+
+          </div>
 
           <div>
-            <b>${user.nama}</b> (${user.umur})
-            <br>
-            Level: ${user.level}
+            <button
+              onclick="editUser('${id}')">
+              Edit
+            </button>
+
+            <button
+              onclick="deleteUser('${id}')">
+              Hapus
+            </button>
           </div>
 
         </div>
+      `;
 
-        <div>
-          <button onclick="editUser('${id}')">Edit</button>
-          <button onclick="deleteUser('${id}')">Hapus</button>
-        </div>
+    });
 
-      </div>
-    `;
-  });
+    userList.innerHTML =
+      html;
+
+    localStorage.setItem(
+      USERS_CACHE,
+      html
+    );
+
+    console.log(
+      "Cache diperbarui"
+    );
+
 });
-
 /* =========================
    EDIT USER
 ========================= */
@@ -723,6 +851,14 @@ window.editUser = async (id)=>{
   editNegara.value = currentUserData.negara || "";
   editNegaraLogo.value = currentUserData.negaraLogo || "";
   editLevelLogo.value = currentUserData.levelLogo || "";
+  editJk.value =
+  currentUserData.jk || "";
+
+editOnline.value =
+  String(
+    currentUserData.online ?? true
+  );
+
 
   renderAll();
 };
@@ -840,17 +976,29 @@ window.saveUser = async ()=>{
 
   if(!confirm("Simpan perubahan user ini?")) return;
 
-  await update(ref(db,"Users/"+currentUserId), {
-    nama: editNama.value,
-    umur: editUmur.value,
-    level: editLevel.value,
-    negara: editNegara.value,
-    negaraLogo: editNegaraLogo.value,
-    levelLogo: editLevelLogo.value,
-    hashtags: currentUserData.hashtags || [],
-    foto: currentUserData.foto || [],
-    gifts: currentUserData.gifts || {}
-  });
+await update(ref(db,"Users/"+currentUserId), {
+  nama: editNama.value,
+  umur: editUmur.value,
+  level: editLevel.value,
+  negara: editNegara.value,
+  negaraLogo: editNegaraLogo.value,
+  levelLogo: editLevelLogo.value,
+
+  jk: editJk.value,
+  online:
+    editOnline.value === "false"
+      ? false
+      : true,
+
+  hashtags:
+    currentUserData.hashtags || [],
+
+  foto:
+    currentUserData.foto || [],
+
+  gifts:
+    currentUserData.gifts || {}
+});
 
   alert("Berhasil disimpan!");
   closeModal();

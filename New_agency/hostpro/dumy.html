@@ -1,63 +1,81 @@
-<button id="addSliderBtn">Tambah Slider Dummy</button>
+<input
+  id="targetUserId"
+  placeholder="Masukkan User ID users2"
+>
+
+<button onclick="buatDummyCall()">
+  Buat Dummy Panggilan
+</button>
 
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
 import {
   getDatabase,
   ref,
-  get,
-  update
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+  set
+}
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-/* FIREBASE */
 const firebaseConfig = {
-  apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
-  authDomain:"users-96dc5.firebaseapp.com",
-  databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId:"users-96dc5"
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+  storageBucket: "users-96dc5.appspot.com",
+  messagingSenderId: "483322415863",
+  appId: "1:483322415863:web:1397a8f2e808e66ad9e1f2"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+const app =
+initializeApp(firebaseConfig);
 
-const sliderBtn = document.getElementById("addSliderBtn");
+const db =
+getDatabase(app);
 
-const sliderDummy = [
-  "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d",
-  "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
-  "https://images.unsplash.com/photo-1495567720989-cebdbdd97913",
-  "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e",
-  "https://images.unsplash.com/photo-1501785888041-af3ef285b470"
-];
+window.buatDummyCall =
+async function(){
 
-sliderBtn.addEventListener("click", async () => {
+  const targetUserId =
+    document
+      .getElementById("targetUserId")
+      .value
+      .trim();
 
-  try {
-
-    const snap = await get(ref(db, "Mypostingan"));
-
-    if(!snap.exists()){
-      alert("Tidak ada postingan");
-      return;
-    }
-
-    const updates = {};
-
-    snap.forEach(child => {
-      const id = child.key;
-
-      updates[`Mypostingan/${id}/slider`] = sliderDummy;
-    });
-
-    await update(ref(db), updates);
-
-    alert("Semua postingan berhasil ditambahkan slider!");
-
-  } catch (err) {
-    console.error(err);
-    alert("Gagal update slider");
+  if(!targetUserId){
+    alert("Masukkan User ID.");
+    return;
   }
 
-});
+  await set(
+    ref(
+      db,
+      "IncomingCall/" +
+      targetUserId
+    ),
+    {
+      aktif: true,
+
+      foto:
+      "https://i.pinimg.com/736x/8e/20/89/8e20893c0a3ce653e3764b660fe9afd8.jpg",
+
+      nama:
+      "Aulia",
+
+      negara:
+      "Indonesia",
+
+      negaraLogo:
+      "indonesialogo.png",
+
+      pesan:
+      "Sedang menghubungi Anda..."
+    }
+  );
+
+  alert("Dummy panggilan berhasil dibuat.");
+};
+
 </script>

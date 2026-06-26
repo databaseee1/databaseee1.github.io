@@ -294,6 +294,44 @@ body{
 
 
 
+
+
+
+
+
+.log-icon-wrap{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
+
+.log-badge{
+  position:absolute;
+  top:-6px;
+  right:-8px;
+
+  min-width:18px;
+  height:18px;
+  padding:0 1px;
+
+  background:#ff3b30;
+  color:#fff;
+
+  border-radius:999px;
+
+  display:none;
+  align-items:center;
+  justify-content:center;
+
+  font-size:11px;
+  font-weight:700;
+  font-family:Poppins,sans-serif;
+
+  border:2px solid #fff;
+}
+
 </style>
 </head>
 
@@ -309,10 +347,27 @@ body{
 <div class="saldo-header">
 <div class="saldo-box">
   <img src="score_icon_wrap.png" class="saldo-icon">
-  <span id="saldoHostPopup3">Rp 0</span>
+  <span id="saldoHostPopup3">0.0</span>
 </div>
 
-<img src="match_his_icon.png" style="width:22px;cursor:pointer;" onclick="window.location.href='Log_panggilan.html'">
+
+
+<div class="log-icon-wrap"
+     onclick="window.location.href='Log_panggilan.html'">
+
+  <img
+    src="match_his_icon.png"
+    style="width:22px;cursor:pointer;"
+  >
+
+  <div id="logBadge" class="log-badge">
+    0
+  </div>
+
+</div>
+
+
+
 </div>
 
 <!-- CAROUSEL -->
@@ -455,6 +510,62 @@ onValue(ref(db, "Statusakun_host/" + login.userId), (snap) => {
   }
 
 });
+
+
+
+
+
+
+
+
+
+onValue(ref(db, "Logpanggilan"), (snap)=>{
+
+  let total = 0;
+
+  if(snap.exists()){
+
+    snap.forEach(child=>{
+
+      const d = child.val();
+
+      if(
+        d.userId === login.userId &&
+        d.read === false
+      ){
+        total++;
+      }
+
+    });
+  }
+
+  const badge =
+    document.getElementById(
+      "logBadge"
+    );
+
+  if(total > 0){
+
+    badge.style.display =
+      "flex";
+
+    badge.textContent =
+      total > 99
+        ? "99+"
+        : total;
+
+  }else{
+
+    badge.style.display =
+      "none";
+  }
+
+});
+
+
+
+
+
 
 
 

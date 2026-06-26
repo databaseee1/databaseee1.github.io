@@ -102,6 +102,11 @@ body{
     width: 42px;
     height: 42px;
 }
+
+
+.profil{
+  cursor:pointer;
+}
 </style>
 </head>
 
@@ -203,7 +208,14 @@ async function loadLog(){
 
     div.innerHTML = `
       <div class="left">
-        <img class="profil" src="${d.profil || 'default.png'}">
+        <img
+  class="profil"
+  src="${d.profil || 'default.png'}"
+  onclick="
+    event.stopPropagation();
+    window.location.href='Profil_users.html?id=${d.targetId}'
+  "
+>
 
         <div class="info">
           <div class="name">${d.nama}</div>
@@ -212,8 +224,17 @@ async function loadLog(){
         </div>
       </div>
 
-      <img class="icon" src="${d.logo}" onclick="window.location.href='Panggilan_video.html'">
-    `;
+<img
+  class="icon"
+  src="${d.logo}"
+  onclick="
+    event.stopPropagation();
+    window.location.href='Panggilan_video.html?id=${d.targetId}'
+  "
+>   
+   
+   
+      `;
 
     list.appendChild(div);
 
@@ -222,6 +243,110 @@ async function loadLog(){
 }
 
 loadLog();
+markAllRead();
+
+
+
+
+
+async function markAllRead(){
+
+  const snap =
+    await get(ref(db,"Logpanggilan"));
+
+  if(!snap.exists()) return;
+
+  const updates = {};
+
+  snap.forEach(child=>{
+
+    const d = child.val();
+
+    if(
+      d.userId === login.userId &&
+      d.read === false
+    ){
+      updates[
+        "Logpanggilan/" +
+        child.key +
+        "/read"
+      ] = true;
+    }
+
+  });
+
+  if(
+    Object.keys(updates).length
+  ){
+    await update(
+      ref(db),
+      updates
+    );
+  }
+}
+
+
+
+
+
+
+
+
+window.reCall = async function(targetId){
+
+  try{
+
+    const targetSnap =
+      await get(ref(db, "Users/" + targetId));
+
+    let nama = "Unknown";
+    let profil = "";
+    let negara = "Indonesia";
+    let level = 0;
+
+    if(targetSnap.exists()){
+
+      const target = targetSnap.val();
+
+      nama = target.nama || "Unknown";
+      profil = target.foto?.[0] || "";
+      negara = target.negara || "Indonesia";
+      level = target.level || 0;
+    }
+
+const logData = {
+  userId: login.userId,
+
+  nama,
+  profil,
+  negara,
+  level,
+
+  logo: "destiny_icon_video_call.png",
+  status: "Panggilan Dibatalkan",
+  waktu: new Date().toLocaleString("id-ID"),
+
+  targetId: targetId,
+
+  read: false
+};
+
+    await push(
+      ref(db, "Logpanggilan"),
+      logData
+    );
+
+  }catch(err){
+    console.log(err);
+  }
+
+  window.location.href =
+    "Panggilan_video.html?id=" + targetId;
+};
+
+
+
+
 
 
 

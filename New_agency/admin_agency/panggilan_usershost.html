@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>Panggilan Users</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Poppins,sans-serif;
+}
+
+body{
+  background:#f6f7fb;
+  padding:15px;
+}
+
+h2{
+  margin-bottom:20px;
+}
+
+.user-card{
+  background:#fff;
+  border-radius:18px;
+  padding:12px;
+  display:flex;
+  align-items:center;
+  margin-bottom:12px;
+  box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.user-card img{
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+.user-info{
+  flex:1;
+  margin-left:12px;
+}
+
+.user-name{
+  font-weight:700;
+}
+
+.user-wa{
+  font-size:13px;
+  color:#777;
+}
+
+.call-btn{
+  border:none;
+  background:#ff3b30;
+  color:#fff;
+  padding:10px 15px;
+  border-radius:12px;
+  cursor:pointer;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:99999;
+}
+
+.modal-box{
+  width:95%;
+  max-width:420px;
+  background:#fff;
+  border-radius:20px;
+  padding:20px;
+}
+
+.modal-box h3{
+  margin-bottom:15px;
+}
+
+.modal-box select,
+.modal-box input{
+  width:100%;
+  padding:12px;
+  margin-bottom:12px;
+  border:1px solid #ddd;
+  border-radius:12px;
+}
+
+.preview{
+  background:#f7f7f7;
+  border-radius:15px;
+  padding:12px;
+  margin-bottom:15px;
+}
+
+.preview img{
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  object-fit:cover;
+  margin-bottom:10px;
+}
+
+.preview div{
+  margin-bottom:5px;
+}
+
+.modal-box button{
+  width:100%;
+  border:none;
+  background:#ff3b30;
+  color:#fff;
+  padding:14px;
+  border-radius:12px;
+  font-weight:700;
+  cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<h2>Panggilan Users</h2>
+
+<div id="userList"></div>
+
+<div id="callModal" class="modal">
+
+  <div class="modal-box">
+
+    <h3>Pilih Pemanggil</h3>
+
+    <select id="callerSelect">
+      <option value="">
+        Pilih Users
+      </option>
+    </select>
+
+    <div class="preview">
+
+      <img
+      id="previewFoto"
+      src="default.png">
+
+      <div id="previewNama">
+        Nama :
+      </div>
+
+      <div id="previewNegara">
+        Negara :
+      </div>
+
+      <div id="previewLevel">
+        Level :
+      </div>
+
+      <div id="previewUmur">
+        Umur :
+      </div>
+
+    </div>
+
+    <input
+    id="bonusInput"
+    value="+201 Credit/menit">
+
+    <button onclick="kirimPanggilan()">
+      Panggil Sekarang
+    </button>
+
+  </div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  onValue,
+  get,
+  set
+}
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain:"users-96dc5.firebaseapp.com",
+  databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:"users-96dc5",
+  storageBucket:"users-96dc5.appspot.com",
+  messagingSenderId:"483322415863",
+  appId:"1:483322415863:web:1397a8f2e808e66ad9e1f2"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* LOGIN ADMIN */
+const admin =
+JSON.parse(
+  localStorage.getItem(
+    "adminLogin"
+  )
+);
+
+if(
+  !admin ||
+  admin.role !== "admin"
+){
+  location.href =
+  "Login_admin.html";
+}
+
+let selectedUserId = "";
+let selectedCaller = null;
+
+/* LIST USERS2 */
+onValue(
+  ref(db,"users2"),
+  snap=>{
+
+    const list =
+      document.getElementById(
+        "userList"
+      );
+
+    list.innerHTML = "";
+
+    if(!snap.exists())
+      return;
+
+    snap.forEach(child=>{
+
+      const id = child.key;
+      const u = child.val();
+
+      const foto =
+        u.profil ||
+        "default.png";
+
+      list.innerHTML += `
+        <div class="user-card">
+
+          <img src="${foto}">
+
+          <div class="user-info">
+
+            <div class="user-name">
+              ${u.nama || "User"}
+            </div>
+
+            <div class="user-wa">
+              ${u.wa || ""}
+            </div>
+
+          </div>
+
+          <button
+            class="call-btn"
+            onclick="
+              openCallModal(
+                '${id}'
+              )
+            ">
+            Panggil
+          </button>
+
+        </div>
+      `;
+    });
+
+  }
+);
+
+/* OPEN MODAL */
+window.openCallModal =
+async function(userId){
+
+  selectedUserId =
+    userId;
+
+  callModal.style.display =
+    "flex";
+
+  callerSelect.innerHTML =
+    `
+    <option value="">
+      Pilih Users
+    </option>
+    `;
+
+  const snap =
+    await get(
+      ref(db,"Users")
+    );
+
+  if(!snap.exists())
+    return;
+
+  snap.forEach(child=>{
+
+    const id = child.key;
+    const u = child.val();
+
+    callerSelect.innerHTML += `
+      <option value="${id}">
+        ${u.nama}
+      </option>
+    `;
+  });
+
+};
+
+/* PILIH USERS */
+callerSelect.onchange =
+async function(){
+
+  const id =
+    this.value;
+
+  if(!id)
+    return;
+
+  const snap =
+    await get(
+      ref(
+        db,
+        "Users/" + id
+      )
+    );
+
+  if(!snap.exists())
+    return;
+
+  selectedCaller =
+    snap.val();
+
+  previewFoto.src =
+    selectedCaller.foto?.[0]
+    || "default.png";
+
+  previewNama.innerText =
+    "Nama : " +
+    (selectedCaller.nama || "");
+
+  previewNegara.innerText =
+    "Negara : " +
+    (selectedCaller.negara || "");
+
+  previewLevel.innerText =
+    "Level : " +
+    (selectedCaller.level || "");
+
+  previewUmur.innerText =
+    "Umur : " +
+    (selectedCaller.umur || "");
+
+};
+
+/* KIRIM */
+window.kirimPanggilan =
+async function(){
+
+  if(
+    !selectedUserId
+  ){
+    return;
+  }
+
+  if(
+    !selectedCaller
+  ){
+    alert(
+      "Pilih Users terlebih dahulu."
+    );
+    return;
+  }
+
+await set(
+  ref(
+    db,
+    "IncomingCall/" +
+    selectedUserId
+  ),
+  {
+    aktif: true,
+
+    foto:
+      selectedCaller.foto?.[0]
+      || "",
+
+    nama:
+      selectedCaller.nama
+      || "",
+
+    negara:
+      selectedCaller.negara
+      || "",
+
+    negaraLogo:
+      selectedCaller.negaraLogo
+      || "",
+
+    level:
+      selectedCaller.level
+      || "",
+
+    umur:
+      selectedCaller.umur
+      || "",
+
+    bonus:
+      bonusInput.value,
+
+    pesan:
+      "Sedang menghubungi Anda...",
+
+    // TAMBAHAN
+    targetId:
+      selectedCaller.uid
+      || "",
+
+    callerUid:
+      selectedCaller.uid
+      || ""
+  }
+);
+
+
+  
+
+  alert(
+    "Panggilan berhasil dikirim."
+  );
+
+  callModal.style.display =
+    "none";
+};
+
+callModal.onclick =
+e=>{
+
+  if(
+    e.target === callModal
+  ){
+    callModal.style.display =
+      "none";
+  }
+
+};
+
+</script>
+
+</body>
+</html>
