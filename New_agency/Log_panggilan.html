@@ -107,6 +107,95 @@ body{
 .profil{
   cursor:pointer;
 }
+
+.disabled{
+  pointer-events: none;
+}
+
+
+
+
+
+
+
+
+
+
+/* FAKE LOG LOADING */
+.logpakew232-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 10px;
+  border-bottom:1px solid #f1f1f1;
+}
+
+.logpakew232-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.logpakew232-profil{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:#eee;
+  animation:logpakew232Shimmer 1.2s infinite;
+}
+
+.logpakew232-info{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.logpakew232-name{
+  width:110px;
+  height:14px;
+  border-radius:20px;
+  background:#eee;
+  animation:logpakew232Shimmer 1.2s infinite;
+}
+
+.logpakew232-status{
+  width:80px;
+  height:11px;
+  border-radius:20px;
+  background:#eee;
+  animation:logpakew232Shimmer 1.2s infinite;
+}
+
+.logpakew232-date{
+  width:100px;
+  height:10px;
+  border-radius:20px;
+  background:#eee;
+  animation:logpakew232Shimmer 1.2s infinite;
+}
+
+.logpakew232-icon{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:#eee;
+  animation:logpakew232Shimmer 1.2s infinite;
+}
+
+@keyframes logpakew232Shimmer{
+  0%{
+    opacity:.5;
+  }
+  50%{
+    opacity:1;
+  }
+  100%{
+    opacity:.5;
+  }
+}
+
+
+
 </style>
 </head>
 
@@ -123,6 +212,10 @@ body{
 </div>
 
 <div class="list" id="logList"></div>
+
+
+
+
 
 <script type="module">
 
@@ -181,7 +274,31 @@ updateLastActive("Log_panggilan");
 
 
 
+function showFakeLog(){
 
+  const list = document.getElementById("logList");
+
+  list.innerHTML = "";
+
+  for(let i=0;i<6;i++){
+
+    list.innerHTML += `
+      <div class="logpakew232-item">
+        <div class="logpakew232-left">
+          <div class="logpakew232-profil"></div>
+
+          <div class="logpakew232-info">
+            <div class="logpakew232-name"></div>
+            <div class="logpakew232-status"></div>
+            <div class="logpakew232-date"></div>
+          </div>
+        </div>
+
+        <div class="logpakew232-icon"></div>
+      </div>
+    `;
+  }
+}
 
 
 /* LOAD LOG */
@@ -203,18 +320,25 @@ async function loadLog(){
     // 🔥 FILTER PER USER
     if(d.userId !== login.userId) return;
 
+const isSelf =
+  !d.targetId &&
+  d.userId === login.userId;
+
+
     const div = document.createElement("div");
     div.className = "item";
 
     div.innerHTML = `
       <div class="left">
-        <img
-  class="profil"
+<img
+  class="profil ${isSelf ? 'disabled' : ''}"
   src="${d.profil || 'default.png'}"
+  ${!isSelf ? `
   onclick="
     event.stopPropagation();
     window.location.href='Profil_users.html?id=${d.targetId}'
   "
+  ` : ''}
 >
 
         <div class="info">
@@ -225,14 +349,15 @@ async function loadLog(){
       </div>
 
 <img
-  class="icon"
+  class="icon ${isSelf ? 'disabled' : ''}"
   src="${d.logo}"
+  ${!isSelf ? `
   onclick="
     event.stopPropagation();
     window.location.href='Panggilan_video.html?id=${d.targetId}'
   "
->   
-   
+  ` : ''}
+>
    
       `;
 
@@ -242,9 +367,10 @@ async function loadLog(){
 
 }
 
+showFakeLog();
+
 loadLog();
 markAllRead();
-
 
 
 
