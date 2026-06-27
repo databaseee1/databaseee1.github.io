@@ -125,6 +125,7 @@ body{
   cursor:pointer;
   font-size:13px;
   color: #fff;
+  border-radius: 5px;
 }
 
 .menu-box button:hover{
@@ -308,11 +309,31 @@ let allUsers = {};
 /* LOAD USERS */
 async function loadUsers(){
 
+
+  // Tampilkan cache dulu
+  const cache = localStorage.getItem("users2_cache");
+
+  if(cache){
+    allUsers = JSON.parse(cache);
+    renderUsers(allUsers);
+  }
+
+
+
   const snap = await get(ref(db,"users2"));
 
   if(!snap.exists()) return;
 
   allUsers = snap.val();
+
+
+ // Simpan ke cache
+  localStorage.setItem(
+    "users2_cache",
+    JSON.stringify(allUsers)
+  );
+
+
   renderUsers(allUsers);
 }
 
@@ -365,7 +386,24 @@ div.id = "card-" + id;
         </div>
       </div>
 
-      <div class="small">Saldo: ${u.saldo}</div>
+   <div class="small">
+  Saldo: Rp ${Number(u.saldo || 0).toLocaleString('id-ID')}
+</div>
+
+<div
+  class="small"
+  style="
+    background:#e53935;
+    color:#fff;
+    padding:4px 8px;
+    border-radius:6px;
+    display:inline-block;
+    margin-top:4px;
+  "
+>
+  Jumlah Tagihan: Rp ${Number(u.jumlahTagihan || 0).toLocaleString('id-ID')}
+</div>
+
       <div class="small">Level: ${u.level}</div>
       <div class="small">WA: ${u.wa || "-"}</div>
 
@@ -531,6 +569,18 @@ onValue(ref(db, "users2"), (snap) => {
 
   const data = snap.val();
   if (!data) return;
+
+
+allUsers = data;
+
+localStorage.setItem(
+  "users2_cache",
+  JSON.stringify(data)
+);
+
+
+
+
 
   Object.keys(data).forEach(id => {
 
