@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Update Inbox Time</title>
+
+<style>
+body{
+  font-family:Arial;
+  background:#f5f5f5;
+  margin:0;
+  padding:20px;
+}
+
+.user-card{
+  background:#fff;
+  border-radius:12px;
+  padding:15px;
+  margin-bottom:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+button{
+  background:#ff4d4f;
+  color:#fff;
+  border:none;
+  padding:10px 18px;
+  border-radius:8px;
+  cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<h2>Update Inbox Users</h2>
+
+<div id="list"></div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  get,
+  onValue,
+  update
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL:
+    "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+};
+
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const list = document.getElementById("list");
+
+onValue(ref(db,"users2"), (snap)=>{
+
+  list.innerHTML = "";
+
+  snap.forEach(child=>{
+
+    const u = child.val();
+
+    const nama = u.nama || "Tanpa Nama";
+    const email = u.email || "";
+
+    list.innerHTML += `
+      <div class="user-card">
+        <div>
+          <div><b>${nama}</b></div>
+          <div>${email}</div>
+        </div>
+
+        <button
+          data-email="${email}">
+          Update
+        </button>
+      </div>
+    `;
+  });
+
+  document.querySelectorAll("button")
+    .forEach(btn=>{
+
+      btn.onclick = ()=>{
+        updateInbox(btn.dataset.email);
+      };
+
+    });
+
+});
+
+async function updateInbox(email){
+
+  const myKey = email
+    .toLowerCase()
+    .replace(/@/g,"_")
+    .replace(/\./g,"_");
+
+  const chatsSnap = await get(ref(db,"chats"));
+
+  const updates = {};
+  const now = Date.now();
+
+  let total = 0;
+
+  chatsSnap.forEach(chat=>{
+
+    const chatId = chat.key;
+
+    if(!chatId.startsWith(myKey + "_")){
+      return;
+    }
+
+    const history =
+      chat.val().history || {};
+
+    const msgs =
+      Object.entries(history);
+
+    if(!msgs.length) return;
+
+    let lastKey = null;
+    let lastTime = 0;
+
+    msgs.forEach(([k,m])=>{
+
+      const t = m.time || 0;
+
+      if(t > lastTime){
+        lastTime = t;
+        lastKey = k;
+      }
+
+    });
+
+    if(lastKey){
+
+const randomMinutes =
+  Math.floor(Math.random() * 11); // 0 - 10 menit
+
+const randomTime =
+  Date.now() - (randomMinutes * 60 * 1000);
+
+updates[
+  `chats/${chatId}/history/${lastKey}/time`
+] = randomTime;
+
+      total++;
+    }
+
+  });
+
+  if(total){
+
+    await update(ref(db), updates);
+
+    alert(
+      total +
+      " inbox berhasil diupdate."
+    );
+
+  }else{
+
+    alert("User ini tidak punya chat.");
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
