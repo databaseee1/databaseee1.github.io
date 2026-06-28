@@ -432,6 +432,20 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
+
+/* ================= LOGIN CHECK ================= */
+const adminData = JSON.parse(localStorage.getItem("adminLogin") || "{}");
+
+if (!adminData || adminData.role !== "admin") {
+  window.location.replace("Login_admin.html");
+}
+
+
+
+
+
+
+
 /* ========================= */
 
 const listTesti =
