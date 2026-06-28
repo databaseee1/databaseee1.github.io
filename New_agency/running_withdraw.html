@@ -1,0 +1,434 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Admin Running Withdraw</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#f5f6fa;
+  padding:20px;
+}
+
+.container{
+  max-width:700px;
+  margin:auto;
+}
+
+.card{
+  background:#fff;
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 5px 20px rgba(0,0,0,.08);
+  margin-bottom:20px;
+}
+
+h2{
+  margin-bottom:15px;
+  color:#222;
+}
+
+input,
+select,
+button{
+  width:100%;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid #ddd;
+  margin-bottom:12px;
+  font-size:15px;
+}
+
+button{
+  background:#0d6efd;
+  color:#fff;
+  border:none;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:hover{
+  opacity:.9;
+}
+
+.list-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px;
+  border-bottom:1px solid #eee;
+}
+
+.list-item:last-child{
+  border-bottom:none;
+}
+
+.list-item img{
+  width:55px;
+  height:55px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+.info{
+  flex:1;
+}
+
+.nama{
+  font-weight:bold;
+  color:#222;
+  font-size:15px;
+}
+
+.detail{
+  color:#666;
+  font-size:13px;
+  margin-top:2px;
+}
+
+.nominal{
+  color:#0d9b5d;
+  font-weight:bold;
+  margin-top:4px;
+}
+
+.action{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.btn-edit{
+  background:#ffc107;
+  color:#000;
+}
+
+.btn-hapus{
+  background:#dc3545;
+}
+
+@media(max-width:600px){
+  body{
+    padding:12px;
+  }
+
+  .card{
+    padding:14px;
+  }
+
+  .list-item img{
+    width:48px;
+    height:48px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="card">
+
+    <h2>Tambah Running Withdraw</h2>
+
+    <input id="nama" placeholder="Nama">
+
+    <input id="foto"
+      placeholder="Link Foto">
+
+    <input id="withdraw"
+      type="number"
+      placeholder="Nominal Withdraw">
+
+    <input id="aplikasi"
+      value="Tigo"
+      placeholder="Aplikasi">
+
+    <select id="level">
+      <option>VIP 1</option>
+      <option>VIP 2</option>
+      <option>VIP 3</option>
+      <option>VIP 4</option>
+      <option>VIP 5</option>
+    </select>
+
+    <button id="btnSimpan">
+      Tambah Data
+    </button>
+
+  </div>
+
+  <div class="card">
+
+    <h2>Daftar Running Withdraw</h2>
+
+    <div id="list"></div>
+
+  </div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  push,
+  set,
+  onValue,
+  remove,
+  get,
+  update
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+/* FIREBASE */
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const runningRef =
+  ref(db,"runningWithdraw");
+
+/* TAMBAH DATA */
+btnSimpan.onclick = async ()=>{
+
+  const nama =
+    document.getElementById("nama")
+    .value.trim();
+
+  const foto =
+    document.getElementById("foto")
+    .value.trim();
+
+  const withdraw =
+    Number(
+      document.getElementById("withdraw")
+      .value
+    );
+
+  const aplikasi =
+    document.getElementById("aplikasi")
+    .value.trim();
+
+  const level =
+    document.getElementById("level")
+    .value;
+
+  if(!nama){
+    alert("Nama wajib diisi");
+    return;
+  }
+
+  const newRef =
+    push(runningRef);
+
+  await set(newRef,{
+    nama,
+    foto,
+    withdraw,
+    aplikasi,
+    level,
+    createdAt:Date.now()
+  });
+
+  document.getElementById("nama").value="";
+  document.getElementById("foto").value="";
+  document.getElementById("withdraw").value="";
+
+  alert("Berhasil ditambahkan.");
+};
+
+/* TAMPILKAN DATA */
+onValue(runningRef,(snap)=>{
+
+  const list =
+    document.getElementById("list");
+
+  list.innerHTML = "";
+
+  if(!snap.exists()) return;
+
+  const data = snap.val();
+
+  Object.keys(data)
+    .sort((a,b)=>
+      (data[b].createdAt||0) -
+      (data[a].createdAt||0)
+    )
+    .forEach(id=>{
+
+      const d = data[id];
+
+      const div =
+        document.createElement("div");
+
+      div.className =
+        "list-item";
+
+      div.innerHTML = `
+        <img src="${
+          d.foto ||
+          "https://i.pravatar.cc/150"
+        }">
+
+        <div class="info">
+
+          <div class="nama">
+            ${d.nama}
+          </div>
+
+          <div class="detail">
+            ${d.level}
+            •
+            ${d.aplikasi}
+          </div>
+
+          <div class="nominal">
+            Withdraw Rp
+            ${Number(
+              d.withdraw||0
+            ).toLocaleString("id-ID")}
+          </div>
+
+        </div>
+
+        <div class="action">
+
+          <button
+            class="btn-edit"
+            onclick="editRunning('${id}')">
+            Edit
+          </button>
+
+          <button
+            class="btn-hapus"
+            onclick="hapusRunning('${id}')">
+            Hapus
+          </button>
+
+        </div>
+      `;
+
+      list.appendChild(div);
+    });
+
+});
+
+/* HAPUS */
+window.hapusRunning =
+async function(id){
+
+  if(
+    !confirm(
+      "Hapus data ini?"
+    )
+  ) return;
+
+  await remove(
+    ref(
+      db,
+      "runningWithdraw/"+id
+    )
+  );
+};
+
+/* EDIT */
+window.editRunning =
+async function(id){
+
+  const snap =
+    await get(
+      ref(
+        db,
+        "runningWithdraw/"+id
+      )
+    );
+
+  if(!snap.exists()) return;
+
+  const d = snap.val();
+
+  document.getElementById("nama")
+    .value = d.nama || "";
+
+  document.getElementById("foto")
+    .value = d.foto || "";
+
+  document.getElementById("withdraw")
+    .value = d.withdraw || "";
+
+  document.getElementById("aplikasi")
+    .value = d.aplikasi || "";
+
+  document.getElementById("level")
+    .value = d.level || "VIP 1";
+
+  btnSimpan.innerText =
+    "Update Data";
+
+  btnSimpan.onclick =
+  async ()=>{
+
+    await update(
+      ref(
+        db,
+        "runningWithdraw/"+id
+      ),
+      {
+        nama:
+          document
+          .getElementById("nama")
+          .value,
+
+        foto:
+          document
+          .getElementById("foto")
+          .value,
+
+        withdraw:
+          Number(
+            document
+            .getElementById("withdraw")
+            .value
+          ),
+
+        aplikasi:
+          document
+          .getElementById("aplikasi")
+          .value,
+
+        level:
+          document
+          .getElementById("level")
+          .value
+      }
+    );
+
+    location.reload();
+  };
+};
+
+</script>
+
+</body>
+</html>
+

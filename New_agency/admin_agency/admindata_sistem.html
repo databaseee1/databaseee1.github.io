@@ -1,0 +1,359 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Admin Data Sistem</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+  background:#f4f6f9;
+  padding:20px;
+}
+
+.card{
+  max-width:700px;
+  margin:auto;
+  background:#fff;
+  border-radius:20px;
+  padding:25px;
+  box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.top{
+  text-align:center;
+  margin-bottom:25px;
+}
+
+.top img{
+  width:110px;
+  height:110px;
+  border-radius:50%;
+  object-fit:cover;
+  border:4px solid #f1f1f1;
+}
+
+.top h2{
+  margin-top:15px;
+  font-size:22px;
+}
+
+.top p{
+  color:#666;
+  margin-top:5px;
+}
+
+.item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 0;
+  border-bottom:1px solid #eee;
+  gap:15px;
+}
+
+.label{
+  font-weight:600;
+  color:#555;
+}
+
+.value{
+  text-align:right;
+  word-break:break-word;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  outline:none;
+}
+
+button{
+  width:100%;
+  margin-top:20px;
+  padding:14px;
+  border:none;
+  background:#198754;
+  color:#fff;
+  border-radius:12px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+button:hover{
+  opacity:.9;
+}
+
+#formEdit{
+  display:none;
+  margin-top:30px;
+}
+
+.status{
+  background:#198754;
+  color:#fff;
+  padding:4px 10px;
+  border-radius:20px;
+}
+
+@media(max-width:600px){
+  .item{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .value{
+    text-align:left;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+
+<div class="top">
+  <img id="profil">
+  <h2 id="nama"></h2>
+  <p id="level"></p>
+</div>
+
+<div class="item">
+  <div class="label">Email</div>
+  <div class="value" id="email"></div>
+</div>
+
+<div class="item">
+  <div class="label">Lokasi</div>
+  <div class="value" id="lokasi"></div>
+</div>
+
+<div class="item">
+  <div class="label">Negara</div>
+  <div class="value" id="negara"></div>
+</div>
+
+<div class="item">
+  <div class="label">Role</div>
+  <div class="value" id="role"></div>
+</div>
+
+<div class="item">
+  <div class="label">Status</div>
+  <div class="value">
+    <span class="status" id="status"></span>
+  </div>
+</div>
+
+<div class="item">
+  <div class="label">Password</div>
+  <div class="value" id="password"></div>
+</div>
+
+<div class="item">
+  <div class="label">Tanggal Bergabung</div>
+  <div class="value" id="tanggal"></div>
+</div>
+
+<button onclick="showEdit()">
+  <i class="fa fa-pen"></i> Edit Data
+</button>
+
+<div id="formEdit">
+
+<input id="editNama" placeholder="Nama">
+<br><br>
+
+<input id="editEmail" placeholder="Email">
+<br><br>
+
+<input id="editLokasi" placeholder="Lokasi">
+<br><br>
+
+<input id="editPassword" placeholder="Password">
+<br><br>
+
+<input id="editProfil" placeholder="Link Foto Profil">
+
+<button onclick="simpan()">
+  Simpan Perubahan
+</button>
+
+</div>
+
+</div>
+
+<script type="module">
+
+import {
+initializeApp
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+import {
+getDatabase,
+ref,
+get,
+update
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+
+
+
+const firebaseConfig = {
+  apiKey:
+  "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+
+  authDomain:
+  "users-96dc5.firebaseapp.com",
+
+  databaseURL:
+  "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+  projectId:
+  "users-96dc5",
+
+  storageBucket:
+  "users-96dc5.appspot.com",
+
+  messagingSenderId:
+  "483322415863",
+
+  appId:
+  "1:483322415863:web:1397a8f2e808e66ad9e1f2"
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+
+
+
+
+/* ================= CEK LOGIN ================= */
+
+const adminLogin = JSON.parse(
+  localStorage.getItem("adminLogin")
+);
+
+if (!adminLogin || adminLogin.role !== "admin") {
+  window.location.replace("Login_admin.html");
+}
+
+/* ================= DATA ADMIN ================= */
+
+const adminRef = ref(db, "admins/LOGADMIN");
+
+let adminData = {};
+
+async function loadData() {
+  try {
+    const snap = await get(adminRef);
+
+    if (!snap.exists()) return;
+
+    adminData = snap.val();
+
+    document.getElementById("profil").src =
+      adminData.profil || "";
+
+    document.getElementById("nama").innerText =
+      adminData.nama || "-";
+
+    document.getElementById("level").innerText =
+      adminData.level || "-";
+
+    document.getElementById("email").innerText =
+      adminData.email || "-";
+
+    document.getElementById("lokasi").innerText =
+      adminData.lokasi || "-";
+
+    document.getElementById("negara").innerText =
+      adminData.negara || "-";
+
+    document.getElementById("role").innerText =
+      adminData.role || "-";
+
+    document.getElementById("status").innerText =
+      adminData.status || "-";
+
+    document.getElementById("tanggal").innerText =
+      adminData.tanggalBergabung || "-";
+
+    document.getElementById("password").innerText =
+      "•".repeat(
+        String(adminData.password || "").length
+      );
+
+  } catch (err) {
+    console.error("Gagal memuat data admin:", err);
+  }
+}
+
+
+
+window.showEdit = function(){
+
+  formEdit.style.display = "block";
+
+  editNama.value = adminData.nama || "";
+  editEmail.value = adminData.email || "";
+  editLokasi.value = adminData.lokasi || "";
+  editPassword.value = adminData.password || "";
+  editProfil.value = adminData.profil || "";
+
+};
+
+window.simpan = async function(){
+
+  await update(adminRef,{
+    nama:editNama.value,
+    email:editEmail.value,
+    lokasi:editLokasi.value,
+    password:editPassword.value,
+    profil:editProfil.value
+  });
+
+  alert("Data berhasil disimpan.");
+
+  formEdit.style.display = "none";
+
+  loadData();
+
+};
+
+loadData();
+
+</script>
+
+</body>
+</html>
+

@@ -1899,6 +1899,209 @@ select option{
   background:#f5a623;
   border-radius:20px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#runningContainer{
+  position:relative;
+  width:100%;
+  height:42px;
+  overflow:hidden;
+  margin-top:8px;
+
+}
+
+.running-card{
+  position:absolute;
+  top:4px;
+  left:0;
+
+  display:flex;
+  align-items:center;
+  gap:8px;
+
+  background:rgba(20,20,20,.92);
+  color:#fff;
+  padding:5px 12px;
+  border-radius:30px;
+
+  white-space:nowrap;
+  font-size:11px;
+  line-height:1;
+
+  box-shadow:0 3px 12px rgba(0,0,0,.2);
+
+  will-change:transform;
+  backface-visibility:hidden;
+  transform:translate3d(110vw,0,0);
+
+  animation:jalan 15s linear forwards;
+}
+
+.running-card img{
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  object-fit:cover;
+  flex-shrink:0;
+}
+
+.running-info{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.running-name{
+  font-size:11px;
+  font-weight:700;
+}
+
+.running-level{
+  font-size:10px;
+  color:#cfcfcf;
+}
+
+.running-wd{
+  font-size:10px;
+  color:#4ade80;
+  font-weight:700;
+}
+
+@keyframes jalan{
+  from{
+    transform:translate3d(110vw,0,0);
+  }
+  to{
+    transform:translate3d(-130%,0,0);
+  }
+}
+
+@media (max-width:600px){
+
+  #runningContainer{
+    height:38px;
+  }
+
+  .running-card{
+    padding:4px 10px;
+    gap:6px;
+    font-size:10px;
+    background: #7418b1;
+  }
+
+  .running-card img{
+    width:22px;
+    height:22px;
+  }
+
+  .running-name{
+    font-size:10px;
+  }
+
+  .running-level,
+  .running-wd{
+    font-size:9px;
+  }
+}
+
+
+
+
+#popuprunning37234Overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:999999;
+  padding:20px;
+}
+
+#popuprunning37234Box{
+  width:100%;
+  max-width:320px;
+  background:#fff;
+  border-radius:22px;
+  padding:22px;
+  position:relative;
+  box-shadow:0 20px 50px rgba(0,0,0,.25);
+  animation:popuprunning37234Show .25s;
+}
+
+@keyframes popuprunning37234Show{
+  from{
+    transform:scale(.9);
+    opacity:0;
+  }
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+#popuprunning37234Close{
+  position:absolute;
+  right:15px;
+  top:12px;
+  font-size:20px;
+  cursor:pointer;
+}
+
+#popuprunning37234Foto{
+  width:72px;
+  height:72px;
+  border-radius:50%;
+  object-fit:cover;
+  display:block;
+  margin:auto;
+}
+
+#popuprunning37234Nama{
+  text-align:center;
+  font-weight:700;
+  font-size:18px;
+  margin-top:12px;
+  margin-bottom:18px;
+}
+
+.popuprunning37234Item{
+  display:flex;
+  justify-content:space-between;
+  padding:10px 0;
+  border-bottom:1px solid #f1f1f1;
+  font-size:14px;
+}
+
+.popuprunning37234Item:last-child{
+  border-bottom:none;
+}
+
+
+
+.keteranganBonus{
+  margin-top:12px;
+  padding:10px 14px;
+  background:#fff8e1;
+  border:1px solid #ffe082;
+  border-radius:10px;
+  color:#8a6d3b;
+  font-size:12px;
+  line-height:1.5;
+}
+
 </style>
 </head>
 
@@ -2260,12 +2463,44 @@ Informasi di atas digunakan sebagai kontak resmi perusahaan untuk keperluan pend
   <div class="inner">
     <div id="Logoaplikasi32_list">Loading</div>
   </div>
+
+
+
+
+
+
+  
 </div>
 
 
 
 
-<div style="display:flex; justify-content:center; gap:10px; background:#d8d8d8; margin-top:30px;">
+
+<div id="runningContainer"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div style="display:flex; justify-content:center; gap:10px; background:#d8d8d8; margin-top:10px;">
   <!-- 🔹 Tombol Lihat Total Data -->
   <button onclick="window.location.href='https://www.tigohost.asia/analisist%20data%20host/'" 
     style="
@@ -2655,6 +2890,240 @@ const app = initializeApp(firebaseConfig);
 
 const db = getDatabase(app);
 const realtimeDb = db;
+
+
+
+
+
+
+const wdRunningRef = ref(db, "runningWithdraw");
+const WD_RUNNING_STORAGE = "wd_running_storage_v1";
+
+let runningData = [];
+let runningIndex = 0;
+let runningTimer = null;
+let runningStarted = false;
+
+function formatRupiah(n) {
+  return "IDR " +
+    Number(n || 0).toLocaleString("id-ID");
+}
+
+function formatDollar(n) {
+  const kurs = 14000;
+  return "$" +
+    (Number(n || 0) / kurs).toFixed(2);
+}
+
+function shuffleArray(arr) {
+  const a = [...arr];
+
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(
+      Math.random() * (i + 1)
+    );
+
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+
+  return a;
+}
+
+function showRunning(data) {
+
+  const container =
+    document.getElementById(
+      "runningContainer"
+    );
+
+  if (!container) return;
+
+  const box =
+    document.createElement("div");
+
+  box.className = "running-card";
+box.style.transform =
+  "translate3d(110vw,0,0)";
+  box.innerHTML = `
+    <img src="${
+      data.foto ||
+      "https://i.imgur.com/6VBx3io.png"
+    }">
+
+    <div class="running-info">
+      <span class="running-name">
+        ${data.nama || "Pengguna"}
+      </span>
+
+      <span class="running-level">
+        ${data.level || "VIP 1"}
+      </span>
+
+      <span class="running-wd">
+        • Menarik
+        ${formatRupiah(data.withdraw)}
+        (${formatDollar(data.withdraw)})
+      </span>
+    </div>
+  `;
+
+  container.appendChild(box);
+
+  box.style.cursor = "pointer";
+
+box.addEventListener("click", () => {
+  openPopuprunning37234(data);
+});
+
+  box.addEventListener(
+    "animationend",
+    () => box.remove()
+  );
+}
+
+function startRunningLoop() {
+
+  if (!runningData.length) return;
+
+  if (runningTimer) {
+    clearInterval(runningTimer);
+  }
+
+  // hanya tampil pertama sekali
+  if (!runningStarted) {
+
+    if (runningIndex >= runningData.length) {
+      runningData = shuffleArray(runningData);
+      runningIndex = 0;
+    }
+
+    showRunning(
+      runningData[runningIndex]
+    );
+
+    runningIndex++;
+    runningStarted = true;
+  }
+
+  runningTimer = setInterval(() => {
+
+    if (runningIndex >= runningData.length) {
+      runningData = shuffleArray(runningData);
+      runningIndex = 0;
+    }
+
+    showRunning(
+      runningData[runningIndex]
+    );
+
+    runningIndex++;
+
+  }, 6000);
+}
+
+/* =====================
+   TAMPILKAN CACHE DULU
+===================== */
+
+try {
+
+  const cache =
+    sessionStorage.getItem(
+      WD_RUNNING_STORAGE
+    );
+
+  if (cache) {
+
+    const data =
+      JSON.parse(cache);
+
+    if (
+      Array.isArray(data) &&
+      data.length
+    ) {
+
+      runningData =
+        shuffleArray(data);
+
+      runningIndex = 0;
+
+      startRunningLoop();
+    }
+  }
+
+} catch (e) {
+  console.log(
+    "Cache error:",
+    e
+  );
+}
+
+/* =====================
+   FIREBASE REALTIME
+===================== */
+
+onValue(wdRunningRef, (snap) => {
+
+  if (!snap.exists()) return;
+
+  const dataList = Object.values(snap.val())
+    .sort(
+      (a, b) =>
+        (b.createdAt || 0) -
+        (a.createdAt || 0)
+    )
+    .slice(0, 50);
+
+  try {
+    sessionStorage.setItem(
+      WD_RUNNING_STORAGE,
+      JSON.stringify(dataList)
+    );
+  } catch (e) {}
+
+const old =
+  JSON.stringify(
+    [...runningData].sort(
+      (a,b)=>
+        (a.createdAt||0) -
+        (b.createdAt||0)
+    )
+  );
+
+const newer =
+  JSON.stringify(
+    [...dataList].sort(
+      (a,b)=>
+        (a.createdAt||0) -
+        (b.createdAt||0)
+    )
+  );
+
+if (old === newer) return;
+
+  runningData =
+    shuffleArray(dataList);
+
+  runningIndex = 0;
+
+  startRunningLoop();
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -4290,6 +4759,87 @@ new MutationObserver(() => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+function openPopuprunning37234(data){
+
+  document.getElementById(
+    "popuprunning37234Foto"
+  ).src =
+    data.foto ||
+    "https://i.imgur.com/6VBx3io.png";
+
+  document.getElementById(
+    "popuprunning37234Nama"
+  ).textContent =
+    data.nama || "-";
+
+  document.getElementById(
+    "popuprunning37234Aplikasi"
+  ).textContent =
+    data.aplikasi || "-";
+
+  document.getElementById(
+    "popuprunning37234Level"
+  ).textContent =
+    data.level || "-";
+
+  document.getElementById(
+    "popuprunning37234Withdraw"
+  ).textContent =
+    formatRupiah(data.withdraw);
+
+  document.getElementById(
+    "popuprunning37234Dollar"
+  ).textContent =
+    formatDollar(data.withdraw);
+
+  document.getElementById(
+    "popuprunning37234Tanggal"
+  ).textContent =
+    new Date(
+      data.createdAt || Date.now()
+    ).toLocaleString("id-ID");
+
+  document.getElementById(
+    "popuprunning37234Overlay"
+  ).style.display = "flex";
+}
+
+const popuprunning37234Overlay =
+  document.getElementById(
+    "popuprunning37234Overlay"
+  );
+
+document
+.getElementById(
+  "popuprunning37234Close"
+)
+.addEventListener("click", () => {
+  popuprunning37234Overlay.style.display =
+    "none";
+});
+
+popuprunning37234Overlay
+.addEventListener("click", (e) => {
+  if (
+    e.target ===
+    popuprunning37234Overlay
+  ) {
+    popuprunning37234Overlay.style.display =
+      "none";
+  }
+});
+
 </script>
 
 
@@ -4420,6 +4970,81 @@ new MutationObserver(() => {
   </div>
 
 </div>
+
+
+
+
+
+
+
+
+
+
+<div id="popuprunning37234Overlay">
+  <div id="popuprunning37234Box">
+
+    <div id="popuprunning37234Close">
+      ✕
+    </div>
+
+    <img
+      id="popuprunning37234Foto"
+      src=""
+    >
+
+    <div id="popuprunning37234Nama">
+      -
+    </div>
+
+    <div class="popuprunning37234Item">
+      <span>Aplikasi</span>
+      <span id="popuprunning37234Aplikasi">
+        -
+      </span>
+    </div>
+
+    <div class="popuprunning37234Item">
+      <span>Kemanusiaan</span>
+      <span id="popuprunning37234Level">
+        -
+      </span>
+    </div>
+
+    <div class="popuprunning37234Item">
+      <span>Withdraw</span>
+      <span id="popuprunning37234Withdraw">
+        -
+      </span>
+    </div>
+
+    <div class="popuprunning37234Item">
+      <span>Dolar</span>
+      <span id="popuprunning37234Dollar">
+        -
+      </span>
+    </div>
+
+    <div class="popuprunning37234Item">
+      <span>Waktu</span>
+      <span id="popuprunning37234Tanggal">
+        -
+      </span>
+    </div>
+<div class="keteranganBonus">
+  Data akan direset pada saat pembaruan sistem dalam periode tertentu.<br>
+  Tambahan bonus akan diberikan setelah periode berakhir sesuai ketentuan yang berlaku.
+</div>
+  </div>
+
+  
+</div>
+
+
+
+
+
+
+
 
 
 

@@ -1,7 +1,6 @@
-<button onclick="buatDummyTesti()">
-  Buat 10 Testimoni Dummy
+<button id="buatDummy">
+  Buat Data Dummy
 </button>
-
 
 
 <script type="module">
@@ -23,108 +22,69 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-window.buatDummyTesti = async function () {
-  const data = [
-    {
-      nama: "Andi Saputra",
-      profil: "https://i.pravatar.cc/150?img=1",
-      rating: 5,
-      commentar: "Pelayanan sangat baik dan tim support selalu membantu saya.",
-      balasan: "Terima kasih atas dukungannya. Kami akan terus meningkatkan kualitas layanan kami."
-    },
-    {
-      nama: "Rizki Maulana",
-      profil: "https://i.pravatar.cc/150?img=2",
-      rating: 5,
-      commentar: "Sangat merekomendasikan Tigohost Indonesia bagi yang ingin menjadi agency.",
-      balasan: "Terima kasih telah bergabung bersama Tigohost Indonesia. Semoga sukses selalu."
-    },
-    {
-      nama: "Putri Amelia",
-      profil: "https://i.pravatar.cc/150?img=3",
-      rating: 5,
-      commentar: "Komisi dan bonusnya sangat menarik, saya puas bergabung.",
-      balasan: "Terima kasih atas ulasan positif Anda. Kami akan terus memberikan layanan terbaik."
-    },
-    {
-      nama: "Budi Santoso",
-      profil: "https://i.pravatar.cc/150?img=4",
-      rating: 4,
-      commentar: "Support cepat dan proses pendaftaran cukup mudah.",
-      balasan: "Terima kasih atas masukannya. Kami akan terus meningkatkan sistem kami."
-    },
-    {
-      nama: "Siti Nurhaliza",
-      profil: "https://i.pravatar.cc/150?img=5",
-      rating: 5,
-      commentar: "Aplikasinya sangat membantu untuk mengembangkan agency.",
-      balasan: "Kami senang dapat membantu perkembangan agency Anda."
-    },
-    {
-      nama: "Rina Lestari",
-      profil: "https://i.pravatar.cc/150?img=6",
-      rating: 5,
-      commentar: "Tim admin profesional dan selalu responsif.",
-      balasan: "Terima kasih atas kepercayaan Anda kepada Tigohost Indonesia."
-    },
-    {
-      nama: "Dedi Kurniawan",
-      profil: "https://i.pravatar.cc/150?img=7",
-      rating: 5,
-      commentar: "Pengalaman terbaik yang pernah saya rasakan di platform agency.",
-      balasan: "Kami akan terus berinovasi agar pengalaman Anda semakin baik."
-    },
-    {
-      nama: "Rahma Aulia",
-      profil: "https://i.pravatar.cc/150?img=8",
-      rating: 5,
-      commentar: "Pendaftaran mudah dan bimbingannya lengkap.",
-      balasan: "Terima kasih. Tim kami selalu siap membantu kapan pun dibutuhkan."
-    },
-    {
-      nama: "Agus Setiawan",
-      profil: "https://i.pravatar.cc/150?img=9",
-      rating: 4,
-      commentar: "Sudah beberapa bulan bergabung dan hasilnya memuaskan.",
-      balasan: "Kami senang mendengar pengalaman positif Anda bersama kami."
-    },
-    {
-      nama: "Maya Sari",
-      profil: "https://i.pravatar.cc/150?img=10",
-      rating: 5,
-      commentar: "Sangat cocok bagi yang ingin membangun bisnis digital.",
-      balasan: "Terima kasih atas ulasan Anda. Semoga sukses bersama Tigohost Indonesia."
-    }
-  ];
+const namaList = [
+  "Rizky",
+  "Budi",
+  "Andi",
+  "Siti",
+  "Maya",
+  "Putri",
+  "Rahmat",
+  "Agus",
+  "Doni",
+  "Rina"
+];
 
-  const logoTigo =
-    "https://res.cloudinary.com/ISI-DENGAN-LOGO-TIGO.png";
+const fotoList = [
+  "https://i.pravatar.cc/150?img=1",
+  "https://i.pravatar.cc/150?img=2",
+  "https://i.pravatar.cc/150?img=3",
+  "https://i.pravatar.cc/150?img=4",
+  "https://i.pravatar.cc/150?img=5",
+  "https://i.pravatar.cc/150?img=6"
+];
 
-  for (const item of data) {
-    const newRef = push(ref(db, "testimoni"));
+const levelList = [
+  "VIP 1",
+  "VIP 2",
+  "VIP 3",
+  "VIP 4",
+  "VIP 5"
+];
 
-    await set(newRef, {
-      nama: item.nama,
-      profil: item.profil,
-      rating: item.rating,
-      commentar: item.commentar,
+const nominalList = [
+  50000,
+  100000,
+  150000,
+  250000,
+  500000,
+  1000000
+];
 
-      penggunaAplikasi: "Tigo",
-      gambarAplikasi: logoTigo,
-      tanggalCommentar: new Date().toLocaleDateString("id-ID", {
-        day: "2-digit",
-        month: "long",
-        year: "numeric"
-      }),
+document.getElementById("buatDummy").onclick = async () => {
 
-      balasanNama: "Tigo Developer",
-      balasanFoto: logoTigo,
-      balasanCommentar: item.balasan,
+  const data = {
+    nama:
+      namaList[Math.floor(Math.random() * namaList.length)],
 
-      timestamp: Date.now()
-    });
-  }
+    foto:
+      fotoList[Math.floor(Math.random() * fotoList.length)],
 
-  alert("10 testimoni dummy berhasil dibuat.");
+    withdraw:
+      nominalList[Math.floor(Math.random() * nominalList.length)],
+
+    aplikasi: "Tigo",
+
+    level:
+      levelList[Math.floor(Math.random() * levelList.length)],
+
+    createdAt: Date.now()
+  };
+
+  const newRef = push(ref(db, "runningWithdraw"));
+
+  await set(newRef, data);
+
+  alert("Data dummy berhasil dibuat.");
 };
 </script>
