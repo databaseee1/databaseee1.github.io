@@ -382,7 +382,28 @@ div.id = "card-" + id;
   </div>
 
 </div>
-          <div class="small">${u.email || ""}</div>
+          
+
+
+
+
+<div style="display:flex;justify-content:space-between;align-items:center;">
+  <div class="small">${u.email || ""}</div>
+
+  <div style="
+    background:#ff5b8a;
+    color:#fff;
+    padding:2px 8px;
+    border-radius:12px;
+    font-size:12px;
+    font-weight:600;
+  ">
+    ${u.umur || "-"} tahun
+  </div>
+</div>
+
+
+
         </div>
       </div>
 
@@ -401,7 +422,7 @@ div.id = "card-" + id;
     margin-top:4px;
   "
 >
-  Jumlah Tagihan: Rp ${Number(u.jumlahTagihan || 0).toLocaleString('id-ID')}
+  Tagihan: Rp ${Number(u.jumlahTagihan || 0).toLocaleString('id-ID')}
 </div>
 
       <div class="small">Level: ${u.level}</div>
