@@ -9,47 +9,52 @@
     <priority>1.0</priority>
   </url>
 
-  <!-- ABOUT -->
+  <!-- PT AGENCY TIGOHOST INDONESIA HOME -->
   <url>
-    <loc>https://www.tigohost.asia/about.html</loc>
+    <loc>https://www.tigohost.asia/PT-AGENCY-TIGOHOST-INDONESIA/</loc>
     <lastmod>2026-06-29</lastmod>
-    <changefreq>monthly</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
-
-
+  <!-- ABOUT -->
+  <url>
+    <loc>https://www.tigohost.asia/PT-AGENCY-TIGOHOST-INDONESIA/about.html</loc>
+    <lastmod>2026-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 
   <!-- FAQ -->
   <url>
-    <loc>https://www.tigohost.asia/faq.html</loc>
+    <loc>https://www.tigohost.asia/PT-AGENCY-TIGOHOST-INDONESIA/faq.html</loc>
     <lastmod>2026-06-29</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
 
   <!-- CONTACT -->
   <url>
-    <loc>https://www.tigohost.asia/contact.html</loc>
+    <loc>https://www.tigohost.asia/PT-AGENCY-TIGOHOST-INDONESIA/contact.html</loc>
+    <lastmod>2026-06-29</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- TERMS -->
+  <url>
+    <loc>https://www.tigohost.asia/PT-AGENCY-TIGOHOST-INDONESIA/terms.html</loc>
     <lastmod>2026-06-29</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
 
-  <!-- TERMS -->
-  <url>
-    <loc>https://www.tigohost.asia/terms.html</loc>
-    <lastmod>2026-06-29</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.4</priority>
-  </url>
-
   <!-- PRIVACY -->
   <url>
-    <loc>https://www.tigohost.asia/privacy.html</loc>
+    <loc>https://www.tigohost.asia/PT-AGENCY-TIGOHOST-INDONESIA/privacy.html</loc>
     <lastmod>2026-06-29</lastmod>
     <changefreq>yearly</changefreq>
-    <priority>0.4</priority>
+    <priority>0.5</priority>
   </url>
 
 </urlset>
