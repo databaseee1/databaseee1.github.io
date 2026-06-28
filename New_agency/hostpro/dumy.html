@@ -1,81 +1,130 @@
-<input
-  id="targetUserId"
-  placeholder="Masukkan User ID users2"
->
-
-<button onclick="buatDummyCall()">
-  Buat Dummy Panggilan
+<button onclick="buatDummyTesti()">
+  Buat 10 Testimoni Dummy
 </button>
 
+
+
 <script type="module">
-
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
   getDatabase,
   ref,
+  push,
   set
-}
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
   authDomain: "users-96dc5.firebaseapp.com",
   databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "users-96dc5",
-  storageBucket: "users-96dc5.appspot.com",
-  messagingSenderId: "483322415863",
-  appId: "1:483322415863:web:1397a8f2e808e66ad9e1f2"
 };
 
-const app =
-initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-const db =
-getDatabase(app);
+window.buatDummyTesti = async function () {
+  const data = [
+    {
+      nama: "Andi Saputra",
+      profil: "https://i.pravatar.cc/150?img=1",
+      rating: 5,
+      commentar: "Pelayanan sangat baik dan tim support selalu membantu saya.",
+      balasan: "Terima kasih atas dukungannya. Kami akan terus meningkatkan kualitas layanan kami."
+    },
+    {
+      nama: "Rizki Maulana",
+      profil: "https://i.pravatar.cc/150?img=2",
+      rating: 5,
+      commentar: "Sangat merekomendasikan Tigohost Indonesia bagi yang ingin menjadi agency.",
+      balasan: "Terima kasih telah bergabung bersama Tigohost Indonesia. Semoga sukses selalu."
+    },
+    {
+      nama: "Putri Amelia",
+      profil: "https://i.pravatar.cc/150?img=3",
+      rating: 5,
+      commentar: "Komisi dan bonusnya sangat menarik, saya puas bergabung.",
+      balasan: "Terima kasih atas ulasan positif Anda. Kami akan terus memberikan layanan terbaik."
+    },
+    {
+      nama: "Budi Santoso",
+      profil: "https://i.pravatar.cc/150?img=4",
+      rating: 4,
+      commentar: "Support cepat dan proses pendaftaran cukup mudah.",
+      balasan: "Terima kasih atas masukannya. Kami akan terus meningkatkan sistem kami."
+    },
+    {
+      nama: "Siti Nurhaliza",
+      profil: "https://i.pravatar.cc/150?img=5",
+      rating: 5,
+      commentar: "Aplikasinya sangat membantu untuk mengembangkan agency.",
+      balasan: "Kami senang dapat membantu perkembangan agency Anda."
+    },
+    {
+      nama: "Rina Lestari",
+      profil: "https://i.pravatar.cc/150?img=6",
+      rating: 5,
+      commentar: "Tim admin profesional dan selalu responsif.",
+      balasan: "Terima kasih atas kepercayaan Anda kepada Tigohost Indonesia."
+    },
+    {
+      nama: "Dedi Kurniawan",
+      profil: "https://i.pravatar.cc/150?img=7",
+      rating: 5,
+      commentar: "Pengalaman terbaik yang pernah saya rasakan di platform agency.",
+      balasan: "Kami akan terus berinovasi agar pengalaman Anda semakin baik."
+    },
+    {
+      nama: "Rahma Aulia",
+      profil: "https://i.pravatar.cc/150?img=8",
+      rating: 5,
+      commentar: "Pendaftaran mudah dan bimbingannya lengkap.",
+      balasan: "Terima kasih. Tim kami selalu siap membantu kapan pun dibutuhkan."
+    },
+    {
+      nama: "Agus Setiawan",
+      profil: "https://i.pravatar.cc/150?img=9",
+      rating: 4,
+      commentar: "Sudah beberapa bulan bergabung dan hasilnya memuaskan.",
+      balasan: "Kami senang mendengar pengalaman positif Anda bersama kami."
+    },
+    {
+      nama: "Maya Sari",
+      profil: "https://i.pravatar.cc/150?img=10",
+      rating: 5,
+      commentar: "Sangat cocok bagi yang ingin membangun bisnis digital.",
+      balasan: "Terima kasih atas ulasan Anda. Semoga sukses bersama Tigohost Indonesia."
+    }
+  ];
 
-window.buatDummyCall =
-async function(){
+  const logoTigo =
+    "https://res.cloudinary.com/ISI-DENGAN-LOGO-TIGO.png";
 
-  const targetUserId =
-    document
-      .getElementById("targetUserId")
-      .value
-      .trim();
+  for (const item of data) {
+    const newRef = push(ref(db, "testimoni"));
 
-  if(!targetUserId){
-    alert("Masukkan User ID.");
-    return;
+    await set(newRef, {
+      nama: item.nama,
+      profil: item.profil,
+      rating: item.rating,
+      commentar: item.commentar,
+
+      penggunaAplikasi: "Tigo",
+      gambarAplikasi: logoTigo,
+      tanggalCommentar: new Date().toLocaleDateString("id-ID", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
+      }),
+
+      balasanNama: "Tigo Developer",
+      balasanFoto: logoTigo,
+      balasanCommentar: item.balasan,
+
+      timestamp: Date.now()
+    });
   }
 
-  await set(
-    ref(
-      db,
-      "IncomingCall/" +
-      targetUserId
-    ),
-    {
-      aktif: true,
-
-      foto:
-      "https://i.pinimg.com/736x/8e/20/89/8e20893c0a3ce653e3764b660fe9afd8.jpg",
-
-      nama:
-      "Aulia",
-
-      negara:
-      "Indonesia",
-
-      negaraLogo:
-      "indonesialogo.png",
-
-      pesan:
-      "Sedang menghubungi Anda..."
-    }
-  );
-
-  alert("Dummy panggilan berhasil dibuat.");
+  alert("10 testimoni dummy berhasil dibuat.");
 };
-
 </script>
