@@ -9,6 +9,14 @@
     <priority>1.0</priority>
   </url>
 
+  <!-- EVENT PAGE (NEW) -->
+  <url>
+    <loc>https://www.tigohost.asia/Event.html</loc>
+    <lastmod>2026-06-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
   <!-- OLD PAGES -->
   <url>
     <loc>https://www.tigohost.asia/topup-coin/</loc>
