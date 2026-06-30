@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Topup Panel</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:#f6f6ff;
+}
+
+.header{
+    background:#6a00ff;
+    color:#fff;
+    padding:14px;
+    font-weight:bold;
+    font-size:16px;
+}
+
+.container{
+    padding:12px;
+}
+
+/* CARD */
+.card{
+    background:#fff;
+    border-radius:12px;
+    padding:12px;
+    margin-bottom:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.06);
+}
+
+.title{
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+.row{
+    display:flex;
+    justify-content:space-between;
+    font-size:13px;
+    margin:3px 0;
+}
+
+/* BUTTON */
+.btn{
+    padding:6px 10px;
+    border:none;
+    border-radius:8px;
+    font-size:12px;
+    cursor:pointer;
+    margin-right:5px;
+}
+
+.approve{ background:#28a745; color:#fff; }
+.reject{ background:#dc3545; color:#fff; }
+.pending{ background:#ffc107; color:#000; }
+
+.actions{
+    margin-top:10px;
+}
+
+.badge{
+    padding:4px 8px;
+    border-radius:20px;
+    font-size:12px;
+}
+
+.Menunggu{ background:#fff3cd; }
+.Sukses{ background:#d4edda; }
+.Gagal{ background:#f8d7da; }
+.Pending{ background:#cce5ff; }
+</style>
+</head>
+
+<body>
+
+<div class="header">
+Admin Topup Panel
+</div>
+
+<div class="container" id="list">
+Loading...
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getDatabase,
+  ref,
+  get,
+  update,
+  set
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+/* FIREBASE */
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const listEl = document.getElementById("list");
+
+loadAll();
+
+/* ===================== LOAD ALL ===================== */
+async function loadAll(){
+    const snap = await get(ref(db, "History_Topup"));
+
+    if(!snap.exists()){
+        listEl.innerHTML = "Tidak ada data";
+        return;
+    }
+
+    const data = snap.val();
+    let html = "";
+
+    Object.entries(data).forEach(([usersid, userData]) => {
+
+        Object.entries(userData).forEach(([id, item]) => {
+
+            html += `
+            <div class="card">
+                <div class="title">${item.aplikasi} - ${item.paket}</div>
+
+                <div class="row">
+                    <span>User ID</span>
+                    <span>${item.usersid}</span>
+                </div>
+
+                <div class="row">
+                    <span>Email</span>
+                    <span>${item.email}</span>
+                </div>
+
+                <div class="row">
+                    <span>Total</span>
+                    <span>Rp ${item.total}</span>
+                </div>
+
+                <div class="row">
+                    <span>Status</span>
+                    <span class="badge ${item.status}">${item.status}</span>
+                </div>
+
+                <div class="actions">
+
+                    <button class="btn approve"
+                        onclick="approve('${usersid}','${id}')">
+                        Approve
+                    </button>
+
+                    <button class="btn reject"
+                        onclick="reject('${usersid}','${id}')">
+                        Tolak
+                    </button>
+
+                    <button class="btn pending"
+                        onclick="pending('${usersid}','${id}')">
+                        Pending
+                    </button>
+
+                </div>
+            </div>
+            `;
+        });
+    });
+
+    listEl.innerHTML = html;
+}
+
+/* ===================== APPROVE ===================== */
+window.approve = async (uid, id) => {
+
+    await update(ref(db, `History_Topup/${uid}/${id}`), {
+        status: "Sukses"
+    });
+
+    sendNotif(uid,
+        "Pembelian coin anda telah berhasil di Approve, periksa coin pada akun yang sesuai dengan data pembelian anda.."
+    );
+
+    loadAll();
+};
+
+/* ===================== REJECT ===================== */
+window.reject = async (uid, id) => {
+
+    await update(ref(db, `History_Topup/${uid}/${id}`), {
+        status: "Gagal"
+    });
+
+    sendNotif(uid,
+        "Pembelian coin anda telah di Tolak, silakan cek kembali data pembayaran anda."
+    );
+
+    loadAll();
+};
+
+/* ===================== PENDING ===================== */
+window.pending = async (uid, id) => {
+
+    await update(ref(db, `History_Topup/${uid}/${id}`), {
+        status: "Menunggu Pembayaran"
+    });
+
+    sendNotif(uid,
+        "Pembayaran anda sedang Pending untuk diproses, mohon bersabar~"
+    );
+
+    loadAll();
+};
+
+/* ===================== NOTIF ===================== */
+async function sendNotif(uid, message){
+
+    const notifRef = ref(db, `notifications/${uid}/${Date.now()}`);
+
+    await set(notifRef, {
+        message: message,
+        read: false,
+        createdAt: Date.now()
+    });
+}
+
+</script>
+
+</body>
+</html>

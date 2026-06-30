@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notifikasi Saya</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:#f7f5ff;
+}
+
+/* HEADER */
+.header{
+    background:#6a00ff;
+    color:#fff;
+    padding:14px;
+    font-weight:bold;
+    font-size:16px;
+    position:sticky;
+    top:0;
+}
+
+/* LIST */
+.container{
+    padding:12px;
+}
+
+/* CARD NOTIF */
+.card{
+    background:#fff;
+    border-radius:12px;
+    padding:12px;
+    margin-bottom:10px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.05);
+    cursor:pointer;
+    border-left:4px solid transparent;
+}
+
+.card.unread{
+    border-left:4px solid #6a00ff;
+    background:#faf8ff;
+}
+
+.title{
+    font-weight:bold;
+    font-size:13px;
+    margin-bottom:4px;
+}
+
+.msg{
+    font-size:12px;
+    color:#444;
+    line-height:1.4;
+}
+
+.time{
+    font-size:11px;
+    color:#999;
+    margin-top:6px;
+}
+
+/* EMPTY */
+.empty{
+    text-align:center;
+    margin-top:50px;
+    color:#777;
+}
+
+/* POPUP */
+.popup{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.4);
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+
+.popup-content{
+    background:#fff;
+    width:90%;
+    border-radius:12px;
+    padding:14px;
+}
+
+.close{
+    float:right;
+    cursor:pointer;
+    font-weight:bold;
+    color:#6a00ff;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+Notifikasi Saya
+</div>
+
+<div class="container" id="list">
+Loading...
+</div>
+
+<!-- POPUP -->
+<div class="popup" id="popup">
+    <div class="popup-content">
+        <span class="close" id="close">✕</span>
+        <div id="popupText"></div>
+    </div>
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+    getDatabase,
+    ref,
+    get,
+    update
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+/* FIREBASE */
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const uid = localStorage.getItem("usersid");
+
+const listEl = document.getElementById("list");
+const popup = document.getElementById("popup");
+const popupText = document.getElementById("popupText");
+
+/* CLOSE POPUP */
+document.getElementById("close").onclick = () => {
+    popup.style.display = "none";
+};
+
+if(!uid){
+    listEl.innerHTML = `<div class="empty">User tidak ditemukan</div>`;
+}else{
+    loadNotif();
+}
+
+/* ===================== LOAD NOTIF ===================== */
+async function loadNotif(){
+
+    const snap = await get(ref(db, `notifications/${uid}`));
+
+    if(!snap.exists()){
+        listEl.innerHTML = `<div class="empty">Belum ada notifikasi</div>`;
+        return;
+    }
+
+    const data = snap.val();
+
+    let html = "";
+
+    Object.entries(data).reverse().forEach(([id, item]) => {
+
+        html += `
+        <div class="card ${item.read ? "" : "unread"}"
+            onclick="openNotif('${id}', \`${item.message}\`)">
+
+            <div class="title">Layanan Pelanggan</div>
+
+            <div class="msg">
+                ${item.message}
+            </div>
+
+            <div class="time">
+                ${new Date(item.createdAt).toLocaleString()}
+            </div>
+        </div>
+        `;
+    });
+
+    listEl.innerHTML = html;
+}
+
+/* ===================== OPEN NOTIF ===================== */
+window.openNotif = async (id, msg) => {
+
+    popupText.innerHTML = `
+        <h4 style="color:#6a00ff">Pesan</h4>
+        <p style="line-height:1.6">${msg}</p>
+    `;
+
+    popup.style.display = "flex";
+
+    /* mark as read */
+    await update(ref(db, `notifications/${uid}/${id}`), {
+        read: true
+    });
+
+    loadNotif();
+};
+
+</script>
+
+</body>
+</html>

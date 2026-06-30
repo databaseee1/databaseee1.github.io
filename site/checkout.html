@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout Top Up Coin</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Poppins,sans-serif;
+}
+
+body{
+    background:#f5f5f5;
+    color:#222;
+}
+
+.header{
+    background:#5c27fe;
+    color:#fff;
+    padding:18px;
+    font-size:20px;
+    font-weight:700;
+    position:sticky;
+    top:0;
+    z-index:999;
+}
+
+.container{
+    max-width:800px;
+    margin:auto;
+    padding:20px;
+}
+
+.card{
+    background:#fff;
+    border-radius:18px;
+    padding:18px;
+    margin-bottom:18px;
+    box-shadow:0 2px 15px rgba(0,0,0,.05);
+}
+
+.title{
+    font-size:17px;
+    font-weight:700;
+    margin-bottom:15px;
+}
+
+.product{
+    display:flex;
+    gap:15px;
+    align-items:center;
+}
+
+.product img{
+    width:70px;
+    height:70px;
+    border-radius:18px;
+    object-fit:cover;
+}
+
+.product h3{
+    font-size:18px;
+    color:#5c27fe;
+}
+
+.product p{
+    color:#666;
+    margin-top:5px;
+}
+
+.coin-item{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.coin-item img{
+    width:55px;
+    height:55px;
+    border-radius:15px;
+}
+
+.coin-name{
+    font-weight:700;
+}
+
+.coin-price{
+    color:#5c27fe;
+    font-weight:700;
+    margin-top:4px;
+}
+
+.payment{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.pay{
+    border:1px solid #ddd;
+    border-radius:14px;
+    padding:14px;
+    cursor:pointer;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.pay.active{
+    border:2px solid #5c27fe;
+    background:#f6f2ff;
+}
+
+.summary{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:12px;
+}
+
+.total{
+    font-size:22px;
+    font-weight:700;
+    color:#5c27fe;
+}
+
+.btn{
+    width:100%;
+    border:none;
+    background:#5c27fe;
+    color:#fff;
+    padding:16px;
+    border-radius:15px;
+    font-size:17px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.btn:hover{
+    opacity:.9;
+}
+
+.loading{
+    text-align:center;
+    padding:50px;
+}
+
+@media(max-width:600px){
+
+    .container{
+        padding:12px;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+/* POPUP CONFIRM */
+
+.confirm-overlay{
+
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+
+background:rgba(0,0,0,.45);
+
+display:none;
+align-items:center;
+justify-content:center;
+
+z-index:9999;
+
+}
+
+
+.confirm-box{
+
+width:90%;
+max-width:420px;
+
+background:white;
+
+border-radius:20px;
+
+padding:20px;
+
+animation:.25s ease;
+
+}
+
+
+.confirm-title{
+
+font-size:18px;
+font-weight:700;
+color:#5c27fe;
+
+margin-bottom:15px;
+
+}
+
+
+.confirm-item{
+
+background:#f7f7f7;
+
+padding:12px;
+
+border-radius:12px;
+
+margin-bottom:10px;
+
+font-size:14px;
+
+}
+
+
+.confirm-buttons{
+
+display:flex;
+
+gap:10px;
+
+margin-top:20px;
+
+}
+
+
+.confirm-buttons button{
+
+flex:1;
+
+padding:12px;
+
+border:none;
+
+border-radius:12px;
+
+font-weight:700;
+
+cursor:pointer;
+
+}
+
+
+.cancel{
+
+background:#eee;
+
+}
+
+
+.confirm{
+
+background:#5c27fe;
+
+color:white;
+
+}
+
+
+
+
+
+
+
+.toast{
+
+position:fixed;
+
+bottom:25px;
+
+left:50%;
+
+transform:translateX(-50%) translateY(100px);
+
+background:#222;
+
+color:white;
+
+padding:14px 20px;
+
+border-radius:14px;
+
+font-size:14px;
+
+z-index:99999;
+
+opacity:0;
+
+transition:.3s;
+
+box-shadow:0 10px 30px #0003;
+
+max-width:90%;
+
+text-align:center;
+
+}
+
+
+.toast.show{
+
+opacity:1;
+
+transform:
+translateX(-50%) translateY(0);
+
+}
+
+
+.toast.success{
+
+background:#16a34a;
+
+}
+
+
+.toast.error{
+
+background:#dc2626;
+
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    Checkout
+</div>
+
+<div class="container" id="content">
+
+    <div class="loading">
+        Memuat data...
+    </div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getDatabase,
+    ref,
+    get,
+    set,
+    push
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+
+
+const usersid =
+localStorage.getItem("usersid");
+
+async function loadUserData(){
+
+    if(!usersid) return;
+
+
+    const snap =
+    await get(
+        ref(db, `users_topup/${usersid}`)
+    );
+
+
+    if(!snap.exists()) return;
+
+
+    const user = snap.val();
+
+
+    const wa =
+    document.getElementById("whatsapp");
+
+    const email =
+    document.getElementById("email");
+
+
+    if(wa){
+        wa.value =
+        user.whatsapp || "";
+    }
+
+
+    if(email){
+        email.value =
+        user.email || "";
+    }
+
+}
+
+
+
+
+
+const params = new URLSearchParams(window.location.search);
+
+const namaApp = params.get("app");
+const itemDipilih = params.get("item");
+
+const content =
+document.getElementById("content");
+
+
+
+let pembayaranDipilih = null;
+
+
+async function loadCheckout(){
+
+    if(!namaApp || !itemDipilih){
+        content.innerHTML = `
+        <div class="card">
+            Data checkout tidak ditemukan.
+        </div>`;
+        return;
+    }
+
+    try {
+
+        const snap = await get(
+            ref(db, `Top-up_aplikasi/${namaApp}`)
+        );
+
+        if(!snap.exists()){
+            content.innerHTML = `
+            <div class="card">
+                Data aplikasi tidak ditemukan.
+            </div>`;
+            return;
+        }
+
+        const appData = snap.val();
+        const item = appData[itemDipilih];
+
+
+if(Number(item.stock || 0) <= 0){
+
+content.innerHTML = `
+
+<div class="card">
+
+<h3 style="color:red">
+Stock Coin Habis
+</h3>
+
+<p>
+Paket ini sudah habis.
+Silakan pilih paket lain.
+</p>
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+
+
+        if(!item){
+            content.innerHTML = `
+            <div class="card">
+                Paket coin tidak ditemukan.
+            </div>`;
+            return;
+        }
+
+        content.innerHTML = `
+            <div class="card">
+
+                <div class="title">
+                    Produk Aplikasi
+                </div>
+
+                <div class="product">
+
+                    <img
+                    src="${appData.logoAplikasi || ''}"
+                    onerror="this.src='https://via.placeholder.com/100'">
+
+                    <div>
+                        <h3>${appData.nama || namaApp}</h3>
+                        <p>${appData.deskripsi || ''}</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="title">
+                    Nominal Coin
+                </div>
+
+                <div class="coin-item">
+
+                    <img
+                    src="${item.logoCoin || ''}"
+                    onerror="this.src='https://via.placeholder.com/60'">
+
+                    <div>
+
+                        <div class="coin-name">
+                            ${item.namaCoin || '-'}
+                        </div>
+
+                        <div class="coin-price">
+                            Rp ${Number(
+                                item.hargaPromo || 0
+                            ).toLocaleString('id-ID')}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+<div class="card">
+
+    <div class="title">
+        Data Akun
+    </div>
+
+
+    <div style="
+        display:flex;
+        flex-direction:column;
+        gap:15px;
+    ">
+
+
+    <div>
+        <label style="
+        font-size:13px;
+        color:#666;
+        ">
+        ID AKUN ${appData.nama || namaApp}
+        </label>
+
+        <input
+        id="idAkun"
+        required
+        placeholder="Masukkan ID akun aplikasi"
+        style="
+        width:100%;
+        padding:14px;
+        border-radius:12px;
+        border:1px solid #ddd;
+        outline:none;
+        ">
+    </div>
+
+
+ <div>
+    <label style="
+    font-size:13px;
+    color:#666;
+    ">
+    Nama akun aplikasi
+    </label>
+
+    <input
+    id="namaAkun"
+    required
+    placeholder="Nama akun"
+    style="
+    width:100%;
+    padding:14px;
+    border-radius:12px;
+    border:1px solid #ddd;
+    outline:none;
+    ">
+</div>
+
+
+       <div>
+        <label style="
+        font-size:13px;
+        color:#666;
+        ">
+        Email
+        </label>
+
+        <input
+        id="email"
+        readonly
+        style="
+        width:100%;
+        padding:14px;
+        border-radius:12px;
+        border:1px solid #ddd;
+        background:#f3f3f3;
+        ">
+    </div>
+
+
+
+
+    <div>
+        <label style="
+        font-size:13px;
+        color:#666;
+        ">
+        Whatsapp
+        </label>
+
+        <input
+        id="whatsapp"
+        readonly
+        style="
+        width:100%;
+        padding:14px;
+        border-radius:12px;
+        border:1px solid #ddd;
+        background:#f3f3f3;
+        ">
+    </div>
+
+
+
+ 
+
+
+ 
+
+
+    </div>
+
+
+</div>
+
+
+
+
+            <div class="card">
+
+                <div class="title">
+                    Metode Pembayaran
+                </div>
+
+             <div class="payment" id="paymentList">
+
+    <div style="
+        text-align:center;
+        color:#888;
+        padding:20px;
+    ">
+        Memuat metode pembayaran...
+    </div>
+
+</div>
+
+
+            </div>
+
+            <div class="card">
+
+                <div class="title">
+                    Ringkasan Pembayaran
+                </div>
+
+                <div class="summary">
+                    <span>Harga Produk</span>
+                    <span>
+                        Rp ${Number(
+                            item.hargaAwal || 0
+                        ).toLocaleString('id-ID')}
+                    </span>
+                </div>
+
+                <div class="summary">
+                    <span>Diskon</span>
+                    <span style="color:red">
+                        - Rp ${Number(
+                            (item.hargaAwal || 0) -
+                            (item.hargaPromo || 0)
+                        ).toLocaleString('id-ID')}
+                    </span>
+                </div>
+
+                <hr style="margin:15px 0">
+
+                <div class="summary total">
+                    <span>Total</span>
+                    <span>
+                        Rp ${Number(
+                            item.hargaPromo || 0
+                        ).toLocaleString('id-ID')}
+                    </span>
+                </div>
+
+            </div>
+
+            <button
+            class="btn"
+            id="bayarBtn">
+                Bayar Sekarang
+            </button>
+        `;
+
+await loadPayment();
+
+
+
+
+
+document
+.getElementById("bayarBtn")
+.onclick = async ()=>{
+
+
+const idAkun =
+document.getElementById("idAkun").value;
+
+
+const namaAkun =
+document.getElementById("namaAkun").value.trim();
+
+
+
+if(!namaAkun){
+
+showNotif(
+"Nama akun aplikasi wajib diisi"
+);
+
+return;
+
+}
+
+
+
+if(!idAkun){
+
+showNotif(
+"ID akun wajib diisi"
+);
+
+return;
+
+}
+
+
+
+if(!pembayaranDipilih){
+
+showNotif(
+"Silakan pilih metode pembayaran"
+);
+
+return;
+
+}
+
+
+
+
+const bankSnap =
+await get(
+ref(
+db,
+`BANK_EWALLET/${pembayaranDipilih}`
+)
+);
+
+
+
+if(!bankSnap.exists()){
+
+showNotif(
+"Metode pembayaran tidak ditemukan"
+);
+
+return;
+
+}
+
+
+
+const bank = bankSnap.val();
+
+
+
+if(bank.maintenance){
+
+showNotif(
+`${bank.namaBank} sedang maintenance. Silakan pilih metode lain`
+);
+
+return;
+
+}
+
+
+
+
+/* =====================
+   POPUP KONFIRMASI
+===================== */
+
+
+document
+.getElementById("confirmText")
+.innerHTML = `
+
+
+<div style="
+font-size:15px;
+line-height:1.8;
+">
+
+
+Anda akan melakukan pembelian coin
+
+
+<br>
+
+
+<b style="color:#5c27fe">
+${appData.nama}
+</b>
+
+
+<br><br>
+
+
+ID Akun :
+
+<b>
+${idAkun}
+</b>
+
+
+<br>
+
+
+Nama Akun :
+
+<b>
+${namaAkun}
+</b>
+
+
+<br>
+
+
+Paket :
+
+<b>
+${item.namaCoin}
+</b>
+
+
+<br>
+
+
+Nominal :
+
+<b style="color:#5c27fe">
+
+Rp ${Number(
+item.hargaPromo
+).toLocaleString('id-ID')}
+
+</b>
+
+
+<br>
+
+
+Pembayaran :
+
+<b>
+${bank.namaBank}
+</b>
+
+
+<hr style="
+margin:15px 0;
+border:none;
+border-top:1px solid #eee;
+">
+
+
+<div style="
+font-size:13px;
+color:#666;
+line-height:1.6;
+">
+
+
+Mohon periksa kembali identitas akun Anda.
+
+Pastikan ID akun aplikasi dan nama akun sudah benar.
+
+Setelah pembayaran berhasil diverifikasi,
+coin akan otomatis diproses dan dikirim ke akun sesuai data yang diberikan.
+
+
+</div>
+
+
+</div>
+
+
+`;
+
+
+
+document
+.getElementById("confirmPopup")
+.style.display="flex";
+
+
+
+
+
+/* BATAL */
+
+document
+.getElementById("cancelConfirm")
+.onclick=()=>{
+
+
+document
+.getElementById("confirmPopup")
+.style.display="none";
+
+
+};
+
+
+
+
+
+/* KONFIRMASI */
+
+document
+.getElementById("yesConfirm")
+.onclick=async()=>{
+
+
+const pembayaran = {
+
+
+idAkun:idAkun,
+
+
+namaAkun:namaAkun,
+
+
+whatsapp:
+document.getElementById("whatsapp").value,
+
+
+email:
+document.getElementById("email").value,
+
+
+usersid:
+localStorage.getItem("usersid"),
+
+
+aplikasi:
+appData.nama,
+
+
+logoAplikasi:
+appData.logoAplikasi,
+
+
+paket:
+item.namaCoin,
+
+
+total:
+item.hargaPromo,
+
+
+metode:
+pembayaranDipilih,
+
+
+namaBank:
+bank.namaBank,
+
+
+noRekening:
+bank.noRekening,
+
+
+namaRekening:
+bank.namaRekening,
+
+
+logoBank:
+bank.logo,
+
+
+
+status:
+"Menunggu Pembayaran",
+
+
+
+read:true,
+
+
+dibuatPada:
+Date.now()
+
+};
+
+
+
+
+
+// =====================
+// SIMPAN HISTORY USER
+// =====================
+
+const uid = localStorage.getItem("usersid");
+
+if (uid) {
+
+    await push(
+        ref(db, `History_Topup/${uid}`),
+        pembayaran
+    );
+
+    // =====================
+    // KIRIM NOTIFIKASI KE USER SENDIRI
+    // =====================
+
+    await set(
+        ref(db, `notifications/${uid}/${Date.now()}`),
+        {
+            message: `Hai ${pembayaran.email}, kamu melakukan top up aplikasi ${appData.nama}, yuk bayar agar sistem dapat menambahkan coin ke akun kamu sesuai jumlah yaitu ${item.namaCoin}`,
+            read: false,
+            createdAt: Date.now(),
+            type: "topup_info",
+            
+        }
+    );
+}
+
+
+
+sessionStorage.setItem(
+"dataPembayaran",
+JSON.stringify(pembayaran)
+);
+
+
+
+location.href =
+"Halaman_Pembayaran.html";
+
+
+};
+
+
+};
+
+} catch(err){
+
+    console.error(err);
+
+    content.innerHTML = `
+    <div class="card">
+        Terjadi kesalahan saat memuat data.
+    </div>`;
+}
+}
+
+loadCheckout();
+loadUserData();
+
+
+async function loadPayment(){
+
+    const paymentList =
+    document.getElementById("paymentList");
+
+    const snap =
+    await get(
+        ref(db,"BANK_EWALLET")
+    );
+
+    if(!snap.exists()){
+        paymentList.innerHTML =
+        "Tidak ada metode pembayaran.";
+        return;
+    }
+
+    paymentList.innerHTML = "";
+
+    snap.forEach(child=>{
+
+        const data = child.val();
+
+        paymentList.innerHTML += `
+            <div
+                class="pay"
+                data-bank="${child.key}">
+
+                <div style="
+                    display:flex;
+                    align-items:center;
+                    gap:12px;
+                ">
+
+                    <img
+src="${data.logo || ''}"
+                        style="
+                            width:40px;
+                            height:40px;
+                            object-fit:contain;
+                        ">
+
+                    <div>
+
+                        <div>
+                            ${data.namaBank}
+                        </div>
+
+                        ${
+                            data.maintenance
+                            ?
+                            `<small style="
+                                color:red
+                            ">
+                                Sedang Maintenance
+                            </small>`
+                            :
+                            `<small style="
+                                color:#888
+                            ">
+                                Tersedia
+                            </small>`
+                        }
+
+                    </div>
+
+                </div>
+
+                <span>›</span>
+
+            </div>
+        `;
+    });
+
+  document
+.querySelectorAll(".pay")
+.forEach(el=>{
+
+    el.onclick = ()=>{
+
+        document
+        .querySelectorAll(".pay")
+        .forEach(x=>
+            x.classList.remove("active")
+        );
+
+        el.classList.add("active");
+
+        pembayaranDipilih = el.dataset.bank;
+
+        console.log("Dipilih:", pembayaranDipilih);
+    };
+});
+
+
+}
+
+
+
+
+
+function showNotif(text,type="error"){
+
+
+const toast =
+document.getElementById("toast");
+
+
+toast.innerHTML=text;
+
+
+toast.className =
+"toast show "+type;
+
+
+
+setTimeout(()=>{
+
+
+toast.className="toast";
+
+
+},3000);
+
+
+
+}
+</script>
+
+
+
+
+
+
+<div 
+class="confirm-overlay"
+id="confirmPopup">
+
+
+<div class="confirm-box">
+
+
+<div class="confirm-title">
+Konfirmasi Pembelian
+</div>
+
+
+<div class="confirm-item" id="confirmText">
+
+</div>
+
+
+
+<div class="confirm-buttons">
+
+
+<button 
+class="cancel"
+id="cancelConfirm">
+
+Batalkan
+
+</button>
+
+
+<button 
+class="confirm"
+id="yesConfirm">
+
+Konfirmasi
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<div id="toast" class="toast"></div>
+</body>
+</html>

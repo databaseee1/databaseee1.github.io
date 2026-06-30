@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Admin Menu Top Up</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+background:#f5f5f5;
+}
+
+.header{
+background:#5c27fe;
+color:white;
+padding:20px;
+font-size:22px;
+font-weight:bold;
+}
+
+.container{
+max-width:1000px;
+margin:auto;
+padding:20px;
+}
+
+
+.card{
+background:white;
+border-radius:20px;
+padding:20px;
+margin-bottom:20px;
+box-shadow:0 2px 15px #0001;
+}
+
+
+.app-head{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.app-head img{
+width:70px;
+height:70px;
+border-radius:18px;
+object-fit:cover;
+}
+
+
+.btn{
+border:0;
+background:#5c27fe;
+color:white;
+padding:10px 18px;
+border-radius:12px;
+cursor:pointer;
+margin-top:10px;
+}
+
+
+.btn.red{
+background:#ff3d3d;
+}
+
+
+.item{
+border:1px solid #eee;
+padding:15px;
+border-radius:15px;
+margin-top:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+
+.item img{
+width:55px;
+height:55px;
+border-radius:15px;
+object-fit:cover;
+}
+
+
+.left{
+display:flex;
+gap:15px;
+align-items:center;
+}
+
+
+.fab{
+position:fixed;
+right:20px;
+bottom:20px;
+width:60px;
+height:60px;
+border:0;
+border-radius:50%;
+background:#5c27fe;
+color:white;
+font-size:30px;
+cursor:pointer;
+}
+
+
+/* MODAL */
+
+
+.modal{
+position:fixed;
+inset:0;
+background:#0007;
+display:none;
+align-items:center;
+justify-content:center;
+z-index:99;
+}
+
+
+.modal-box{
+
+background:white;
+width:90%;
+max-width:420px;
+padding:25px;
+border-radius:25px;
+
+}
+
+
+.modal-box h2{
+margin-bottom:15px;
+}
+
+
+.field{
+
+margin-top:12px;
+
+}
+
+
+.field input{
+
+width:100%;
+padding:12px;
+border-radius:12px;
+border:1px solid #ddd;
+
+}
+
+
+.modal-actions{
+
+display:flex;
+gap:10px;
+margin-top:20px;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="header">
+Admin Menu Top Up
+</div>
+
+
+<div class="container" id="list">
+Memuat...
+</div>
+
+
+<button class="fab" onclick="tambahAplikasi()">
++
+</button>
+
+
+
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+
+<div class="modal-box">
+
+
+<h2 id="modalTitle">
+Form
+</h2>
+
+
+<div id="modalContent"></div>
+
+
+
+<div class="modal-actions">
+
+
+<button class="btn" onclick="closeModal()">
+Batal
+</button>
+
+
+<button class="btn" onclick="saveModal()">
+Simpan
+</button>
+
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+
+
+<script type="module">
+
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+import {
+
+getDatabase,
+ref,
+get,
+set,
+update,
+remove
+
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+
+const firebaseConfig={
+
+apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+
+authDomain:"users-96dc5.firebaseapp.com",
+
+databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:"users-96dc5"
+
+};
+
+
+
+const app=initializeApp(firebaseConfig);
+
+const db=getDatabase(app);
+
+
+
+const list=document.getElementById("list");
+
+
+
+let mode="";
+
+let saveFunction=null;
+
+
+
+function openModal(title,html,callback){
+
+document.getElementById("modalTitle").innerHTML=title;
+
+document.getElementById("modalContent").innerHTML=html;
+
+saveFunction=callback;
+
+document.getElementById("modal").style.display="flex";
+
+}
+
+
+
+window.closeModal=function(){
+
+document.getElementById("modal").style.display="none";
+
+}
+
+
+
+window.saveModal=function(){
+
+if(saveFunction)
+saveFunction();
+
+}
+
+
+// ===============================
+// TAMBAH APLIKASI
+// ===============================
+
+window.tambahAplikasi=function(){
+
+
+openModal(
+
+"Tambah Aplikasi",
+
+`
+
+<div class="field">
+<input id="namaApp" placeholder="Nama Aplikasi">
+</div>
+
+
+<div class="field">
+<input id="deskripsi" placeholder="Deskripsi">
+</div>
+
+
+<div class="field">
+<input id="logoApp" placeholder="Link Logo Aplikasi">
+</div>
+
+
+<div class="field">
+<input id="logoCoinApp" placeholder="Link Logo Coin">
+</div>
+
+
+<div class="field">
+<input id="hargaAwal" placeholder="Harga Awal">
+</div>
+
+
+<div class="field">
+<input id="hargaPromo" placeholder="Harga Promo">
+</div>
+
+
+<div class="field">
+<input id="hargaSampul" placeholder="Harga Sampul">
+</div>
+
+
+<div class="field">
+
+<label>
+<input type="checkbox" id="verified">
+ Diverifikasi
+</label>
+
+</div>
+
+
+`,
+
+async()=>{
+
+
+let nama=
+document.getElementById("namaApp").value.trim();
+
+
+if(!nama)return;
+
+
+
+let key=safeKey(nama);
+
+
+await set(
+
+ref(db,`Top-up_aplikasi/${key}`),
+
+{
+
+
+aplikasi:nama,
+
+nama:nama,
+
+
+deskripsi:
+document.getElementById("deskripsi").value,
+
+
+diverifikasi:
+document.getElementById("verified").checked,
+
+
+hargaAwal:
+Number(
+document.getElementById("hargaAwal").value
+),
+
+
+hargaPromo:
+Number(
+document.getElementById("hargaPromo").value
+),
+
+
+hargaSampul:
+Number(
+document.getElementById("hargaSampul").value
+),
+
+
+
+logoAplikasi:
+document.getElementById("logoApp").value,
+
+
+logoCoin:
+document.getElementById("logoCoinApp").value
+
+
+}
+
+
+
+);
+
+
+closeModal();
+
+loadData();
+
+
+});
+
+
+}
+
+
+
+// ===============================
+// EDIT APLIKASI
+// ===============================
+
+
+window.editAplikasi=async function(key){
+
+
+let snap=
+await get(
+ref(db,`Top-up_aplikasi/${key}`)
+);
+
+
+let d=snap.val();
+
+
+
+openModal(
+
+"Edit Aplikasi",
+
+`
+
+<div class="field">
+<input id="namaApp" value="${d.nama||""}">
+</div>
+
+
+<div class="field">
+<input id="deskripsi" value="${d.deskripsi||""}">
+</div>
+
+
+<div class="field">
+<input id="logoApp" value="${d.logoAplikasi||""}">
+</div>
+
+
+<div class="field">
+<input id="logoCoinApp" value="${d.logoCoin||""}">
+</div>
+
+
+<div class="field">
+<input id="hargaAwal" value="${d.hargaAwal||0}">
+</div>
+
+
+<div class="field">
+<input id="hargaPromo" value="${d.hargaPromo||0}">
+
+</div>
+
+
+
+
+<div class="field">
+<input id="hargaSampul" value="${d.hargaSampul||0}">
+</div>
+
+
+<div class="field">
+
+<label>
+
+<input 
+type="checkbox"
+id="verified"
+${d.diverifikasi ? "checked":""}>
+
+Diverifikasi
+
+</label>
+
+</div>
+
+`,
+
+async()=>{
+
+
+let nama=
+namaApp.value;
+
+
+
+await update(
+
+ref(db,`Top-up_aplikasi/${key}`),
+
+{
+
+
+aplikasi:nama,
+
+nama:nama,
+
+
+deskripsi:
+deskripsi.value,
+
+
+diverifikasi:
+verified.checked,
+
+
+hargaAwal:
+Number(hargaAwal.value),
+
+
+hargaPromo:
+Number(hargaPromo.value),
+
+
+hargaSampul:
+Number(hargaSampul.value),
+
+
+
+logoAplikasi:
+logoApp.value,
+
+
+logoCoin:
+logoCoinApp.value
+
+
+}
+
+);
+
+
+closeModal();
+
+loadData();
+
+
+});
+
+
+}
+
+function safeKey(text){
+
+return text
+.replace(/\./g,"_dot_")
+.replace(/#/g,"_hash_")
+.replace(/\$/g,"_dollar_")
+.replace(/\[/g,"_lb_")
+.replace(/\]/g,"_rb_");
+
+}
+
+// ===============================
+// TAMBAH ITEM
+// ===============================
+
+function hitungAngka(value){
+
+    try{
+
+        value = String(value)
+        .replace(/[^0-9+\-*/().]/g,"");
+
+        let hasil = eval(value);
+
+        if(
+            isNaN(hasil) ||
+            !isFinite(hasil)
+        ){
+            return 0;
+        }
+
+        return Number(hasil);
+
+    }catch(e){
+
+        return 0;
+
+    }
+
+}
+
+window.tambahItem=function(appName){
+
+
+openModal(
+
+"Tambah Coin",
+
+`
+
+<div class="field">
+<input id="coinName" placeholder="Nama Coin">
+</div>
+
+
+<div class="field">
+<input id="coinJumlah" placeholder="Jumlah Coin">
+</div>
+
+
+<div class="field">
+<input id="hargaAwal" placeholder="Harga Awal">
+</div>
+
+
+<div class="field">
+<input id="hargaPromo" placeholder="Harga Promo">
+</div>
+
+
+<div class="field">
+<input id="logoCoin" placeholder="Link Logo Coin">
+</div>
+
+
+<div class="field">
+<input 
+id="stock"
+type="number"
+placeholder="Stock">
+</div>
+
+`,
+
+
+
+
+
+async()=>{
+
+
+let snap=await get(
+ref(db,`Top-up_aplikasi/${appName}`)
+);
+
+
+let data=snap.val();
+
+
+let no=1;
+
+
+while(data["item"+no])
+no++;
+
+
+
+await set(
+
+ref(db,
+`Top-up_aplikasi/${appName}/item${no}`),
+
+{
+
+namaCoin:
+coinName.value,
+
+jumlahCoin:
+hitungAngka(coinJumlah.value),
+
+hargaAwal:
+Number(hargaAwal.value),
+
+hargaPromo:
+Number(hargaPromo.value),
+
+logoCoin:
+logoCoin.value,
+
+
+stock:
+Number(
+stock.value || 0
+)
+}
+
+);
+
+
+closeModal();
+
+loadData();
+
+
+});
+
+
+}
+
+
+
+// ===============================
+// EDIT ITEM
+// ===============================
+
+
+window.editItem=async function(appName,key){
+
+
+let snap=await get(
+ref(db,
+`Top-up_aplikasi/${appName}/${key}`)
+);
+
+
+let item=snap.val();
+
+
+
+openModal(
+
+"Edit Coin",
+
+`
+
+<div class="field">
+<input id="coinName" value="${item.namaCoin}">
+</div>
+
+
+<div class="field">
+<input id="coinJumlah" value="${item.jumlahCoin}">
+</div>
+
+
+<div class="field">
+<input id="hargaAwal" value="${item.hargaAwal}">
+</div>
+
+
+<div class="field">
+<input id="hargaPromo" value="${item.hargaPromo}">
+</div>
+
+
+<div class="field">
+<input id="logoCoin" value="${item.logoCoin}">
+</div>
+
+<div class="field">
+
+<input 
+id="stock"
+type="number"
+value="${item.stock ?? 0}"
+placeholder="Stock">
+
+</div>
+
+
+
+`,
+
+async()=>{
+
+
+await update(
+
+ref(db,
+`Top-up_aplikasi/${appName}/${key}`),
+
+{
+
+namaCoin:coinName.value,
+
+jumlahCoin:
+hitungAngka(coinJumlah.value),
+
+hargaAwal:Number(hargaAwal.value),
+
+hargaPromo:Number(hargaPromo.value),
+
+logoCoin:logoCoin.value,
+
+
+stock:
+Number(
+stock.value || 0
+)
+
+}
+
+);
+
+
+closeModal();
+
+loadData();
+
+
+});
+
+
+}
+
+
+
+// ===============================
+// HAPUS
+// ===============================
+
+
+function confirmPopup(text,callback){
+
+
+openModal(
+
+"Konfirmasi",
+
+`
+
+<p>${text}</p>
+
+`,
+
+async()=>{
+
+await callback();
+
+closeModal();
+
+}
+
+
+);
+
+
+}
+
+
+
+window.hapusAplikasi=function(key){
+
+
+confirmPopup(
+
+"Hapus aplikasi ini?",
+
+async()=>{
+
+await remove(
+ref(db,`Top-up_aplikasi/${key}`)
+);
+
+loadData();
+
+
+});
+
+
+}
+
+
+
+
+window.hapusItem=function(app,key){
+
+
+confirmPopup(
+
+"Hapus item ini?",
+
+
+async()=>{
+
+
+await remove(
+
+ref(db,
+`Top-up_aplikasi/${app}/${key}`)
+
+);
+
+
+loadData();
+
+
+});
+
+
+}
+
+
+
+
+
+// ===============================
+// LOAD DATA
+// ===============================
+
+
+async function loadData(){
+
+
+let snap=
+await get(
+ref(db,"Top-up_aplikasi")
+);
+
+
+
+if(!snap.exists()){
+
+list.innerHTML="Belum ada data";
+
+return;
+
+}
+
+
+
+list.innerHTML="";
+
+
+
+snap.forEach(a=>{
+
+
+let key=a.key;
+
+let data=a.val();
+
+
+
+let html=`
+
+<div class="card">
+
+
+<div class="app-head">
+
+
+<img src="${data.logoAplikasi||''}">
+
+
+<div>
+
+<h2>${data.nama||key}</h2>
+
+<small>${key}</small>
+
+
+</div>
+
+
+</div>
+
+
+
+<button class="btn"
+onclick="editAplikasi('${key}')">
+Edit Aplikasi
+</button>
+
+
+<button class="btn"
+onclick="tambahItem('${key}')">
+Tambah Item
+</button>
+
+
+<button class="btn red"
+onclick="hapusAplikasi('${key}')">
+Hapus
+</button>
+
+
+`;
+
+
+
+Object.keys(data).forEach(k=>{
+
+
+if(!k.startsWith("item"))
+return;
+
+
+let i=data[k];
+
+
+
+html+=`
+
+<div class="item">
+
+
+<div class="left">
+
+
+<img src="${i.logoCoin||''}">
+
+
+<div>
+
+<b>${i.namaCoin}</b>
+
+<div>
+Coin : ${i.jumlahCoin}
+</div>
+
+
+<div>
+
+Stock :
+<span style="
+color:${Number(i.stock||0)<=0?'red':'green'}
+">
+
+${i.stock ?? 0}
+
+</span>
+
+</div>
+
+
+
+<div>
+Rp ${Number(i.hargaPromo||0)
+.toLocaleString("id-ID")}
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<div>
+
+
+<button class="btn"
+onclick="editItem('${key}','${k}')">
+
+Edit
+
+</button>
+
+
+<button class="btn red"
+onclick="hapusItem('${key}','${k}')">
+
+Hapus
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+`;
+
+
+
+});
+
+
+
+html+="</div>";
+
+list.innerHTML+=html;
+
+
+});
+
+
+}
+
+
+
+loadData();
+
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Top Up Coin</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Poppins,sans-serif;
+}
+
+body{
+    background:#f6f7fb;
+}
+
+/* HEADER */
+
+.header{
+    background:#4d0f99;
+    padding:15px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    box-shadow:0 3px 15px rgba(0,0,0,.08);
+    position:sticky;
+    top:0;
+    z-index:999;
+    border-radius:0 0 10px 10px;
+
+}
+
+.header img{
+    width:60px;
+    height:60px;
+    border-radius:20px;
+    object-fit:cover;
+}
+
+.header h2{
+    color:#ffffff;
+    font-size:22px;
+}
+
+/* CONTENT */
+.container{
+    max-width:1000px;
+    margin:auto;
+    padding:30px 18px;
+}
+
+
+/* TITLE SECTION */
+
+.title{
+    background:#fff;
+    padding:22px 20px;
+    border-radius:22px;
+    margin-bottom:22px;
+    box-shadow:
+    0 8px 25px rgba(0,0,0,.06);
+    position:relative;
+    overflow:hidden;
+}
+
+
+.title::before{
+
+    content:"";
+
+    position:absolute;
+    left:0;
+    top:0;
+
+    width:5px;
+    height:100%;
+
+    background:
+    linear-gradient(
+        180deg,
+        #5c27fe,
+        #9d5cff
+    );
+
+}
+
+
+
+.title h3{
+
+    color:#222;
+
+    font-size:24px;
+
+    font-weight:800;
+
+    margin-left:8px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+}
+
+
+
+.title h3::before{
+
+    content:"";
+
+    width:10px;
+    height:10px;
+
+    background:#5c27fe;
+
+    border-radius:50%;
+
+}
+
+
+
+.title p{
+
+    color:#777;
+
+    font-size:14px;
+
+    margin-top:7px;
+
+    margin-left:26px;
+
+    line-height:1.6;
+
+}
+/* COIN LIST */
+
+
+
+
+
+/* COIN GRID */
+
+.coin-list{
+
+display:grid;
+
+grid-template-columns:
+repeat(4,1fr);
+
+gap:18px;
+
+}
+
+
+
+/* CARD */
+
+.coin-card{
+
+
+background:#fff;
+
+border-radius:22px;
+
+padding:18px 12px;
+
+box-shadow:
+0 8px 25px rgba(0,0,0,.07);
+
+cursor:pointer;
+
+transition:.25s;
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+text-align:center;
+
+position:relative;
+
+overflow:hidden;
+
+
+}
+
+
+
+.coin-card::before{
+
+
+content:"";
+
+position:absolute;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:5px;
+
+background:
+linear-gradient(
+90deg,
+#5c27fe,
+#9d5cff
+);
+
+
+}
+
+
+
+.coin-card:hover{
+
+
+transform:translateY(-6px);
+
+box-shadow:
+0 15px 35px rgba(92,39,254,.18);
+
+
+}
+
+
+
+
+
+.coin-left{
+
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+gap:10px;
+
+
+}
+
+
+
+.coin-left img{
+
+
+width:70px;
+
+height:70px;
+
+border-radius:20px;
+
+object-fit:contain;
+
+background:transparent;
+
+box-shadow:none;
+
+
+}
+
+
+
+.coin-info h4{
+
+
+font-size:15px;
+
+font-weight:700;
+
+color:#222;
+
+
+}
+
+
+
+
+.coin-info span{
+
+
+display:block;
+
+font-size:12px;
+
+color:#999;
+
+text-decoration:line-through;
+
+margin-top:5px;
+
+
+}
+
+
+
+
+
+.coin-price{
+
+
+width:100%;
+
+margin-top:12px;
+
+
+}
+
+
+
+
+.coin-price h3{
+
+
+font-size:16px;
+
+color:#5c27fe;
+
+margin-bottom:10px;
+
+
+}
+
+
+
+
+.coin-price button{
+
+
+width:100%;
+
+border:none;
+
+background:#5c27fe;
+
+color:white;
+
+padding:9px;
+
+border-radius:20px;
+
+font-weight:600;
+
+cursor:pointer;
+
+
+}
+
+.coin-card{
+    min-height:230px;
+}
+
+
+.coin-left{
+    flex:1;
+}
+
+
+.coin-info{
+    min-height:120px;
+    display:flex;
+    flex-direction:column;
+}
+
+
+.coin-price{
+    margin-top:auto;
+}
+
+
+.loading{
+
+text-align:center;
+
+padding:60px;
+
+color:#888;
+
+}
+
+
+
+
+/* TABLET */
+
+@media(max-width:900px){
+
+
+.coin-list{
+
+grid-template-columns:
+repeat(3,1fr);
+
+}
+
+
+}
+
+
+
+
+
+/* HP */
+
+@media(max-width:600px){
+
+
+.coin-list{
+
+
+grid-template-columns:
+repeat(2,1fr);
+
+
+gap:12px;
+
+
+}
+
+
+
+.coin-card{
+
+
+padding:14px 10px;
+
+border-radius:18px;
+
+
+}
+
+
+
+.coin-left img{
+
+
+width:55px;
+
+height:55px;
+
+background:transparent;
+
+box-shadow:none;
+
+object-fit:contain;
+
+
+}
+
+
+.coin-info h4{
+
+
+font-size:13px;
+
+
+}
+
+
+
+.coin-price h3{
+
+
+font-size:14px;
+
+
+}
+
+
+.coin-price button{
+
+
+font-size:12px;
+
+padding:8px;
+
+
+}
+
+
+}
+
+
+
+
+
+
+
+/* FAKE LOADING */
+
+.skeleton{
+
+background:
+linear-gradient(
+90deg,
+#eeeeee 25%,
+#f8f8f8 37%,
+#eeeeee 63%
+);
+
+background-size:400% 100%;
+
+animation:
+loading 1.4s infinite;
+
+}
+
+
+.skeleton-card{
+
+height:190px;
+
+border-radius:22px;
+
+background:#eee;
+
+animation:
+loading 1.4s infinite;
+
+}
+
+
+@keyframes loading{
+
+0%{
+background-position:100% 0;
+}
+
+100%{
+background-position:-100% 0;
+}
+
+}
+
+
+
+</style>
+</head>
+<body>
+
+<div class="header">
+    <img id="logoAplikasi">
+    <div>
+        <h2 id="namaAplikasi">Top Up</h2>
+    </div>
+</div>
+
+<div class="container">
+
+<div class="title">
+    <h3>Pilih Nominal Coin</h3>
+
+    <p>
+        Pilih paket coin yang ingin dibeli.
+        <br>
+        Bonus dan diskon hanya berlaku untuk pembelian pertama.
+        Setelah itu, pembelian berikutnya akan menggunakan harga normal.
+    </p>
+
+</div>
+
+    <div id="coinList" class="coin-list">
+        <div class="loading">
+            Memuat paket coin...
+        </div>
+    </div>
+<div id="ratingBox"></div>
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getDatabase,
+    ref,
+    get
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const params = new URLSearchParams(location.search);
+const namaApp = params.get("app");
+
+const logoAplikasi =
+document.getElementById("logoAplikasi");
+
+const namaAplikasi =
+document.getElementById("namaAplikasi");
+
+const coinList =
+document.getElementById("coinList");
+
+async function loadData(){
+
+
+// FAKE LOADING DULU
+
+coinList.innerHTML = `
+
+<div class="skeleton-card"></div>
+<div class="skeleton-card"></div>
+<div class="skeleton-card"></div>
+<div class="skeleton-card"></div>
+<div class="skeleton-card"></div>
+<div class="skeleton-card"></div>
+
+`;
+
+
+
+const snap =
+await get(
+ref(db, `Top-up_aplikasi/${namaApp}`)
+);
+
+
+
+if(!snap.exists()){
+
+coinList.innerHTML =
+
+`
+<div class="loading">
+
+Data tidak ditemukan.
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+
+const data = snap.val();
+
+
+// ================= RATING SUMMARY =================
+
+let totalNilai = 0;
+let jumlahProduk = 0;
+
+
+let bintang = {
+    5:0,
+    4:0,
+    3:0,
+    2:0,
+    1:0
+};
+
+
+
+Object.entries(data).forEach(([key,item])=>{
+
+
+if(!key.startsWith("item")) return;
+
+
+
+let rating =
+parseFloat(item.rating || 0);
+
+
+
+if(rating > 0){
+
+
+totalNilai += rating;
+
+jumlahProduk++;
+
+
+let bulat =
+Math.round(rating);
+
+
+if(bintang[bulat] !== undefined){
+
+    bintang[bulat]++;
+
+}
+
+
+}
+
+
+});
+
+
+
+let rataRata =
+jumlahProduk
+?
+(totalNilai / jumlahProduk).toFixed(1)
+:
+"0.0";
+
+
+
+
+
+document.getElementById("ratingBox").innerHTML = `
+
+
+<div style="
+background:#fff;
+margin-top:20px;
+padding:20px;
+border-radius:20px;
+box-shadow:0 8px 25px #0001;
+">
+
+
+<h3>
+Ulasan Produk
+</h3>
+
+
+
+<div style="
+display:flex;
+align-items:center;
+gap:8px;
+margin-top:10px;
+">
+
+
+<div style="
+font-size:38px;
+font-weight:800;
+color:#ffb400;
+">
+
+${rataRata}
+
+</div>
+
+
+<span>
+
+/5
+
+</span>
+
+
+
+<div>
+
+<div style="
+color:#ffb400;
+font-size:18px;
+">
+
+★★★★★
+
+</div>
+
+
+<div style="
+font-size:13px;
+color:#777;
+">dari
+
+${jumlahProduk} Item
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+${[5,4,3,2,1].map(n=>`
+
+<div style="
+display:flex;
+align-items:center;
+gap:8px;
+margin-top:8px;
+font-size:13px;
+">
+
+
+<span>${n}</span>
+
+
+<i class="fa-solid fa-star"
+style="
+color:#ffb400;
+">
+</i>
+
+
+
+<div style="
+flex:1;
+height:7px;
+background:#eee;
+border-radius:20px;
+overflow:hidden;
+">
+
+
+<div style="
+width:${jumlahProduk ? (bintang[n]/jumlahProduk*100) : 0}%;
+height:100%;
+background:#ffb400;
+">
+
+</div>
+
+
+</div>
+
+
+
+<span>
+${bintang[n]}
+</span>
+
+
+</div>
+
+
+`).join("")}
+
+
+</div>
+
+`;
+
+
+
+namaAplikasi.innerText =
+data.nama || namaApp;
+
+
+
+logoAplikasi.src =
+data.logoAplikasi || "";
+
+
+
+
+
+
+
+
+
+// hapus fake
+
+coinList.innerHTML = "";
+
+
+
+Object.entries(data).forEach(([key,item])=>{
+
+
+if(!key.startsWith("item")) return;
+
+
+
+const habis =
+Number(item.stock || 0) <= 0;
+
+
+
+coinList.innerHTML += `
+
+<div class="coin-card"
+style="
+${habis ? 
+'opacity:.5;filter:grayscale(1);cursor:not-allowed;' 
+: 
+'cursor:pointer;'}
+
+">
+
+
+
+<div class="coin-left">
+
+
+<img
+
+src="${item.logoCoin || ''}"
+
+onerror="this.src='https://via.placeholder.com/60'">
+
+
+<div class="coin-info">
+
+
+<h4>
+
+${item.namaCoin || key}
+
+</h4>
+
+
+<span>
+
+Rp ${Number(
+item.hargaAwal || 0
+).toLocaleString('id-ID')}
+
+</span>
+
+
+${data.diverifikasi ? `
+
+<div style="
+display:flex;
+align-items:center;
+gap:6px;
+margin-top:8px;
+margin-bottom:10px;
+">
+
+
+<!-- BADGE RESMI -->
+
+<div style="
+display:inline-flex;
+align-items:center;
+gap:4px;
+background:#e8f0ff;
+color:#5c27fe;
+font-size:11px;
+font-weight:700;
+padding:3px 7px;
+border-radius:12px;
+width:max-content;
+">
+
+<span style="
+display:flex;
+align-items:center;
+justify-content:center;
+width:13px;
+height:13px;
+background:#5c27fe;
+color:white;
+border-radius:50%;
+font-size:8px;
+">
+✓
+</span>
+
+Resmi
+
+</div>
+
+
+
+
+<!-- BADGE INSTAN -->
+
+<div style="
+display:inline-flex;
+align-items:center;
+gap:4px;
+background:#e7fff0;
+color:#16a34a;
+font-size:11px;
+font-weight:700;
+padding:3px 7px;
+border-radius:12px;
+width:max-content;
+">
+
+
+<img 
+src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782774470/yoldeeamtzgkx27wtfdx.svg"
+style="
+width:14px;
+height:14px;
+object-fit:contain;
+">
+
+
+Instan
+
+
+</div>
+
+
+</div>
+
+` : ""}
+
+
+
+<!-- RATING + TERJUAL -->
+
+<div style="
+display:flex;
+align-items:center;
+gap:4px;
+margin-top:6px;
+font-size:12px;
+font-weight:600;
+color:#777;
+padding-bottom: 10px;
+">
+
+
+<span style="
+display:flex;
+align-items:center;
+gap:4px;
+">
+
+<i 
+class="fa-solid fa-star"
+style="
+color:#ffb400;
+font-size:13px;
+">
+</i>
+
+
+${item.rating || "0.0"}
+
+</span>
+
+
+
+<span style="
+color:#ddd;
+">
+|
+</span>
+
+
+
+<span style="
+display:flex;
+align-items:center;
+gap:4px;
+">
+
+<i 
+class="fa-solid fa-bag-shopping"
+style="
+color:#5c27fe;
+font-size:13px;
+">
+</i>
+
+
+${item.terjual || "0"} Terjual
+
+
+</span>
+
+
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<div class="coin-price">
+
+
+<h3>
+
+Rp ${Number(
+item.hargaPromo || 0
+).toLocaleString('id-ID')}
+
+</h3>
+
+
+
+${
+habis
+
+?
+
+`
+<button
+disabled
+style="
+background:#aaa;
+cursor:not-allowed;
+">
+
+Stock Habis
+
+</button>
+`
+
+:
+
+`
+
+<button
+
+onclick="
+cekLogin('${encodeURIComponent(namaApp)}','${key}')
+">
+
+Pilih
+
+</button>
+
+`
+
+}
+
+
+</div>
+
+
+
+</div>
+
+
+`;
+
+});
+
+
+}
+
+loadData();
+
+
+
+
+window.cekLogin = function(app, item){
+
+    const usersid = localStorage.getItem("usersid");
+
+    if(!usersid){
+
+        location.href =
+        `register_topup.html?redirect=${encodeURIComponent(
+            `checkout.html?app=${app}&item=${item}`
+        )}`;
+
+        return;
+    }
+
+    location.href =
+    `checkout.html?app=${app}&item=${item}`;
+};
+
+
+</script>
+
+</body>
+</html>

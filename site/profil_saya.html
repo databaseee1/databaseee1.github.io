@@ -1,0 +1,539 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Profil Saya</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Poppins,sans-serif;
+}
+
+body{
+    background:#f5f6fb;
+    min-height:100vh;
+}
+
+/* HEADER */
+
+.cover{
+    position:relative;
+    width:100%;
+    height:230px;
+    background:#5c27fe;
+    overflow:hidden;
+}
+
+.cover img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.profile-box{
+    position:relative;
+    margin-top:-70px;
+    text-align:center;
+}
+
+.profile-box img{
+    width:130px;
+    height:130px;
+    border-radius:50%;
+    border:5px solid #fff;
+    object-fit:cover;
+    background:#fff;
+}
+
+.card{
+    width:95%;
+    max-width:700px;
+    margin:20px auto;
+    background:#fff;
+    border-radius:25px;
+    padding:25px;
+    box-shadow:0 10px 35px rgba(0,0,0,.08);
+}
+
+.name{
+    text-align:center;
+    margin-top:15px;
+}
+
+.name h2{
+    color:#222;
+    font-size:25px;
+}
+
+.name p{
+    color:#777;
+    margin-top:5px;
+}
+
+.info{
+    margin-top:25px;
+}
+
+.item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 0;
+    border-bottom:1px solid #eee;
+}
+
+.item:last-child{
+    border-bottom:none;
+}
+
+.item .label{
+    color:#777;
+    font-size:14px;
+}
+
+.item .value{
+    color:#222;
+    font-weight:600;
+    text-align:right;
+}
+
+.menu{
+    margin-top:20px;
+}
+
+.menu a{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    text-decoration:none;
+    color:#222;
+    padding:18px 0;
+    border-bottom:1px solid #eee;
+}
+
+.menu a:last-child{
+    border-bottom:none;
+}
+
+.logout{
+    width:100%;
+    border:none;
+    background:#ff3b30;
+    color:#fff;
+    padding:16px;
+    border-radius:15px;
+    margin-top:25px;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.loading{
+    text-align:center;
+    padding:80px;
+    color:#777;
+}
+
+@media(max-width:600px){
+
+    .cover{
+        height:180px;
+    }
+
+    .profile-box img{
+        width:110px;
+        height:110px;
+    }
+
+    .name h2{
+        font-size:22px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div id="content">
+
+<div class="loading">
+Memuat data profil...
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getDatabase,
+    ref,
+    get,
+    update
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const content =
+document.getElementById("content");
+
+const usersid =
+localStorage.getItem("usersid");
+
+if(!usersid){
+    location.href =
+    "login_topup.html";
+}
+
+async function loadProfil(){
+
+    try{
+
+        const snap =
+        await get(
+            ref(
+                db,
+                `users_topup/${usersid}`
+            )
+        );
+
+        if(!snap.exists()){
+
+            localStorage.removeItem(
+                "usersid"
+            );
+
+            localStorage.removeItem(
+                "user_topup"
+            );
+
+            location.href =
+            "login_topup.html";
+
+            return;
+        }
+
+        const user =
+        snap.val();
+
+        localStorage.setItem(
+            "user_topup",
+            JSON.stringify(user)
+        );
+
+        content.innerHTML = `
+        <div class="cover">
+            <img
+            src="${user.fotoSampul}"
+            onerror="this.src='https://images.unsplash.com/photo-1506744038136-46273834b3fb'">
+        </div>
+
+        <div class="profile-box">
+            <img
+            src="${user.profil}"
+            onerror="this.src='https://ui-avatars.com/api/?name=U'">
+        </div>
+
+        <div class="card">
+
+            <div class="name">
+                <h2>${user.email}</h2>
+                <p>Akun Top Up Coin</p>
+            </div>
+
+            <div class="info">
+
+                <div class="item">
+                    <div class="label">
+                        User ID
+                    </div>
+
+                    <div class="value">
+                        ${user.usersid}
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="label">
+                        Email
+                    </div>
+
+                    <div class="value">
+                        ${user.email}
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="label">
+                        WhatsApp
+                    </div>
+
+                    <div class="value">
+                        ${user.whatsapp}
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="label">
+                        Saldo
+                    </div>
+
+                    <div class="value">
+                        Rp ${Number(
+                            user.saldo || 0
+                        ).toLocaleString(
+                            "id-ID"
+                        )}
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="label">
+                        Bergabung
+                    </div>
+
+                    <div class="value">
+                        ${new Date(
+                            user.dibuatPada
+                        ).toLocaleDateString(
+                            "id-ID"
+                        )}
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="menu">
+
+<a href="edit_profil.html">
+    <span>Edit Profil</span>
+    <span>›</span>
+</a>
+
+<a href="History_topup_saya.html">
+    <span>Riwayat Pesanan</span>
+    <span>›</span>
+</a>
+
+
+<a href="notifikasi.html"
+   id="notifMenu"
+   style="position:relative; display:flex; justify-content:space-between; align-items:center; padding:12px 0;">
+
+    <span>Notifikasi</span>
+    <span>›</span>
+
+    <span id="notifBadge" style="
+        position:absolute;
+        right:10px;
+        top:10px;
+        background:red;
+        color:#fff;
+        font-size:10px;
+        padding:2px 6px;
+        border-radius:10px;
+        display:none;
+        min-width:16px;
+        text-align:center;
+    ">0</span>
+
+</a>
+
+            </div>
+
+            <button
+            class="logout"
+            id="logoutBtn">
+                Logout
+            </button>
+
+        </div>
+        `;
+
+        requestAnimationFrame(() => {
+    loadNotifBadge();
+});
+
+
+setTimeout(() => {
+
+    const notifMenu = document.getElementById("notifMenu");
+
+    if (!notifMenu) return;
+
+    notifMenu.addEventListener("click", async () => {
+
+        const uid = localStorage.getItem("usersid");
+        if (!uid) return;
+
+        const snap = await get(ref(db, `notifications/${uid}`));
+        if (!snap.exists()) return;
+
+        const data = snap.val();
+
+        for (const key in data) {
+            await update(
+                ref(db, `notifications/${uid}/${key}`),
+                {
+                    read: true
+                }
+            );
+        }
+
+        const badge = document.getElementById("notifBadge");
+        if (badge) {
+            badge.style.display = "none";
+        }
+
+    });
+
+}, 100);
+
+
+
+        document
+        .getElementById(
+            "logoutBtn"
+        )
+        .onclick = ()=>{
+
+            if(
+                confirm(
+                    "Keluar dari akun?"
+                )
+            ){
+
+                localStorage.removeItem(
+                    "usersid"
+                );
+
+                localStorage.removeItem(
+                    "user_topup"
+                );
+
+                location.href =
+                "login_topup.html";
+            }
+
+        };
+
+    }catch(err){
+
+        console.error(err);
+
+        content.innerHTML = `
+        <div class="loading">
+            Gagal memuat profil.
+        </div>
+        `;
+
+
+
+    }
+}
+
+loadProfil();
+
+
+
+
+
+
+const uid = localStorage.getItem("usersid");
+
+async function loadNotifBadge() {
+
+    const badge = document.getElementById("notifBadge");
+
+    if (!badge) {
+        
+        return;
+    }
+
+    if (!uid) {
+        
+        return;
+    }
+
+    const snap = await get(ref(db, `notifications/${uid}`));
+
+    if (!snap.exists()) {
+        
+        badge.style.display = "none";
+        return;
+    }
+
+    const data = snap.val();
+
+    
+
+    let count = 0;
+
+    Object.values(data).forEach(item => {
+
+        // 🔥 FIX IMPORTANT: handle string + boolean
+        if (item.read === false || item.read === "false" || item.read == null) {
+            count++;
+        }
+
+    });
+
+    
+
+    if (count > 0) {
+        badge.style.display = "inline-block";
+        badge.innerText = count;
+    } else {
+        badge.style.display = "none";
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>
+

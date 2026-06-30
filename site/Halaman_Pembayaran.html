@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta
+name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>Pembayaran</title>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+background:#f5f5f5;
+}
+
+.header{
+background:#5c27fe;
+color:#fff;
+padding:18px;
+font-size:20px;
+font-weight:700;
+position:sticky;
+top:0;
+}
+
+.container{
+max-width:700px;
+margin:auto;
+padding:20px;
+}
+
+.card{
+background:#fff;
+border-radius:10px;
+padding:20px;
+margin-bottom:20px;
+
+}
+
+.title{
+font-size:17px;
+font-weight:700;
+margin-bottom:20px;
+}
+
+.bank{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.bank img{
+width:70px;
+height:70px;
+object-fit:contain;
+}
+
+.rekening{
+background:#f8f8f8;
+padding:15px;
+border-radius:15px;
+margin-top:20px;
+}
+
+.rekening div{
+margin-bottom:12px;
+}
+
+.nomor{
+font-size:25px;
+font-weight:700;
+color:#5c27fe;
+word-break:break-all;
+}
+
+.btn{
+width:100%;
+border:none;
+background:#5c27fe;
+color:#fff;
+padding:16px;
+border-radius:15px;
+font-size:16px;
+font-weight:700;
+cursor:pointer;
+margin-top:15px;
+}
+
+.summary{
+display:flex;
+justify-content:space-between;
+margin-bottom:15px;
+}
+
+.total{
+font-size:22px;
+font-weight:700;
+color:#5c27fe;
+}
+
+.invoice{
+background:#f8f8f8;
+padding:12px;
+border-radius:12px;
+word-break:break-all;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+Pembayaran
+</div>
+
+<div
+class="container"
+id="content">
+
+</div>
+
+<script>
+
+const data =
+JSON.parse(
+sessionStorage.getItem(
+"dataPembayaran"
+)
+);
+
+const content =
+document.getElementById(
+"content"
+);
+
+if(!data){
+    location.href =
+    "index.html";
+}
+
+const invoice =
+"INV"+
+Date.now();
+
+content.innerHTML = `
+<div class="card">
+
+<div class="title">
+Informasi Pembayaran
+</div>
+
+<div class="bank">
+
+<img src="${data.logoBank}">
+
+<div>
+
+<h3>
+${data.namaBank}
+</h3>
+
+<p>
+${data.namaRekening}
+</p>
+
+</div>
+
+</div>
+
+<div class="rekening">
+
+<div>
+Nomor Rekening
+</div>
+
+<div class="nomor">
+${data.noRekening}
+</div>
+
+<button
+class="btn"
+id="copyBtn">
+Salin Nomor Rekening
+</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="title">
+Detail Pesanan
+</div>
+
+<div class="summary">
+<span>User ID</span>
+<span>${data.usersid}</span>
+</div>
+
+
+<div class="summary">
+<span>ID Akun</span>
+<span>
+${data.idAkun || "-"}
+</span>
+</div>
+
+
+<div class="summary">
+<span>Nama Akun</span>
+<span>
+${data.namaAkun || "-"}
+</span>
+</div>
+
+
+<div class="summary">
+<span>Whatsapp</span>
+<span>
+${data.whatsapp || "-"}
+</span>
+</div>
+
+
+<div class="summary">
+<span>Email</span>
+<span>
+${data.email || "-"}
+</span>
+</div>
+
+
+
+<div class="summary">
+<span>Aplikasi</span>
+<span>${data.aplikasi}</span>
+</div>
+
+<div class="summary">
+<span>Paket</span>
+<span>${data.paket}</span>
+</div>
+
+<div class="summary">
+<span>Total Bayar</span>
+<span class="total">
+Rp ${Number(
+data.total
+).toLocaleString(
+'id-ID'
+)}
+</span>
+</div>
+
+</div>
+
+
+
+
+<div class="card">
+
+<div class="title">
+Informasi Proses Pembayaran
+</div>
+
+
+<p style="
+color:#555;
+line-height:1.8;
+font-size:14px;
+">
+
+Setelah pembayaran berhasil dilakukan dan pembayaran
+telah terverifikasi oleh sistem, pesanan akan diproses
+secara otomatis.
+
+Coin akan dikirim ke ID akun aplikasi yang telah Anda
+masukkan pada saat checkout. Pastikan ID akun,
+nama akun, dan aplikasi yang dipilih sudah benar agar
+coin masuk ke akun yang sesuai.
+
+Proses approval dilakukan secara otomatis oleh sistem
+dan dapat memerlukan waktu beberapa saat tergantung
+proses verifikasi pembayaran.
+
+Jika pembayaran berhasil namun coin belum masuk,
+silakan hubungi Customer Service dengan menyertakan
+nomor invoice dan bukti pembayaran.
+
+</p>
+
+
+<div style="
+margin-top:15px;
+background:#f3ecff;
+padding:15px;
+border-radius:14px;
+color:#5c27fe;
+font-size:14px;
+font-weight:600;
+">
+
+✓ Pembayaran aman  
+<br>
+✓ Verifikasi otomatis  
+<br>
+✓ Coin dikirim ke ID tujuan
+
+</div>
+
+
+</div>
+
+
+<div class="card">
+
+<div class="title">
+Nomor Invoice
+</div>
+
+<div class="invoice">
+${invoice}
+</div>
+
+</div>
+`;
+
+document
+.getElementById(
+"copyBtn"
+)
+.onclick = ()=>{
+
+navigator.clipboard
+.writeText(
+data.noRekening
+);
+
+alert(
+"Nomor rekening berhasil disalin."
+);
+
+};
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,213 @@
+<button id="buatDummy">
+    Tambah Rating + Terjual Semua Item
+</button>
+
+
+<script type="module">
+
+import { initializeApp } 
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+import {
+getDatabase,
+ref,
+get,
+update
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+
+const firebaseConfig = {
+
+apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+
+authDomain:"users-96dc5.firebaseapp.com",
+
+databaseURL:
+"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:"users-96dc5"
+
+};
+
+
+
+const app =
+initializeApp(firebaseConfig);
+
+
+
+const db =
+getDatabase(app);
+
+
+
+
+
+document
+.getElementById("buatDummy")
+.onclick = async ()=>{
+
+
+try{
+
+
+const snap =
+await get(
+ref(db,"Top-up_aplikasi")
+);
+
+
+
+if(!snap.exists()){
+
+alert("Data aplikasi kosong");
+
+return;
+
+}
+
+
+
+const data =
+snap.val();
+
+
+
+let perubahan = {};
+
+
+
+
+
+/*
+ LOOP SEMUA APLIKASI
+ LOOP SEMUA ITEM
+ */
+
+Object.entries(data)
+.forEach(([namaApp,appData])=>{
+
+
+
+Object.entries(appData)
+.forEach(([key,item])=>{
+
+
+
+if(
+key.startsWith("item")
+){
+
+
+
+let terjual =
+Math.floor(
+Math.random()*900
+)+100;
+
+
+
+let rating =
+(
+Math.random() *
+(5 - 4.3)
++
+4.3
+)
+.toFixed(1);
+
+
+
+
+
+// tambah terjual
+perubahan[
+`Top-up_aplikasi/${namaApp}/${key}/terjual`
+]
+=
+terjual+"rb";
+
+
+
+
+// tambah rating
+perubahan[
+`Top-up_aplikasi/${namaApp}/${key}/rating`
+]
+=
+rating;
+
+
+
+}
+
+
+
+});
+
+
+
+});
+
+
+
+
+
+if(
+Object.keys(perubahan).length === 0
+){
+
+alert(
+"Tidak ada item ditemukan"
+);
+
+return;
+
+}
+
+
+
+
+await update(
+ref(db),
+perubahan
+);
+
+
+
+
+
+alert(
+"Berhasil menambahkan rating dan terjual ke semua item"
+);
+
+
+
+console.log(
+perubahan
+);
+
+
+
+}catch(err){
+
+
+console.error(err);
+
+
+alert(
+"Gagal membuat dummy"
+);
+
+
+}
+
+
+
+};
+
+
+</script>

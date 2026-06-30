@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>History Topup Saya</title>
+
+<style>
+    body{
+        margin:0;
+        font-family:Arial, sans-serif;
+        background:#f7f5ff;
+        color:#222;
+    }
+
+    /* HEADER */
+    .header{
+        background:#6a00ff;
+        color:#fff;
+        padding:16px;
+        font-size:18px;
+        font-weight:bold;
+        position:sticky;
+        top:0;
+        z-index:10;
+    }
+
+    /* CONTAINER */
+    .container{
+        padding:12px;
+    }
+
+    /* CARD */
+    .card{
+        background:#fff;
+        border-radius:14px;
+        padding:12px;
+        margin-bottom:12px;
+        box-shadow:0 2px 8px rgba(0,0,0,0.05);
+        border-left:5px solid #6a00ff;
+    }
+
+    .row{
+        display:flex;
+        justify-content:space-between;
+        margin:4px 0;
+        font-size:13px;
+    }
+
+    .title{
+        font-weight:bold;
+        font-size:14px;
+        margin-bottom:6px;
+    }
+
+    .status{
+        padding:4px 10px;
+        border-radius:20px;
+        font-size:12px;
+        font-weight:bold;
+        display:inline-block;
+    }
+
+    .Menunggu{
+        background:#fff3cd;
+        color:#856404;
+    }
+
+    .Sukses{
+        background:#d4edda;
+        color:#155724;
+    }
+
+    .Gagal{
+        background:#f8d7da;
+        color:#721c24;
+    }
+
+    /* EMPTY */
+    .empty{
+        text-align:center;
+        margin-top:50px;
+        color:#777;
+    }
+
+    /* LOADING */
+    .loading{
+        text-align:center;
+        margin-top:40px;
+        color:#6a00ff;
+        font-weight:bold;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    Riwayat Topup Saya
+</div>
+
+<div class="container" id="list">
+    <div class="loading">Loading data...</div>
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+/* FIREBASE CONFIG */
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* ambil usersid */
+const usersid = localStorage.getItem("usersid");
+
+const listEl = document.getElementById("list");
+
+if (!usersid) {
+    listEl.innerHTML = `<div class="empty">Users ID tidak ditemukan</div>`;
+} else {
+    loadHistory(usersid);
+}
+
+async function loadHistory(uid){
+    try {
+        const snap = await get(ref(db, `History_Topup/${uid}`));
+
+        if (!snap.exists()) {
+            listEl.innerHTML = `<div class="empty">Belum ada history topup</div>`;
+            return;
+        }
+
+        const data = snap.val();
+        let html = "";
+
+        Object.entries(data).forEach(([key, item]) => {
+
+            let statusClass = "Menunggu";
+            if(item.status === "Sukses") statusClass = "Sukses";
+            if(item.status === "Gagal") statusClass = "Gagal";
+
+            html += `
+            <div class="card">
+                <div class="title">${item.aplikasi || "-"} • ${item.paket || "-"}</div>
+
+                <div class="row">
+                    <span>Status</span>
+                    <span class="status ${statusClass}">${item.status}</span>
+                </div>
+
+                <div class="row">
+                    <span>Total</span>
+                    <span>Rp ${formatRupiah(item.total)}</span>
+                </div>
+
+                <div class="row">
+                    <span>Metode</span>
+                    <span>${item.metode}</span>
+                </div>
+
+                <div class="row">
+                    <span>Rekening</span>
+                    <span>${item.namaBank} - ${item.noRekening}</span>
+                </div>
+
+                <div class="row">
+                    <span>Nama</span>
+                    <span>${item.namaRekening}</span>
+                </div>
+
+                <div class="row">
+                    <span>ID Akun</span>
+                    <span>${item.idAkun}</span>
+                </div>
+            </div>
+            `;
+        });
+
+        listEl.innerHTML = html;
+
+    } catch (err) {
+        console.error(err);
+        listEl.innerHTML = `<div class="empty">Gagal memuat data</div>`;
+    }
+}
+
+/* format rupiah */
+function formatRupiah(angka){
+    return new Intl.NumberFormat("id-ID").format(angka || 0);
+}
+
+</script>
+
+</body>
+</html>

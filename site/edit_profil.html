@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Edit Profil</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+    font-family:Poppins;
+    background:#f5f6fb;
+}
+
+.card{
+    background:#fff;
+    padding:20px;
+    border-radius:20px;
+    max-width:500px;
+    margin:auto;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+h2{ margin-bottom:15px; }
+
+input{
+    width:90%;
+    padding:12px;
+    margin:8px 0;
+    border:1px solid #ddd;
+    border-radius:10px;
+}
+
+.btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:#5c27fe;
+    color:#fff;
+    font-weight:600;
+    margin-top:10px;
+    cursor:pointer;
+}
+
+.preview{
+    display:flex;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.preview img{
+    width:70px;
+    height:70px;
+    border-radius:10px;
+    object-fit:cover;
+    cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+
+<h2>Edit Profil</h2>
+
+<div class="preview">
+    <img id="profilImg">
+    <img id="sampulImg">
+</div>
+
+<input id="email" disabled>
+<input id="whatsapp" placeholder="WhatsApp">
+
+<hr>
+
+<h3>Ganti Password (opsional)</h3>
+
+<input type="password" id="oldPass" placeholder="Password lama (kosongkan jika tidak ganti)">
+<input type="password" id="newPass" placeholder="Password baru">
+<input type="password" id="confirmPass" placeholder="Ulangi password baru">
+
+<button class="btn" id="saveBtn">Simpan Perubahan</button>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const uid = localStorage.getItem("usersid");
+
+/* ================= CLOUDINARY ================= */
+const CLOUD_NAME = "dowoq4a0i";
+const UPLOAD_PRESET = "fotousershost";
+
+/* ================= LOAD USER ================= */
+async function loadUser(){
+
+    const snap = await get(ref(db, `users_topup/${uid}`));
+    if(!snap.exists()) return;
+
+    const user = snap.val();
+
+    document.getElementById("email").value = user.email || "";
+    document.getElementById("whatsapp").value = user.whatsapp || "";
+
+    document.getElementById("profilImg").src = user.profil || "";
+    document.getElementById("sampulImg").src = user.fotoSampul || "";
+
+    window.userData = user || {};
+}
+
+loadUser();
+
+/* ================= UPLOAD CLOUDINARY ================= */
+async function uploadCloud(file){
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", UPLOAD_PRESET);
+
+    const res = await fetch(
+        `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+        { method:"POST", body:formData }
+    );
+
+    const data = await res.json();
+    return data.secure_url;
+}
+
+/* ================= CHANGE PROFIL ================= */
+document.getElementById("profilImg").onclick = async () => {
+
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+
+    input.onchange = async (e) => {
+
+        const file = e.target.files[0];
+        if(!file) return;
+
+        const url = await uploadCloud(file);
+        document.getElementById("profilImg").src = url;
+
+        window.newProfil = url;
+    };
+
+    input.click();
+};
+
+/* ================= CHANGE SAMPUL ================= */
+document.getElementById("sampulImg").onclick = async () => {
+
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+
+    input.onchange = async (e) => {
+
+        const file = e.target.files[0];
+        if(!file) return;
+
+        const url = await uploadCloud(file);
+        document.getElementById("sampulImg").src = url;
+
+        window.newSampul = url;
+    };
+
+    input.click();
+};
+
+/* ================= SAVE ================= */
+document.getElementById("saveBtn").onclick = async () => {
+
+    if(!window.userData){
+        return alert("Data user belum siap, coba refresh");
+    }
+
+    const whatsapp = document.getElementById("whatsapp").value.trim();
+
+    const oldPass = document.getElementById("oldPass").value;
+    const newPass = document.getElementById("newPass").value;
+    const confirmPass = document.getElementById("confirmPass").value;
+
+    const updateData = {};
+
+    /* ================= WHATSAPP ================= */
+    if(whatsapp !== window.userData.whatsapp){
+        updateData.whatsapp = whatsapp;
+    }
+
+    /* ================= FOTO ================= */
+    if(window.newProfil) updateData.profil = window.newProfil;
+    if(window.newSampul) updateData.fotoSampul = window.newSampul;
+
+    /* ================= PASSWORD (FULL FIX) ================= */
+    const dbPass = String(window.userData.password || "");
+
+    if(oldPass || newPass || confirmPass){
+
+        if(!oldPass || !newPass || !confirmPass){
+            return alert("Isi semua kolom password");
+        }
+
+        if(oldPass !== dbPass){
+            console.log("DEBUG:", dbPass, oldPass);
+            return alert("Password lama salah");
+        }
+
+        if(newPass !== confirmPass){
+            return alert("Password baru tidak cocok");
+        }
+
+        // 🔥 SUPPORT SEMUA KARAKTER TANPA LIMIT
+        updateData.password = newPass;
+    }
+
+    /* ================= VALIDASI ================= */
+    if(Object.keys(updateData).length === 0){
+        return alert("Tidak ada perubahan data");
+    }
+
+    await update(ref(db, `users_topup/${uid}`), updateData);
+
+    alert("Profil berhasil diperbarui");
+    location.href = "profil_saya.html";
+};
+
+</script>
+
+</body>
+</html>
