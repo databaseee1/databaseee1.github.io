@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Checkout Mobile</title>
+
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+<style>
+
+
+*{
+box-sizing:border-box;
+}
+
+
+body{
+margin:0;
+background:#f5f5f5;
+font-family:Poppins,Arial;
+}
+
+
+
+.container{
+
+max-width:600px;
+margin:auto;
+padding:12px;
+padding-bottom:100px;
+
+}
+
+
+
+.card{
+
+background:white;
+border-radius:18px;
+padding:15px;
+margin-bottom:12px;
+
+}
+
+
+
+.product{
+
+display:flex;
+gap:12px;
+}
+
+
+
+.product img{
+
+width:90px;
+height:90px;
+border-radius:15px;
+object-fit:cover;
+
+}
+
+
+
+.name{
+
+font-weight:900;
+font-size:16px;
+
+}
+
+
+
+.price{
+
+color:#ff4d00;
+font-size:22px;
+font-weight:900;
+margin-top:8px;
+
+}
+
+
+
+.pay{
+
+display:flex;
+align-items:center;
+gap:8px;
+
+border:1px solid #eee;
+padding:8px;
+
+border-radius:12px;
+
+margin-top:6px;
+
+cursor:pointer;
+
+}
+
+
+
+.pay.active{
+
+border:2px solid #ff4d00;
+
+}
+
+
+
+.pay-card{
+
+display:flex;
+align-items:center;
+
+gap:10px;
+
+padding:8px;
+
+background:#fff;
+
+border-radius:12px;
+
+margin-bottom:8px;
+
+box-shadow:0 2px 10px #0001;
+
+cursor:pointer;
+
+min-height:65px;
+
+}
+
+
+
+.pay-card img{
+
+width:38px;
+height:38px;
+
+object-fit:contain;
+
+}
+
+
+
+.pay-card h4{
+
+margin:0;
+
+font-size:13px;
+
+}
+
+
+
+.pay-card p,
+.pay-card b{
+
+display:none;
+
+}
+
+
+
+.pay-card.disabled{
+
+opacity:.45;
+
+cursor:not-allowed;
+
+}
+
+
+
+.maint{
+
+color:red;
+
+font-size:10px;
+
+font-weight:700;
+
+}
+
+
+
+.ready{
+
+color:#00a651;
+
+font-size:10px;
+
+font-weight:700;
+
+}
+
+
+
+
+
+
+
+
+
+
+.buy{
+
+position:fixed;
+
+bottom:15px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+width:90%;
+
+max-width:560px;
+
+padding:15px;
+
+border:0;
+
+border-radius:18px;
+
+background:#ff4d00;
+
+color:white;
+
+font-weight:900;
+
+}
+
+
+
+
+.popup{
+
+position:fixed;
+
+inset:0;
+
+background:#0006;
+
+display:none;
+
+align-items:center;
+
+justify-content:center;
+
+z-index:99;
+
+}
+
+
+
+.box{
+
+background:white;
+
+width:90%;
+
+max-width:350px;
+
+border-radius:22px;
+
+padding:22px;
+
+text-align:center;
+
+}
+
+
+
+.box i{
+
+font-size:45px;
+
+color:#ff4d00;
+
+}
+
+
+
+.btn{
+
+width:100%;
+
+padding:13px;
+
+border:0;
+
+border-radius:14px;
+
+margin-top:10px;
+
+background:#ff4d00;
+
+color:white;
+
+font-weight:800;
+
+}
+
+
+
+.gray{
+
+background:#eee;
+
+color:#333;
+
+}
+
+
+
+.profile{
+
+width:65px;
+height:65px;
+border-radius:50%;
+object-fit:cover;
+
+}
+
+.pay-card.active{
+
+border:2px solid #ff4d00;
+background:#fff7f2;
+
+}
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+
+<div class="container" id="content">
+
+
+<div class="card">
+Memuat...
+</div>
+
+
+</div>
+
+
+
+
+<button class="buy" id="confirmBtn">
+
+Konfirmasi Pembelian
+
+</button>
+
+
+
+
+
+<div class="popup" id="popup">
+
+
+<div class="box">
+
+
+<i class="fa-solid fa-circle-check"></i>
+
+
+<h3 id="popTitle">
+Info
+</h3>
+
+
+<p id="popText"></p>
+
+
+
+<button class="btn" id="popOk">
+Lanjut
+</button>
+
+
+
+<button class="btn gray" id="popClose">
+Batal
+</button>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<script type="module">
+
+
+
+import {
+initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+
+import {
+getDatabase,
+ref,
+get,
+push,
+set
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+
+
+
+const firebaseConfig={
+
+
+apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+
+authDomain:"users-96dc5.firebaseapp.com",
+
+databaseURL:
+"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:"users-96dc5"
+
+};
+
+
+
+const app =
+initializeApp(firebaseConfig);
+
+
+
+const db =
+getDatabase(app);
+
+
+
+
+const id =
+new URLSearchParams(location.search)
+.get("id");
+
+
+const produkIndex =
+Number(
+new URLSearchParams(location.search)
+.get("produk") || 0
+);
+
+
+const content =
+document.getElementById("content");
+
+
+
+let item=null;
+
+let bank=null;
+
+let selectedPayment=null;
+
+
+
+function showPop(t,x){
+
+
+popTitle.innerHTML=t;
+
+popText.innerHTML=x;
+
+
+popup.style.display="flex";
+
+
+}
+
+
+
+popClose.onclick=()=>{
+
+popup.style.display="none";
+
+};
+
+
+
+
+
+
+
+async function load(){
+
+
+const snap =
+await get(
+ref(db,"Top-up game-Mobile/"+id)
+);
+
+
+
+if(!snap.exists()){
+
+
+content.innerHTML=
+`
+<div class="card">
+Produk tidak ditemukan
+</div>
+`;
+
+return;
+
+}
+
+
+
+item=snap.val();
+
+
+
+
+
+const usersid =
+localStorage.getItem("usersid");
+
+
+
+let user={};
+
+
+
+if(usersid){
+
+
+const u =
+await get(
+ref(db,"users_topup/"+usersid)
+);
+
+
+if(u.exists())
+user=u.val();
+
+
+}
+
+
+
+
+
+
+const payList = document.getElementById("paymentList");
+
+async function loadPayment(){
+
+
+const payList =
+document.getElementById("paymentList");
+
+
+
+const snap =
+await get(
+ref(db,"BANK_EWALLET")
+);
+
+
+
+payList.innerHTML="";
+
+
+
+if(!snap.exists()){
+
+payList.innerHTML=
+"<p>Pembayaran belum tersedia</p>";
+
+return;
+
+}
+
+
+
+
+snap.forEach(child=>{
+
+
+const p =
+child.val();
+
+
+
+payList.innerHTML += `
+
+
+<div 
+class="pay-card ${p.maintenance ? "disabled":""}"
+onclick="${
+p.maintenance
+?
+""
+:
+`pilihPayment('${child.key}')`
+}">
+
+
+<img src="${p.logo || ""}">
+
+
+
+<div>
+
+
+<h4>
+${p.namaBank || "-"}
+</h4>
+
+
+
+<p>
+${p.namaRekening || "-"}
+</p>
+
+
+<b>
+${p.noRekening || "-"}
+</b>
+
+
+
+<br>
+
+
+${
+p.maintenance
+?
+"<span class='maint'>Maintenance</span>"
+:
+"<span class='ready'>Tersedia</span>"
+}
+
+
+
+</div>
+
+
+</div>
+
+
+`;
+
+
+
+});
+
+
+}
+
+
+
+
+
+
+window.pilihPayment=(id)=>{
+
+
+selectedPayment=id;
+
+
+
+document
+.querySelectorAll(".pay-card")
+.forEach(x=>{
+
+x.classList.remove("active");
+
+});
+
+
+
+const el =
+event.currentTarget;
+
+
+el.classList.add("active");
+
+
+
+get(
+ref(db,"BANK_EWALLET/"+id)
+)
+.then(s=>{
+
+
+const p=s.val();
+
+
+showPopup(
+"Pembayaran Dipilih",
+`
+<b>${p.namaBank}</b><br>
+${p.noRekening}
+`
+);
+
+
+
+});
+
+
+
+};
+
+
+function showPopup(title,text){
+
+
+const box =
+document.getElementById("popup");
+
+
+const t =
+document.getElementById("popupTitle");
+
+
+const p =
+document.getElementById("popupText");
+
+
+
+if(!box || !t || !p)
+return;
+
+
+
+t.innerHTML=title;
+
+
+p.innerHTML=text;
+
+
+
+box.style.display="flex";
+
+
+}
+
+
+
+content.innerHTML=
+
+
+
+`
+
+<div class="card">
+
+
+<img class="profile"
+
+src="${user.profil ||
+'https://cdn-icons-png.flaticon.com/512/149/149071.png'}">
+
+
+<p>
+
+${user.email || "-"}
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+
+<div class="product">
+
+
+<img src="${item.thumbnail}">
+
+
+<div>
+
+
+<div class="name">
+
+${item.nama}
+
+</div>
+
+
+
+<div class="price">
+
+Rp ${Number(item.harga)
+.toLocaleString("id-ID")}
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h3>
+Detail Pembelian
+</h3>
+
+
+
+<p>
+
+Produk:
+
+<b>
+
+${item.produk?.[produkIndex]?.nama || "-"}
+
+</b>
+
+</p>
+
+
+
+<p>
+
+Harga:
+
+<b>
+
+Rp ${Number(
+item.produk?.[produkIndex]?.harga ||
+item.harga
+)
+.toLocaleString("id-ID")}
+
+</b>
+
+</p>
+
+
+
+<h3>
+
+Total
+
+</h3>
+
+
+<div class="price">
+
+Rp ${Number(
+item.produk?.[produkIndex]?.harga ||
+item.harga
+)
+.toLocaleString("id-ID")}
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div class="card">
+
+
+<h3>
+
+Pembayaran
+
+</h3>
+
+
+<div id="paymentList"></div>
+
+
+</div>
+
+
+`;
+
+loadPayment();
+}
+
+
+
+
+
+
+
+window.pilihBank=(id,el)=>{
+
+
+selectedBank=id;
+
+
+document
+.querySelectorAll(".pay")
+.forEach(x=>
+x.classList.remove("active")
+);
+
+
+
+el.classList.add("active");
+
+
+
+};
+
+
+
+confirmBtn.onclick=()=>{
+
+
+if(!selectedPayment){
+
+showPop(
+"Pilih Pembayaran",
+"Pilih rekening pembayaran dulu"
+);
+
+return;
+}
+
+
+showPop(
+"Konfirmasi",
+`
+Lanjutkan pembayaran?
+<br>
+<b>${item.nama}</b>
+`
+);
+
+
+popOk.onclick=async()=>{
+
+const orderId = await saveHistory();
+
+if(!orderId){
+alert("Gagal membuat pesanan");
+return;
+}
+
+location.href =
+"Menu_pembayaran_mobile.html?id="+orderId;
+
+};
+
+};
+
+load();
+
+
+
+
+
+
+
+async function saveHistory(){
+
+const usersid = localStorage.getItem("usersid");
+
+if(!usersid) return false;
+
+
+// ambil user
+const userSnap = await get(ref(db,"users_topup/"+usersid));
+const user = userSnap.exists() ? userSnap.val() : {};
+
+
+// ambil data payment detail
+const paySnap = await get(ref(db,"BANK_EWALLET/"+selectedPayment));
+const pay = paySnap.exists() ? paySnap.val() : {};
+
+
+const orderRef = push(ref(db,"Histori_top-up_mobile"));
+
+await set(orderRef,{
+
+userId: usersid,
+email: user.email || "-",
+profil: user.profil || "",
+
+
+// produk
+produk: {
+id: id,
+nama: item.nama,
+thumbnail: item.thumbnail
+},
+
+
+// item detail
+item: {
+nama: item.produk?.[produkIndex]?.nama || item.nama,
+harga: Number(item.produk?.[produkIndex]?.harga || item.harga)
+},
+
+
+// payment lengkap
+payment: {
+id: selectedPayment,
+namaBank: pay.namaBank || "-",
+namaRekening: pay.namaRekening || "-",
+noRekening: pay.noRekening || "-",
+logo: pay.logo || ""
+},
+
+
+total: Number(item.produk?.[produkIndex]?.harga || item.harga),
+
+status: "pending",
+read: false,
+
+createdAt: Date.now()
+
+});
+
+return orderRef.key;
+}
+
+</script>
+
+
+</body>
+
+</html>

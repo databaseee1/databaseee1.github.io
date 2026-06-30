@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+
+<title>Admin Game Top Up</title>
+
+
+<style>
+
+body{
+font-family:Poppins,Arial;
+background:#f5f5f5;
+padding:20px;
+}
+
+
+button{
+border:0;
+padding:10px 15px;
+border-radius:10px;
+cursor:pointer;
+}
+
+
+#addBtn{
+background:#00a651;
+color:white;
+}
+
+
+.card{
+background:white;
+padding:15px;
+border-radius:15px;
+margin-top:15px;
+}
+
+
+.card img{
+width:80px;
+height:80px;
+object-fit:cover;
+border-radius:12px;
+}
+
+
+.modal{
+
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.5);
+align-items:center;
+justify-content:center;
+
+}
+
+
+.modal-box{
+
+background:white;
+width:95%;
+max-width:500px;
+padding:20px;
+border-radius:20px;
+max-height:90vh;
+overflow:auto;
+
+}
+
+
+input,textarea{
+
+width:100%;
+padding:10px;
+margin:6px 0;
+border-radius:8px;
+border:1px solid #ddd;
+
+}
+
+
+
+.save{
+background:#008cff;
+color:white;
+}
+
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<h2>Admin Game Top Up</h2>
+
+
+<button id="addBtn">
+Tambah Game
+</button>
+
+
+
+<div id="list"></div>
+
+
+
+
+<!-- MODAL -->
+
+
+<div class="modal" id="modal">
+
+
+<div class="modal-box">
+
+
+<h3 id="modalTitle">
+Tambah Game
+</h3>
+
+
+
+<input id="nama" placeholder="Nama">
+
+<input id="thumbnail" placeholder="Thumbnail URL">
+<input id="harga" placeholder="Harga">
+
+<input id="rating" placeholder="Rating">
+
+
+<input id="reviews" placeholder="Reviews">
+
+<input id="terjual" placeholder="Jumlah Terjual">
+<input id="badge" placeholder="Badge">
+
+
+<input id="verified" placeholder="Verified">
+<input id="penjual" placeholder="Nama Penjual">
+
+
+<h4>Region</h4>
+
+<input id="regionIcon" placeholder="Region Icon">
+
+<input id="regionName" placeholder="Region Name">
+
+
+
+
+<h4>Platform</h4>
+
+<input id="platformIcon" placeholder="Platform Icon">
+
+<input id="platformName" placeholder="Platform Name">
+
+
+
+
+<h4>Type</h4>
+
+
+<input id="typeIcon" placeholder="Type Icon">
+
+<input id="typeName" placeholder="Type Name">
+
+
+
+
+<input id="aktivasi" placeholder="Aktivasi">
+
+
+<textarea id="note" placeholder="Note"></textarea>
+
+
+<input id="caraBeli" placeholder="Cara Beli">
+
+
+<input id="detailEdisi" placeholder="Detail Edisi">
+
+
+
+<textarea id="deskripsi"></textarea>
+
+
+<textarea id="promo"></textarea>
+
+
+
+<button class="save" id="saveBtn">
+Simpan
+</button>
+
+
+
+<button onclick="closeModal()">
+Batal
+</button>
+
+
+
+</div>
+
+</div>
+
+
+
+
+
+<script type="module">
+
+
+import {initializeApp}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+
+import {
+
+getDatabase,
+ref,
+onValue,
+push,
+set,
+update,
+remove
+
+}
+
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+
+
+
+const firebaseConfig={
+
+
+apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+
+authDomain:"users-96dc5.firebaseapp.com",
+
+databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:"users-96dc5"
+
+};
+
+
+
+const app=initializeApp(firebaseConfig);
+
+
+const db=getDatabase(app);
+
+
+
+
+const list=document.getElementById("list");
+
+let editID=null;
+
+
+
+
+
+onValue(
+ref(db,"Game-top-up"),
+snap=>{
+
+
+list.innerHTML="";
+
+
+snap.forEach(c=>{
+
+
+let d=c.val();
+
+
+list.innerHTML+=`
+
+
+<div class="card">
+
+
+<img src="${d.thumbnail}">
+
+
+<h3>${d.nama}</h3>
+
+
+<p>
+Penjual : ${d.penjual || "-"}
+</p>
+
+
+<p>
+${d.region?.name} • ${d.type?.name}
+</p>
+
+
+<p>
+★ ${d.rating}
+</p>
+<p>
+Rp ${d.harga || 0}
+</p>
+<p>
+${d.terjual || 0} terjual
+</p>
+
+
+<button onclick="editGame('${c.key}')">
+Edit
+</button>
+
+
+<button onclick="deleteGame('${c.key}')">
+Hapus
+</button>
+
+
+</div>
+
+
+
+`;
+
+
+
+});
+
+
+});
+
+
+
+
+
+
+function openModal(){
+
+document
+.getElementById("modal")
+.style.display="flex";
+
+}
+
+
+
+window.closeModal=()=>{
+
+document
+.getElementById("modal")
+.style.display="none";
+
+};
+
+
+
+
+
+document
+.getElementById("addBtn")
+.onclick=()=>{
+
+
+if(confirm("Tambah game baru?")){
+
+
+editID=null;
+
+document
+.getElementById("modalTitle")
+.innerHTML="Tambah Game";
+
+
+openModal();
+
+
+}
+
+
+
+};
+
+
+
+
+
+
+window.editGame=(id)=>{
+
+
+if(!confirm("Edit game ini?"))
+return;
+
+
+
+editID=id;
+
+
+
+getData(id);
+
+
+openModal();
+
+
+
+};
+
+
+
+
+
+
+function getData(id){
+
+
+const r=ref(
+db,
+"Game-top-up/"+id
+);
+
+
+
+onValue(r,s=>{
+
+
+let d=s.val();
+
+
+
+nama.value=d.nama;
+
+thumbnail.value=d.thumbnail;
+harga.value = d.harga || "";
+rating.value=d.rating;
+
+reviews.value=d.reviews;
+
+badge.value=d.badge;
+
+verified.value=d.verified;
+penjual.value=d.penjual || "";
+terjual.value = d.terjual || "";
+regionIcon.value=d.region.icon;
+
+regionName.value=d.region.name;
+
+
+platformIcon.value=d.platform.icon;
+
+platformName.value=d.platform.name;
+
+
+typeIcon.value=d.type.icon;
+
+typeName.value=d.type.name;
+
+
+aktivasi.value=d.aktivasi;
+
+note.value=d.note;
+
+caraBeli.value=d.caraBeli;
+
+detailEdisi.value=d.detailEdisi;
+
+deskripsi.value=d.deskripsi;
+
+promo.value=d.promo;
+
+
+
+},{onlyOnce:true});
+
+
+}
+
+
+
+
+
+
+document
+.getElementById("saveBtn")
+.onclick=async()=>{
+
+
+
+if(!confirm("Simpan perubahan?"))
+return;
+
+
+
+
+let data={
+
+
+
+nama:nama.value,
+
+thumbnail:thumbnail.value,
+harga:harga.value,
+rating:rating.value,
+
+reviews:reviews.value,
+terjual:terjual.value,
+badge:badge.value,
+
+verified:verified.value,
+
+penjual:penjual.value,
+
+region:{
+icon:regionIcon.value,
+name:regionName.value
+},
+
+
+
+platform:{
+icon:platformIcon.value,
+name:platformName.value
+},
+
+
+type:{
+icon:typeIcon.value,
+name:typeName.value
+},
+
+
+
+aktivasi:aktivasi.value,
+
+note:note.value,
+
+caraBeli:caraBeli.value,
+
+detailEdisi:detailEdisi.value,
+
+deskripsi:deskripsi.value,
+
+promo:promo.value,
+
+
+createdAt:Date.now()
+
+
+};
+
+
+
+
+
+if(editID){
+
+
+await update(
+ref(db,"Game-top-up/"+editID),
+data
+);
+
+
+}else{
+
+
+await set(
+push(ref(db,"Game-top-up")),
+data
+);
+
+
+}
+
+
+
+alert("Berhasil");
+
+
+closeModal();
+
+
+
+};
+
+
+
+
+
+
+window.deleteGame=async(id)=>{
+
+
+if(!confirm("Hapus game ini?"))
+return;
+
+
+
+await remove(
+ref(db,"Game-top-up/"+id)
+);
+
+
+
+alert("Terhapus");
+
+
+};
+
+
+
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pembayaran</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+body{
+margin:0;
+font-family:Poppins,Arial;
+background:#f5f5f5;
+}
+
+.container{
+max-width:600px;
+margin:auto;
+padding:12px;
+padding-bottom:80px;
+}
+
+.card{
+background:white;
+border-radius:8px;
+padding:15px;
+margin-bottom:12px;
+}
+
+.title{
+font-weight:900;
+font-size:16px;
+}
+
+.sub{
+font-size:13px;
+color:#666;
+margin-top:4px;
+}
+
+.price{
+font-size:22px;
+font-weight:900;
+color:#ff4d00;
+margin-top:6px;
+}
+
+.bank{
+display:flex;
+align-items:center;
+gap:12px;
+margin-top:10px;
+}
+
+.bank img{
+width:50px;
+height:50px;
+object-fit:contain;
+}
+
+.row{
+display:flex;
+justify-content:space-between;
+font-size:13px;
+margin-top:6px;
+}
+
+.copy{
+background:#ff4d00;
+color:white;
+border:none;
+padding:8px 12px;
+border-radius:10px;
+cursor:pointer;
+font-size:12px;
+}
+
+.status{
+background:#fff3e6;
+color:#ff4d00;
+padding:10px;
+border-radius:12px;
+font-weight:700;
+font-size:13px;
+text-align:center;
+}
+
+.paybox{
+border:1px dashed #ddd;
+padding:10px;
+border-radius:12px;
+margin-top:10px;
+}
+
+.small{
+font-size:12px;
+color:#777;
+}
+
+.header{
+background:#ff4d00;
+color:white;
+padding:15px;
+border-radius:0 0 18px 18px;
+text-align:center;
+font-weight:900;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+Menunggu Pembayaran
+</div>
+
+<div class="container" id="content">
+
+<div class="card">Loading...</div>
+
+</div>
+
+<script type="module">
+
+import {
+initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getDatabase,
+ref,
+get,
+update
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+authDomain:"users-96dc5.firebaseapp.com",
+databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId:"users-96dc5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const id = new URLSearchParams(location.search).get("id");
+const content = document.getElementById("content");
+
+let data = null;
+
+async function load(){
+
+const snap = await get(ref(db,"Histori_top-up_mobile/"+id));
+
+if(!snap.exists()){
+content.innerHTML = "<div class='card'>Pesanan tidak ditemukan</div>";
+return;
+}
+
+data = snap.val();
+
+// tandai read = true
+update(ref(db,"Histori_top-up_mobile/"+id),{
+read:true
+});
+
+content.innerHTML = `
+
+<div class="card">
+
+<div class="title">
+${data.item.nama}
+</div>
+
+<div class="sub">
+ID Order: ${id}
+</div>
+
+<div class="price">
+Rp ${Number(data.total).toLocaleString("id-ID")}
+</div>
+
+<div class="status">
+Menunggu Pembayaran
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>Metode Pembayaran</h3>
+
+<div class="bank">
+
+<img src="${data.payment.logo}">
+
+<div>
+
+<b>${data.payment.namaBank}</b>
+<div class="small">${data.payment.namaRekening}</div>
+
+</div>
+
+</div>
+
+<div class="paybox">
+
+<div class="row">
+<span>No Rekening</span>
+<button class="copy" onclick="copyText('${data.payment.noRekening}')">Copy</button>
+</div>
+
+<b>${data.payment.noRekening}</b>
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<h3 style="display:flex;align-items:center;gap:8px;">
+<i class="fa-solid fa-receipt" style="color:#ff4d00;"></i>
+Detail Pesanan
+</h3>
+
+
+<div class="row" style="padding:10px 0;border-bottom:1px dashed #eee;">
+<span style="color:#777;">Produk</span>
+<span style="font-weight:700;text-align:right;max-width:60%;">
+${data.produk.nama}
+</span>
+</div>
+
+
+<div class="row" style="padding:10px 0;border-bottom:1px dashed #eee;">
+<span style="color:#777;">Harga</span>
+<span style="font-weight:900;color:#ff4d00;">
+Rp ${Number(data.item.harga).toLocaleString("id-ID")}
+</span>
+</div>
+
+
+<div class="row" style="padding:10px 0;">
+<span style="color:#777;">Status</span>
+
+<span style="
+background:#fff3e6;
+color:#ff4d00;
+padding:5px 10px;
+border-radius:20px;
+font-size:12px;
+font-weight:800;
+display:inline-flex;
+align-items:center;
+gap:6px;
+">
+
+<i class="fa-solid fa-clock"></i>
+Pending
+
+</span>
+
+</div>
+
+
+
+
+
+
+
+
+<b style="
+font-size:13px;
+display:flex;
+gap:7px;
+align-items:center;
+">
+
+<i class="fa-solid fa-circle-info"
+style="color:#ff4d00;">
+</i>
+
+Keterangan
+
+</b>
+
+
+
+<p style="
+font-size:13px;
+color:#666;
+line-height:1.6;
+margin:8px 0 0;
+">
+
+
+Silahkan lakukan pembayaran sesuai metode yang dipilih.
+Pastikan nominal pembayaran benar agar pesanan dapat diproses.
+
+
+</p>
+
+
+</div>
+
+
+</div>
+
+`;
+
+}
+
+window.copyText = (text)=>{
+navigator.clipboard.writeText(text);
+alert("Disalin: " + text);
+};
+
+load();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Admin Mobile Top Up</title>
+
+
+<style>
+
+body{
+font-family:Poppins,Arial;
+background:#f5f5f5;
+padding:15px;
+}
+
+
+button{
+
+padding:10px;
+border:0;
+border-radius:10px;
+cursor:pointer;
+
+}
+
+
+#addBtn{
+
+background:#ff4d00;
+color:white;
+
+}
+
+
+
+.card{
+
+background:white;
+padding:15px;
+border-radius:18px;
+margin-top:15px;
+
+}
+
+
+
+.card img{
+
+width:80px;
+height:80px;
+object-fit:cover;
+border-radius:12px;
+
+}
+
+
+
+.modal{
+
+display:none;
+position:fixed;
+inset:0;
+background:#0008;
+align-items:center;
+justify-content:center;
+z-index:99;
+
+}
+
+
+
+.box{
+
+background:white;
+width:95%;
+max-width:500px;
+max-height:90vh;
+overflow:auto;
+padding:20px;
+border-radius:20px;
+
+}
+
+
+
+input,textarea{
+
+width:100%;
+padding:10px;
+margin:5px 0;
+
+}
+
+
+
+.save{
+
+background:#00a651;
+color:white;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+
+<h2>
+Admin Top Up Mobile
+</h2>
+
+
+<button id="addBtn">
+Tambah
+</button>
+
+
+<div id="list"></div>
+
+
+
+
+
+<div class="modal" id="modal">
+
+
+<div class="box">
+
+
+<h3 id="title">
+Tambah
+</h3>
+
+
+
+<input id="nama" placeholder="Nama">
+
+
+<input id="thumbnail" placeholder="Thumbnail">
+
+
+<input id="harga" placeholder="Harga">
+
+
+<input id="terjual" placeholder="Terjual">
+
+
+<input id="rating" placeholder="Rating">
+
+
+<input id="ulasan" placeholder="Ulasan">
+
+
+
+<input id="kategori" placeholder="Kategori">
+
+
+<input id="status" placeholder="Status">
+
+
+
+
+
+<h4>Platform</h4>
+
+
+<input id="platformIcon"
+placeholder="Platform Icon">
+
+
+<input id="platformNama"
+placeholder="Platform Nama">
+
+
+
+
+
+<h4>Produk</h4>
+
+
+<div style="margin-top:15px">
+
+<h4>Produk</h4>
+
+<div id="produkList"></div>
+
+
+<button type="button" id="addProduk">
++ Tambah Produk
+</button>
+
+
+</div>
+
+
+
+<input id="caraBeli"
+placeholder="Cara Beli">
+
+
+
+
+
+<button class="save" id="save">
+Simpan
+</button>
+
+
+
+<button onclick="closeModal()">
+Batal
+</button>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<script type="module">
+
+
+
+import {
+
+initializeApp
+
+}
+
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+
+import {
+
+getDatabase,
+ref,
+onValue,
+push,
+set,
+update,
+remove,
+get
+
+}
+
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+
+
+
+
+const firebaseConfig={
+
+
+apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+
+authDomain:"users-96dc5.firebaseapp.com",
+
+databaseURL:
+"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:"users-96dc5"
+
+
+};
+
+
+
+
+
+const app =
+initializeApp(firebaseConfig);
+
+
+
+const db =
+getDatabase(app);
+
+
+
+
+
+const list =
+document.getElementById("list");
+
+
+
+
+let editID=null;
+
+
+
+
+
+
+onValue(
+ref(db,"Top-up game-Mobile"),
+snap=>{
+
+
+list.innerHTML="";
+
+
+
+snap.forEach(c=>{
+
+
+let d=c.val();
+
+
+
+list.innerHTML +=`
+
+
+
+<div class="card">
+
+
+<img src="${d.thumbnail}">
+
+
+<h3>
+
+${d.nama}
+
+</h3>
+
+
+
+<p>
+
+Rp ${Number(d.harga||0)
+.toLocaleString("id-ID")}
+
+</p>
+
+
+
+<p>
+
+★ ${d.rating}
+•
+${d.terjual} terjual
+
+</p>
+
+
+
+
+<button onclick="editData('${c.key}')">
+
+Edit
+
+</button>
+
+
+
+<button onclick="hapus('${c.key}')">
+
+Hapus
+
+</button>
+
+
+
+</div>
+
+
+
+`;
+
+
+
+});
+
+
+
+});
+
+
+
+
+
+const produkList =
+document.getElementById("produkList");
+
+
+document
+.getElementById("addProduk")
+.onclick=()=>{
+
+
+buatFormProduk();
+
+
+};
+
+
+
+
+function buatFormProduk(data={}){
+
+
+let div =
+document.createElement("div");
+
+
+div.className="produk-box";
+
+
+div.style=
+`
+background:#f5f5f5;
+padding:10px;
+border-radius:12px;
+margin-top:10px;
+`;
+
+
+
+div.innerHTML=
+`
+
+<input class="produkLogo"
+placeholder="Logo URL"
+value="${data.logo || ""}">
+
+
+<input class="produkNama"
+placeholder="Nama Produk"
+value="${data.nama || ""}">
+
+
+<input class="produkHarga"
+placeholder="Harga"
+value="${data.harga || ""}">
+
+
+
+<button type="button" onclick="this.parentElement.remove()">
+Hapus
+</button>
+
+`;
+
+
+
+produkList.appendChild(div);
+
+
+}
+
+
+function openModal(){
+
+
+modal.style.display="flex";
+
+}
+
+
+
+window.closeModal=()=>{
+
+
+modal.style.display="none";
+
+
+};
+
+
+
+
+
+
+
+
+
+addBtn.onclick=()=>{
+
+
+if(!confirm("Tambah item baru?"))
+return;
+
+
+
+editID=null;
+
+
+
+title.innerHTML="Tambah";
+
+
+
+clearForm();
+
+
+openModal();
+
+
+
+};
+
+
+
+
+
+
+function clearForm(){
+
+
+document
+.querySelectorAll("input,textarea")
+.forEach(x=>x.value="");
+
+
+}
+
+
+
+
+
+
+
+window.editData=async(id)=>{
+
+
+if(!confirm("Edit item ini?"))
+return;
+
+
+
+editID=id;
+
+
+
+const snap =
+await get(
+ref(db,"Top-up game-Mobile/"+id)
+);
+
+
+
+const d=snap.val();
+
+
+
+
+
+document.getElementById("nama").value =
+d.nama || "";
+
+
+
+document.getElementById("thumbnail").value =
+d.thumbnail || "";
+
+
+
+document.getElementById("harga").value =
+d.harga || "";
+
+
+
+document.getElementById("terjual").value =
+d.terjual || "";
+
+
+
+document.getElementById("rating").value =
+d.rating || "";
+
+
+
+document.getElementById("ulasan").value =
+d.ulasan || "";
+
+
+
+
+document.getElementById("kategori").value =
+d.kategori || "";
+
+
+
+document.getElementById("status").value =
+d.status || "";
+
+
+
+
+
+
+
+document.getElementById("platformIcon").value =
+d.platform?.icon || "";
+
+
+
+document.getElementById("platformNama").value =
+d.platform?.nama || "";
+
+
+
+
+
+
+let produkData = "";
+
+
+
+if(Array.isArray(d.produk)){
+
+
+produkData =
+JSON.stringify(
+d.produk,
+null,
+2
+);
+
+
+}else{
+
+
+produkData =
+d.produk || "";
+
+
+}
+
+
+
+
+produkList.innerHTML="";
+
+
+(d.produk || []).forEach(p=>{
+
+
+buatFormProduk(p);
+
+
+});
+
+
+
+
+document.getElementById("caraBeli").value =
+d.caraBeli || "";
+
+
+
+
+
+
+
+document.getElementById("title").innerHTML =
+"Edit Item";
+
+
+
+openModal();
+
+
+
+};
+
+
+
+
+
+
+save.onclick=async()=>{
+
+
+if(!confirm("Simpan data?"))
+return;
+
+
+
+
+let data={
+
+
+
+
+nama:
+document.getElementById("nama").value,
+
+
+
+thumbnail:
+document.getElementById("thumbnail").value,
+
+
+
+harga:
+Number(
+document.getElementById("harga").value
+),
+
+
+
+terjual:
+Number(
+document.getElementById("terjual").value
+),
+
+
+
+rating:
+document.getElementById("rating").value,
+
+
+
+ulasan:
+document.getElementById("ulasan").value,
+
+
+
+
+kategori:
+document.getElementById("kategori").value,
+
+
+
+status:
+document.getElementById("status").value,
+
+
+
+
+
+
+platform:{
+
+
+icon:
+document.getElementById("platformIcon").value,
+
+
+nama:
+document.getElementById("platformNama").value
+
+
+},
+
+
+
+
+
+
+produk:
+
+
+[
+...document.querySelectorAll(".produk-box")
+]
+.map(box=>{
+
+
+return {
+
+
+logo:
+box.querySelector(".produkLogo").value,
+
+
+
+harga:
+Number(
+box.querySelector(".produkHarga").value
+),
+
+
+
+nama:
+box.querySelector(".produkNama").value
+
+
+
+};
+
+
+}),
+
+
+
+
+
+
+
+caraBeli:
+document.getElementById("caraBeli").value,
+
+
+
+updatedAt:
+Date.now()
+
+
+
+};
+
+
+
+
+
+if(editID){
+
+
+await update(
+
+ref(
+db,
+"Top-up game-Mobile/"+editID
+),
+
+data
+
+);
+
+
+
+}else{
+
+
+await set(
+
+push(
+ref(db,"Top-up game-Mobile")
+),
+
+data
+
+);
+
+
+
+}
+
+
+
+
+
+alert("Berhasil");
+
+
+closeModal();
+
+
+
+};
+
+
+
+
+
+
+
+
+
+window.hapus=async(id)=>{
+
+
+if(!confirm("Hapus item ini?"))
+return;
+
+
+
+await remove(
+
+ref(
+db,
+"Top-up game-Mobile/"+id
+)
+
+);
+
+
+
+alert("Terhapus");
+
+
+
+};
+
+
+
+
+</script>
+
+
+
+</body>
+
+</html>

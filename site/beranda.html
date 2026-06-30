@@ -1407,6 +1407,633 @@ transform:rotate(180deg);
     white-space:nowrap;
 
 }
+
+
+
+.card-container{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    padding:15px;
+}
+
+
+#cardfoinfo93{
+    background:white;
+    border-radius:10px;
+    padding:20px;
+    text-align:center;
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+
+
+#cardfoinfo93 img{
+    width:55px;
+    height:55px;
+    object-fit:contain;
+    margin-bottom:12px;
+}
+
+
+#cardfoinfo93 h3{
+    font-size:16px;
+    margin-bottom:8px;
+}
+
+
+#cardfoinfo93 p{
+    font-size:13px;
+    line-height:1.5;
+    color:#666;
+}
+
+
+/* mobile */
+@media(max-width:600px){
+
+.card-container{
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+}
+
+
+#cardfoinfo93{
+    padding:15px 10px;
+}
+
+}
+
+
+
+
+
+
+.logo-list-box{
+    width:100%;
+    overflow:hidden;
+    padding:10px 0;
+}
+
+
+#logoAppList{
+    display:flex;
+    gap:14px;
+    overflow-x:auto;
+    scroll-behavior:smooth;
+    padding:10px;
+}
+
+
+#logoAppList::-webkit-scrollbar{
+    display:none;
+}
+
+
+.app-logo-item{
+    min-width:55px;
+    border-radius:12px;
+    padding:6px 5px;
+    text-align:center;
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
+    flex-shrink:0;
+}
+
+
+.app-logo-item img{
+    width:28px;
+    height:28px;
+    object-fit:contain;
+    border-radius:7px;
+}
+
+
+.app-logo-item span{
+    display:block;
+    font-size:10px;
+    margin-top:4px;
+    white-space:nowrap;
+}
+
+
+
+
+.logo-skeleton{
+    min-width:55px;
+    height:65px;
+    background:#eee;
+    border-radius:12px;
+    flex-shrink:0;
+    position:relative;
+    overflow:hidden;
+}
+
+
+.logo-skeleton:after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.8),
+        transparent
+    );
+    animation:shimmer 1.2s infinite;
+}
+
+
+@keyframes shimmer{
+    100%{
+        left:100%;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.game-wrapper{
+    position:relative;
+    width:100%;
+    padding:10px;
+}
+
+
+.game-scroll{
+
+    display:flex;
+    gap:12px;
+    overflow-x:auto;
+    scroll-behavior:smooth;
+    scrollbar-width:none;
+
+}
+
+
+.game-scroll::-webkit-scrollbar{
+    display:none;
+}
+
+
+
+.game-card{
+
+    min-width:150px;
+    background:white;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+    flex-shrink:0;
+
+}
+
+
+
+.game-card img.thumb{
+
+    width:100%;
+    height:100px;
+    object-fit:cover;
+
+}
+
+
+
+.game-body{
+    padding:8px;
+}
+
+
+
+.game-platform{
+
+    display:flex;
+    align-items:center;
+    gap:4px;
+    font-size:10px;
+    color:#666;
+
+}
+
+
+
+.game-platform img{
+
+    width:14px;
+    height:14px;
+
+}
+
+
+
+.game-title{
+
+    font-size:12px;
+    font-weight:700;
+    margin:5px 0;
+
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+
+}
+
+
+
+.game-info{
+    display:flex;
+    align-items:center;
+    gap:5px;
+    font-size:10px;
+    color:#777;
+}
+
+
+.mini-info{
+    display:flex;
+    align-items:center;
+    gap:3px;
+}
+
+
+.mini-info img{
+    width:13px;
+    height:13px;
+    object-fit:contain;
+}
+
+
+.game-price{
+
+    font-size:13px;
+    color:#ff4d00;
+    font-weight:800;
+    margin-top:5px;
+
+}
+
+
+
+.game-bottom{
+
+    display:flex;
+    justify-content:space-between;
+    font-size:10px;
+
+}
+
+
+
+.game-arrow{
+
+    position:absolute;
+    top:45%;
+    z-index:5;
+
+    width:25px;
+    height:25px;
+
+    border-radius:50%;
+    border:none;
+
+    background:white;
+    box-shadow:0 2px 10px rgba(0,0,0,.2);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+}
+
+
+
+.game-arrow i{
+
+    font-size:12px;
+
+}
+
+
+
+.game-arrow.left{
+
+    left:5px;
+
+}
+
+
+.game-arrow.right{
+
+    right:5px;
+
+}
+
+
+
+.star{
+    display:flex;
+    align-items:center;
+    gap:3px;
+    font-size:11px;
+    color:#555;
+}
+
+
+.star i{
+    color:#ffc107;
+    font-size:11px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.mobile-wrap{
+
+margin:10px;
+padding:10px;
+border-radius:16px;
+
+}
+
+
+
+.mobile-head{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+}
+
+
+
+.mobile-head h3{
+
+font-size:15px;
+margin:0;
+font-weight:800;
+
+}
+
+
+
+.mobile-head button{
+
+border:0;
+
+background:#f5f5f5;
+
+width:26px;
+height:26px;
+
+border-radius:50%;
+
+font-size:11px;
+
+display:inline-flex;
+align-items:center;
+justify-content:center;
+
+color:#333;
+
+margin-left:5px;
+
+box-shadow:0 2px 8px #0001;
+
+}
+
+
+
+
+
+.mobile-list{
+
+display:flex;
+
+gap:9px;
+
+overflow-x:auto;
+
+scroll-behavior:smooth;
+
+padding-top:10px;
+
+}
+
+
+
+.mobile-list::-webkit-scrollbar{
+
+display:none;
+
+}
+
+
+
+
+
+.mobile-card{
+
+min-width:135px;
+max-width:135px;
+
+background:white;
+
+border-radius:5px;
+
+box-shadow:
+0 3px 12px #0002;
+
+overflow:hidden;
+
+flex-shrink:0;
+
+}
+
+
+
+
+
+.mobile-card img{
+
+width:100%;
+
+height:135px;
+
+object-fit:cover;
+
+display:block;
+
+}
+
+
+
+
+
+.mobile-body{
+
+padding:8px;
+
+}
+
+
+
+
+
+.mobile-title{
+
+font-size:12px;
+
+font-weight:800;
+
+line-height:15px;
+
+height:30px;
+
+overflow:hidden;
+
+}
+
+
+
+
+
+.mobile-price{
+
+color:#ff4d00;
+
+font-weight:900;
+
+font-size:13px;
+
+margin-top:6px;
+
+}
+
+
+
+
+
+.mobile-bottom{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+font-size:10px;
+
+color:#777;
+
+margin-top:7px;
+
+}
+
+
+
+
+
+.mobile-star{
+
+color:#ffae00;
+
+font-size:10px;
+
+}
+
+
+
+
+
+.mobile-loading{
+
+min-width:135px;
+
+height:190px;
+
+border-radius:13px;
+
+
+background:
+
+linear-gradient(
+90deg,
+#eee,
+#fafafa,
+#eee
+);
+
+
+animation:
+load 1s infinite;
+
+}
+
+
+
+
+
+
+
+
+#bud328icon{
+
+display:flex;
+
+gap:5px;
+margin-bottom: -10px;
+margin-top:5px;
+
+}
+
+
+
+#bud328icon img{
+
+width:40px;
+
+height:30px;
+
+object-fit:contain;
+
+}
 </style>
 </head>
 <body>
@@ -1481,6 +2108,15 @@ onclick="slideBanner(1)">
 
 </div>
 
+
+
+<div class="logo-list-box">
+  <div id="logoAppList"></div>
+</div>
+
+
+
+
 <div class="section-line">
 
     <span>
@@ -1539,6 +2175,103 @@ onclick="slideBanner(1)">
 
     </div>
 </section>
+
+
+
+
+
+
+
+
+
+<div class="mobile-wrap">
+
+
+<div class="mobile-head">
+
+<h3>
+Top Up Game Mobile
+</h3>
+
+
+<div>
+
+<button id="mobileLeft">
+<i class="fa-solid fa-chevron-left"></i>
+</button>
+
+
+<button id="mobileRight">
+<i class="fa-solid fa-chevron-right"></i>
+</button>
+
+</div>
+
+
+</div>
+
+
+
+<div id="mobileList"
+class="mobile-list">
+
+
+<div class="mobile-loading"></div>
+<div class="mobile-loading"></div>
+<div class="mobile-loading"></div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-line">
+
+    <span>
+        Game PC Steam
+    </span>
+
+</div>
+
+
+<div class="game-wrapper">
+
+<button class="game-arrow left" id="gameLeft">
+<i class="fa-solid fa-chevron-left"></i>
+</button>
+
+
+<div id="gameList" class="game-scroll"></div>
+
+
+<button class="game-arrow right" id="gameRight">
+<i class="fa-solid fa-chevron-right"></i>
+</button>
+
+</div>
+
+
+
+
+
+
+
 
 
 
@@ -1634,6 +2367,89 @@ dapat melakukan top-up sesuai kebutuhan.
 
 
 </div>
+
+
+
+
+
+
+
+
+
+
+<div class="card-container">
+
+  <div id="cardfoinfo93">
+    <img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782829759/dczmw0p1pjcyp55emuml.png" alt="Tigohost Top-Up">
+    <h3>Top Up Cepat & Mudah</h3>
+    <p>
+      Nikmati layanan Tigohost Top-Up dengan proses cepat,
+      aman, dan praktis untuk kebutuhan digital kamu.
+    </p>
+  </div>
+
+
+  <div id="cardfoinfo93">
+    <img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782829758/akj5svn6tzgllkmehsw3.png" alt="Tigohost Top-Up">
+    <h3>Aman & Terpercaya</h3>
+    <p>
+      Transaksi diproses dengan sistem keamanan terbaik.
+      Saldo dan pembelian kamu lebih nyaman.
+    </p>
+  </div>
+
+
+  <div id="cardfoinfo93">
+    <img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782829890/kbczkaxqqgo9cmjcnpsv.png" alt="Tigohost Top-Up">
+    <h3>Harga Terbaik</h3>
+    <p>
+      Dapatkan harga top up yang kompetitif dengan
+      layanan cepat dan terpercaya.
+    </p>
+  </div>
+
+
+  <div id="cardfoinfo93">
+    <img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782829756/l7dyhuwzbou0t6ozamel.png" alt="Tigohost Top-Up">
+    <h3>Bantuan Pelanggan</h3>
+    <p>
+      Tim support Tigohost siap membantu jika ada
+      pertanyaan terkait transaksi kamu.
+    </p>
+  </div>
+
+
+  <div id="cardfoinfo93">
+    <img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782829757/mtwjlgeqfq9ni24do2si.png" alt="Tigohost Top-Up">
+    <h3>Pembayaran Fleksibel</h3>
+    <p>
+      Pilihan pembayaran yang mudah untuk membuat
+      pengalaman top up lebih nyaman.
+    </p>
+  </div>
+
+
+  <div id="cardfoinfo93">
+    <img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782830005/jftdo118k1prqsynxu7o.png" alt="Tigohost Top-Up">
+    <h3>Mulai Top Up Sekarang</h3>
+    <p>
+      Gunakan Tigohost Top-Up dan nikmati layanan
+      digital dengan cepat kapan saja.
+    </p>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1958,8 +2774,6 @@ Profil Saya
 
 
 
-
-
 <script type="module">
 
 import { initializeApp }
@@ -1970,23 +2784,873 @@ import {
     ref,
     onValue,
     get
+    
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
+
+
 const firebaseConfig = {
-  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
-  authDomain: "users-96dc5.firebaseapp.com",
-  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "users-96dc5"
+
+apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+
+authDomain:"users-96dc5.firebaseapp.com",
+
+databaseURL:
+"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:"users-96dc5"
+
 };
 
+
+
 const app = initializeApp(firebaseConfig);
+
 const db = getDatabase(app);
 
-const appGrid = document.getElementById("appGrid");
-const loading = document.getElementById("loading");
+
+
+const appGrid =
+document.getElementById("appGrid");
+const loading =
+document.getElementById("loading");
 const bannerHot =
 document.getElementById("bannerHot");
+const logoList =
+document.getElementById("logoAppList");
+const gameList =
+document.getElementById("gameList");
+const gameRef =
+ref(db,"Game-top-up");
+
+
+const mobileList =
+document.getElementById("mobileList");
+
+
+
+const mobileRef =
+ref(db,"Top-up game-Mobile");
+
+
+
+
+
+const mobileCache =
+"mobile_game_cache_v1";
+
+
+
+
+
+const fakeMobile=()=>{
+
+
+mobileList.innerHTML=`
+
+<div class="mobile-loading"></div>
+<div class="mobile-loading"></div>
+<div class="mobile-loading"></div>
+
+`;
+
+};
+
+
+
+
+
+fakeMobile();
+
+
+
+
+
+
+
+const renderMobile=(data)=>{
+
+
+mobileList.innerHTML="";
+
+
+
+data.forEach(g=>{
+
+
+mobileList.innerHTML += `
+
+
+
+<div class="mobile-card"
+onclick="openMobile('${g.id}')">
+
+
+<img src="${g.thumbnail}">
+
+
+
+<div class="mobile-body">
+
+
+
+<div class="mobile-title">
+
+${g.nama}
+
+</div>
+
+
+
+
+<div class="mobile-price">
+
+Rp ${Number(g.harga)
+.toLocaleString("id-ID")}
+
+</div>
+
+
+<div id="bud328icon">
+
+
+<img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782852544/tr8qy7ibsjgrogaxcxwo.png">
+
+
+<img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782852546/gxwbyirbmebsdedcqdbi.png">
+
+
+
+</div>
+<div id="bud328icon">
+<img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782856890/bt3oxtfnoxeienyjqgu9.webp">
+
+
+</div>
+
+
+
+
+
+
+
+<div class="mobile-bottom">
+
+
+<span>
+
+${g.terjual || 0} terjual
+
+</span>
+
+
+
+<span class="mobile-star">
+
+★ ${g.rating || "0"}
+
+</span>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+
+`;
+
+});
+
+
+};
+
+
+
+
+
+
+
+
+const oldMobile =
+localStorage.getItem(mobileCache);
+
+
+
+if(oldMobile){
+
+
+renderMobile(
+JSON.parse(oldMobile)
+);
+
+
+}
+
+
+
+
+
+
+
+
+onValue(
+mobileRef,
+snap=>{
+
+
+let arr=[];
+
+
+snap.forEach(c=>{
+
+
+arr.push({
+
+id:c.key,
+...c.val()
+
+});
+
+
+});
+
+
+
+
+localStorage.setItem(
+mobileCache,
+JSON.stringify(arr)
+);
+
+
+
+renderMobile(arr);
+
+
+
+});
+
+
+
+
+
+
+
+
+
+
+document
+.getElementById("mobileLeft")
+.onclick=()=>{
+
+
+mobileList.scrollBy({
+
+left:-180,
+
+behavior:"smooth"
+
+});
+
+
+};
+
+
+
+
+
+
+document
+.getElementById("mobileRight")
+.onclick=()=>{
+
+
+mobileList.scrollBy({
+
+left:180,
+
+behavior:"smooth"
+
+});
+
+
+};
+
+
+
+
+
+window.openMobile=(id)=>{
+
+
+location.href =
+"Halaman_mobile.html?id="+id;
+
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ===========================
+// SKELETON SHOPEE STYLE
+// ===========================
+
+
+function showGameSkeleton(){
+
+
+gameList.innerHTML = `
+
+<div class="game-grid">
+
+${Array.from({length:10}).map(()=>`
+
+<div class="game-card skeleton-card">
+
+
+<div class="skeleton-img"></div>
+
+
+<div class="game-body">
+
+
+<div class="skeleton-line"></div>
+
+<div class="skeleton-line small"></div>
+
+<div class="skeleton-line small"></div>
+
+
+</div>
+
+
+</div>
+
+`).join("")}
+
+
+</div>
+
+`;
+
+}
+
+
+
+showGameSkeleton();
+
+
+
+
+
+// ===========================
+// RENDER GAME
+// ===========================
+
+
+function renderGame(data){
+
+
+
+gameList.innerHTML =
+
+`
+
+<div class="game-grid">
+
+`;
+
+
+
+
+
+data.forEach(g=>{
+
+
+
+let nama =
+(g.nama || "")
+.replace("Try To Get ","")
+.replace("(PC) - Steam GLOBAL","");
+
+
+
+
+
+gameList.innerHTML += `
+
+
+<div class="game-card"
+onclick="openGame('${g.id}')">
+
+
+
+
+
+<img 
+class="thumb"
+src="${g.thumbnail || ""}">
+
+
+
+
+
+<div class="game-body">
+
+
+
+
+
+<div class="game-platform">
+
+
+<img src="${g.platform?.icon || ""}">
+
+
+${g.platform?.name || "-"}
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="game-title">
+
+
+${nama || "Game"}
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="game-info">
+
+
+
+
+
+<div class="mini-info">
+
+
+<img src="${g.region?.icon || ""}">
+
+
+${g.region?.name || "-"}
+
+
+
+</div>
+
+
+
+
+
+<span>•</span>
+
+
+
+
+
+<div class="mini-info">
+
+
+<img src="${g.type?.icon || ""}">
+
+
+${g.type?.name || "-"}
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="game-price">
+
+
+Rp ${Number(g.harga || 0)
+.toLocaleString("id-ID")}
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="game-bottom">
+
+
+
+
+
+
+
+<span>
+
+
+${g.terjual || 0} terjual
+
+
+
+</span>
+
+
+
+
+
+
+
+<span class="star">
+
+Ulasan
+
+<i class="fa-solid fa-star"></i>
+
+
+${g.rating || "0.0"}
+
+
+
+</span>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+
+`;
+
+
+
+});
+
+
+
+gameList.innerHTML +=
+`
+
+</div>
+
+`;
+
+
+
+}
+
+
+
+
+
+// ===========================
+// CACHE KHUSUS GAME
+// ===========================
+
+
+const GAME_CACHE_KEY =
+"gameTopupCache_v1";
+
+
+
+const oldGame =
+localStorage.getItem(GAME_CACHE_KEY);
+
+
+
+if(oldGame){
+
+
+renderGame(
+JSON.parse(oldGame)
+);
+
+
+}
+
+
+
+
+
+
+
+
+// ===========================
+// FIREBASE
+// ===========================
+
+
+onValue(gameRef,(snap)=>{
+
+
+let games=[];
+
+
+
+snap.forEach((child)=>{
+
+
+const g = child.val();
+
+
+
+games.push({
+
+
+id:child.key,
+
+
+...g
+
+
+
+});
+
+
+
+});
+
+
+
+
+
+if(games.length){
+
+
+
+localStorage.setItem(
+
+GAME_CACHE_KEY,
+
+JSON.stringify(games)
+
+);
+
+
+
+
+renderGame(games);
+
+
+
+}
+
+
+
+});
+
+
+
+
+
+
+
+
+// ===========================
+// SLIDER
+// ===========================
+
+
+document
+.getElementById("gameLeft")
+.onclick=()=>{
+
+
+gameList.scrollBy({
+
+left:-180,
+
+behavior:"smooth"
+
+});
+
+
+};
+
+
+
+
+
+
+
+document
+.getElementById("gameRight")
+.onclick=()=>{
+
+
+gameList.scrollBy({
+
+left:180,
+
+behavior:"smooth"
+
+});
+
+
+};
+
+
+
+
+
+
+
+window.openGame = (id)=>{
+
+
+window.location.href =
+
+"Halaman_game.html?id="+id;
+
+
+};
+
+
+
+
+
+
+
+
+
+
+const logoRef = ref(db,"Logo-aplikasi");
+
+// =====================
+// SKELETON LOADING
+// =====================
+function showLogoSkeleton(){
+logoList.innerHTML="";
+for(let i=0;i<10;i++){
+logoList.innerHTML += `
+<div class="logo-skeleton"></div>
+
+`;
+
+}
+
+}
+showLogoSkeleton();
+
+// =====================
+// RENDER DATA FIREBASE
+// =====================
+
+function renderLogo(data){
+logoList.innerHTML="";
+data.forEach(item=>{
+logoList.innerHTML += `
+
+<div class="app-logo-item">
+
+<img src="${item.logo}">
+
+<span>${item.nama || item.aplikasi}</span>
+
+</div>
+
+`;
+});
+}
+
+// =====================
+// FIREBASE LOAD
+// =====================
+onValue(logoRef,(snap)=>{
+let data=[];
+snap.forEach((child)=>{
+const item = child.val();
+if(!item.logo) return;
+data.push({
+logo:item.logo,
+nama:item.nama || item.aplikasi
+
+});
+
+});
+
+if(data.length){
+renderLogo(data);
+
+}
+});
+
+
+
+
+
+
 
 
 
@@ -2448,6 +4112,29 @@ Instan
 
 </span>
 
+
+<span style="
+display:inline-flex;
+align-items:center;
+color:#ff3b30;
+font-size:11px;
+font-weight:700;
+border-radius:12px;
+">
+
+
+<img
+src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782832209/aujuenewjycuan61hfza.png"
+style="
+width:30px;
+height:30px;
+object-fit:contain;
+">
+
+
+
+
+</span>
 
 </div>
 
