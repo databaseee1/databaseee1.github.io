@@ -9,6 +9,42 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
+
+
+
+
+
+*{
+-webkit-tap-highlight-color: transparent;
+}
+
+button,
+a,
+img,
+div{
+-webkit-tap-highlight-color: transparent;
+}
+
+body{
+user-select:none;
+-webkit-user-select:none;
+}
+
+img{
+-webkit-user-drag:none;
+}
+
+input,
+textarea,
+select{
+user-select:text;
+-webkit-user-select:text;
+}
+
+
+
+
+
 *{
     margin:0;
     padding:0;
@@ -527,6 +563,38 @@ async function loadNotifBadge() {
 
 
 
+
+
+
+// PROTEKSI
+document.addEventListener("contextmenu",e=>e.preventDefault());
+document.addEventListener("copy",e=>e.preventDefault());
+document.addEventListener("cut",e=>e.preventDefault());
+document.addEventListener("selectstart",e=>e.preventDefault());
+
+document.addEventListener("dragstart",e=>{
+if(e.target.tagName==="IMG")e.preventDefault();
+});
+
+document.addEventListener("keydown",e=>{
+if(
+(e.ctrlKey&&["s","u","c"].includes(e.key.toLowerCase()))
+||e.key==="F12"
+)e.preventDefault();
+});
+
+
+let lastTouch=0;
+
+document.addEventListener("touchend",e=>{
+let now=Date.now();
+if(now-lastTouch<300)e.preventDefault();
+lastTouch=now;
+},{passive:false});
+
+
+document.addEventListener("gesturestart",e=>e.preventDefault());
+// PROTEKSI
 
 
 
