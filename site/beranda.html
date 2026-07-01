@@ -624,18 +624,8 @@ footer{
     padding:30px;
 }
 
-/* ANIMATION */
 
-.reveal{
-    opacity:0;
-    transform:translateY(80px);
-    transition:all .8s ease;
-}
 
-.reveal.active{
-    opacity:1;
-    transform:translateY(0);
-}
 
 @media(max-width:768px){
 
@@ -725,7 +715,7 @@ font-size:11px;
     background:#5c27fe;
     color:#fff;
     text-decoration:none;
-    padding:10px 18px;
+    padding:5px 10px;
     border-radius:30px;
     font-size:14px;
     font-weight:600;
@@ -761,19 +751,30 @@ font-size:11px;
 
 
 
-
-
 .banner-box{
 
 position:relative;
 
-max-width:1200px;
+max-width:1600px;
 
-margin:30px auto;
-margin-top: 20px;
-padding:0 20px;
+margin:25px auto;
+
+padding:0 0px;
 
 }
+
+
+
+.banner{
+
+flex:0 0 calc(100% - 0px);
+
+height:270px;
+
+border-radius:24px;
+
+}
+
 
 
 .banner-wrapper{
@@ -783,12 +784,16 @@ display:flex;
 overflow-x:auto;
 
 scroll-behavior:smooth;
-
-gap:20px;
+    margin-bottom: -60px;
+gap:16px;
 
 scroll-snap-type:x mandatory;
 
+padding:5px 0 15px;
+
 }
+
+
 
 .banner-wrapper::-webkit-scrollbar{
 
@@ -797,24 +802,39 @@ display:none;
 }
 
 
+
+
 .banner{
 
-flex:0 0 100%;
+flex:0 0 calc(100% - 10px);
 
-scroll-snap-align:start;
+scroll-snap-align:center;
 
-height:220px;
+height:270px;
 
-border-radius:25px;
+border-radius:24px;
 
 overflow:hidden;
 
 cursor:pointer;
 
+background:white;
+
 box-shadow:
-0 10px 30px rgba(0,0,0,.15);
+0 12px 35px rgba(0,0,0,.18);
+
+transition:.3s;
 
 }
+
+
+
+.banner:hover{
+
+transform:translateY(-3px);
+
+}
+
 
 
 
@@ -832,10 +852,8 @@ display:block;
 
 
 
-/* tombol */
 
 .banner-btn{
-
 
 position:absolute;
 
@@ -843,9 +861,9 @@ top:50%;
 
 transform:translateY(-50%);
 
-width:45px;
+width:48px;
 
-height:45px;
+height:48px;
 
 border:none;
 
@@ -853,15 +871,22 @@ border-radius:50%;
 
 background:white;
 
-box-shadow:0 5px 15px #0003;
+box-shadow:
+0 8px 20px #0003;
 
 cursor:pointer;
 
 z-index:5;
 
-font-size:18px;
+font-size:22px;
 
 color:#5c27fe;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
 
 }
 
@@ -869,7 +894,7 @@ color:#5c27fe;
 
 .banner-prev{
 
-left:30px;
+left:-5px;
 
 }
 
@@ -877,39 +902,9 @@ left:30px;
 
 .banner-next{
 
-right:30px;
+right:-5px;
 
 }
-
-
-
-@media(max-width:768px){
-
-.banner{
-
-height:140px;
-
-}
-
-
-
-.banner-btn{
-
-width:35px;
-
-height:35px;
-
-font-size:14px;
-
-}
-
-
-
-}
-
-
-
-
 
 
 
@@ -920,13 +915,16 @@ font-size:14px;
 
 min-width:100%;
 
-height:220px;
+height:270px;
+
+border-radius:24px;
 
 background:
+
 linear-gradient(
 90deg,
 #eee,
-#f7f7f7,
+#fafafa,
 #eee
 );
 
@@ -934,13 +932,79 @@ background-size:200% 100%;
 
 animation:loading 1.3s infinite;
 
-border-radius:25px;
+}
+
+
+
+.banner-box {
+
+    margin-top: 100px;
+}
+
+@media(max-width:768px){
+
+
+.banner-box{
+
+padding:0 8px;
+margin-top: 100px;
+
+
+
+}
+
+
+
+.banner{
+
+height:190px;
+
+flex:0 0 100%;
+
+border-radius:20px;
+
+}
+
+
+
+.banner-btn{
+
+width:36px;
+
+height:36px;
+
+font-size:16px;
+
+}
+
+
+
+.banner-prev{
+
+left:8px;
+
+}
+
+
+
+.banner-next{
+
+right:8px;
 
 }
 
 
 
 
+.banner.skeleton{
+
+height:190px;
+
+}
+
+
+
+}
 
 
 
@@ -1472,6 +1536,7 @@ transform:rotate(180deg);
     width:100%;
     overflow:hidden;
     padding:10px 0;
+        margin-top: -30px;
 }
 
 
@@ -1785,9 +1850,15 @@ transform:rotate(180deg);
 
 .mobile-wrap{
 
-margin:10px;
 padding:10px;
-border-radius:16px;
+
+background-image:url("assets/images/oxv5369v4qfngzo8a9mkx.png");
+
+background-size:cover;
+
+background-position:center;
+border-radius: 4px;
+background-repeat:no-repeat;
 
 }
 
@@ -1808,6 +1879,7 @@ align-items:center;
 font-size:15px;
 margin:0;
 font-weight:800;
+    color: #fff;
 
 }
 
@@ -2034,6 +2106,242 @@ height:30px;
 object-fit:contain;
 
 }
+
+
+
+
+
+
+
+
+
+.roblox-box{
+
+position:relative;
+
+margin:20px 12px;
+
+padding:18px 16px 14px;
+
+border-radius:22px 0 20px 0;
+
+overflow:hidden;
+
+background:#000;
+
+color:white;
+
+box-shadow:
+0 10px 30px #0004;
+
+}
+
+
+
+
+
+.roblox-box::before{
+
+content:"";
+
+position:absolute;
+
+inset:0;
+
+background:
+
+linear-gradient(
+90deg,
+rgba(0,0,0,.75),
+rgba(0,0,0,.35)
+),
+
+url("assets/images/tigohosttop-up.webp");
+
+
+background-size:cover;
+
+background-position:center;
+
+z-index:0;
+
+}
+
+
+
+
+
+.roblox-box::after{
+
+content:"";
+
+position:absolute;
+
+right:0;
+
+bottom:0;
+
+width:250px;
+
+height:120px;
+
+background:#0c85ff;
+
+clip-path:polygon(
+100% 0,
+100% 100%,
+0 100%
+);
+
+z-index:2;
+
+}
+
+
+
+
+.roblox-box>*{
+
+position:relative;
+
+z-index:2;
+
+}
+
+
+
+.roblox-title{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:8px;
+
+background:#0c85ff;
+
+padding:8px 45px 8px 14px;
+
+font-weight:900;
+
+font-size:15px;
+
+clip-path:
+polygon(
+0 0,
+92% 0,
+100% 100%,
+0 100%
+);
+
+margin-bottom:15px;
+margin-left:-16px;
+padding-left:28px;
+}
+
+
+
+.roblox-grid{
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:14px;
+
+}
+
+
+
+.roblox-item{
+
+text-align:center;
+
+font-size:11px;
+
+font-weight:700;
+
+}
+
+
+
+.roblox-item img{
+
+width:70px;
+
+height:70px;
+
+border-radius:12px;
+
+object-fit:cover;
+
+display:block;
+
+margin:auto;
+
+margin-bottom:6px;
+
+box-shadow:
+0 5px 15px #0005;
+
+}
+
+
+
+
+.roblox-more{
+
+width:100%;
+
+margin-top:16px;
+
+height:36px;
+
+border-radius:10px;
+
+border:1px solid #ffffff88;
+
+background:#ffffff22;
+
+color:white;
+
+font-weight:800;
+
+}
+
+
+
+@media(max-width:600px){
+
+
+.roblox-grid{
+
+grid-template-columns:repeat(4,1fr);
+
+gap:10px;
+
+}
+
+
+
+.roblox-item img{
+
+width:55px;
+
+height:55px;
+
+}
+
+
+
+.roblox-item{
+
+font-size:10px;
+
+}
+
+
+}
 </style>
 </head>
 <body>
@@ -2073,11 +2381,6 @@ object-fit:contain;
     </div>
 </header>
 
-
-
-<section id="topup">
-    <div class="container">
-
 <div class="banner-box">
 
 
@@ -2107,6 +2410,11 @@ onclick="slideBanner(1)">
 
 
 </div>
+
+
+<section id="topup">
+    <div class="container">
+
 
 
 
@@ -2252,19 +2560,165 @@ class="mobile-list">
 
 <div class="game-wrapper">
 
-<button class="game-arrow left" id="gameLeft">
+<button class="game-arrow left" id="gameLeft1">
 <i class="fa-solid fa-chevron-left"></i>
 </button>
 
 
-<div id="gameList" class="game-scroll"></div>
+<div id="gameList1" class="game-scroll"></div>
 
 
-<button class="game-arrow right" id="gameRight">
+<button class="game-arrow right" id="gameRight1">
 <i class="fa-solid fa-chevron-right"></i>
 </button>
 
 </div>
+
+
+
+
+<div class="game-wrapper">
+
+<button class="game-arrow left" id="gameLeft2">
+<i class="fa-solid fa-chevron-left"></i>
+</button>
+
+
+<div id="gameList2" class="game-scroll"></div>
+
+
+<button class="game-arrow right" id="gameRight2">
+<i class="fa-solid fa-chevron-right"></i>
+</button>
+
+</div>
+
+
+
+
+
+<div class="roblox-box">
+
+
+<div class="roblox-title">
+<i class="fa-solid fa-gamepad"></i>
+Top Rbl Games
+</div>
+
+
+
+<div class="roblox-grid">
+
+
+<div class="roblox-item">
+
+<img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782861961/b9n8gbctpe8xxah7vfpr.webp">
+
+<span>
+Fish It!
+</span>
+
+</div>
+
+
+<div class="roblox-item">
+
+<img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782861967/vpywys1yw0dls5uipm6i.webp">
+
+<span>
+Blox Fruits
+</span>
+
+</div>
+
+
+<div class="roblox-item">
+
+<img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782862003/aauif3jad3a7xevdyhkm.webp">
+
+<span>
+Escape Tsunami
+</span>
+
+</div>
+
+
+<div class="roblox-item">
+
+<img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782862020/qonmona4hx3tgwvexwx6.webp">
+
+<span>
+Fisch
+</span>
+
+</div>
+
+
+<div class="roblox-item">
+
+<img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782862208/was7ccsfoud4w5fsjvux.webp">
+
+<span>
+Steal A Brainrot
+</span>
+
+</div>
+
+
+
+<div class="roblox-item">
+
+<img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782862223/vse7bbimbxttkzlzmol0.webp">
+
+<span>
+Drag Drive Simulator
+</span>
+
+</div>
+
+
+
+<div class="roblox-item">
+
+<img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782862272/jxumvpqmrxd0rqqmqzj5.webp">
+
+<span>
+Grow A Garden
+</span>
+
+</div>
+
+
+
+<div class="roblox-item">
+
+<img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782862294/nzl4xhvnyn9wpsmb9aiz.webp">
+
+<span>
+Catch And Tame!
+</span>
+
+</div>
+
+
+</div>
+
+
+
+<button class="roblox-more">
+
+Populer Roblox --------
+<i class="fa-solid fa-chevron-right"></i>
+
+</button>
+
+
+</div>
+
+
+
+
+
 
 
 
@@ -3118,15 +3572,25 @@ location.href =
 // SKELETON SHOPEE STYLE
 // ===========================
 
-
 function showGameSkeleton(){
 
 
-gameList.innerHTML = `
+const gameList1 =
+document.getElementById("gameList1");
+
+
+const gameList2 =
+document.getElementById("gameList2");
+
+
+
+let skeleton = `
 
 <div class="game-grid">
 
+
 ${Array.from({length:10}).map(()=>`
+
 
 <div class="game-card skeleton-card">
 
@@ -3149,12 +3613,25 @@ ${Array.from({length:10}).map(()=>`
 
 </div>
 
+
 `).join("")}
 
 
 </div>
 
 `;
+
+
+
+if(gameList1)
+gameList1.innerHTML = skeleton;
+
+
+
+if(gameList2)
+gameList2.innerHTML = skeleton;
+
+
 
 }
 
@@ -3170,12 +3647,31 @@ showGameSkeleton();
 // RENDER GAME
 // ===========================
 
-
 function renderGame(data){
 
 
+let list1 =
+document.getElementById("gameList1");
 
-gameList.innerHTML =
+
+let list2 =
+document.getElementById("gameList2");
+
+
+
+let latestData =
+[...data]
+.sort((a,b)=>{
+
+return (b.createdAt || 0) - (a.createdAt || 0);
+
+});
+
+
+function render(target,list){
+
+
+target.innerHTML =
 
 `
 
@@ -3186,9 +3682,7 @@ gameList.innerHTML =
 
 
 
-
-data.forEach(g=>{
-
+list.forEach(g=>{
 
 
 let nama =
@@ -3200,11 +3694,12 @@ let nama =
 
 
 
-gameList.innerHTML += `
+target.innerHTML += `
 
 
 <div class="game-card"
 onclick="openGame('${g.id}')">
+
 
 
 
@@ -3218,7 +3713,9 @@ src="${g.thumbnail || ""}">
 
 
 
+
 <div class="game-body">
+
 
 
 
@@ -3227,14 +3724,21 @@ src="${g.thumbnail || ""}">
 <div class="game-platform">
 
 
+
 <img src="${g.platform?.icon || ""}">
+
 
 
 ${g.platform?.name || "-"}
 
 
 
+
+
 </div>
+
+
+
 
 
 
@@ -3245,10 +3749,14 @@ ${g.platform?.name || "-"}
 <div class="game-title">
 
 
+
 ${nama || "Game"}
 
 
+
 </div>
+
+
 
 
 
@@ -3264,17 +3772,27 @@ ${nama || "Game"}
 
 
 
+
+
+
 <div class="mini-info">
 
 
+
 <img src="${g.region?.icon || ""}">
+
 
 
 ${g.region?.name || "-"}
 
 
 
+
+
 </div>
+
+
+
 
 
 
@@ -3286,17 +3804,27 @@ ${g.region?.name || "-"}
 
 
 
+
+
+
 <div class="mini-info">
 
 
+
 <img src="${g.type?.icon || ""}">
+
 
 
 ${g.type?.name || "-"}
 
 
 
+
+
 </div>
+
+
+
 
 
 
@@ -3315,12 +3843,17 @@ ${g.type?.name || "-"}
 <div class="game-price">
 
 
+
 Rp ${Number(g.harga || 0)
 .toLocaleString("id-ID")}
 
 
 
+
+
+
 </div>
+
 
 
 
@@ -3337,14 +3870,21 @@ Rp ${Number(g.harga || 0)
 
 
 
+
 <span>
+
 
 
 ${g.terjual || 0} terjual
 
 
 
+
+
+
 </span>
+
+
 
 
 
@@ -3354,12 +3894,20 @@ ${g.terjual || 0} terjual
 
 <span class="star">
 
+
+
 Ulasan
+
+
 
 <i class="fa-solid fa-star"></i>
 
 
+
 ${g.rating || "0.0"}
+
+
+
 
 
 
@@ -3371,13 +3919,6 @@ ${g.rating || "0.0"}
 
 
 
-</div>
-
-
-
-
-
-
 
 </div>
 
@@ -3387,7 +3928,21 @@ ${g.rating || "0.0"}
 
 
 
+
+
 </div>
+
+
+
+
+
+
+
+
+
+</div>
+
+
 
 
 
@@ -3399,7 +3954,8 @@ ${g.rating || "0.0"}
 
 
 
-gameList.innerHTML +=
+target.innerHTML +=
+
 `
 
 </div>
@@ -3413,6 +3969,90 @@ gameList.innerHTML +=
 
 
 
+render(list1,data);
+
+
+render(list2,latestData);
+
+
+
+const gameList1 =
+document.getElementById("gameList1");
+
+
+const gameList2 =
+document.getElementById("gameList2");
+
+
+
+const gameLeft1 =
+document.getElementById("gameLeft1");
+
+
+const gameRight1 =
+document.getElementById("gameRight1");
+
+
+const gameLeft2 =
+document.getElementById("gameLeft2");
+
+
+const gameRight2 =
+document.getElementById("gameRight2");
+
+
+
+
+
+if(gameLeft1){
+
+gameLeft1.onclick=()=>{
+
+gameList1.scrollLeft -=300;
+
+};
+
+}
+
+
+
+if(gameRight1){
+
+gameRight1.onclick=()=>{
+
+gameList1.scrollLeft +=300;
+
+};
+
+}
+
+
+
+
+
+if(gameLeft2){
+
+gameLeft2.onclick=()=>{
+
+gameList2.scrollLeft -=300;
+
+};
+
+}
+
+
+
+
+if(gameRight2){
+
+gameRight2.onclick=()=>{
+
+gameList2.scrollLeft +=300;
+
+};
+
+}
+}
 
 // ===========================
 // CACHE KHUSUS GAME
@@ -3515,19 +4155,45 @@ renderGame(games);
 
 
 
-
-
 // ===========================
 // SLIDER
 // ===========================
 
 
-document
-.getElementById("gameLeft")
-.onclick=()=>{
+const gameList1 =
+document.getElementById("gameList1");
 
 
-gameList.scrollBy({
+const gameList2 =
+document.getElementById("gameList2");
+
+
+
+const gameLeft1 =
+document.getElementById("gameLeft1");
+
+
+const gameRight1 =
+document.getElementById("gameRight1");
+
+
+const gameLeft2 =
+document.getElementById("gameLeft2");
+
+
+const gameRight2 =
+document.getElementById("gameRight2");
+
+
+
+
+
+if(gameLeft1){
+
+gameLeft1.onclick=()=>{
+
+
+gameList1.scrollBy({
 
 left:-180,
 
@@ -3538,18 +4204,17 @@ behavior:"smooth"
 
 };
 
+}
 
 
 
 
+if(gameRight1){
+
+gameRight1.onclick=()=>{
 
 
-document
-.getElementById("gameRight")
-.onclick=()=>{
-
-
-gameList.scrollBy({
+gameList1.scrollBy({
 
 left:180,
 
@@ -3559,6 +4224,52 @@ behavior:"smooth"
 
 
 };
+
+}
+
+
+
+
+
+if(gameLeft2){
+
+gameLeft2.onclick=()=>{
+
+
+gameList2.scrollBy({
+
+left:-180,
+
+behavior:"smooth"
+
+});
+
+
+};
+
+}
+
+
+
+
+
+if(gameRight2){
+
+gameRight2.onclick=()=>{
+
+
+gameList2.scrollBy({
+
+left:180,
+
+behavior:"smooth"
+
+});
+
+
+};
+
+}
 
 
 
@@ -3575,12 +4286,6 @@ window.location.href =
 
 
 };
-
-
-
-
-
-
 
 
 
