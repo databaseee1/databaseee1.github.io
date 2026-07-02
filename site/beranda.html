@@ -106,10 +106,19 @@ html{
     scroll-behavior:smooth;
 }
 
-body{
-    background:#eae1f2;
-    color:#222;
-    overflow-x:hidden;
+body {
+    background-color: #eae1f2;
+
+background-image: 
+    linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+    background-size: 24px 24px;
+
+    color: #222;
+    overflow-x: hidden;
+    margin: 0 auto;
+
+
 }
 
 /* HEADER */
@@ -356,9 +365,8 @@ line-height:1.8;
 /* TOPUP */
 
 .container{
-    max-width:1200px;
+    max-width:2500px;
     margin:auto;
-    padding:70px 20px;
 }
 
 .title{
@@ -376,14 +384,95 @@ line-height:1.8;
     margin-top:10px;
 }
 
+.app-slider{
+position:relative;
+width:100%;
+}
+
+
 .app-grid{
 
-display:grid;
-
-grid-template-columns:
-repeat(auto-fit,minmax(210px,1fr));
+display:flex;
 
 gap:20px;
+
+overflow-x:auto;
+
+scroll-behavior:smooth;
+    margin-bottom: 20px;
+padding:10px 0;
+
+}
+
+
+.app-grid::-webkit-scrollbar{
+display:none;
+}
+
+
+
+.app-card,
+.fake-card{
+
+min-width:210px;
+
+max-width:210px;
+
+flex:0 0 210px;
+
+}
+
+
+
+/* tombol */
+
+.app-arrow{
+
+position:absolute;
+
+top:45%;
+
+transform:translateY(-50%);
+
+width:40px;
+
+height:40px;
+
+border:0;
+
+border-radius:50%;
+
+background:white;
+
+box-shadow:0 5px 15px #0003;
+
+color:#5c27fe;
+
+z-index:20;
+
+cursor:pointer;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+}
+
+
+
+.app-left{
+
+left:-5px;
+
+}
+
+
+
+.app-right{
+
+right:-5px;
 
 }
 
@@ -398,13 +487,9 @@ overflow:hidden;
 text-decoration:none;
 
 color:#222;
-
-box-shadow:
-0 8px 25px rgba(0,0,0,.08);
-
 border:1px solid #5c27fe;
 
-transition:.25s;
+transition:15.5s;
 
 position:relative;
 
@@ -1342,7 +1427,7 @@ align-items:center;
 
 cursor:pointer;
 
-font-weight:700;
+font-weight:500;
 
 color:#222;
 
@@ -1426,7 +1511,7 @@ justify-content:space-between;
 
 cursor:pointer;
 
-font-weight:700;
+font-weight:500;
 
 color:#222;
 
@@ -1509,21 +1594,89 @@ transform:rotate(180deg);
 }
 
 
-
 .card-container{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:15px;
-    padding:15px;
+
+display:flex;
+
+gap:15px;
+margin-top: 20px;
+overflow-x:auto;
+
+scroll-behavior:smooth;
+
 }
 
 
+.card-container::-webkit-scrollbar{
+display:none;
+}
+
+.info-slider{
+
+position:relative;
+
+}
+
+
+
+.info-arrow{
+
+position:absolute;
+
+top:45%;
+
+transform:translateY(-50%);
+
+width:38px;
+
+height:38px;
+
+border:0;
+
+border-radius:50%;
+
+background:white;
+
+box-shadow:0 5px 15px #0003;
+
+color:#5c27fe;
+
+z-index:5;
+
+}
+
+
+
+.info-left{
+
+left:5px;
+
+}
+
+
+
+.info-right{
+
+right:5px;
+
+}
+
 #cardfoinfo93{
-    background:white;
-    border-radius:10px;
-    padding:20px;
-    text-align:center;
-    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+min-width:230px;
+
+flex:0 0 230px;
+
+background:white;
+
+border-radius:18px;
+
+padding:20px;
+
+text-align:center;
+
+box-shadow:0 8px 25px rgba(0,0,0,.08);
+
 }
 
 
@@ -1582,6 +1735,7 @@ transform:rotate(180deg);
     overflow-x:auto;
     scroll-behavior:smooth;
     padding:10px;
+        margin-top: 30px;
 }
 
 
@@ -1810,8 +1964,8 @@ transform:rotate(180deg);
     top:45%;
     z-index:5;
 
-    width:25px;
-    height:25px;
+    width:40px;
+    height:40px;
 
     border-radius:50%;
     border:none;
@@ -1985,8 +2139,6 @@ background:white;
 
 border-radius:5px;
 
-box-shadow:
-0 3px 12px #0002;
 
 overflow:hidden;
 
@@ -2236,11 +2388,34 @@ z-index:2;
 
 
 
-.roblox-box>*{
+.roblox-box>*:not(.trend-text){
 
 position:relative;
 
 z-index:2;
+
+}
+
+
+.trend-text{
+
+position:absolute;
+
+right:25px;
+
+bottom:20px;
+
+color:white;
+
+font-size:14px;
+
+font-weight:900;
+
+letter-spacing:1px;
+
+z-index:5;
+
+font-family:Poppins,Arial;
 
 }
 
@@ -2378,6 +2553,207 @@ font-size:10px;
 
 
 }
+
+
+
+.section-title{
+display:inline-flex;
+align-items:center;
+background:#0c85ff;
+color:white;
+font-size:15px;
+font-weight:900;
+padding:8px 35px 8px 18px;
+margin:15px 0 15px 0;
+position:relative;
+font-family:Poppins,Arial;
+z-index:1;
+}
+
+/* KEPALA TITLE (yang kamu sudah punya) */
+.section-title::after{
+content:"";
+position:absolute;
+left:84%;
+top:0;
+height:100%;
+width:calc(100vw - 100%);
+background:#cbd4ff;
+clip-path:polygon(
+15px 0,
+100% 0,
+100% 100%,
+0 100%
+);
+z-index:-1;
+}
+
+/* 🔥 GARIS PANJANG DI ATAS (LEFT SIDE) */
+.section-title::before{
+content:"";
+position:absolute;
+top:-2px;              /* posisinya di atas title */
+left:-100vw;           /* mulai dari jauh kiri */
+width:200vw;           /* panjang banget sampai kanan */
+height:3px;            /* tebal garis */
+background:#0c85ff;
+z-index:0;
+}
+
+
+#voucherList{
+
+display:flex;
+
+gap:12px;
+
+overflow-x:auto;
+
+padding:5px 12px 15px;
+
+}
+
+
+
+#voucherList::-webkit-scrollbar{
+
+display:none;
+
+}
+
+
+
+#voucherList .mobile-card{
+
+min-width:50px;
+
+max-width:150px;
+
+border-radius:5px;
+
+}
+
+
+
+#voucherList .thumb{
+
+height:65px;
+width:65px;
+
+display:block;
+
+margin:10px auto;
+
+object-fit:cover;
+
+border-radius:12px;
+
+}
+
+
+#voucherList .mobile-body{
+
+padding:10px;
+
+}
+
+
+
+#voucherList .mobile-title{
+
+font-size:11px;
+
+font-weight:800;
+
+height:34px;
+
+overflow:hidden;
+
+}
+
+
+
+#voucherList .mobile-price{
+
+font-size:13px;
+
+font-weight:900;
+
+}
+
+
+#voucherList .voucher-badge{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:5px;
+
+font-size:10px;
+
+padding:4px 8px;
+
+margin-top:5px;
+
+}
+
+
+.voucher-badge img{
+
+width:18px;
+
+height:18px;
+
+object-fit:contain;
+
+}
+
+
+.sectionrop{
+display:inline-flex;
+align-items:center;
+background:#0c85ff;
+color:white;
+font-size:15px;
+font-weight:900;
+padding:8px 35px 8px 18px;
+margin:15px 0;
+position:relative;
+font-family:Poppins,Arial;
+z-index:1;
+}
+
+/* EKOR KANAN */
+.sectionrop::after{
+content:"";
+position:absolute;
+left:89%;
+top:0;
+height:100%;
+width:calc(100vw - 100%);
+background:#cbd4ff;
+clip-path:polygon(
+15px 0,
+100% 0,
+100% 100%,
+0 100%
+);
+z-index:-1;
+}
+
+/* GARIS PANJANG DI ATAS */
+.sectionrop::before{
+content:"";
+position:absolute;
+top:-2px;
+left:-100vw;
+width:200vw;
+height:3px;
+background:#0c85ff;
+z-index:0;
+}
+
 </style>
 </head>
 <body>
@@ -2385,10 +2761,10 @@ font-size:10px;
 <header>
     <div class="nav">
 
-        <div class="logo">
-            <img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782573190/vqp0oxzbjiwwmvpbn9yl.jpg">
-            <h2 style="color: #fff;">PT AGENCY TIGOHOST INDONESIA</h2>
-        </div>
+<div class="logo" onclick="location.reload()">
+    <img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782573190/vqp0oxzbjiwwmvpbn9yl.jpg">
+    <h2 style="color: #fff;">PT AGENCY TIGOHOST INDONESIA</h2>
+</div>
 
         <div class="menu">
             <a href="#">Beranda</a>
@@ -2416,6 +2792,8 @@ font-size:10px;
 
     </div>
 </header>
+
+
 
 <div class="banner-box">
 
@@ -2461,7 +2839,7 @@ onclick="slideBanner(1)">
 
 
 
-<div class="section-line">
+<div class="sectionrop">
 
     <span>
         Menu Aplikasi
@@ -2474,6 +2852,22 @@ onclick="slideBanner(1)">
         <div id="loading" class="loading">
             Memuat aplikasi...
         </div>
+
+
+
+
+
+
+<div class="app-slider">
+
+
+<button class="app-arrow app-left" onclick="appSliderLeft()">
+
+<i class="fa-solid fa-chevron-left"></i>
+
+</button>
+
+
 
 <div class="app-grid" id="appGrid">
 
@@ -2488,6 +2882,15 @@ onclick="slideBanner(1)">
 
 </div>
 
+<div class="fake-card">
+
+<div class="skeleton fake-logo"></div>
+
+<div class="skeleton fake-text"></div>
+
+<div class="skeleton fake-price"></div>
+
+</div>
 
 
 <div class="fake-card">
@@ -2500,26 +2903,13 @@ onclick="slideBanner(1)">
 
 </div>
 
-
-
-<div class="fake-card">
-
-<div class="skeleton fake-logo"></div>
-
-<div class="skeleton fake-text"></div>
-
-<div class="skeleton fake-price"></div>
-
 </div>
+<button class="app-arrow app-right" onclick="appSliderRight()">
 
+<i class="fa-solid fa-chevron-right"></i>
 
+</button>
 </div>
-
-
-
-    </div>
-</section>
-
 
 
 
@@ -2613,6 +3003,23 @@ class="mobile-list">
 
 
 
+
+
+<h3 class="section-title">
+Voucher
+</h3>
+
+<div id="voucherList" class="game-scroll"></div>
+
+
+
+
+
+
+
+
+
+
 <div class="game-wrapper">
 
 <button class="game-arrow left" id="gameLeft2">
@@ -2641,7 +3048,9 @@ class="mobile-list">
 Top Rbl Games
 </div>
 
-
+<div class="trend-text">
+TRENDING APP
+</div>
 
 <div class="roblox-grid">
 
@@ -2804,6 +3213,42 @@ Apa itu Tigohost Top-Up?
 
 
 
+<div class="game-info"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div id="tigoInfoContent22">
 
 
@@ -2864,6 +3309,14 @@ dapat melakukan top-up sesuai kebutuhan.
 
 
 
+
+
+<div class="info-slider">
+
+
+<button class="info-arrow info-left" onclick="infoSliderLeft()">
+<i class="fa-solid fa-chevron-left"></i>
+</button>
 
 
 
@@ -2931,6 +3384,13 @@ dapat melakukan top-up sesuai kebutuhan.
 </div>
 
 
+<button class="info-arrow info-right" onclick="infoSliderRight()">
+<i class="fa-solid fa-chevron-right"></i>
+</button>
+
+
+
+</div>
 
 
 
@@ -3311,6 +3771,10 @@ const logoList =
 document.getElementById("logoAppList");
 const gameList =
 document.getElementById("gameList");
+
+const voucherList =
+document.getElementById("voucherList");
+
 const gameRef =
 ref(db,"Game-top-up");
 
@@ -3365,7 +3829,7 @@ const renderMobile=(data)=>{
 mobileList.innerHTML="";
 
 
-
+voucherList.innerHTML="";
 data.forEach(g=>{
 
 
@@ -3456,6 +3920,69 @@ ${g.terjual || 0} terjual
 
 
 `;
+
+
+
+if(g.kategori === "Voucher"){
+
+
+voucherList.innerHTML += `
+
+
+<div class="mobile-card"
+onclick="openMobile('${g.id}')">
+
+
+<img 
+class="thumb"
+src="${g.thumbnail || ""}">
+
+
+
+<div class="game-body">
+
+
+<div class="game-title">
+
+${(g.nama || "").length > 12
+? g.nama.substring(0,12) + "..."
+: g.nama}
+
+</div>
+
+
+
+<div class="voucher-badge">
+
+<img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782938395/zmmtt8yp6pyfm0qc1plc.webp">
+
+Voucher
+
+</div>
+
+
+
+<div class="game-price">
+
+Rp ${Number(g.harga || 0)
+.toLocaleString("id-ID")}
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+`;
+
+
+}
+
+
+
 
 });
 
@@ -4789,7 +5316,6 @@ item.hargaSampul || 0
 ${item.diverifikasi ? `
 
 <div style="
-margin-top:8px;
 display:flex;
 align-items:center;
 gap:6px;
@@ -4865,10 +5391,10 @@ border-radius:12px;
 
 
 <img
-src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782832209/aujuenewjycuan61hfza.png"
+src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782856890/bt3oxtfnoxeienyjqgu9.webp"
 style="
-width:30px;
-height:30px;
+width:40px;
+height:40px;
 object-fit:contain;
 ">
 
@@ -5269,6 +5795,84 @@ gameBox22.classList.toggle("active");
 
 
 
+window.appSliderLeft = ()=>{
+
+
+const appGrid =
+document.getElementById("appGrid");
+
+
+appGrid.scrollBy({
+
+left:-250,
+
+behavior:"smooth"
+
+});
+
+
+};
+
+
+
+window.appSliderRight = ()=>{
+
+
+const appGrid =
+document.getElementById("appGrid");
+
+
+appGrid.scrollBy({
+
+left:250,
+
+behavior:"smooth"
+
+});
+
+
+};
+
+
+
+
+
+
+window.infoSliderLeft=()=>{
+
+document
+.querySelector(".card-container")
+.scrollBy({
+
+left:-250,
+
+behavior:"smooth"
+
+});
+
+};
+
+
+
+window.infoSliderRight=()=>{
+
+document
+.querySelector(".card-container")
+.scrollBy({
+
+left:250,
+
+behavior:"smooth"
+
+});
+
+};
+
+
+
+
+
+
 
 
 
@@ -5305,6 +5909,9 @@ lastTouch=now;
 
 document.addEventListener("gesturestart",e=>e.preventDefault());
 // PROTEKSI
+
+
+
 
 
 
