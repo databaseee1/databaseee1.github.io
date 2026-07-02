@@ -1013,75 +1013,77 @@ document
 
 const pembayaran = {
 
-
 idAkun:idAkun,
 
-
 namaAkun:namaAkun,
-
 
 whatsapp:
 document.getElementById("whatsapp").value,
 
-
 email:
 document.getElementById("email").value,
-
 
 usersid:
 localStorage.getItem("usersid"),
 
-
 aplikasi:
 appData.nama,
-
 
 logoAplikasi:
 appData.logoAplikasi,
 
-
 paket:
 item.namaCoin,
-
 
 total:
 item.hargaPromo,
 
-
 metode:
 pembayaranDipilih,
-
 
 namaBank:
 bank.namaBank,
 
-
 noRekening:
 bank.noRekening,
-
 
 namaRekening:
 bank.namaRekening,
 
-
 logoBank:
 bank.logo,
 
+// =====================
+// DETAIL UNTUK NOTIFIKASI
+// =====================
 
+produk:
+appData.nama,
+
+produkThumbnail:
+appData.logoAplikasi,
+
+itemNama:
+item.namaCoin,
+
+itemHarga:
+item.hargaPromo,
+
+paymentBank:
+bank.namaBank,
+
+paymentLogo:
+bank.logo,
 
 status:
 "Menunggu Pembayaran",
 
-
-
 read:true,
-
 
 dibuatPada:
 Date.now()
 
 };
-
 
 
 
@@ -1092,27 +1094,67 @@ Date.now()
 
 const uid = localStorage.getItem("usersid");
 
-if (uid) {
+if(uid){
 
     await push(
-        ref(db, `History_Topup/${uid}`),
+        ref(db,`History_Topup/${uid}`),
         pembayaran
     );
 
     // =====================
-    // KIRIM NOTIFIKASI KE USER SENDIRI
+    // KIRIM NOTIFIKASI
     // =====================
 
     await set(
-        ref(db, `notifications/${uid}/${Date.now()}`),
+        ref(db,`notifications/${uid}/${Date.now()}`),
         {
-            message: `Hai ${pembayaran.email}, kamu melakukan top up aplikasi ${appData.nama}, yuk bayar agar sistem dapat menambahkan coin ke akun kamu sesuai jumlah yaitu ${item.namaCoin}`,
-            read: false,
-            createdAt: Date.now(),
-            type: "topup_info",
-            
+
+            message:
+            `Hai ${pembayaran.email}, kamu melakukan top up aplikasi ${appData.nama}, yuk bayar agar sistem dapat menambahkan coin ke akun kamu sesuai jumlah yaitu ${item.namaCoin}`,
+
+            type:"topup_info",
+
+            read:false,
+
+            createdAt:Date.now(),
+
+            // =====================
+            // RINGKASAN
+            // =====================
+
+            idAkun:pembayaran.idAkun,
+
+            namaAkun:pembayaran.namaAkun,
+
+            aplikasi:pembayaran.aplikasi,
+
+            logoAplikasi:pembayaran.logoAplikasi,
+
+            paket:pembayaran.paket,
+
+            total:pembayaran.total,
+
+            metode:pembayaran.metode,
+
+            namaBank:pembayaran.namaBank,
+
+            namaRekening:pembayaran.namaRekening,
+
+            noRekening:pembayaran.noRekening,
+
+            logoBank:pembayaran.logoBank,
+
+            status:pembayaran.status,
+
+            // =====================
+            // KIRIM SEMUA DATA
+            // =====================
+
+            orderData:pembayaran
+
         }
     );
+
 }
 
 

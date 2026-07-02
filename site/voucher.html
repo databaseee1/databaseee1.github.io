@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voucher</title>
+
+<!-- FONT AWESOME -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+body{
+    margin:0;
+    font-family:system-ui, Arial;
+     background-color: #eae1f2;
+
+background-image: 
+    linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+    background-size: 24px 24px;
+
+    color: #222;
+    overflow-x: hidden;
+    margin: 0 auto;
+}
+
+/* HEADER */
+.header{
+    position:sticky;
+    top:0;
+    z-index:10;
+    background:#fff;
+    padding:20px 14px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    border-bottom:1px solid #eee;
+}
+
+.header i{
+    color:#0c85ff;
+}
+
+.header .title{
+    font-size:15px;
+    font-weight:800;
+}
+
+/* SECTION */
+.section-title{
+    padding:10px 14px 6px;
+    font-size:12px;
+    font-weight:700;
+    color:#666;
+}
+
+/* LIST (BUKAN GRID) */
+#voucherList{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    padding:10px;
+}
+
+/* ROW ITEM */
+.mobile-card{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:#fff;
+    border-radius:12px;
+    padding:10px;
+    border:1px solid #eee;
+    box-shadow:0 2px 6px rgba(0,0,0,0.04);
+    transition:0.15s;
+}
+
+.mobile-card:active{
+    transform:scale(0.98);
+}
+
+/* LOGO KECIL */
+.mobile-card img.thumb{
+    width:42px;
+    height:42px;
+    border-radius:10px;
+    object-fit:cover;
+    background:#eee;
+}
+
+/* TEXT AREA */
+.game-body{
+    display:flex;
+    flex-direction:column;
+}
+
+/* NAMA */
+.game-title{
+    font-size:13px;
+    font-weight:700;
+    color:#111;
+}
+
+/* SUB TEXT */
+.voucher-badge{
+    margin-top:2px;
+    font-size:11px;
+    color:#0c85ff;
+    font-weight:600;
+}
+
+.voucher-badge img{
+    width:14px;
+    height:14px;
+}
+
+
+
+
+
+
+
+
+
+
+
+.rekomen365-list{
+
+display:grid;
+
+grid-template-columns:repeat(5,1fr);
+
+gap:12px;
+    margin-bottom: 100px;
+}
+
+
+
+.rekomen365-item{
+
+background:white;
+
+border-radius:16px;
+
+padding:10px;
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+box-shadow:0 5px 20px #0001;
+
+cursor:pointer;
+
+}
+
+
+
+.rekomen365-item img{
+
+width:45px;
+
+height:45px;
+
+border-radius:12px;
+
+object-fit:cover;
+
+}
+
+
+
+.rekomen365-name{
+
+font-size:13px;
+
+font-weight:800;
+
+}
+
+
+
+@media(max-width:768px){
+
+
+.rekomen365-list{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+
+}
+
+
+
+.suka365-list{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:10px;
+
+padding:5px;
+    margin-bottom: 40px;
+
+}
+
+
+
+.suka365-item{
+
+height:65px;
+
+background:white;
+
+border-radius:14px;
+
+display:flex;
+
+align-items:center;
+
+gap:8px;
+
+padding:10px;
+
+box-shadow:0 5px 15px #0001;
+
+cursor:pointer;
+
+}
+
+
+
+.suka365-item img{
+
+width:38px;
+
+height:38px;
+
+border-radius:10px;
+
+object-fit:cover;
+
+}
+
+
+
+.suka365-name{
+
+font-size:12px;
+
+font-weight:800;
+
+overflow:hidden;
+
+text-overflow:ellipsis;
+
+white-space:nowrap;
+
+}
+
+
+
+
+
+/* mobile */
+
+@media(max-width:768px){
+
+
+.suka365-list{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+
+}
+
+
+.suka365-title,
+.rekomen365-title{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:8px;
+
+background:#0c85ff;
+
+padding:8px 45px 8px 14px;
+
+font-weight:900;
+
+font-size:15px;
+
+color:white;
+
+clip-path:polygon(
+0 0,
+92% 0,
+100% 100%,
+0 100%
+);
+
+margin-bottom:15px;
+
+margin-left:-16px;
+
+padding-left:28px;
+
+font-family:Poppins,Arial;
+
+}
+
+</style>
+
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <i class="fa fa-ticket"></i>
+    <div class="title">Voucher</div>
+</div>
+
+
+
+<!-- LIST -->
+<div id="voucherList"></div>
+
+
+
+
+
+
+
+
+
+<div class="suka365-box">
+
+
+<h3 class="suka365-title">
+Rekomendasi Pilihan Untuk Kamu
+</h3>
+
+
+<div id="suka365List" class="suka365-list"></div>
+
+
+</div>
+
+
+
+<div class="rekomen365-box">
+
+
+<h3 class="rekomen365-title">
+Aplikasi & Layanan Lainnya
+</h3>
+
+
+<div id="rekomen365List" class="rekomen365-list"></div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+/* FIREBASE */
+const firebaseConfig = {
+apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+authDomain:"users-96dc5.firebaseapp.com",
+databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId:"users-96dc5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* ELEMENT */
+const rekomen365List = document.getElementById("rekomen365List");
+const suka365List = document.getElementById("suka365List");
+const voucherList = document.getElementById("voucherList");
+
+/* =========================
+   TOP UP APLIKASI (SUKA)
+========================= */
+const sukaRef = ref(db,"Top-up_aplikasi");
+
+onValue(sukaRef,(snap)=>{
+
+suka365List.innerHTML = "";
+
+snap.forEach((child)=>{
+
+const g = child.val();
+const key = child.key;
+
+suka365List.innerHTML += `
+<div class="suka365-item" onclick="openSuka365('${key}')">
+
+<img src="${g.logoAplikasi || ""}" 
+onerror="this.style.display='none'">
+
+<div class="suka365-name">
+${g.nama || g.aplikasi || key}
+</div>
+
+</div>
+`;
+
+});
+
+});
+
+window.openSuka365 = (key)=>{
+location.href = `halaman_menu_coin.html?app=${encodeURIComponent(key)}`;
+};
+
+
+/* =========================
+   MOBILE + REKOMENDASI
+========================= */
+const mobileRef = ref(db,"Top-up game-Mobile");
+
+onValue(mobileRef,(snap)=>{
+
+let arr = [];
+
+snap.forEach((child)=>{
+arr.push({id:child.key,...child.val()});
+});
+
+/* render 2 section */
+renderRekomen365(arr);
+renderVoucher(arr);
+
+});
+
+
+/* =========================
+   REKOMENDASI 365
+========================= */
+function renderRekomen365(data){
+
+rekomen365List.innerHTML = "";
+
+data.forEach(g=>{
+
+const id = g.id;
+
+rekomen365List.innerHTML += `
+<div class="rekomen365-item" onclick="openRekomen365('${id}')">
+
+<img src="${g.thumbnail || ""}">
+
+<div class="rekomen365-name">
+${
+    (g.nama || "-")
+    .split(" ")
+    .slice(0,5)
+    .join(" ")
+    +
+    ((g.nama || "").split(" ").length > 5 ? "..." : "")
+}
+</div>
+
+</div>
+`;
+
+});
+
+}
+
+window.openRekomen365 = (id)=>{
+location.href = "Halaman_mobile.html?id=" + id;
+};
+
+
+/* =========================
+   VOUCHER
+========================= */
+window.openMobile = (id)=>{
+location.href = "Halaman_mobile.html?id=" + id;
+};
+
+function renderVoucher(data){
+
+voucherList.innerHTML = "";
+
+data.forEach(g=>{
+
+if(g.kategori !== "Voucher") return;
+
+voucherList.innerHTML += `
+<div class="mobile-card" onclick="openMobile('${g.id}')">
+
+<img class="thumb" src="${g.thumbnail || ''}">
+
+<div class="game-body">
+
+<div class="game-title">
+${g.nama || ''}
+</div>
+
+<div class="voucher-badge">
+<img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782938395/zmmtt8yp6pyfm0qc1plc.webp">
+Voucher
+</div>
+
+</div>
+
+</div>
+`;
+
+});
+
+}
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

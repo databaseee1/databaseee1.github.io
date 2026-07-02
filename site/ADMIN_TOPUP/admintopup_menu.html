@@ -334,7 +334,6 @@ openModal(
 <input id="namaApp" placeholder="Nama Aplikasi">
 </div>
 
-
 <div class="field">
 <input id="deskripsi" placeholder="Deskripsi">
 </div>
@@ -362,6 +361,10 @@ openModal(
 
 <div class="field">
 <input id="hargaSampul" placeholder="Harga Sampul">
+</div>
+
+<div class="field">
+<input id="rating" placeholder="Rating (contoh: 4.5)">
 </div>
 
 
@@ -406,6 +409,9 @@ nama:nama,
 deskripsi:
 document.getElementById("deskripsi").value,
 
+
+rating:
+document.getElementById("rating").value,
 
 diverifikasi:
 document.getElementById("verified").checked,
@@ -511,11 +517,18 @@ openModal(
 
 </div>
 
-
+<div class="field">
+<input id="terjual" value="${d.terjual||"terjual"}">
+</div>
 
 
 <div class="field">
 <input id="hargaSampul" value="${d.hargaSampul||0}">
+</div>
+
+
+<div class="field">
+<input id="rating" value="${d.rating||''}" placeholder="Rating">
 </div>
 
 
@@ -550,10 +563,18 @@ ref(db,`Top-up_aplikasi/${key}`),
 
 {
 
+rating:
+rating.value,
+
+
 
 aplikasi:nama,
 
 nama:nama,
+
+
+terjual:
+document.getElementById("terjual").value,
 
 
 deskripsi:
@@ -676,6 +697,12 @@ openModal(
 
 
 <div class="field">
+<input id="terjual" placeholder="Terjual (contoh: 895rb)">
+</div>
+
+
+
+<div class="field">
 <input 
 id="stock"
 type="number"
@@ -795,6 +822,26 @@ openModal(
 </div>
 
 
+
+
+<div class="field">
+<input
+id="terjual"
+value="${item.terjual||''}"
+placeholder="Terjual (contoh: 895rb)">
+</div>
+
+
+
+<div class="field">
+<input
+id="rating"
+value="${item.rating||''}"
+placeholder="Rating (contoh: 4.5)">
+</div>
+
+
+
 <div class="field">
 <input id="logoCoin" value="${item.logoCoin}">
 </div>
@@ -824,6 +871,15 @@ ref(db,
 {
 
 namaCoin:coinName.value,
+
+rating:
+rating.value,
+
+terjual:
+terjual.value,
+
+rating:
+rating.value,
 
 jumlahCoin:
 hitungAngka(coinJumlah.value),

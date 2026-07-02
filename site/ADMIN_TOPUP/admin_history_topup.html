@@ -1,235 +1,1261 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Topup Panel</title>
+
+<meta
+name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>
+Admin Topup Panel
+</title>
 
 <style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,Arial,sans-serif;
+}
+
 body{
-    margin:0;
-    font-family:Arial;
-    background:#f6f6ff;
+background:#eef2ff;
+color:#222;
 }
 
 .header{
-    background:#6a00ff;
-    color:#fff;
-    padding:14px;
-    font-weight:bold;
-    font-size:16px;
+
+position:sticky;
+top:0;
+z-index:99;
+
+background:
+linear-gradient(
+135deg,
+#5b24ff,
+#7a5cff
+);
+
+color:#fff;
+
+padding:18px;
+
+font-size:20px;
+font-weight:700;
+
+box-shadow:
+0 8px 25px rgba(0,0,0,.15);
+
 }
 
 .container{
-    padding:12px;
+
+padding:15px;
+
+max-width:900px;
+margin:auto;
+
 }
 
-/* CARD */
 .card{
-    background:#fff;
-    border-radius:12px;
-    padding:12px;
-    margin-bottom:12px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.06);
+
+background:#fff;
+
+border-radius:22px;
+
+padding:18px;
+
+margin-bottom:18px;
+
+box-shadow:
+0 10px 30px rgba(0,0,0,.08);
+
+border:1px solid #ececff;
+
+transition:.2s;
+
+}
+
+.card:hover{
+
+transform:translateY(-2px);
+
+}
+
+.top{
+
+display:flex;
+
+gap:14px;
+
+align-items:center;
+
+margin-bottom:15px;
+
+}
+
+.avatar{
+
+width:58px;
+height:58px;
+
+border-radius:50%;
+
+object-fit:cover;
+
+background:#eee;
+
+border:2px solid #ddd;
+
+}
+
+.logo{
+
+width:50px;
+height:50px;
+
+border-radius:14px;
+
+background:#fff;
+
+object-fit:contain;
+
+border:1px solid #eee;
+
+padding:6px;
+
+}
+
+.flex{
+
+flex:1;
+
 }
 
 .title{
-    font-weight:bold;
-    margin-bottom:6px;
+
+font-size:17px;
+
+font-weight:700;
+
+color:#222;
+
+}
+
+.subtitle{
+
+font-size:13px;
+
+color:#777;
+
+margin-top:2px;
+
 }
 
 .row{
-    display:flex;
-    justify-content:space-between;
-    font-size:13px;
-    margin:3px 0;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:8px 0;
+
+border-bottom:1px dashed #eee;
+
+font-size:14px;
+
 }
 
-/* BUTTON */
-.btn{
-    padding:6px 10px;
-    border:none;
-    border-radius:8px;
-    font-size:12px;
-    cursor:pointer;
-    margin-right:5px;
+.row:last-child{
+
+border:none;
+
 }
 
-.approve{ background:#28a745; color:#fff; }
-.reject{ background:#dc3545; color:#fff; }
-.pending{ background:#ffc107; color:#000; }
+.label{
+
+color:#777;
+
+}
+
+.value{
+
+font-weight:600;
+
+text-align:right;
+
+}
+
+.total{
+
+font-size:18px;
+
+font-weight:700;
+
+color:#5b24ff;
+
+}
 
 .actions{
-    margin-top:10px;
+
+display:flex;
+
+flex-wrap:wrap;
+
+gap:8px;
+
+margin-top:18px;
+
+}
+
+.btn{
+
+flex:1;
+
+border:none;
+
+padding:12px;
+
+border-radius:14px;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:.2s;
+
+}
+
+.btn:hover{
+
+transform:scale(.98);
+
+}
+
+.approve{
+
+background:#19b34a;
+color:#fff;
+
+}
+
+.reject{
+
+background:#ff3b30;
+color:#fff;
+
+}
+
+.pending{
+
+background:#ffc107;
+color:#222;
+
+}
+
+.delete{
+
+background:#111;
+color:#fff;
+
 }
 
 .badge{
-    padding:4px 8px;
-    border-radius:20px;
-    font-size:12px;
+
+padding:6px 12px;
+
+border-radius:99px;
+
+font-size:12px;
+
+font-weight:700;
+
+display:inline-block;
+
 }
 
-.Menunggu{ background:#fff3cd; }
-.Sukses{ background:#d4edda; }
-.Gagal{ background:#f8d7da; }
-.Pending{ background:#cce5ff; }
+.Sukses{
+
+background:#d4ffe3;
+
+color:#15803d;
+
+}
+
+.Gagal{
+
+background:#ffe0e0;
+
+color:#d11a2a;
+
+}
+
+.Pending{
+
+background:#e0f1ff;
+
+color:#007bff;
+
+}
+
+.Menunggu{
+
+background:#fff4d8;
+
+color:#b97700;
+
+}
+
+.empty{
+
+padding:40px;
+
+text-align:center;
+
+color:#888;
+
+font-size:15px;
+
+}
+
 </style>
+
 </head>
 
 <body>
 
 <div class="header">
+
 Admin Topup Panel
+
 </div>
 
-<div class="container" id="list">
+<div
+class="container"
+id="list">
+
 Loading...
+
 </div>
 
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
-  getDatabase,
-  ref,
-  get,
-  update,
-  set
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-/* FIREBASE */
-const firebaseConfig = {
-  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
-  authDomain: "users-96dc5.firebaseapp.com",
-  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "users-96dc5"
+import{
+
+getDatabase,
+
+ref,
+
+get,
+
+update,
+
+remove,
+
+set
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+const firebaseConfig={
+
+apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+
+authDomain:"users-96dc5.firebaseapp.com",
+
+databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:"users-96dc5"
+
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+const app=
 
-const listEl = document.getElementById("list");
+initializeApp(firebaseConfig);
+
+const db=
+
+getDatabase(app);
+
+const listEl=
+
+document.getElementById("list");
+
 
 loadAll();
 
-/* ===================== LOAD ALL ===================== */
+
+
 async function loadAll(){
-    const snap = await get(ref(db, "History_Topup"));
 
-    if(!snap.exists()){
-        listEl.innerHTML = "Tidak ada data";
-        return;
-    }
+const snap=
 
-    const data = snap.val();
-    let html = "";
+await get(
 
-    Object.entries(data).forEach(([usersid, userData]) => {
+ref(
+db,
+"History_Topup"
+)
 
-        Object.entries(userData).forEach(([id, item]) => {
+);
 
-            html += `
-            <div class="card">
-                <div class="title">${item.aplikasi} - ${item.paket}</div>
 
-                <div class="row">
-                    <span>User ID</span>
-                    <span>${item.usersid}</span>
-                </div>
+if(!snap.exists()){
 
-                <div class="row">
-                    <span>Email</span>
-                    <span>${item.email}</span>
-                </div>
+listEl.innerHTML=
 
-                <div class="row">
-                    <span>Total</span>
-                    <span>Rp ${item.total}</span>
-                </div>
+`<div class="empty">
 
-                <div class="row">
-                    <span>Status</span>
-                    <span class="badge ${item.status}">${item.status}</span>
-                </div>
+Belum ada transaksi.
 
-                <div class="actions">
+</div>`;
 
-                    <button class="btn approve"
-                        onclick="approve('${usersid}','${id}')">
-                        Approve
-                    </button>
+return;
 
-                    <button class="btn reject"
-                        onclick="reject('${usersid}','${id}')">
-                        Tolak
-                    </button>
-
-                    <button class="btn pending"
-                        onclick="pending('${usersid}','${id}')">
-                        Pending
-                    </button>
-
-                </div>
-            </div>
-            `;
-        });
-    });
-
-    listEl.innerHTML = html;
 }
 
-/* ===================== APPROVE ===================== */
-window.approve = async (uid, id) => {
 
-    await update(ref(db, `History_Topup/${uid}/${id}`), {
-        status: "Sukses"
-    });
+const data=snap.val();
 
-    sendNotif(uid,
-        "Pembelian coin anda telah berhasil di Approve, periksa coin pada akun yang sesuai dengan data pembelian anda.."
+let html="";
+
+
+Object.entries(data).reverse().forEach(
+
+([uid,user])=>{
+
+Object.entries(user).reverse().forEach(
+
+([id,item])=>{
+
+html+=`
+
+<div class="card">
+
+<div class="top">
+
+<img
+class="avatar"
+src="${
+item.profil ||
+'https://cdn-icons-png.flaticon.com/512/149/149071.png'
+}">
+
+<img
+class="logo"
+src="${
+item.logoAplikasi ||
+item.produkThumbnail ||
+'https://cdn-icons-png.flaticon.com/512/1828/1828640.png'
+}">
+
+<div class="flex">
+
+<div class="title">
+
+${item.aplikasi ||
+item.produk ||
+"-"}
+
+</div>
+
+<div class="subtitle">
+
+${item.email || "-"}
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="label">
+Nama Akun
+</div>
+
+<div class="value">
+
+${item.namaAkun ||
+"-"}
+
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="label">
+ID Akun
+</div>
+
+<div class="value">
+
+${item.idAkun ||
+"-"}
+
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="label">
+Paket
+</div>
+
+<div class="value">
+
+${item.paket ||
+item.itemNama ||
+"-"}
+
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="label">
+Pembayaran
+</div>
+
+<div class="value">
+
+${item.namaBank ||
+"-"}
+
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="label">
+Total
+</div>
+
+<div class="total">
+
+Rp ${Number(
+item.total || 0
+).toLocaleString("id-ID")}
+
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="label">
+Status
+</div>
+
+<div>
+
+<span class="badge ${item.status}">
+
+${item.status}
+
+</span>
+
+</div>
+
+</div>
+
+
+<div class="actions">
+
+<button
+class="btn approve"
+onclick="approve('${uid}','${id}')">
+
+Approve
+
+</button>
+
+<button
+class="btn pending"
+onclick="pending('${uid}','${id}')">
+
+Pending
+
+</button>
+
+<button
+class="btn reject"
+onclick="reject('${uid}','${id}')">
+
+Tolak
+
+</button>
+
+<button
+class="btn delete"
+onclick="hapus('${uid}','${id}')">
+
+Hapus
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+});
+
+listEl.innerHTML=html;
+
+}
+
+
+
+
+
+
+async function updateNotifStatus(uid, orderId, status){
+
+    // kalau tidak ada orderId jangan update apa pun
+    if(!orderId) return;
+
+    const snap = await get(
+        ref(db, `notifications/${uid}`)
     );
 
-    loadAll();
-};
+    if(!snap.exists()) return;
 
-/* ===================== REJECT ===================== */
-window.reject = async (uid, id) => {
+    const updates = {};
 
-    await update(ref(db, `History_Topup/${uid}/${id}`), {
-        status: "Gagal"
+    snap.forEach(child=>{
+
+        const n = child.val();
+
+        if(
+            n.orderId &&
+            n.orderId === orderId
+        ){
+
+            updates[`${child.key}/status`] = status;
+
+        }
+
     });
 
-    sendNotif(uid,
-        "Pembelian coin anda telah di Tolak, silakan cek kembali data pembayaran anda."
-    );
+    if(Object.keys(updates).length){
 
-    loadAll();
+        await update(
+            ref(db, `notifications/${uid}`),
+            updates
+        );
+
+    }
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+   APPROVE
+========================================== */
+
+window.approve = async(uid,id)=>{
+
+const ok=confirm(
+"Approve transaksi ini?"
+);
+
+if(!ok) return;
+
+const itemSnap=
+await get(
+ref(db,`History_Topup/${uid}/${id}`)
+);
+
+if(!itemSnap.exists()) return;
+
+const item=itemSnap.val();
+
+await update(
+ref(db,`History_Topup/${uid}/${id}`),
+{
+status:"Sukses"
+}
+);
+
+
+
+await updateNotifStatus(
+    uid,
+    item.orderId,
+    "Sukses"
+);
+
+
+
+
+
+
+
+
+
+/* jika memiliki order utama */
+if(item.orderId){
+
+const orderRef=
+ref(
+db,
+`Histori_top-up_mobile/${item.orderId}`
+);
+
+const orderSnap=
+await get(orderRef);
+
+if(orderSnap.exists()){
+
+await update(
+orderRef,
+{
+status:"Sukses"
+}
+);
+
+}
+
+}
+
+
+await sendNotif(
+uid,
+"Sukses",
+item
+);
+
+alert("Transaksi berhasil di Approve");
+
+loadAll();
+
 };
 
-/* ===================== PENDING ===================== */
-window.pending = async (uid, id) => {
 
-    await update(ref(db, `History_Topup/${uid}/${id}`), {
-        status: "Menunggu Pembayaran"
-    });
 
-    sendNotif(uid,
-        "Pembayaran anda sedang Pending untuk diproses, mohon bersabar~"
-    );
+/* ==========================================
+   PENDING
+========================================== */
 
-    loadAll();
+window.pending=async(uid,id)=>{
+
+const ok=confirm(
+"Ubah menjadi Pending?"
+);
+
+if(!ok) return;
+
+const itemSnap=
+await get(
+ref(db,`History_Topup/${uid}/${id}`)
+);
+
+if(!itemSnap.exists()) return;
+
+const item=itemSnap.val();
+
+await update(
+ref(db,`History_Topup/${uid}/${id}`),
+{
+status:"Menunggu Pembayaran"
+}
+);
+
+
+await updateNotifStatus(
+    uid,
+    item.orderId,
+    "Menunggu Pembayaran"
+);
+
+if(item.orderId){
+
+const orderRef=
+ref(
+db,
+`Histori_top-up_mobile/${item.orderId}`
+);
+
+const orderSnap=
+await get(orderRef);
+
+if(orderSnap.exists()){
+
+await update(
+orderRef,
+{
+status:"Menunggu Pembayaran"
+}
+);
+
+}
+
+}
+
+
+await sendNotif(
+uid,
+"Pending",
+item
+);
+
+alert("Status menjadi Pending");
+
+loadAll();
+
 };
 
-/* ===================== NOTIF ===================== */
-async function sendNotif(uid, message){
 
-    const notifRef = ref(db, `notifications/${uid}/${Date.now()}`);
 
-    await set(notifRef, {
-        message: message,
-        read: false,
-        createdAt: Date.now()
-    });
+/* ==========================================
+   REJECT
+========================================== */
+
+window.reject=async(uid,id)=>{
+
+const ok=confirm(
+"Tolak transaksi ini?"
+);
+
+if(!ok) return;
+
+const itemSnap=
+await get(
+ref(db,`History_Topup/${uid}/${id}`)
+);
+
+if(!itemSnap.exists()) return;
+
+const item=itemSnap.val();
+
+await update(
+ref(db,`History_Topup/${uid}/${id}`),
+{
+status:"Gagal"
+}
+);
+
+
+await updateNotifStatus(
+    uid,
+    item.orderId,
+    "Gagal"
+);
+
+
+
+
+
+if(item.orderId){
+
+const orderRef=
+ref(
+db,
+`Histori_top-up_mobile/${item.orderId}`
+);
+
+const orderSnap=
+await get(orderRef);
+
+if(orderSnap.exists()){
+
+await update(
+orderRef,
+{
+status:"Gagal"
+}
+);
+
+}
+
+}
+
+
+await sendNotif(
+uid,
+"Gagal",
+item
+);
+
+alert("Transaksi berhasil ditolak");
+
+loadAll();
+
+};
+
+
+
+/* ==========================================
+   HAPUS
+========================================== */
+
+window.hapus=async(uid,id)=>{
+
+const ok=confirm(
+"Yakin ingin menghapus transaksi ini?\n\nData tidak bisa dikembalikan."
+);
+
+if(!ok) return;
+
+
+const itemSnap=
+await get(
+ref(db,`History_Topup/${uid}/${id}`)
+);
+
+if(!itemSnap.exists()) return;
+
+const item=itemSnap.val();
+
+
+await remove(
+ref(
+db,
+`History_Topup/${uid}/${id}`
+)
+);
+
+
+/* hapus order utama jika ada */
+
+if(item.orderId){
+
+const orderRef=
+ref(
+db,
+`Histori_top-up_mobile/${item.orderId}`
+);
+
+const orderSnap=
+await get(orderRef);
+
+if(orderSnap.exists()){
+
+await remove(orderRef);
+
+}
+
+}
+
+
+/* kirim notif */
+
+await sendNotif(
+uid,
+"Hapus",
+item
+);
+
+
+alert(
+"Transaksi berhasil dihapus."
+);
+
+loadAll();
+
+};
+
+
+/* ==========================================
+   KIRIM NOTIFIKASI LENGKAP
+========================================== */
+
+async function sendNotif(uid,type,item){
+
+let message="";
+let status=item.status||"-";
+
+switch(type){
+
+case "Sukses":
+
+message=
+`Hai ${item.email || "User"}, pembayaran kamu telah berhasil diverifikasi. Coin/produk akan segera diproses ke akun tujuan.`;
+
+status="Sukses";
+
+break;
+
+case "Pending":
+
+message=
+`Hai ${item.email || "User"}, pembayaran kamu sedang menunggu proses verifikasi admin. Mohon tunggu beberapa saat.`;
+
+status="Menunggu Pembayaran";
+
+break;
+
+case "Gagal":
+
+message=
+`Hai ${item.email || "User"}, pembayaran kamu ditolak. Silakan periksa kembali bukti transfer dan data pembayaran kamu.`;
+
+status="Gagal";
+
+break;
+
+case "Hapus":
+
+message=
+`Riwayat transaksi ini telah dihapus oleh Admin.`;
+
+status="Dihapus";
+
+break;
+
+default:
+
+message="Status transaksi diperbarui.";
+
+}
+
+
+/* ==========================
+   SIMPAN NOTIFIKASI
+========================== */
+
+await set(
+
+ref(
+db,
+`notifications/${uid}/${Date.now()}`
+),
+
+{
+
+type:"topup_info",
+
+message:message,
+
+read:false,
+
+createdAt:Date.now(),
+
+
+/* STATUS */
+
+status:status,
+
+
+/* USER */
+
+userId:item.usersid || uid,
+
+email:item.email || "-",
+
+profil:item.profil || "",
+
+
+/* ORDER */
+
+orderId:item.orderId || "",
+
+
+/* APLIKASI */
+
+aplikasi:
+item.aplikasi ||
+item.produk ||
+"-",
+
+logoAplikasi:
+item.logoAplikasi ||
+item.produkThumbnail ||
+"",
+
+
+/* PRODUK */
+
+produk:{
+
+id:
+item.idProduk ||
+item.produk?.id ||
+"",
+
+nama:
+item.aplikasi ||
+item.produk ||
+"-",
+
+thumbnail:
+item.logoAplikasi ||
+item.produkThumbnail ||
+""
+
+},
+
+
+/* ITEM */
+
+item:{
+
+nama:
+item.paket ||
+item.itemNama ||
+item.item?.nama ||
+"-",
+
+harga:Number(
+
+item.total ||
+
+item.itemHarga ||
+
+item.item?.harga ||
+
+0
+
+)
+
+},
+
+
+/* TOTAL */
+
+total:Number(
+
+item.total ||
+
+item.itemHarga ||
+
+item.item?.harga ||
+
+0
+
+),
+
+
+/* PEMBAYARAN */
+
+payment:{
+
+id:
+item.metode || "",
+
+namaBank:
+item.namaBank || "-",
+
+namaRekening:
+item.namaRekening || "-",
+
+noRekening:
+item.noRekening || "-",
+
+logo:
+item.logoBank || ""
+
+},
+
+
+/* FIELD AGAR COMPATIBLE
+   DENGAN POPUP LAMA */
+
+namaBank:
+item.namaBank || "-",
+
+namaRekening:
+item.namaRekening || "-",
+
+noRekening:
+item.noRekening || "-",
+
+logoBank:
+item.logoBank || "",
+
+produkThumbnail:
+item.logoAplikasi ||
+item.produkThumbnail ||
+"",
+
+itemNama:
+item.paket ||
+item.itemNama ||
+item.item?.nama ||
+"-",
+
+itemHarga:Number(
+
+item.total ||
+
+item.itemHarga ||
+
+item.item?.harga ||
+
+0
+
+),
+
+
+/* ORDER DATA LENGKAP */
+
+orderData:item
+
+}
+
+);
+
+}
+
+
+/* ==========================================
+   FORMAT RUPIAH
+========================================== */
+
+function rupiah(x){
+
+return Number(
+x || 0
+).toLocaleString("id-ID");
+
+}
+
+
+/* ==========================================
+   FORMAT TANGGAL
+========================================== */
+
+function waktu(x){
+
+return new Date(
+x
+).toLocaleString("id-ID");
+
 }
 
 </script>

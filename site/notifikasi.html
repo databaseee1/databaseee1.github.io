@@ -183,7 +183,7 @@ document.getElementById("close").onclick = () => {
 };
 
 if(!uid){
-    listEl.innerHTML = `<div class="empty">User tidak ditemukan</div>`;
+    listEl.innerHTML = `<div class="empty">Yuk Login dulu</div>`;
 }else{
     loadNotif();
 }
@@ -202,48 +202,492 @@ async function loadNotif(){
 
     let html = "";
 
-    Object.entries(data).reverse().forEach(([id, item]) => {
+    Object.entries(data).reverse().forEach(([id,item])=>{
+
+        const o = item.orderData || {};
+
+        // Logo aplikasi / thumbnail produk (BUKAN logo bank)
+        const logo =
+            item.produkThumbnail ||
+            o.produkThumbnail ||
+            item.logoAplikasi ||
+            o.logoAplikasi ||
+            item.thumbnail ||
+            o.thumbnail ||
+            "https://cdn-icons-png.flaticon.com/512/1828/1828640.png";
+
+        // Nama aplikasi / produk
+const nama =
+    item.produk?.nama?.nama ||
+    item.produk?.nama ||
+    item.produkNama ||
+    item.orderData?.produk?.nama ||
+    item.aplikasi ||
+    "Tigo Notification";
+
+
+    console.log("produk =", item.produk);
+console.log("orderData =", item.orderData);
+
 
         html += `
-        <div class="card ${item.read ? "" : "unread"}"
-            onclick="openNotif('${id}', \`${item.message}\`)">
 
-            <div class="title">Layanan Pelanggan</div>
+<div
+class="card ${item.read ? "" : "unread"}"
+onclick="openNotif('${id}')">
 
-            <div class="msg">
-                ${item.message}
-            </div>
+<div style="
+display:flex;
+align-items:flex-start;
+gap:14px;
+">
 
-            <div class="time">
-                ${new Date(item.createdAt).toLocaleString()}
-            </div>
-        </div>
-        `;
+<div style="
+width:56px;
+height:56px;
+border-radius:16px;
+overflow:hidden;
+background:#fff;
+border:1px solid #ececec;
+flex-shrink:0;
+box-shadow:0 4px 12px rgba(0,0,0,.08);
+">
+
+<img
+src="${logo}"
+style="
+width:100%;
+height:100%;
+object-fit:cover;
+">
+
+</div>
+
+
+<div style="
+flex:1;
+min-width:0;
+">
+
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+gap:10px;
+margin-bottom:6px;
+">
+
+<div style="
+font-size:15px;
+font-weight:700;
+color:#222;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+">
+
+${nama}
+
+</div>
+
+${
+!item.read
+?
+`<span style="
+width:10px;
+height:10px;
+border-radius:50%;
+background:#ff3b30;
+flex-shrink:0;
+margin-top:5px;
+"></span>`
+:
+""
+}
+
+</div>
+
+
+<div style="
+font-size:13px;
+color:#666;
+line-height:1.6;
+display:-webkit-box;
+-webkit-line-clamp:2;
+-webkit-box-orient:vertical;
+overflow:hidden;
+">
+
+${item.message}
+
+</div>
+
+
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:12px;
+">
+
+<div style="
+font-size:12px;
+color:#999;
+">
+
+${new Date(item.createdAt).toLocaleString("id-ID")}
+
+</div>
+
+<div style="
+font-size:12px;
+font-weight:700;
+color:#5c27fe;
+">
+
+Lihat Detail ›
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+`;
     });
 
     listEl.innerHTML = html;
 }
 
 /* ===================== OPEN NOTIF ===================== */
-window.openNotif = async (id, msg) => {
+window.openNotif = async(id)=>{
 
-    popupText.innerHTML = `
-        <h4 style="color:#6a00ff">Pesan</h4>
-        <p style="line-height:1.6">${msg}</p>
-    `;
+const snap = await get(
+ref(db,`notifications/${uid}/${id}`)
+);
 
-    popup.style.display = "flex";
+if(!snap.exists()) return;
 
-    /* mark as read */
-    await update(ref(db, `notifications/${uid}/${id}`), {
-        read: true
-    });
+const n = snap.val();
 
-    loadNotif();
+// Ambil detail pesanan
+const o = n.orderData || {};
+
+const produk =
+n.produk?.nama ||
+o.produk?.nama ||
+n.produk ||
+o.produk ||
+n.aplikasi ||
+"-";
+
+const itemNama =
+n.item?.nama ||
+o.item?.nama ||
+n.itemNama ||
+o.itemNama ||
+n.item ||
+n.paket ||
+"-";
+
+const harga =
+n.total ??
+o.itemHarga ??
+n.harga ??
+0;
+
+const pembayaran =
+n.namaBank ||
+o.paymentBank ||
+n.payment ||
+"-";
+
+const status =
+n.status ||
+o.status ||
+"Menunggu Pembayaran";
+
+const bg =
+status==="Sukses"
+? "#d8ffe5"
+:
+status==="Gagal"
+? "#ffe2e2"
+:
+"#fff5d8";
+
+
+const color =
+status==="Sukses"
+? "#0b8d3b"
+:
+status==="Gagal"
+? "#d60000"
+:
+"#c98b00";
+
+popupText.innerHTML = `
+
+<div style="
+background:#fff;
+border-radius:18px;
+overflow:hidden;
+font-family:Poppins,sans-serif;
+">
+
+<div style="
+background:linear-gradient(135deg,#5c27fe,#7f5cff);
+padding:18px;
+color:#fff;
+">
+
+<div style="
+font-size:18px;
+font-weight:700;
+">
+Detail Pembelian
+</div>
+
+<div style="
+font-size:13px;
+opacity:.9;
+margin-top:4px;
+line-height:1.5;
+">
+${n.message}
+</div>
+
+</div>
+
+
+<div style="padding:18px;">
+
+
+<div style="
+border:1px solid #ececec;
+border-radius:14px;
+padding:15px;
+margin-bottom:15px;
+">
+
+<div style="
+font-size:13px;
+color:#888;
+margin-bottom:10px;
+font-weight:600;
+">
+PRODUK
+</div>
+
+<div style="
+display:flex;
+justify-content:space-between;
+margin-bottom:10px;
+">
+
+<span style="color:#777;">
+Produk
+</span>
+
+<b>
+${produk?.nama || produk || "-"}
+</b>
+
+</div>
+
+<div style="
+display:flex;
+justify-content:space-between;
+margin-bottom:10px;
+">
+
+<span style="color:#777;">
+Item
+</span>
+
+<b>
+${itemNama}
+</b>
+
+</div>
+
+<div style="
+display:flex;
+justify-content:space-between;
+">
+
+<span style="color:#777;">
+Total
+</span>
+
+<b style="
+color:#5c27fe;
+font-size:17px;
+">
+Rp ${Number(harga).toLocaleString("id-ID")}
+</b>
+
+</div>
+
+</div>
+
+
+
+<div style="
+border:1px solid #ececec;
+border-radius:14px;
+padding:15px;
+margin-bottom:15px;
+">
+
+<div style="
+font-size:13px;
+color:#888;
+margin-bottom:10px;
+font-weight:600;
+">
+PEMBAYARAN
+</div>
+
+
+<div style="
+display:flex;
+align-items:center;
+gap:12px;
+margin-bottom:14px;
+">
+
+${
+n.logoBank
+?
+`
+<img
+src="${n.logoBank}"
+style="
+width:52px;
+height:52px;
+border-radius:12px;
+object-fit:contain;
+background:#fff;
+border:1px solid #eee;
+padding:6px;
+">
+`
+:
+""
+}
+
+<div>
+
+<div style="
+font-weight:700;
+">
+${n.namaBank || "-"}
+</div>
+
+<div style="
+font-size:13px;
+color:#777;
+">
+${n.namaRekening || "-"}
+</div>
+
+</div>
+
+</div>
+
+
+<div style="
+display:flex;
+justify-content:space-between;
+margin-bottom:10px;
+">
+
+<span style="color:#777;">
+Nomor Pembayaran
+</span>
+
+<b>
+${n.noRekening || "-"}
+</b>
+
+</div>
+
+
+<div style="
+display:flex;
+justify-content:space-between;
+">
+
+<span style="color:#777;">
+Metode
+</span>
+
+<b>
+${pembayaran}
+</b>
+
+</div>
+
+</div>
+
+
+
+<div style="
+border:1px solid #ececec;
+border-radius:14px;
+padding:15px;
+">
+
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+">
+
+<span style="
+font-weight:600;
+">
+Status Pesanan
+</span>
+
+<span style="
+background:${bg};
+color:${color};
+padding:6px 12px;
+border-radius:999px;
+font-size:13px;
+font-weight:700;
+">
+${status}
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+popup.style.display="flex";
+
+await update(
+ref(db,`notifications/${uid}/${id}`),
+{
+read:true
+}
+);
+
+loadNotif();
+
 };
-
-
-
 
 
 

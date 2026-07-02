@@ -1044,8 +1044,6 @@ load();
 
 
 
-
-
 async function saveHistory(){
 
 const usersid = localStorage.getItem("usersid");
@@ -1054,64 +1052,189 @@ if(!usersid) return false;
 
 
 // ambil user
-const userSnap = await get(ref(db,"users_topup/"+usersid));
-const user = userSnap.exists() ? userSnap.val() : {};
+const userSnap = await get(
+ref(db,"users_topup/"+usersid)
+);
+
+const user = userSnap.exists()
+? userSnap.val()
+: {};
 
 
-// ambil data payment detail
-const paySnap = await get(ref(db,"BANK_EWALLET/"+selectedPayment));
-const pay = paySnap.exists() ? paySnap.val() : {};
+// ambil payment
+const paySnap = await get(
+ref(db,"BANK_EWALLET/"+selectedPayment)
+);
+
+const pay = paySnap.exists()
+? paySnap.val()
+: {};
 
 
-const orderRef = push(ref(db,"Histori_top-up_mobile"));
-
-await set(orderRef,{
-
-userId: usersid,
-email: user.email || "-",
-profil: user.profil || "",
+// buat order id
+const orderRef =
+push(ref(db,"Histori_top-up_mobile"));
 
 
-// produk
-produk: {
-id: id,
-nama: item.nama,
-thumbnail: item.thumbnail
+// =====================
+// DATA LENGKAP PESANAN
+// =====================
+
+const orderData={
+
+orderId:orderRef.key,
+
+userId:usersid,
+
+email:user.email || "-",
+
+profil:user.profil || "",
+
+
+// PRODUK
+produk:{
+
+id:id,
+
+nama:item.nama,
+
+thumbnail:item.thumbnail || ""
+
 },
 
 
-// item detail
-item: {
-nama: item.produk?.[produkIndex]?.nama || item.nama,
-harga: Number(item.produk?.[produkIndex]?.harga || item.harga)
+// ITEM
+item:{
+
+nama:item.nama,
+
+harga:Number(item.harga)
+
 },
 
 
-// payment lengkap
-payment: {
-id: selectedPayment,
-namaBank: pay.namaBank || "-",
-namaRekening: pay.namaRekening || "-",
-noRekening: pay.noRekening || "-",
-logo: pay.logo || ""
+// PEMBAYARAN
+payment:{
+
+id:selectedPayment,
+
+namaBank:pay.namaBank || "-",
+
+namaRekening:pay.namaRekening || "-",
+
+noRekening:pay.noRekening || "-",
+
+logo:pay.logo || ""
+
 },
 
 
-total: Number(item.produk?.[produkIndex]?.harga || item.harga),
+// DATA UNIVERSAL
 
-status: "pending",
-read: false,
+produkNama:item.nama,
 
-createdAt: Date.now()
+produkThumbnail:item.thumbnail || "",
 
-});
+itemNama:item.nama,
+
+itemHarga:Number(item.harga),
+
+namaBank:pay.namaBank || "-",
+
+namaRekening:pay.namaRekening || "-",
+
+noRekening:pay.noRekening || "-",
+
+logoBank:pay.logo || "",
+
+total:Number(item.harga),
+
+status:"pending",
+
+read:false,
+
+createdAt:Date.now()
+
+};
+
+
+// =====================
+// ORDER UTAMA
+// =====================
+
+await set(
+orderRef,
+orderData
+);
+
+
+// =====================
+// HISTORY USER
+// =====================
+
+await push(
+ref(db,`History_Topup/${usersid}`),
+orderData
+);
+
+
+// =====================
+// NOTIFIKASI USER
+// =====================
+
+await set(
+ref(db,`notifications/${usersid}/${Date.now()}`),
+{
+
+message:
+`Hai ${user.email || "User"}, kamu melakukan pembelian ${item.nama}, yuk bayar agar pesanan kamu segera diproses.`,
+
+type:"topup_info",
+
+read:false,
+
+createdAt:Date.now(),
+
+
+// DETAIL ORDER
+
+orderId:orderRef.key,
+
+produk:item.nama,
+
+item:item.nama,
+
+harga:Number(item.harga),
+
+total:Number(item.harga),
+
+status:"pending",
+
+
+// DETAIL BANK
+
+namaBank:pay.namaBank || "-",
+
+namaRekening:pay.namaRekening || "-",
+
+noRekening:pay.noRekening || "-",
+
+logoBank:pay.logo || "",
+
+
+// SIMPAN SEMUA DATA ORDER
+
+orderData:orderData
+
+}
+);
+
+
+// selesai
 
 return orderRef.key;
+
 }
-
-
-
-
 
 
 // PROTEKSI

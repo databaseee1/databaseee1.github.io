@@ -180,6 +180,65 @@ header{
 
 
 
+.scroll-nav{
+    position: fixed;
+    top: -60px;
+    left: 0;
+    width: 100%;
+    background: #0c85ff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 4px 0; 
+    z-index: 9999;
+    transition: 0.3s ease;
+}
+
+.scroll-nav.show{
+    top: 70px;
+}
+
+.scroll-item{
+    color: white;
+    font-size: 11px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px; 
+    cursor: pointer;
+}
+
+.scroll-item img{
+    width: 18px; 
+    height: 18px;
+    object-fit: contain;
+        border-radius: 5px;
+}
+
+.icon-wrapper{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.badge{
+    position: absolute;
+    top: -4px;
+    right: -6px;
+    background: red;
+    color: white;
+    font-size: 10px;
+    min-width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+    font-weight: bold;
+}
+
 #popupinfo22{
 
 position:fixed;
@@ -630,16 +689,7 @@ box-shadow:0 8px 20px rgba(0,0,0,.12);
     font-size:14px;
 }
 
-.badge{
-    margin-top:15px;
-    display:inline-block;
-    background:#f3ecff;
-    color:#5c27fe;
-    padding:8px 16px;
-    border-radius:30px;
-    font-size:13px;
-    font-weight:600;
-}
+
 
 .loading{
     text-align:center;
@@ -2795,6 +2845,34 @@ z-index:0;
     </div>
 </header>
 
+
+
+<div id="scrollNav" class="scroll-nav">
+
+<div class="scroll-item" onclick="location.href='https://www.tigohost.asia/'">
+    <img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1783015138/u9wvmosgcb8r4palazkd.svg" alt="daftarhost">
+    <span>Daftar Host</span>
+</div>
+
+<div class="scroll-item" onclick="location.href='dating_apps.html'">
+    <img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1783014784/eofdkrkkn0nfylbbvsf9.svg" alt="datingapps">
+    <span>Dating Apps</span>
+</div>
+
+<div class="scroll-item" onclick="location.href='notifikasi.html'">
+    <div class="icon-wrapper">
+        <img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1783015061/icx4xyczu3qv4m2qro6p.svg">
+        <span id="notifBadgeScroll" class="badge" style="display:none;"></span>
+    </div>
+    <span>Notifikasi</span>
+</div>
+
+<div class="scroll-item" onclick="location.href='voucher.html'">
+    <img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1783014216/ytmyduyvumg3sim16ers.webp" alt="Voucher">
+    <span>Voucher</span>
+</div>
+
+</div>
 
 
 <div class="banner-box">
@@ -5599,7 +5677,7 @@ if(usersid){
         badge.style.background = "red";
         badge.style.color = "#fff";
         badge.style.fontSize = "10px";
-        badge.style.padding = "2px 5px";
+        badge.style.padding = "2px 8px";
         badge.style.borderRadius = "10px";
         badge.style.display = "none";
 
@@ -5665,9 +5743,10 @@ async function loadHeaderBadge() {
 
     }
 
-setTimeout(() => {
+window.addEventListener("load", () => {
     loadHeaderBadge();
-}, 100);
+    loadScrollBadge();
+});
 
 
     if(footerUserName){
@@ -5704,6 +5783,45 @@ setTimeout(() => {
 
 
 }
+
+
+
+
+
+
+
+async function loadScrollBadge() {
+
+    const uid = localStorage.getItem("usersid");
+    const badge = document.getElementById("notifBadgeScroll");
+
+    if (!uid || !badge) return;
+
+    const snap = await get(ref(db, `notifications/${uid}`));
+
+    if (!snap.exists()) {
+        badge.style.display = "none";
+        return;
+    }
+
+    const data = snap.val();
+    let count = 0;
+
+    Object.values(data).forEach(item => {
+        if (item.read === false || item.read === "false" || item.read == null) {
+            count++;
+        }
+    });
+
+    if (count > 0) {
+        badge.style.display = "flex";
+        badge.innerText = count;
+    } else {
+        badge.style.display = "none";
+    }
+}
+
+
 </script>
 
 
@@ -5919,6 +6037,25 @@ document.addEventListener("gesturestart",e=>e.preventDefault());
 
 
 </script>
+
+
+
+
+<script>
+const scrollNav = document.getElementById("scrollNav");
+
+window.addEventListener("scroll", () => {
+    if (window.scrollY > 80) {
+        scrollNav.classList.add("show");
+    } else {
+        scrollNav.classList.remove("show");
+    }
+});
+
+
+
+</script>
+
 
 </body>
 </html>
