@@ -2570,7 +2570,7 @@ font-family:Poppins,Arial;
 z-index:1;
 }
 
-/* KEPALA TITLE (yang kamu sudah punya) */
+
 .section-title::after{
 content:"";
 position:absolute;
@@ -2586,16 +2586,17 @@ clip-path:polygon(
 0 100%
 );
 z-index:-1;
+border-radius: 50px 0 0 50px;
 }
 
-/* 🔥 GARIS PANJANG DI ATAS (LEFT SIDE) */
+
 .section-title::before{
 content:"";
 position:absolute;
-top:-2px;              /* posisinya di atas title */
-left:-100vw;           /* mulai dari jauh kiri */
-width:200vw;           /* panjang banget sampai kanan */
-height:3px;            /* tebal garis */
+top:-2px;            
+left:-100vw;         
+width:200vw;         
+height:3px;            
 background:#0c85ff;
 z-index:0;
 }
@@ -2740,6 +2741,7 @@ clip-path:polygon(
 0 100%
 );
 z-index:-1;
+border-radius: 50px 0 0 50px;
 }
 
 /* GARIS PANJANG DI ATAS */
