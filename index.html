@@ -2134,7 +2134,530 @@ select option{
 
 
 
+.section-title{
+display:inline-flex;
+align-items:center;
+background:#7c3aed;
+color:white;
+font-size:15px;
+font-weight:900;
+padding:8px 35px 8px 18px;
+margin:15px 0 15px 0;
+position:relative;
+font-family:Poppins,Arial;
+z-index:1;
+    border-radius: 10px;
+}
 
+
+.section-title::after{
+content:"";
+position:absolute;
+left:84%;
+top:0;
+height:100%;
+width:calc(100vw - 100%);
+background:#cbd4ff;
+clip-path:polygon(
+15px 0,
+100% 0,
+100% 100%,
+0 100%
+);
+z-index:-1;
+border-radius: 50px 0 0 50px;
+}
+
+
+.section-title::before{
+content:"";
+position:absolute;
+top:-2px;            
+left:-100vw;         
+width:200vw;         
+height:3px;            
+background:#7c3aed;
+z-index:0;
+}
+
+
+
+
+
+
+
+
+
+
+
+#voucherList{
+
+display:flex;
+
+gap:12px;
+
+overflow-x:auto;
+
+padding:5px 12px 15px;
+
+}
+
+
+
+#voucherList::-webkit-scrollbar{
+
+display:none;
+
+}
+
+
+
+#voucherList .mobile-card{
+
+min-width:50px;
+
+max-width:150px;
+
+border-radius:5px;
+
+}
+
+
+
+#voucherList .thumb{
+
+height:65px;
+width:65px;
+
+display:block;
+
+margin:10px auto;
+
+object-fit:cover;
+
+border-radius:12px;
+
+}
+
+
+#voucherList .mobile-body{
+
+padding:10px;
+
+}
+
+
+
+#voucherList .mobile-title{
+
+font-size:11px;
+
+font-weight:800;
+
+height:34px;
+
+overflow:hidden;
+
+}
+
+
+
+#voucherList .mobile-price{
+
+font-size:13px;
+
+font-weight:900;
+
+}
+
+
+#voucherList .voucher-badge{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:5px;
+
+font-size:10px;
+
+padding:4px 8px;
+
+margin-top:5px;
+
+}
+
+
+.voucher-badge img{
+
+width:18px;
+
+height:18px;
+
+object-fit:contain;
+
+}
+
+
+/* ===========================
+   MOBILE LIST
+=========================== */
+
+#mobileList{
+
+display:flex;
+
+gap:14px;
+
+overflow-x:auto;
+
+scroll-behavior:smooth;
+
+padding:10px 2px 14px;
+
+}
+
+#mobileList::-webkit-scrollbar{
+
+display:none;
+
+}
+
+.mobile-card{
+
+min-width:180px;
+
+max-width:180px;
+
+background:#fff;
+
+border-radius:18px;
+
+overflow:hidden;
+
+cursor:pointer;
+
+box-shadow:
+0 6px 18px rgba(0,0,0,.08);
+
+transition:.18s;
+
+flex-shrink:0;
+
+}
+
+.mobile-card:hover{
+
+transform:translateY(-3px);
+
+}
+
+.mobile-card:active{
+
+transform:scale(.98);
+
+}
+
+.mobile-card>img{
+
+width:100%;
+
+height:145px;
+
+object-fit:cover;
+
+display:block;
+
+background:#f2f2f2;
+
+}
+
+.mobile-body{
+
+padding:12px;
+
+}
+
+.mobile-title{
+
+font-size:14px;
+
+font-weight:700;
+
+color:#222;
+
+line-height:1.35;
+
+height:38px;
+
+overflow:hidden;
+
+}
+
+.mobile-price{
+
+margin-top:8px;
+
+font-size:17px;
+
+font-weight:800;
+
+color:#0c85ff;
+
+}
+
+#bud328icon{
+
+display:flex;
+
+gap:6px;
+
+margin-top:8px;
+
+}
+
+#bud328icon img{
+
+width:38px;
+
+height:8px;
+
+object-fit:contain;
+
+}
+
+.mobile-bottom{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-top:10px;
+
+font-size:11px;
+
+color:#777;
+
+}
+
+.mobile-star{
+
+font-weight:700;
+
+color:#f5a623;
+
+}
+
+/* ===========================
+   LOADING
+=========================== */
+
+.mobile-loading{
+
+min-width:180px;
+
+height:255px;
+
+border-radius:18px;
+
+background:
+linear-gradient(
+90deg,
+#ececec 25%,
+#f8f8f8 50%,
+#ececec 75%
+);
+
+background-size:400% 100%;
+
+animation:loading 1.2s infinite;
+
+flex-shrink:0;
+
+}
+
+@keyframes loading{
+
+0%{
+background-position:100% 0;
+}
+
+100%{
+background-position:-100% 0;
+}
+
+}
+
+/* ===========================
+   VOUCHER
+=========================== */
+
+#voucherList{
+
+display:flex;
+
+gap:14px;
+
+overflow-x:auto;
+
+padding:8px 2px 14px;
+
+scroll-behavior:smooth;
+
+}
+
+#voucherList::-webkit-scrollbar{
+
+display:none;
+
+}
+
+#voucherList .mobile-card{
+
+min-width:160px;
+
+max-width:160px;
+
+background:#fff;
+
+border-radius:18px;
+
+overflow:hidden;
+
+box-shadow:
+0 6px 18px rgba(0,0,0,.07);
+
+}
+
+.thumb{
+
+width:100%;
+
+height:110px;
+
+object-fit:cover;
+
+display:block;
+
+}
+
+.game-body{
+
+padding:10px;
+
+}
+
+.game-title{
+
+font-size:13px;
+
+font-weight:700;
+
+color:#222;
+
+line-height:1.35;
+
+
+overflow:hidden;
+
+}
+
+.voucher-badge{
+
+margin-top:6px;
+
+display:inline-flex;
+
+align-items:center;
+
+gap:5px;
+
+background:#eef7ff;
+
+padding:4px 9px;
+
+border-radius:30px;
+
+font-size:11px;
+
+font-weight:700;
+
+color:#0c85ff;
+
+}
+
+.voucher-badge img{
+
+width:13px;
+
+height:13px;
+
+object-fit:contain;
+
+}
+
+.game-price{
+
+margin-top:8px;
+
+font-size:15px;
+
+font-weight:800;
+
+color:#ff5a00;
+
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:768px){
+
+.mobile-card{
+
+min-width:160px;
+
+max-width:160px;
+
+}
+
+.mobile-card>img{
+
+height:130px;
+
+}
+
+.mobile-loading{
+
+min-width:160px;
+
+height:235px;
+
+}
+
+}
+
+.topup-btn{
+display:inline-block;
+background:linear-gradient(135deg, #c171d1, #ffffff);
+color:#fff;
+padding:12px 22px;
+text-decoration:none;
+font-weight:700;
+transition:.2s;
+}
+
+.topup-btn:hover{
+opacity:.9;
+}
+
+.topup-btn:active{
+transform:scale(.97);
+
+}
 
 </style>
 </head>
@@ -2170,6 +2693,7 @@ select option{
   <a href="tentang-host.html">Tentang Host</a>
   <a href="tentang-agency.html">Tentang Agency</a>
   <a href="tentang-topup.html">Tentang Top Up</a>
+  <a href="https://www.tigohost.asia/site/beranda.html" class="topup-btn">Top-Up Coin Sekarang</a>
   <a href="#" onclick="openinforma2334cominfo();return false;">Informasi</a>
 
   <h3>Tutorial</h3>
@@ -2493,7 +3017,10 @@ Informasi di atas digunakan sebagai kontak resmi perusahaan untuk keperluan pend
     <div class="apliksi328549_item"></div>
   </div>
   <div class="inner">
-    <div id="Logoaplikasi32_list">Loading</div>
+<div id="Logoaplikasi32_list"
+     onclick="window.location.href='https://www.tigohost.asia/site/beranda.html'">
+    Loading
+</div>
   </div>
 </div>
 
@@ -2695,18 +3222,22 @@ Informasi di atas digunakan sebagai kontak resmi perusahaan untuk keperluan pend
 
 
 
-<div class="ulasan-header">
-  <p3>Ulasan Terbaru</p3>
-  </div>
+<h3 class="section-title">
+Ulasan Terbaru
+</h3>
 <div id="listTestimoni"></div>
 
 
 
 
-
-
-
-
+<h3 class="section-title">
+Shopping
+</h3>
+<div id="voucherList" class="game-scroll"></div>
+<div id="Logoaplikasi32_list"></div>
+<div id="mobileList"></div>
+<div id="mobileLeft"></div>
+<div id="mobileRight"></div>
 
 
 
@@ -4651,7 +5182,7 @@ window.scrollTop99navigasi = function () {
 
 /* ================= SALE (NO SCROLL) ================= */
 window.goSale99navigasi = function () {
-  window.location.href = "https://www.tigohost.asia/topup-coin/";
+  window.location.href = "https://www.tigohost.asia/site/beranda.html";
 };
 
 
@@ -4898,6 +5429,365 @@ popuprunning37234Overlay
       "none";
   }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+document.getElementById("gameList");
+
+const voucherList =
+document.getElementById("voucherList");
+
+const gameRef =
+ref(db,"Game-top-up");
+
+
+const mobileList =
+document.getElementById("mobileList");
+
+
+
+const mobileRef =
+ref(db,"Top-up game-Mobile");
+
+
+
+
+
+const mobileCache =
+"mobile_game_cache_v1";
+
+
+
+
+
+const fakeMobile=()=>{
+
+
+mobileList.innerHTML=`
+
+<div class="mobile-loading"></div>
+<div class="mobile-loading"></div>
+<div class="mobile-loading"></div>
+
+`;
+
+};
+
+
+
+
+
+fakeMobile();
+
+
+
+
+
+
+
+const renderMobile=(data)=>{
+
+
+mobileList.innerHTML="";
+
+
+voucherList.innerHTML="";
+data.forEach(g=>{
+
+
+mobileList.innerHTML += `
+
+
+
+<div class="mobile-card"
+onclick="openMobile('${g.id}')">
+
+
+<img src="${g.thumbnail}">
+
+
+
+<div class="mobile-body">
+
+
+
+<div class="mobile-title">
+
+${g.nama}
+
+</div>
+
+
+
+
+<div class="mobile-price">
+
+Rp ${Number(g.harga)
+.toLocaleString("id-ID")}
+
+</div>
+
+
+<div id="bud328icon">
+
+
+<img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782852544/tr8qy7ibsjgrogaxcxwo.png">
+
+
+<img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782852546/gxwbyirbmebsdedcqdbi.png">
+
+
+
+</div>
+<div id="bud328icon">
+<img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782856890/bt3oxtfnoxeienyjqgu9.webp">
+
+
+</div>
+
+
+
+
+
+
+
+<div class="mobile-bottom">
+
+
+<span>
+
+${g.terjual || 0} terjual
+
+</span>
+
+
+
+<span class="mobile-star">
+
+★ ${g.rating || "0"}
+
+</span>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+
+`;
+
+
+
+if(g.kategori === "Voucher"){
+
+
+voucherList.innerHTML += `
+
+
+<div class="mobile-card"
+onclick="openMobile('${g.id}')">
+
+
+<img 
+class="thumb"
+src="${g.thumbnail || ""}">
+
+
+
+<div class="game-body">
+
+
+<div class="game-title">
+
+${(g.nama || "").length > 12
+? g.nama.substring(0,12) + "..."
+: g.nama}
+
+</div>
+
+
+
+<div class="voucher-badge">
+
+<img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782938395/zmmtt8yp6pyfm0qc1plc.webp">
+
+Voucher
+
+</div>
+
+
+
+<div class="game-price">
+
+Rp ${Number(g.harga || 0)
+.toLocaleString("id-ID")}
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+`;
+
+
+}
+
+
+
+
+});
+
+
+};
+
+
+
+
+
+
+
+
+const oldMobile =
+localStorage.getItem(mobileCache);
+
+
+
+if(oldMobile){
+
+
+renderMobile(
+JSON.parse(oldMobile)
+);
+
+
+}
+
+
+
+
+
+
+
+
+onValue(
+mobileRef,
+snap=>{
+
+
+let arr=[];
+
+
+snap.forEach(c=>{
+
+
+arr.push({
+
+id:c.key,
+...c.val()
+
+});
+
+
+});
+
+
+
+
+localStorage.setItem(
+mobileCache,
+JSON.stringify(arr)
+);
+
+
+
+renderMobile(arr);
+
+
+
+});
+
+
+
+
+
+
+
+
+
+
+document
+.getElementById("mobileLeft")
+.onclick=()=>{
+
+
+mobileList.scrollBy({
+
+left:-180,
+
+behavior:"smooth"
+
+});
+
+
+};
+
+
+
+
+
+
+document
+.getElementById("mobileRight")
+.onclick=()=>{
+
+
+mobileList.scrollBy({
+
+left:180,
+
+behavior:"smooth"
+
+});
+
+
+};
+
+
+
+
+
+window.openMobile = (id) => {
+
+    location.href =
+    "https://www.tigohost.asia/site/beranda.html";
+
+};
 
 
 
