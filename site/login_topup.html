@@ -7,6 +7,8 @@
 <title>Login Akun Top Up</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
 
@@ -52,22 +54,142 @@ user-select:text;
     font-family:Poppins,sans-serif;
 }
 
-body{
-    background:#f5f6fb;
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:20px;
+
+
+.show-notif{
+
+position:fixed;
+
+top:20px;
+
+left:50%;
+
+transform:translateX(-50%) translateY(-100px);
+
+opacity:0;
+
+transition:.35s;
+
+z-index:999999;
+
+pointer-events:none;
+
 }
 
+.show-notif.show{
+
+transform:translateX(-50%) translateY(0);
+
+opacity:1;
+
+}
+
+.show-notif-box{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+padding:14px 18px;
+
+background:white;
+
+border-radius:16px;
+
+box-shadow:
+0 10px 30px rgba(0,0,0,.15);
+
+min-width:270px;
+
+font-family:Poppins,sans-serif;
+
+}
+
+.show-notif-icon{
+
+width:38px;
+
+height:38px;
+
+border-radius:50%;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:18px;
+
+background:#0c85ff;
+
+color:white;
+
+}
+
+.show-notif-text{
+
+font-size:14px;
+
+font-weight:600;
+
+color:#222;
+
+}
+
+.show-notif.success .show-notif-icon{
+
+background:#16a34a;
+
+}
+
+.show-notif.error .show-notif-icon{
+
+background:#ef4444;
+
+}
+
+.show-notif.warning .show-notif-icon{
+
+background:#f59e0b;
+
+}
+
+
+body{
+    margin:0;
+    min-height:100vh;
+    font-family:'Poppins',sans-serif;
+
+    background-color:#131722;
+
+    background-image:
+
+    linear-gradient(45deg,
+    rgba(255,255,255,.03) 25%,
+    transparent 25%,
+    transparent 75%,
+    rgba(255,255,255,.03) 75%),
+
+    linear-gradient(-45deg,
+    rgba(255,255,255,.03) 25%,
+    transparent 25%,
+    transparent 75%,
+    rgba(255,255,255,.03) 75%);
+
+    background-size:40px 40px;
+
+    color:#fff;
+}
 .card{
     width:100%;
     max-width:450px;
-    background:#fff;
+    background:#2800ff00;
     border-radius:25px;
     padding:35px;
-    box-shadow:0 10px 40px rgba(0,0,0,.08);
+    box-shadow:0 10px 40px rgb(66 0 255);
 }
 
 .logo{
@@ -145,6 +267,72 @@ body{
     text-decoration:none;
     font-weight:600;
 }
+
+
+
+
+
+
+
+
+
+
+
+.footer{
+
+    margin-top:50px;
+
+    background:#ffffff00;
+
+    border-top:1px solid #e8e8e8;
+border-radius: 10px;
+    padding:25px 18px;
+
+}
+
+.footer-links{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    justify-content:center;
+
+    gap:12px;
+
+}
+
+.footer-links a{
+
+    text-decoration:none;
+
+    color:#555;
+
+    font-size:13px;
+
+    font-weight:500;
+
+    transition:.2s;
+
+}
+
+.footer-links a:hover{
+
+    color:#0c85ff;
+
+}
+
+.footer-copy{
+
+    margin-top:18px;
+
+    text-align:center;
+
+    font-size:12px;
+
+    color:#999;
+
+}
 </style>
 </head>
 <body>
@@ -154,7 +342,7 @@ body{
     <div class="logo">
         <img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782573190/vqp0oxzbjiwwmvpbn9yl.jpg">
 
-        <h2>Login Akun Top Up</h2>
+        <h2>Login Akun</h2>
 
         <p>
             Masuk untuk melanjutkan pembelian coin.
@@ -191,6 +379,52 @@ body{
     </div>
 
 </div>
+
+
+
+
+
+
+<footer class="footer">
+
+    <div class="footer-links">
+
+        <a href="FAQ.HTML">
+            FAQ
+        </a>
+
+        <a href="keamanan_akun.html">
+            Keamanan Akun
+        </a>
+
+        <a href="Pusat_Bantuan.html">
+            Pusat Bantuan
+        </a>
+
+        <a href="Syarat&Ketentuan_topup.html">
+            Syarat & Ketentuan
+        </a>
+
+        <a href="beranda.html">
+            Beranda
+        </a>
+
+    </div>
+
+    <div class="footer-copy">
+        © 2026 Tigohost Agency. All Rights Reserved.
+    </div>
+
+</footer>
+
+
+
+
+
+
+
+
+
 
 <script type="module">
 
@@ -231,12 +465,12 @@ document
     .value.trim();
 
     if(!email){
-        alert("Email wajib diisi.");
+        showNotif("Email wajib diisi.","warning");
         return;
     }
 
     if(!password){
-        alert("Password wajib diisi.");
+        showNotif("Password wajib diisi.","warning");
         return;
     }
 
@@ -248,7 +482,7 @@ document
         );
 
         if(!snap.exists()){
-            alert("Akun tidak ditemukan.");
+            showNotif("Akun tidak ditemukan.","error");
             return;
         }
 
@@ -269,9 +503,7 @@ document
         });
 
         if(!user){
-            alert(
-                "Email atau password salah."
-            );
+            showNotif("Email atau password salah.","error");
             return;
         }
 
@@ -285,9 +517,7 @@ document
             JSON.stringify(user)
         );
 
-        alert(
-            "Login berhasil."
-        );
+        showNotif("Login berhasil.","success");
 
         if(redirect){
             location.href =
@@ -302,11 +532,79 @@ document
     }catch(err){
 
         console.error(err);
-        alert(err.message);
+        showNotif(err.message,"error");
 
     }
 
 };
+
+
+
+
+
+
+
+
+
+
+
+
+function showNotif(text,type="success"){
+
+const notif =
+document.getElementById("showNotif");
+
+const icon =
+document.getElementById("showNotifIcon");
+
+const txt =
+document.getElementById("showNotifText");
+
+txt.textContent=text;
+
+notif.className="show-notif "+type+" show";
+
+if(type==="success"){
+
+icon.innerHTML=
+'<i class="fa-solid fa-check"></i>';
+
+}
+
+else if(type==="error"){
+
+icon.innerHTML=
+'<i class="fa-solid fa-xmark"></i>';
+
+}
+
+else{
+
+icon.innerHTML=
+'<i class="fa-solid fa-circle-info"></i>';
+
+}
+
+clearTimeout(window.notifTimer);
+
+window.notifTimer=setTimeout(()=>{
+
+notif.classList.remove("show");
+
+},2500);
+
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -347,6 +645,26 @@ document.addEventListener("gesturestart",e=>e.preventDefault());
 
 
 </script>
+
+
+
+
+<div id="showNotif" class="show-notif">
+
+    <div class="show-notif-box">
+
+        <div id="showNotifIcon" class="show-notif-icon">
+            <i class="fa-solid fa-circle-info"></i>
+        </div>
+
+        <div id="showNotifText" class="show-notif-text">
+            Pesan
+        </div>
+
+    </div>
+
+</div>
+
 
 </body>
 </html>

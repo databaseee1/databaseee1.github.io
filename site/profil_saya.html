@@ -7,6 +7,8 @@
 <title>Profil Saya</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
 
@@ -192,6 +194,315 @@ body{
         font-size:22px;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+.confirm-popup{
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,.45);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+opacity:0;
+
+visibility:hidden;
+
+transition:.25s;
+
+z-index:999999;
+
+backdrop-filter:blur(4px);
+
+}
+
+.confirm-popup.show{
+
+opacity:1;
+
+visibility:visible;
+
+}
+
+.confirm-box{
+
+width:320px;
+
+background:#fff;
+
+border-radius:22px;
+
+padding:24px;
+
+text-align:center;
+
+font-family:Poppins,sans-serif;
+
+animation:pop .25s;
+
+}
+
+@keyframes pop{
+
+from{
+
+transform:scale(.85);
+
+opacity:0;
+
+}
+
+to{
+
+transform:scale(1);
+
+opacity:1;
+
+}
+
+}
+
+.confirm-icon{
+
+width:64px;
+
+height:64px;
+
+margin:auto;
+
+border-radius:50%;
+
+background:#ffe8e8;
+
+color:#ef4444;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:28px;
+
+margin-bottom:14px;
+
+}
+
+.confirm-box h3{
+
+margin:0;
+
+font-size:20px;
+
+font-weight:700;
+
+}
+
+.confirm-box p{
+
+margin:10px 0 24px;
+
+font-size:14px;
+
+color:#666;
+
+line-height:1.5;
+
+}
+
+.confirm-btns{
+
+display:flex;
+
+gap:10px;
+
+}
+
+.confirm-btns button{
+
+flex:1;
+
+border:none;
+
+border-radius:12px;
+
+padding:12px;
+
+font-size:14px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.2s;
+
+}
+
+#cancelConfirm{
+
+background:#ececec;
+
+color:#444;
+
+}
+
+#cancelConfirm:hover{
+
+background:#ddd;
+
+}
+
+#yesConfirm{
+
+background:#ef4444;
+
+color:#fff;
+
+}
+
+#yesConfirm:hover{
+
+background:#dc2626;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.saldo-card{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:16px 18px;
+
+border-radius:18px;
+
+background:linear-gradient(135deg,#0c85ff,#2563eb);
+
+color:#fff;
+
+box-shadow:
+0 12px 30px rgba(12,133,255,.25);
+
+margin-top:12px;
+
+}
+
+.saldo-left{
+
+display:flex;
+
+align-items:center;
+
+gap:14px;
+
+}
+
+.saldo-icon{
+
+width:52px;
+
+height:52px;
+
+border-radius:16px;
+
+background:rgba(255,255,255,.18);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:22px;
+
+}
+
+.saldo-label{
+
+font-size:13px;
+
+opacity:.85;
+
+font-weight:500;
+
+}
+
+.saldo-value{
+
+margin-top:3px;
+font-size:18px;
+font-weight:600;
+letter-spacing:.3px;
+
+}
+
+.saldo-badge{
+
+padding:6px 12px;
+
+border-radius:999px;
+
+background:rgba(255,255,255,.18);
+
+font-size:12px;
+
+font-weight:700;
+
+}
+
+.saldo-card::after{
+
+content:"";
+
+position:absolute;
+
+left:-30px;
+
+bottom:-30px;
+
+width:100px;
+
+height:100px;
+
+border-radius:50%;
+
+background:rgba(255,255,255,.05);
+
+}
+
+
 </style>
 </head>
 <body>
@@ -341,19 +652,34 @@ async function loadProfil(){
                     </div>
                 </div>
 
-                <div class="item">
-                    <div class="label">
-                        Saldo
-                    </div>
+         <div class="saldo-card">
 
-                    <div class="value">
-                        Rp ${Number(
-                            user.saldo || 0
-                        ).toLocaleString(
-                            "id-ID"
-                        )}
-                    </div>
-                </div>
+    <div class="saldo-left">
+
+        <div class="saldo-icon">
+            <i class="fa-solid fa-wallet"></i>
+        </div>
+
+        <div>
+
+            <div class="saldo-label">
+                Saldo
+            </div>
+
+            <div class="saldo-value">
+                Rp ${Number(user.saldo || 0).toLocaleString("id-ID")}
+            </div>
+
+        </div>
+
+    </div>
+
+<div class="saldo-badge"
+     onclick="location.href='isi_saldo_topup.html'">
+    Isi Saldo
+</div>
+
+</div>
 
                 <div class="item">
                     <div class="label">
@@ -459,31 +785,46 @@ setTimeout(() => {
 
 
 
-        document
-        .getElementById(
-            "logoutBtn"
-        )
-        .onclick = ()=>{
+      const popup =
+document.getElementById("confirmPopup");
 
-            if(
-                confirm(
-                    "Keluar dari akun?"
-                )
-            ){
+document
+.getElementById("logoutBtn")
+.onclick=()=>{
 
-                localStorage.removeItem(
-                    "usersid"
-                );
+popup.classList.add("show");
 
-                localStorage.removeItem(
-                    "user_topup"
-                );
+};
 
-                location.href =
-                "login_topup.html";
-            }
+document
+.getElementById("cancelConfirm")
+.onclick=()=>{
 
-        };
+popup.classList.remove("show");
+
+};
+
+document
+.getElementById("yesConfirm")
+.onclick=()=>{
+
+localStorage.removeItem("usersid");
+
+localStorage.removeItem("user_topup");
+
+location.href="login_topup.html";
+
+};
+
+popup.onclick=(e)=>{
+
+if(e.target===popup){
+
+popup.classList.remove("show");
+
+}
+
+};
 
     }catch(err){
 
@@ -601,6 +942,41 @@ document.addEventListener("gesturestart",e=>e.preventDefault());
 
 
 </script>
+
+
+
+
+
+
+
+
+<div id="confirmPopup" class="confirm-popup">
+
+    <div class="confirm-box">
+
+        <div class="confirm-icon">
+            <i class="fa-solid fa-right-from-bracket"></i>
+        </div>
+
+        <h3>Keluar Akun</h3>
+
+        <p>Apakah kamu yakin ingin keluar dari akun?</p>
+
+        <div class="confirm-btns">
+
+            <button id="cancelConfirm">
+                Batal
+            </button>
+
+            <button id="yesConfirm">
+                Keluar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
 
 </body>
 </html>

@@ -160,7 +160,7 @@ const usersid = localStorage.getItem("usersid");
 const listEl = document.getElementById("list");
 
 if (!usersid) {
-    listEl.innerHTML = `<div class="empty">Users ID tidak ditemukan</div>`;
+    listEl.innerHTML = `<div class="empty">Yuk Login dulu!</div>`;
 } else {
     loadHistory(usersid);
 }

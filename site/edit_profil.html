@@ -6,6 +6,8 @@
 <title>Edit Profil</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
 
@@ -43,7 +45,108 @@ user-select:text;
 
 
 
+.show-notif{
 
+position:fixed;
+
+top:20px;
+
+left:50%;
+
+transform:translateX(-50%) translateY(-100px);
+
+opacity:0;
+
+transition:.35s;
+
+z-index:999999;
+
+pointer-events:none;
+
+}
+
+.show-notif.show{
+
+transform:translateX(-50%) translateY(0);
+
+opacity:1;
+
+}
+
+.show-notif-box{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+padding:14px 18px;
+
+background:#fff;
+
+border-radius:18px;
+
+box-shadow:
+0 15px 40px rgba(0,0,0,.15);
+
+min-width:280px;
+
+font-family:Poppins,sans-serif;
+
+}
+
+.show-notif-icon{
+
+width:42px;
+
+height:42px;
+
+border-radius:50%;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:18px;
+
+background:#0c85ff;
+
+color:#fff;
+
+flex-shrink:0;
+
+}
+
+.show-notif-text{
+
+font-size:14px;
+
+font-weight:600;
+
+color:#222;
+
+}
+
+.show-notif.success .show-notif-icon{
+
+background:#22c55e;
+
+}
+
+.show-notif.error .show-notif-icon{
+
+background:#ef4444;
+
+}
+
+.show-notif.warning .show-notif-icon{
+
+background:#f59e0b;
+
+}
 
 body{
     font-family:Poppins;
@@ -224,7 +327,8 @@ document.getElementById("sampulImg").onclick = async () => {
 document.getElementById("saveBtn").onclick = async () => {
 
     if(!window.userData){
-        return alert("Data user belum siap, coba refresh");
+        showNotif("Data user belum siap, coba refresh","error");
+        return;
     }
 
     const whatsapp = document.getElementById("whatsapp").value.trim();
@@ -244,37 +348,57 @@ document.getElementById("saveBtn").onclick = async () => {
     if(window.newProfil) updateData.profil = window.newProfil;
     if(window.newSampul) updateData.fotoSampul = window.newSampul;
 
-    /* ================= PASSWORD (FULL FIX) ================= */
+    /* ================= PASSWORD ================= */
     const dbPass = String(window.userData.password || "");
 
     if(oldPass || newPass || confirmPass){
 
         if(!oldPass || !newPass || !confirmPass){
-            return alert("Isi semua kolom password");
+            showNotif("Isi semua kolom password","warning");
+            return;
         }
 
         if(oldPass !== dbPass){
             console.log("DEBUG:", dbPass, oldPass);
-            return alert("Password lama salah");
+            showNotif("Password lama salah","error");
+            return;
         }
 
         if(newPass !== confirmPass){
-            return alert("Password baru tidak cocok");
+            showNotif("Password baru tidak cocok","warning");
+            return;
         }
 
-        // 🔥 SUPPORT SEMUA KARAKTER TANPA LIMIT
         updateData.password = newPass;
     }
 
     /* ================= VALIDASI ================= */
     if(Object.keys(updateData).length === 0){
-        return alert("Tidak ada perubahan data");
+        showNotif("Tidak ada perubahan data","warning");
+        return;
     }
 
-    await update(ref(db, `users_topup/${uid}`), updateData);
+    try{
 
-    alert("Profil berhasil diperbarui");
-    location.href = "profil_saya.html";
+        await update(
+            ref(db, `users_topup/${uid}`),
+            updateData
+        );
+
+        showNotif("Profil berhasil diperbarui","success");
+
+        setTimeout(()=>{
+            location.href = "profil_saya.html";
+        },1200);
+
+    }catch(err){
+
+        console.error(err);
+
+        showNotif("Gagal memperbarui profil","error");
+
+    }
+
 };
 
 
@@ -282,9 +406,39 @@ document.getElementById("saveBtn").onclick = async () => {
 
 
 
+function showNotif(text,type="success"){
 
+const notif=document.getElementById("showNotif");
+const icon=document.getElementById("showNotifIcon");
+const txt=document.getElementById("showNotifText");
 
+txt.textContent=text;
 
+notif.className="show-notif "+type+" show";
+
+if(type==="success"){
+
+icon.innerHTML='<i class="fa-solid fa-check"></i>';
+
+}else if(type==="error"){
+
+icon.innerHTML='<i class="fa-solid fa-xmark"></i>';
+
+}else{
+
+icon.innerHTML='<i class="fa-solid fa-triangle-exclamation"></i>';
+
+}
+
+clearTimeout(window.notifTimer);
+
+window.notifTimer=setTimeout(()=>{
+
+notif.classList.remove("show");
+
+},2500);
+
+}
 
 
 
@@ -324,6 +478,33 @@ document.addEventListener("gesturestart",e=>e.preventDefault());
 
 
 </script>
+
+
+
+
+
+
+
+
+
+<!-- CUSTOM NOTIFICATION -->
+<div id="showNotif" class="show-notif">
+
+    <div class="show-notif-box">
+
+        <div id="showNotifIcon" class="show-notif-icon">
+            <i class="fa-solid fa-circle-info"></i>
+        </div>
+
+        <div id="showNotifText" class="show-notif-text">
+            Pesan
+        </div>
+
+    </div>
+
+</div>
+
+
 
 </body>
 </html>

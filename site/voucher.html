@@ -59,63 +59,141 @@ background-image:
 #voucherList{
     display:flex;
     flex-direction:column;
-    gap:8px;
-    padding:10px;
+    gap:14px;
+    padding:14px;
 }
 
-/* ROW ITEM */
-.mobile-card{
+.voucher-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:18px;
+
+    padding:18px;
+
+    color:#fff;
+
+    cursor:pointer;
+
+    background:linear-gradient(135deg, #be3ef5, #b30015);
+
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+
+}
+
+.voucher-pattern{
+
+    position:absolute;
+
+    inset:0;
+
+    background-image:
+    linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);
+
+    background-size:28px 28px;
+
+    opacity:.35;
+
+}
+
+.voucher-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    right:-35px;
+
+    bottom:-35px;
+
+    width:180px;
+
+    height:180px;
+
+    border-radius:50%;
+
+    border:5px solid rgba(45, 0, 248, 0.811);
+
+    box-shadow:
+0 0 0 12px rgba(255, 208, 0, .45), 0 0 0 24px rgb(255 213 0 / 35%);
+
+}
+
+.voucher-header{
+
+    position:relative;
+
+    z-index:2;
+
     display:flex;
+
+    justify-content:space-between;
+
     align-items:center;
-    gap:10px;
-    background:#fff;
-    border-radius:12px;
-    padding:10px;
-    border:1px solid #eee;
-    box-shadow:0 2px 6px rgba(0,0,0,0.04);
-    transition:0.15s;
+
 }
 
-.mobile-card:active{
-    transform:scale(0.98);
+.voucher-logo{
+
+    width:90px;
+
+
+    padding:5px 8px;
+
+    border-radius:20px;
+
 }
 
-/* LOGO KECIL */
-.mobile-card img.thumb{
-    width:42px;
-    height:42px;
-    border-radius:10px;
-    object-fit:cover;
-    background:#eee;
-}
+.voucher-type{
 
-/* TEXT AREA */
-.game-body{
-    display:flex;
-    flex-direction:column;
-}
+    font-size:14px;
 
-/* NAMA */
-.game-title{
-    font-size:13px;
-    font-weight:700;
-    color:#111;
-}
-
-/* SUB TEXT */
-.voucher-badge{
-    margin-top:2px;
-    font-size:11px;
-    color:#0c85ff;
     font-weight:600;
+
 }
 
-.voucher-badge img{
-    width:14px;
-    height:14px;
+.voucher-title{
+
+    position:relative;
+
+    z-index:2;
+
+    margin:30px 0 26px;
+
+    font-size:34px;
+
+    font-weight:800;
+
+    line-height:1.15;
+
 }
 
+.voucher-footer{
 
+    position:relative;
+
+    z-index:2;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    font-size:13px;
+
+}
+
+.voucher-footer img{
+
+    width:16px;
+
+    height:16px;
+
+}
 
 
 
@@ -341,8 +419,6 @@ font-family:Poppins,Arial;
 
 
 
-
-
 <div class="suka365-box">
 
 
@@ -502,42 +578,54 @@ location.href = "Halaman_mobile.html?id=" + id;
    VOUCHER
 ========================= */
 window.openMobile = (id)=>{
-location.href = "Halaman_mobile.html?id=" + id;
+    location.href = "Halaman_mobile.html?id=" + id;
 };
 
 function renderVoucher(data){
 
-voucherList.innerHTML = "";
+    voucherList.innerHTML = "";
 
-data.forEach(g=>{
+    data.forEach(g=>{
 
-if(g.kategori !== "Voucher") return;
+        if(g.kategori !== "Voucher") return;
 
-voucherList.innerHTML += `
-<div class="mobile-card" onclick="openMobile('${g.id}')">
+        voucherList.innerHTML += `
 
-<img class="thumb" src="${g.thumbnail || ''}">
+        <div class="voucher-card" onclick="openMobile('${g.id}')">
 
-<div class="game-body">
+            <div class="voucher-pattern"></div>
 
-<div class="game-title">
-${g.nama || ''}
-</div>
+            <div class="voucher-header">
 
-<div class="voucher-badge">
-<img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782938395/zmmtt8yp6pyfm0qc1plc.webp">
-Voucher
-</div>
+                <img class="voucher-logo"
+                     src="${g.thumbnail || ''}"
+                     onerror="this.style.display='none'">
 
-</div>
+                <div class="voucher-type">
+                    Voucher Digital
+                </div>
 
-</div>
-`;
+            </div>
 
-});
+            <div class="voucher-title">
+                ${g.nama || ''}
+            </div>
+
+            <div class="voucher-footer">
+
+                <img src="https://res.cloudinary.com/dowoq4a0i/image/upload/v1782938395/zmmtt8yp6pyfm0qc1plc.webp">
+
+                Voucher
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
 
 }
-
 </script>
 
 
