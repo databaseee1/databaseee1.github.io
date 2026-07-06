@@ -317,6 +317,139 @@ padding:15px;
 
 
 
+
+
+
+
+
+
+#syaratruu23{
+    max-width:900px;
+    margin:40px auto;
+    background:#fff;
+    border-radius:18px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    overflow:hidden;
+    font-family:Segoe UI,Tahoma,sans-serif;
+    color:#2d3748;
+    border:1px solid #e8edf3;
+}
+
+.syaratruu23-header{
+    background:linear-gradient(135deg,#1e88e5,#1565c0);
+    color:#fff;
+    padding:28px;
+    text-align:center;
+}
+
+.syaratruu23-header h2{
+    margin:0;
+    font-size:28px;
+    font-weight:700;
+}
+
+.syaratruu23-header p{
+    margin-top:8px;
+    opacity:.95;
+    font-size:15px;
+}
+
+.syaratruu23-content{
+    padding:30px;
+}
+
+.syaratruu23-list{
+    list-style:none;
+    margin:0;
+    padding:0;
+    counter-reset:syaratruu23-counter;
+}
+
+.syaratruu23-list li{
+    counter-increment:syaratruu23-counter;
+    position:relative;
+    background:#f8fafc;
+    margin-bottom:18px;
+    padding:18px 20px 18px 70px;
+    border-radius:12px;
+    border-left:5px solid #1e88e5;
+    transition:.25s ease;
+}
+
+.syaratruu23-list li:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 18px rgba(0,0,0,.08);
+    background:#f3f9ff;
+}
+
+.syaratruu23-list li::before{
+    content:counter(syaratruu23-counter);
+    position:absolute;
+    left:18px;
+    top:18px;
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    background:#1e88e5;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+    font-size:15px;
+}
+
+.syaratruu23-list strong{
+    color:#1565c0;
+}
+
+.syaratruu23-info{
+    margin-top:30px;
+    background:#fff8e8;
+    border-left:5px solid #f39c12;
+    padding:18px;
+    border-radius:10px;
+    color:#7b4e00;
+    line-height:1.7;
+}
+
+.syaratruu23-info strong{
+    color:#d97706;
+}
+
+@media(max-width:768px){
+
+#syaratruu23{
+    margin:15px;
+}
+
+.syaratruu23-header{
+    padding:22px;
+}
+
+.syaratruu23-header h2{
+    font-size:22px;
+}
+
+.syaratruu23-content{
+    padding:20px;
+}
+
+.syaratruu23-list li{
+    padding:16px 16px 16px 58px;
+    font-size:14px;
+}
+
+.syaratruu23-list li::before{
+    width:30px;
+    height:30px;
+    left:14px;
+    top:16px;
+    font-size:14px;
+}
+
+}
+
 </style>
 
 
@@ -525,11 +658,8 @@ Kami berhak melakukan pemeriksaan jika ditemukan transaksi mencurigakan.
 </p>
 
 
+
 </div>
-
-
-
-
 
 
 
@@ -573,7 +703,59 @@ Kembali
 
 
 
+<div id="syaratruu23">
 
+    <div class="syaratruu23-header">
+        <h2>Syarat & Ketentuan Pengembalian Dana Top Up Coin</h2>
+        <p>Harap membaca seluruh ketentuan berikut sebelum melakukan transaksi.</p>
+    </div>
+
+    <div class="syaratruu23-content">
+
+        <ol class="syaratruu23-list">
+
+            <li>
+                Setiap transaksi <strong>Top Up Coin</strong> yang telah berhasil diproses akan mengikuti seluruh kebijakan dan ketentuan yang berlaku pada sistem aplikasi.
+            </li>
+
+            <li>
+                Apabila pembelian coin pada menu <strong>Restock Coin</strong> tidak dapat diproses atau tidak dapat dikembalikan secara langsung, pengguna diwajibkan memilih salah satu menu top up lain yang tersedia sesuai dengan arahan sistem atau layanan pelanggan.
+            </li>
+
+            <li>
+                Setelah transaksi pada menu top up pengganti berhasil diselesaikan dan diverifikasi oleh sistem, pengguna berhak mengajukan proses pengembalian dana sesuai dengan nominal transaksi yang telah dibayarkan sebelumnya.
+            </li>
+
+            <li>
+                Pengembalian dana akan dilakukan melalui transfer ke rekening bank atau metode pembayaran yang telah didaftarkan dan berhasil diverifikasi oleh sistem.
+            </li>
+
+            <li>
+                Nominal dana yang dikembalikan sebesar jumlah pembayaran yang telah diterima dan tercatat pada sistem, tanpa melebihi nilai transaksi yang dilakukan.
+            </li>
+
+            <li>
+                Pengguna wajib memastikan bahwa data rekening atau metode penerimaan dana yang diberikan telah benar, valid, dan masih aktif. Kesalahan data yang diberikan sepenuhnya menjadi tanggung jawab pengguna dan dapat menyebabkan keterlambatan proses pengembalian dana.
+            </li>
+
+            <li>
+                Proses verifikasi transaksi serta pengembalian dana akan dilakukan setelah seluruh persyaratan administrasi dan validasi dinyatakan lengkap sesuai dengan prosedur yang berlaku.
+            </li>
+
+            <li>
+                Dengan melakukan transaksi <strong>Top Up Coin</strong>, pengguna dianggap telah membaca, memahami, dan menyetujui seluruh syarat dan ketentuan yang berlaku.
+            </li>
+
+        </ol>
+
+        <div class="syaratruu23-info">
+            <strong>Catatan:</strong><br>
+            Pengembalian dana hanya dapat diproses setelah seluruh persyaratan dan ketentuan yang berlaku telah dipenuhi. Mohon memastikan seluruh data yang diberikan sudah benar agar proses verifikasi dan transfer dana dapat berjalan dengan lancar.
+        </div>
+
+    </div>
+
+</div>
 
 
 
