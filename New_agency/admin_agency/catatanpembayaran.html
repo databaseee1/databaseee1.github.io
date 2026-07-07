@@ -131,6 +131,107 @@ border-radius:10px;
 z-index:99999;
 }
 
+
+
+
+.total-card{
+
+margin:12px;
+
+padding:18px;
+
+border-radius:18px;
+
+background:linear-gradient(
+135deg,
+#27ae60,
+#1e874b
+);
+
+color:#fff;
+
+box-shadow:
+0 10px 30px rgba(39,174,96,.25);
+
+}
+
+.total-title{
+
+font-size:14px;
+
+opacity:.9;
+
+margin-bottom:8px;
+
+}
+
+.total-nominal{
+
+font-size:30px;
+
+font-weight:700;
+
+line-height:1.2;
+
+}
+
+.total-transaksi{
+
+margin-top:8px;
+
+font-size:13px;
+
+opacity:.9;
+
+}
+
+
+
+
+.aksi{
+
+display:flex;
+
+gap:10px;
+
+margin-top:12px;
+
+}
+
+.edit-btn,
+.hapus-btn{
+
+flex:1;
+
+border:none;
+
+padding:10px;
+
+border-radius:10px;
+
+font-weight:600;
+
+cursor:pointer;
+
+}
+
+.edit-btn{
+
+background:#0c85ff;
+
+color:#fff;
+
+}
+
+.hapus-btn{
+
+background:#ff4d4f;
+
+color:#fff;
+
+}
+
+
 </style>
 </head>
 
@@ -153,6 +254,46 @@ onclick="openPopup()">
 </div>
 
 </div>
+
+
+
+
+<div class="total-card">
+
+<div class="total-title">
+
+Total Pembayaran
+
+</div>
+
+<div
+id="totalNominal"
+class="total-nominal">
+
+Rp 0
+
+</div>
+
+<div
+id="totalTransaksi"
+class="total-transaksi">
+
+0 Transaksi
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
 
 <div id="list"></div>
 
@@ -202,7 +343,9 @@ import {
 getDatabase,
 ref,
 get,
-push
+push,
+remove,
+update
 }
 from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
@@ -224,6 +367,10 @@ window.location.search
 const uid =
 params.get("uid");
 
+let editId = null;
+
+window.dataCatatan = {};
+
 async function loadData(){
 
 const snap =
@@ -239,52 +386,85 @@ uid +
 const list =
 document.getElementById("list");
 
-list.innerHTML="";
+list.innerHTML = "";
 
-if(!snap.exists()) return;
+let total = 0;
+let jumlah = 0;
+let editId = null;
+if(!snap.exists()){
 
-const data =
-snap.val();
+document.getElementById(
+"totalNominal"
+).innerText = "Rp 0";
 
+document.getElementById(
+"totalTransaksi"
+).innerText = "0 Transaksi";
+
+return;
+
+}
+
+const data = snap.val();
+window.dataCatatan = data;
 Object.keys(data)
 .reverse()
 .forEach(id=>{
 
 const d = data[id];
 
+total += Number(d.nominal || 0);
+
+jumlah++;
+
 const div =
 document.createElement("div");
 
-div.className =
-"card";
+div.className = "card";
 
 div.innerHTML = `
 
 <div class="row">
 <b>Tujuan :</b>
-${d.tujuan}
+${d.tujuan || "-"}
 </div>
 
 <div class="row nominal">
-Rp ${Number(
-d.nominal||0
-).toLocaleString("id-ID")}
+Rp ${Number(d.nominal||0).toLocaleString("id-ID")}
 </div>
 
 <div class="row">
 <b>Bank :</b>
-${d.bank}
+${d.bank || "-"}
 </div>
 
 <div class="row">
 <b>Note :</b>
-${d.note}
+${d.note || "-"}
 </div>
 
 <div class="time">
-${new Date(
-d.time
-).toLocaleString("id-ID")}
+${new Date(d.time).toLocaleString("id-ID")}
+</div>
+
+<div class="aksi">
+
+<button class="edit-btn"
+onclick="editCatatan('${id}')">
+
+<i class="fa fa-pen"></i>
+Edit
+
+</button>
+
+<button class="hapus-btn"
+onclick="hapusCatatan('${id}')">
+
+<i class="fa fa-trash"></i>
+Hapus
+
+</button>
+
 </div>
 
 `;
@@ -292,6 +472,26 @@ d.time
 list.appendChild(div);
 
 });
+
+/* ===========================
+TOTAL
+=========================== */
+
+document.getElementById(
+"totalNominal"
+).innerText =
+
+"Rp " +
+
+total.toLocaleString("id-ID");
+
+document.getElementById(
+"totalTransaksi"
+).innerText =
+
+jumlah +
+
+" Transaksi";
 
 }
 
@@ -345,11 +545,55 @@ if(
 !tujuan ||
 !nominal
 ){
+
 showNotif(
 "Lengkapi data"
 );
+
 return;
+
 }
+
+/* ===========================
+EDIT
+=========================== */
+
+if(editId){
+
+await update(
+
+ref(
+db,
+"users2/" +
+uid +
+"/catatanPembayaran/" +
+editId
+),
+
+{
+
+tujuan,
+nominal,
+bank,
+note
+
+}
+
+);
+
+showNotif(
+"Catatan berhasil diperbarui"
+);
+
+editId = null;
+
+}
+
+/* ===========================
+TAMBAH
+=========================== */
+
+else{
 
 await push(
 
@@ -361,14 +605,22 @@ uid +
 ),
 
 {
+
 tujuan,
 nominal,
 bank,
 note,
 time:Date.now()
+
 }
 
 );
+
+showNotif(
+"Catatan berhasil ditambahkan"
+);
+
+}
 
 document.getElementById("popup")
 .style.display = "none";
@@ -385,13 +637,79 @@ document.getElementById("bank")
 document.getElementById("note")
 .value="";
 
-showNotif(
-"Catatan berhasil ditambahkan"
-);
+loadData();
+
+};
+
+
+
+
+
+window.hapusCatatan = async function(id){
+
+if(!confirm("Hapus catatan ini?"))
+return;
+
+await remove(
+ref(
+db,
+"users2/"+uid+"/catatanPembayaran/"+id
+));
+
+showNotif("Catatan berhasil dihapus");
 
 loadData();
 
 };
+
+
+
+window.editCatatan = function(id){
+
+const d = window.dataCatatan[id];
+
+if(!d) return;
+
+editId = id;
+
+document.getElementById("tujuan").value =
+d.tujuan || "";
+
+document.getElementById("nominal").value =
+d.nominal || "";
+
+document.getElementById("bank").value =
+d.bank || "";
+
+document.getElementById("note").value =
+d.note || "";
+
+document.getElementById("popup")
+.style.display = "flex";
+
+};
+
+
+
+
+
+
+
+
+document
+.getElementById("popup")
+.addEventListener("click",function(e){
+
+if(e.target===this){
+
+this.style.display="none";
+
+}
+
+});
+
+
+
 
 </script>
 

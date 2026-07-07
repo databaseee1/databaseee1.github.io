@@ -680,7 +680,15 @@ if (!adminData || adminData.role !== "admin") {
 
 
 
+function shortText(text,max=90){
 
+text = text || "";
+
+return text.length > max
+? text.substring(0,max) + "..."
+: text;
+
+}
 
 
 
@@ -721,9 +729,9 @@ onValue(ref(db, "cs_inbox"), (snap) => {
       <img src="${d.profil || 'https://via.placeholder.com/40'}">
       <div>
         <div><b>${d.nama || "Pengguna"}</b></div>
-        <div style="font-size:12px;color:#666;">
-          ${d.lastMessage || ""}
-        </div>
+<div style="font-size:12px;color:#666;">
+  ${shortText(d.lastMessage,90)}
+</div>
       </div>
     `;
 

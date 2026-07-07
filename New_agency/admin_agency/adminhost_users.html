@@ -126,6 +126,7 @@ body{
   font-size:13px;
   color: #fff;
   border-radius: 5px;
+  margin-bottom: 6px;
 }
 
 .menu-box button:hover{
@@ -158,8 +159,8 @@ body{
 }
 
 .status{
-  font-size:11px;
-  padding:3px 8px;
+  font-size:10px;
+  padding:1px 5px;
   border-radius:8px;
   color:#fff;
   text-transform:uppercase;
@@ -168,9 +169,9 @@ body{
 
 /* STATUS COLOR */
 .status.approved{ background:#2ecc71; }
-.status.banned{ background:#e74c3c; }
+.status.banned{ background:#ff1900; }
 .status.tolak{ background:#f39c12; }
-.status.suspend{ background:#8e44ad; }
+.status.suspend{ background:#ff9100; }
 .status.unknown{ background:#999; }
 
 .popup99status_overlay{
@@ -247,6 +248,170 @@ body{
   border-radius: 6px;
   display: inline-block;
   margin-top: 4px;
+}
+
+
+
+.btn-catatan327{
+
+background:#fff7e6 !important;
+
+color:#b76e00 !important;
+
+border:1px solid #ffd27a !important;
+
+font-weight:700;
+
+transition:.25s;
+
+}
+
+.btn-catatan327:hover{
+
+background:#ffefc7 !important;
+
+transform:translateY(-1px);
+
+}
+
+
+
+
+
+.btn-terima327{
+
+background:#e8fff1 !important;
+
+color:#16a34a !important;
+
+border:1px solid #86efac !important;
+
+font-weight:700;
+
+transition:.25s;
+
+}
+
+.btn-terima327:hover{
+
+background:#d5ffe5 !important;
+
+transform:translateY(-1px);
+
+}
+
+
+
+
+
+
+
+
+
+.saldo327{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:8px;
+
+margin-top:8px;
+
+padding:1px 5px;
+
+
+border:1px solid #bfe6ff;
+
+border-radius:14px;
+
+font-size:13px;
+
+}
+
+.saldo327 i{
+
+color:#0c85ff;
+
+font-size:15px;
+
+}
+
+.saldo327 span{
+
+color:#666;
+
+font-weight:500;
+
+}
+
+.saldo327 b{
+
+margin-left:auto;
+
+color:#0c85ff;
+
+font-size:14px;
+
+font-weight:700;
+
+}
+
+
+
+
+
+
+
+.tagihan327{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:8px;
+
+margin-top:8px;
+
+padding: 1px 8px;
+
+
+border:1px solid #ffcaca;
+
+border-radius:14px;
+
+font-size:13px;
+
+}
+
+.tagihan327 i{
+
+color:#ff0000;
+
+font-size:15px;
+
+}
+
+.tagihan327 span{
+
+color:#000000;
+
+font-weight:500;
+
+}
+
+
+
+.tagihan327 b{
+
+margin-left:auto;
+
+color:#ff0000;
+
+font-size:14px;
+
+font-weight:700;
+
 }
 
 </style>
@@ -375,58 +540,56 @@ div.id = "card-" + id;
         <div>
           <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
   
-  <div class="name">${u.nama}</div>
+<div class="name">${shortName(u.nama,12)}</div>
 
   <div class="status ${u.status || 'unknown'}">
     ${u.status || 'no status'}
   </div>
-
-</div>
-          
-
-
-
-
-<div style="display:flex;justify-content:space-between;align-items:center;">
-  <div class="small">${u.email || ""}</div>
-
   <div style="
     background:#ff5b8a;
     color:#fff;
-    padding:2px 8px;
-    border-radius:12px;
-    font-size:12px;
-    font-weight:600;
+    padding:1px 5px;
+    border-radius:5px;
+    font-size:10px;
+    font-weight:400;
   ">
     ${u.umur || "-"} tahun
   </div>
 </div>
+</div>
+          
+</div>
+
+
+
+<div style="display:flex;justify-content:space-between;align-items:center;">
+  <div class="small">${u.email || ""}
+    
+    <div class="small">WA: ${u.wa || "-"}</div>
+    
+    </div>
+
+
 
 
 
         </div>
       </div>
 
-   <div class="small">
-  Saldo: Rp ${Number(u.saldo || 0).toLocaleString('id-ID')}
+<div class="saldo327">
+  <i class="fa-solid fa-wallet"></i>
+  <span>Saldo</span>
+  <b>Rp ${Number(u.saldo || 0).toLocaleString("id-ID")}</b>
 </div>
 
-<div
-  class="small"
-  style="
-    background:#e53935;
-    color:#fff;
-    padding:4px 8px;
-    border-radius:6px;
-    display:inline-block;
-    margin-top:4px;
-  "
->
-  Tagihan: Rp ${Number(u.jumlahTagihan || 0).toLocaleString('id-ID')}
+<div class="tagihan327">
+  <i class="fa-solid fa-file-invoice-dollar"></i>
+  <span>Tagihan</span>
+  <b>Rp ${Number(u.jumlahTagihan || 0).toLocaleString("id-ID")}</b>
 </div>
 
       <div class="small">Level: ${u.level}</div>
-      <div class="small">WA: ${u.wa || "-"}</div>
+
 
 
 
@@ -454,14 +617,11 @@ div.id = "card-" + id;
   <button onclick="setStatus('${id}','tolak')">Tolak</button>
   <button onclick="setStatus('${id}','banned')">Banned</button>
   <button onclick="setStatus('${id}','suspend')">Suspend</button>
-  <button onclick="catatanPembayaran('${id}')">
-Catatan
-</button>
+  <button class="btn-catatan327"onclick="catatanPembayaran('${id}')">📝 Catatan</button>
 
   <button onclick="setSudah('${id}')">Sudah</button>
   <button onclick="setSukses('${id}')">Sukses</button>
-
-  <button onclick="terimaData('${id}')">Terima</button>
+  <button class="btn-terima327"onclick="terimaData('${id}')">✅ Terima</button>
 
   <button style="background:#e74c3c;color:#fff;" onclick="deleteUser('${id}')">
     Hapus Data
@@ -505,7 +665,15 @@ if(u.statusAdminCard === "sukses"){
 loadUsers();
 
 
+function shortName(nama,max=12){
 
+nama = nama || "";
+
+return nama.length > max
+? nama.substring(0,max) + "..."
+: nama;
+
+}
 
 window.setSudah = async function(userId){
 
@@ -661,50 +829,63 @@ window.terimaData = async function(userId){
       })
     : "-";
 
-  const text =
-`📩SELAMAT! , Atas pendaftaran anda untuk menjadi salah satu Father PT AGENCY TIGOHOST INDONESIA Telah di Terima🎉🎊
+const text =
+`🎉 *PENDAFTARAN HOST BERHASIL DISETUJUI*
 
-𝘉𝘦𝘳𝘪𝘬𝘶𝘵 𝘥𝘢𝘵𝘢 𝘢𝘯𝘥𝘢 𝘺𝘢𝘯𝘨 𝘵𝘦𝘭𝘢𝘩 𝘬𝘢𝘮𝘪 𝘵𝘦𝘳𝘪𝘮𝘢
---------------------------------------
+Halo *${u.nama || "-"}*,
 
-*HOST DAFTAR*
------------------
+Selamat! Pendaftaran Anda sebagai *Host PT AGENCY TIGOHOST INDONESIA* telah berhasil diverifikasi dan *DITERIMA*.
 
-NAMA D/B
+━━━━━━━━━━━━━━━━━━
+📋 *DATA PENDAFTARAN*
+━━━━━━━━━━━━━━━━━━
+
+👤 *Nama D/B*
 ${u.nama || "-"}
------------------
-EMAIL AKTIF
+
+📧 *Email Aktif*
 ${u.email || "-"}
------------------
-NAMA AKUN DI APLIKASI
-${u.nama || "-"} (dapat di ganti pada aplikasi)
------------------
-WHATSAPP
-${u.wa || "-"}
------------------
-NAMA BANK/E-WALLET
-${u.bank || "-"}
------------------
-NAMA REKENING
-${u.namaRek || "-"}
------------------
-NOMO REKENING
-${u.noRek || "-"}
------------------
-HOST APLIKASI
+
+🆔 *Nama Akun Aplikasi*
 ${u.nama || "-"}
------------------
-APLIKASI
+_(Nama dapat diubah melalui aplikasi)_
+
+📱 *WhatsApp*
+${u.wa || "-"}
+
+🏦 *Bank / E-Wallet*
+${u.bank || "-"}
+
+💳 *Nama Rekening*
+${u.namaRek || "-"}
+
+🔢 *Nomor Rekening*
+${u.noRek || "-"}
+
+🎙️ *Nama Host*
+${u.nama || "-"}
+
+📲 *Aplikasi*
 ${u.appName || "-"}
------------------
------------------
------------------
-Tanggal Pendaftaran
+
+📅 *Tanggal Pendaftaran*
 ${tanggal}
 
-*Mohon untuk memeriksa kembali data anda apakah sudah benar ya kak*
-----------------------------
-`;
+━━━━━━━━━━━━━━━━━━
+⚠️ *PENTING*
+━━━━━━━━━━━━━━━━━━
+
+Mohon periksa kembali seluruh data di atas.
+
+Apabila terdapat kesalahan data, silakan segera hubungi Admin sebelum proses aktivasi akun dilanjutkan.
+
+Terima kasih telah bergabung bersama
+*PT AGENCY TIGOHOST INDONESIA*.
+
+Semoga sukses dan selamat bergabung! 🚀`;
+
+
+
 
   try {
     await navigator.clipboard.writeText(text);
@@ -842,17 +1023,54 @@ window.catatanPembayaran = function(id){
 
 window.toggleMenu = function(id){
 
-  const menu = document.getElementById("menu-" + id);
+const menu = document.getElementById("menu-" + id);
 
-  document.querySelectorAll(".menu-box").forEach(m => {
-    if(m !== menu) m.style.display = "none";
-  });
+document.querySelectorAll(".menu-box").forEach(m=>{
 
-  menu.style.display = menu.style.display === "block"
-    ? "none"
-    : "block";
+if(m!==menu){
+
+m.style.display="none";
+
+}
+
+});
+
+menu.style.display =
+
+menu.style.display==="block"
+
+? "none"
+
+: "block";
+
 };
 
+
+/* ===========================
+TUTUP MENU SAAT TAP DI LUAR
+=========================== */
+
+document.addEventListener("click",function(e){
+
+if(
+
+e.target.closest(".menu-box") ||
+
+e.target.closest(".hamburger")
+
+){
+
+return;
+
+}
+
+document.querySelectorAll(".menu-box").forEach(menu=>{
+
+menu.style.display="none";
+
+});
+
+});
 
 
 
