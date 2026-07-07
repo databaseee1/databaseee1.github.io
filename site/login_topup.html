@@ -159,30 +159,18 @@ background:#f59e0b;
 
 
 body{
-    margin:0;
+        font-family: 'Poppins', sans-serif;
+    background-color: #131722;
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, .03) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, .03) 75%), linear-gradient(-45deg, rgba(255, 255, 255, .03) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, .03) 75%);
+    background-size: 40px 40px;
     min-height:100vh;
-    font-family:'Poppins',sans-serif;
-
-    background-color:#131722;
-
-    background-image:
-
-    linear-gradient(45deg,
-    rgba(255,255,255,.03) 25%,
-    transparent 25%,
-    transparent 75%,
-    rgba(255,255,255,.03) 75%),
-
-    linear-gradient(-45deg,
-    rgba(255,255,255,.03) 25%,
-    transparent 25%,
-    transparent 75%,
-    rgba(255,255,255,.03) 75%);
-
-    background-size:40px 40px;
-
-    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
 }
+
+
 .card{
     width:100%;
     max-width:450px;
@@ -277,60 +265,89 @@ body{
 
 
 
-
 .footer{
 
-    margin-top:50px;
+margin-top:50px;
 
-    background:#ffffff00;
+background:#ffffff00;
 
-    border-top:1px solid #e8e8e8;
-border-radius: 10px;
-    padding:25px 18px;
+border-top:1px solid #e8e8e8;
+
+border-radius:10px;
+
+padding:25px 18px;
 
 }
 
 .footer-links{
 
-    display:flex;
+display:flex;
 
-    flex-wrap:wrap;
+flex-wrap:wrap;
 
-    justify-content:center;
+justify-content:center;
 
-    gap:12px;
+align-items:center;
+
+gap:0;
 
 }
 
 .footer-links a{
 
-    text-decoration:none;
+position:relative;
 
-    color:#555;
+text-decoration:none;
 
-    font-size:13px;
+color:#555;
 
-    font-weight:500;
+font-size:13px;
 
-    transition:.2s;
+font-weight:500;
+
+padding:4px 12px;
+
+transition:.25s;
 
 }
 
 .footer-links a:hover{
 
-    color:#0c85ff;
+color:#0c85ff;
+
+}
+
+.footer-links a:not(:last-child)::after{
+
+content:"•";
+
+position:absolute;
+
+right:-4px;
+
+top:50%;
+
+transform:translateY(-50%);
+
+font-size:12px;
+
+color:#c5c5c5;
+
+pointer-events:none;
 
 }
 
 .footer-copy{
 
-    margin-top:18px;
+margin-top:18px;
 
-    text-align:center;
+text-align:center;
 
-    font-size:12px;
+font-size:12px;
 
-    color:#999;
+color:#999;
+
+line-height:1.8;
 
 }
 </style>
@@ -377,6 +394,30 @@ border-radius: 10px;
             Daftar Sekarang
         </a>
     </div>
+<footer class="footer">
+
+    <div class="footer-links">
+
+        <a href="beranda.html">Beranda</a>
+
+        <a href="FAQ.HTML">FAQ</a>
+
+        <a href="Pusat_Bantuan.html">Pusat Bantuan</a>
+
+        <a href="keamanan_akun.html">Keamanan Akun</a>
+
+        <a href="Syarat&Ketentuan_topup.html">Syarat & Ketentuan</a>
+
+    </div>
+
+    <div class="footer-copy">
+
+        © 2026 Tigohost Agency. All Rights Reserved.
+
+    </div>
+
+</footer>
+
 
 </div>
 
@@ -384,38 +425,6 @@ border-radius: 10px;
 
 
 
-
-<footer class="footer">
-
-    <div class="footer-links">
-
-        <a href="FAQ.HTML">
-            FAQ
-        </a>
-
-        <a href="keamanan_akun.html">
-            Keamanan Akun
-        </a>
-
-        <a href="Pusat_Bantuan.html">
-            Pusat Bantuan
-        </a>
-
-        <a href="Syarat&Ketentuan_topup.html">
-            Syarat & Ketentuan
-        </a>
-
-        <a href="beranda.html">
-            Beranda
-        </a>
-
-    </div>
-
-    <div class="footer-copy">
-        © 2026 Tigohost Agency. All Rights Reserved.
-    </div>
-
-</footer>
 
 
 
