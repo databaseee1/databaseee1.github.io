@@ -1,299 +1,56 @@
-<button id="buatDummyMobile">
-Buat 10 Dummy Mobile
-</button>
-
-
+<button id="buatDummy">Buat 5 Data Dummy</button>
 
 <script type="module">
-
 import {
 initializeApp
-}
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-
 getDatabase,
 ref,
 push,
 set
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-}
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
-
-
-
-const firebaseConfig={
-
-
+const firebaseConfig = {
 apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
-
 authDomain:"users-96dc5.firebaseapp.com",
-
-databaseURL:
-"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
-
+databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
 projectId:"users-96dc5"
-
 };
 
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-
-const app =
-initializeApp(firebaseConfig);
-
-
-
-const db =
-getDatabase(app);
-
-
-
-
-
-const games=[
-
-
-"Top Up ML Murah - Beli Diamond Mobile Legends",
-
-"Top Up Free Fire Diamond",
-
-"Top Up PUBG Mobile UC",
-
-"Top Up Honor Of Kings",
-
-"Top Up Valorant Point Mobile",
-
-"Top Up Genshin Impact Genesis",
-
-"Top Up HOK Token",
-
-"Top Up Arena Breakout",
-
-"Top Up Blood Strike",
-
-"Top Up Call Of Duty Mobile"
-
-
+const banners = [
+"https://res.cloudinary.com/dowoq4a0i/image/upload/v1783169148/dqhn5sw2uckfz6a6bimk.webp",
+"https://res.cloudinary.com/dowoq4a0i/image/upload/v1783187623/idkkzuco4560rrvhete0.png",
+"https://res.cloudinary.com/dowoq4a0i/image/upload/v1783171150/luokiiaenwwhkpms0nuc.webp",
+"https://res.cloudinary.com/dowoq4a0i/image/upload/v1783187233/ekbqkumahzuxkq2pjoi1.png",
+"https://res.cloudinary.com/dowoq4a0i/image/upload/v1783171246/dxjmprgzjbyohnjrvbzg.webp"
 ];
 
+document.getElementById("buatDummy").onclick = async () => {
 
+for(const banner of banners){
 
+const newRef = push(ref(db,"Bannermini33"));
 
+await set(newRef,{
 
-const produk=[
+Bannermini: banner,
 
+"Link tujuan":"https://tigohost.asia",
 
-{
-nama:"1136 Diamonds (1006 + 130 Bonus)",
-harga:293576
-},
+"Diperbaharui oleh":"Tigo.app",
 
-
-{
-nama:"1159 Diamonds (1028 + 131 Bonus)",
-harga:300029
-},
-
-
-{
-nama:"1443 Diamonds (1277 + 166 Bonus)",
-harga:371848
-},
-
-
-{
-nama:"1704 Diamonds (1509 + 195 Bonus)",
-harga:440364
-},
-
-
-{
-nama:"2010 Diamonds (1708 + 302 Bonus)",
-harga:485722
-},
-
-
-{
-nama:"4020 Diamonds (3416 + 604 Bonus)",
-harga:971444
-}
-
-
-];
-
-
-
-
-
-
-document
-.getElementById("buatDummyMobile")
-.onclick=async()=>{
-
-
-
-for(let i=0;i<10;i++){
-
-
-
-const item =
-push(
-ref(db,"Top-up game-Mobile")
-);
-
-
-
-
-const rating =
-(Number(
-Math.random()*0.5+4.5
-)).toFixed(1);
-
-
-
-
-const terjual =
-Math.floor(
-Math.random()*50000
-+1000
-);
-
-
-
-
-const ulasan =
-Math.floor(
-Math.random()*300000
-+10000
-);
-
-
-
-
-const pilih =
-produk[
-Math.floor(
-Math.random()*produk.length
-)
-];
-
-
-
-
-
-
-await set(item,{
-
-
-
-nama:
-games[i],
-
-
-
-thumbnail:
-"https://res.cloudinary.com/dowoq4a0i/image/upload/v1782831535/pw4oasy47umxg3lyplwc.png",
-
-
-
-
-
-harga:
-
-pilih.harga,
-
-
-
-terjual:terjual,
-
-
-
-rating:rating,
-
-
-
-ulasan:
-ulasan+" Ulasan",
-
-
-
-
-
-
-kategori:
-"Top Up",
-
-
-
-
-status:
-"Tersedia di Indonesia",
-
-
-
-
-
-caraBeli:
-"Cara Beli & Tips",
-
-
-
-
-
-produk:[
-
-{
-nama:pilih.nama,
-harga:pilih.harga
-}
-
-],
-
-
-
-
-
-platform:{
-
-nama:"Mobile",
-
-icon:
-"https://res.cloudinary.com/dowoq4a0i/image/upload/v1782831535/pw4oasy47umxg3lyplwc.png"
-
-},
-
-
-
-
-
-
-createdAt:
-Date.now()
-
-
+dibuatPada: Date.now()
 
 });
 
-
-
 }
 
-
-
-
-alert(
-"10 Dummy Top Up Mobile berhasil dibuat"
-);
-
-
+alert("Berhasil membuat 5 data dummy.");
 
 };
-
-
-
 </script>

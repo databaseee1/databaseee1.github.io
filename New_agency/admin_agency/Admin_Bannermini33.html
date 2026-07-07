@@ -1,0 +1,2341 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Admin Bannermini33</title>
+
+
+<style>
+
+
+
+    /*=========================
+ADMIN BANNER MINI 327
+==========================*/
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,Arial,sans-serif;
+}
+
+body{
+
+background:#eef2ff;
+
+color:#222;
+
+padding:20px;
+
+}
+
+
+/*=========================
+HEADER
+==========================*/
+
+#bannermin327Header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:18px;
+
+margin-bottom:18px;
+
+border-radius:22px;
+
+background:
+
+linear-gradient(
+135deg,
+#5b24ff,
+#7a5cff
+);
+
+color:#fff;
+
+box-shadow:
+0 12px 30px rgba(0,0,0,.15);
+
+}
+
+#bannermin327Header h1{
+
+font-size:24px;
+
+font-weight:700;
+
+}
+
+#bannermin327Header p{
+
+margin-top:4px;
+
+font-size:13px;
+
+opacity:.9;
+
+}
+
+#bannermin327Refresh{
+
+border:none;
+
+padding:12px 20px;
+
+border-radius:14px;
+
+background:#fff;
+
+color:#5b24ff;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+#bannermin327Refresh:hover{
+
+transform:translateY(-2px);
+
+}
+
+
+
+/*=========================
+STATISTIK
+==========================*/
+
+#bannermin327Stats{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:14px;
+
+margin-bottom:20px;
+
+}
+
+.bannermin327StatCard{
+
+background:#fff;
+
+padding:20px;
+
+border-radius:20px;
+
+box-shadow:
+0 8px 25px rgba(0,0,0,.08);
+
+border:1px solid #ececff;
+
+}
+
+.bannermin327StatCard h2{
+
+font-size:28px;
+
+color:#5b24ff;
+
+margin-bottom:6px;
+
+}
+
+.bannermin327StatCard p{
+
+font-size:14px;
+
+color:#777;
+
+}
+
+
+
+/*=========================
+FORM
+==========================*/
+
+#bannermin327Tambah{
+
+background:#fff;
+
+padding:22px;
+
+border-radius:22px;
+
+box-shadow:
+0 10px 30px rgba(0,0,0,.08);
+
+margin-bottom:20px;
+
+}
+
+#bannermin327Tambah h2{
+
+margin-bottom:18px;
+
+font-size:20px;
+
+color:#5b24ff;
+
+}
+
+.bannermin327Input{
+
+margin-bottom:16px;
+
+}
+
+.bannermin327Input label{
+
+display:block;
+
+margin-bottom:8px;
+
+font-size:14px;
+
+font-weight:600;
+
+color:#666;
+
+}
+
+.bannermin327Input input{
+
+width:100%;
+
+padding:14px;
+
+border-radius:14px;
+
+border:1px solid #ddd;
+
+outline:none;
+
+font-size:15px;
+
+transition:.25s;
+
+}
+
+.bannermin327Input input:focus{
+
+border-color:#5b24ff;
+
+box-shadow:
+0 0 0 4px rgba(91,36,255,.12);
+
+}
+
+#bannermin327TambahBtn{
+
+width:100%;
+
+padding:15px;
+
+border:none;
+
+border-radius:14px;
+
+background:#5b24ff;
+
+color:#fff;
+
+font-size:16px;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+#bannermin327TambahBtn:hover{
+
+transform:translateY(-2px);
+
+}
+
+
+
+/*=========================
+SEARCH
+==========================*/
+
+#bannermin327Search{
+
+margin-bottom:18px;
+
+}
+
+#bannermin327Cari{
+
+width:100%;
+
+padding:15px;
+
+border-radius:16px;
+
+border:1px solid #ddd;
+
+outline:none;
+
+font-size:15px;
+
+background:#fff;
+
+box-shadow:
+0 5px 20px rgba(0,0,0,.05);
+
+}
+
+#bannermin327Cari:focus{
+
+border-color:#5b24ff;
+
+}
+
+
+
+/*=========================
+LIST
+==========================*/
+
+#bannermin327List{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+
+gap:18px;
+
+}
+
+
+
+/*=========================
+CARD
+==========================*/
+
+.bannermin327Card{
+
+background:#fff;
+
+border-radius:22px;
+
+overflow:hidden;
+
+border:1px solid #ececff;
+
+box-shadow:
+0 10px 25px rgba(0,0,0,.08);
+
+transition:.25s;
+
+}
+
+.bannermin327Card:hover{
+
+transform:translateY(-3px);
+
+}
+
+.bannermin327Image{
+
+height:190px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+background:#fff;
+
+padding:14px;
+
+}
+
+.bannermin327Image img{
+
+width:100%;
+
+height:100%;
+
+object-fit:contain;
+
+}
+
+.bannermin327Content{
+
+padding:18px;
+
+}
+
+.bannermin327Title{
+
+font-size:18px;
+
+font-weight:700;
+
+margin-bottom:10px;
+
+color:#333;
+
+}
+
+.bannermin327Row{
+
+display:flex;
+
+justify-content:space-between;
+
+padding:7px 0;
+
+border-bottom:1px dashed #eee;
+
+font-size:14px;
+
+}
+
+.bannermin327Row:last-child{
+
+border:none;
+
+}
+
+
+
+/*=========================
+BUTTONS
+==========================*/
+
+.bannermin327Actions{
+
+display:flex;
+
+gap:10px;
+
+margin-top:18px;
+
+}
+
+.bannermin327Btn{
+
+flex:1;
+
+border:none;
+
+padding:13px;
+
+border-radius:14px;
+
+cursor:pointer;
+
+font-weight:700;
+
+transition:.25s;
+
+}
+
+.bannermin327Edit{
+
+background:#0c85ff;
+
+color:#fff;
+
+}
+
+.bannermin327Delete{
+
+background:#ff3b30;
+
+color:#fff;
+
+}
+
+.bannermin327Btn:hover{
+
+transform:scale(.98);
+
+}
+
+
+
+/*=========================
+LOADING
+==========================*/
+
+.bannermin327-loading{
+
+height:220px;
+
+border-radius:22px;
+
+margin-bottom:16px;
+
+background:
+
+linear-gradient(
+90deg,
+#eee,
+#fafafa,
+#eee
+);
+
+background-size:300% 100%;
+
+animation:bannermin327Load 1s linear infinite;
+
+}
+
+@keyframes bannermin327Load{
+
+0%{
+
+background-position:100% 0;
+
+}
+
+100%{
+
+background-position:-100% 0;
+
+}
+
+}
+
+
+
+/*=========================
+RESPONSIVE
+==========================*/
+
+@media(max-width:700px){
+
+#bannermin327Header{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:15px;
+
+}
+
+#bannermin327Stats{
+
+grid-template-columns:1fr;
+
+}
+
+#bannermin327List{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+
+
+
+
+/*=========================================
+EDIT MODAL
+=========================================*/
+
+#bannermin327EditModal{
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,.45);
+
+display:none;
+
+justify-content:center;
+
+align-items:center;
+
+padding:18px;
+
+z-index:9999;
+
+backdrop-filter:blur(4px);
+
+}
+
+#bannermin327EditBox{
+
+width:100%;
+
+max-width:520px;
+
+background:#fff;
+
+border-radius:24px;
+
+padding:24px;
+
+animation:bannermin327Popup .25s ease;
+
+box-shadow:
+0 25px 60px rgba(0,0,0,.25);
+
+}
+
+#bannermin327EditBox h2{
+
+margin-bottom:18px;
+
+font-size:22px;
+
+color:#5b24ff;
+
+}
+
+#bannermin327EditBox input{
+
+width:100%;
+
+margin-bottom:14px;
+
+padding:14px;
+
+border-radius:14px;
+
+border:1px solid #ddd;
+
+outline:none;
+
+font-size:15px;
+
+transition:.25s;
+
+}
+
+#bannermin327EditBox input:focus{
+
+border-color:#5b24ff;
+
+box-shadow:
+0 0 0 4px rgba(91,36,255,.12);
+
+}
+
+.bannermin327EditAction{
+
+display:flex;
+
+gap:10px;
+
+margin-top:10px;
+
+}
+
+#bannermin327Save,
+#bannermin327Cancel{
+
+flex:1;
+
+padding:14px;
+
+border:none;
+
+border-radius:14px;
+
+cursor:pointer;
+
+font-weight:700;
+
+transition:.25s;
+
+}
+
+#bannermin327Save{
+
+background:#19b34a;
+
+color:#fff;
+
+}
+
+#bannermin327Cancel{
+
+background:#ff3b30;
+
+color:#fff;
+
+}
+
+#bannermin327Save:hover,
+#bannermin327Cancel:hover{
+
+transform:translateY(-2px);
+
+}
+
+
+
+/*=========================================
+CONFIRM
+=========================================*/
+
+#bannermin327Confirm{
+
+position:fixed;
+
+inset:0;
+
+display:none;
+
+justify-content:center;
+
+align-items:center;
+
+background:rgba(0,0,0,.45);
+
+z-index:10000;
+
+backdrop-filter:blur(4px);
+
+padding:20px;
+
+}
+
+#bannermin327ConfirmBox{
+
+width:100%;
+
+max-width:420px;
+
+background:#fff;
+
+padding:25px;
+
+border-radius:22px;
+
+animation:bannermin327Popup .25s ease;
+
+text-align:center;
+
+box-shadow:
+0 20px 50px rgba(0,0,0,.25);
+
+}
+
+#bannermin327ConfirmBox h3{
+
+font-size:22px;
+
+margin-bottom:10px;
+
+color:#ff3b30;
+
+}
+
+#bannermin327ConfirmBox p{
+
+font-size:14px;
+
+color:#666;
+
+line-height:1.6;
+
+margin-bottom:22px;
+
+}
+
+.bannermin327ConfirmAction{
+
+display:flex;
+
+gap:12px;
+
+}
+
+#bannermin327No,
+#bannermin327Yes{
+
+flex:1;
+
+padding:14px;
+
+border:none;
+
+border-radius:14px;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+#bannermin327No{
+
+background:#ddd;
+
+color:#333;
+
+}
+
+#bannermin327Yes{
+
+background:#ff3b30;
+
+color:#fff;
+
+}
+
+#bannermin327No:hover,
+#bannermin327Yes:hover{
+
+transform:translateY(-2px);
+
+}
+
+
+
+/*=========================================
+TOAST
+=========================================*/
+
+#bannermin327Toast{
+
+position:fixed;
+
+left:50%;
+
+bottom:30px;
+
+transform:translateX(-50%) translateY(120px);
+
+background:#111;
+
+color:#fff;
+
+padding:15px 24px;
+
+border-radius:14px;
+
+font-size:14px;
+
+font-weight:600;
+
+z-index:10001;
+
+opacity:0;
+
+transition:.35s;
+
+box-shadow:
+0 10px 30px rgba(0,0,0,.25);
+
+}
+
+#bannermin327Toast.show{
+
+opacity:1;
+
+transform:translateX(-50%) translateY(0);
+
+}
+
+
+
+/*=========================================
+FULL LOADING
+=========================================*/
+
+#bannermin327FullLoading{
+
+position:fixed;
+
+inset:0;
+
+display:none;
+
+justify-content:center;
+
+align-items:center;
+
+flex-direction:column;
+
+background:rgba(255,255,255,.92);
+
+z-index:10002;
+
+backdrop-filter:blur(4px);
+
+}
+
+.bannermin327Spinner{
+
+width:62px;
+
+height:62px;
+
+border-radius:50%;
+
+border:5px solid #ddd;
+
+border-top:5px solid #5b24ff;
+
+animation:bannermin327Spin .8s linear infinite;
+
+}
+
+#bannermin327FullLoading p{
+
+margin-top:18px;
+
+font-size:15px;
+
+font-weight:600;
+
+color:#555;
+
+}
+
+
+
+/*=========================================
+EMPTY DATA
+=========================================*/
+
+.bannermin327Empty{
+
+padding:45px;
+
+background:#fff;
+
+border-radius:22px;
+
+text-align:center;
+
+font-size:15px;
+
+color:#888;
+
+border:1px dashed #ddd;
+
+}
+
+
+
+/*=========================================
+SCROLLBAR
+=========================================*/
+
+::-webkit-scrollbar{
+
+width:8px;
+
+height:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:#c8c8c8;
+
+border-radius:99px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+background:#999;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:#f4f4f4;
+
+}
+
+
+
+/*=========================================
+ANIMATION
+=========================================*/
+
+@keyframes bannermin327Popup{
+
+0%{
+
+opacity:0;
+
+transform:scale(.88);
+
+}
+
+100%{
+
+opacity:1;
+
+transform:scale(1);
+
+}
+
+}
+
+@keyframes bannermin327Spin{
+
+100%{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+
+
+/*=========================================
+IMAGE PREVIEW
+=========================================*/
+
+.bannermin327Preview{
+
+width:100%;
+
+height:180px;
+
+border-radius:18px;
+
+background:#fafafa;
+
+border:1px dashed #ddd;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+overflow:hidden;
+
+margin-bottom:16px;
+
+}
+
+.bannermin327Preview img{
+
+width:100%;
+
+height:100%;
+
+object-fit:contain;
+
+}
+
+
+
+/*=========================================
+HOVER EFFECT
+=========================================*/
+
+input:hover{
+
+border-color:#bbb;
+
+}
+
+button:active{
+
+transform:scale(.98);
+
+}
+
+.bannermin327Card:hover{
+
+box-shadow:
+0 18px 45px rgba(0,0,0,.12);
+
+}
+
+
+
+
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body>
+
+
+<!-- ===========================
+HEADER
+=========================== -->
+
+<header id="bannermin327Header">
+
+<div id="bannermin327HeaderLeft">
+
+<h1>Banner Mini Admin</h1>
+
+<p>Kelola Banner Firebase</p>
+
+</div>
+
+<div id="bannermin327HeaderRight">
+
+<button id="bannermin327Refresh">
+
+Refresh
+
+</button>
+
+</div>
+
+</header>
+
+
+
+
+<!-- ===========================
+STATISTIK
+=========================== -->
+
+<section id="bannermin327Stats">
+
+<div class="bannermin327StatCard">
+
+<h2 id="bannermin327TotalBanner">
+
+0
+
+</h2>
+
+<p>Total Banner</p>
+
+</div>
+
+
+<div class="bannermin327StatCard">
+
+<h2 id="bannermin327LastUpdate">
+
+-
+
+</h2>
+
+<p>Pembaruan Terakhir</p>
+
+</div>
+
+</section>
+
+
+
+
+
+<!-- ===========================
+FORM TAMBAH
+=========================== -->
+
+<section id="bannermin327Tambah">
+
+<h2>
+
+Tambah Banner
+
+</h2>
+
+
+<div class="bannermin327Input">
+
+<label>
+
+URL Banner
+
+</label>
+
+<input
+
+id="bannermin327InputBanner"
+
+type="text"
+
+placeholder="https://..."
+
+>
+
+</div>
+
+
+
+
+<div class="bannermin327Input">
+
+<label>
+
+Link Tujuan
+
+</label>
+
+<input
+
+id="bannermin327InputLink"
+
+type="text"
+
+placeholder="https://tigohost.asia"
+
+>
+
+</div>
+
+
+
+
+<div class="bannermin327Input">
+
+<label>
+
+Diperbaharui Oleh
+
+</label>
+
+<input
+
+id="bannermin327InputUpdate"
+
+type="text"
+
+value="Tigo.app"
+
+>
+
+</div>
+
+
+
+<button
+
+id="bannermin327TambahBtn">
+
+Tambah Banner
+
+</button>
+
+</section>
+
+
+
+
+
+
+<!-- ===========================
+SEARCH
+=========================== -->
+
+<section id="bannermin327Search">
+
+<input
+
+id="bannermin327Cari"
+
+type="search"
+
+placeholder="Cari Banner..."
+
+>
+
+</section>
+
+
+
+
+
+
+
+<!-- ===========================
+LOADING
+=========================== -->
+
+<section id="bannermin327Loading">
+
+<div class="bannermin327-loading"></div>
+
+<div class="bannermin327-loading"></div>
+
+<div class="bannermin327-loading"></div>
+
+</section>
+
+
+
+
+
+
+
+
+<!-- ===========================
+LIST DATA
+=========================== -->
+
+<section id="bannermin327List">
+
+<!-- otomatis -->
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ===========================
+MODAL EDIT
+=========================== -->
+
+<div id="bannermin327EditModal">
+
+<div id="bannermin327EditBox">
+
+<h2>
+
+Edit Banner
+
+</h2>
+
+
+<input
+
+id="bannermin327EditBanner"
+
+type="text"
+
+placeholder="URL Banner"
+
+>
+
+
+<input
+
+id="bannermin327EditLink"
+
+type="text"
+
+placeholder="Link Tujuan"
+
+>
+
+
+
+<input
+
+id="bannermin327EditUpdate"
+
+type="text"
+
+placeholder="Diperbaharui Oleh"
+
+>
+
+
+
+<div class="bannermin327EditAction">
+
+<button
+
+id="bannermin327Save">
+
+Simpan
+
+</button>
+
+
+<button
+
+id="bannermin327Cancel">
+
+Batal
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+<!-- ===========================
+CUSTOM CONFIRM
+=========================== -->
+
+<div id="bannermin327Confirm">
+
+<div id="bannermin327ConfirmBox">
+
+<h3>
+
+Hapus Banner?
+
+</h3>
+
+<p>
+
+Data yang dihapus tidak dapat dikembalikan.
+
+</p>
+
+
+<div class="bannermin327ConfirmAction">
+
+<button
+
+id="bannermin327No">
+
+Batal
+
+</button>
+
+<button
+
+id="bannermin327Yes">
+
+Hapus
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+<!-- ===========================
+CUSTOM TOAST
+=========================== -->
+
+<div id="bannermin327Toast">
+
+<span id="bannermin327ToastText">
+
+Berhasil
+
+</span>
+
+</div>
+
+
+
+
+
+
+
+
+<!-- ===========================
+LOADING FULLSCREEN
+=========================== -->
+
+<div id="bannermin327FullLoading">
+
+<div class="bannermin327Spinner"></div>
+
+<p>
+
+Mohon Tunggu...
+
+</p>
+
+</div>
+
+
+<script type="module">
+
+import {
+initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getDatabase,
+ref,
+onValue,
+push,
+set,
+update,
+remove
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+/*=====================================
+FIREBASE
+=====================================*/
+
+const firebaseConfig={
+
+apiKey:"AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+
+authDomain:"users-96dc5.firebaseapp.com",
+
+databaseURL:"https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:"users-96dc5"
+
+};
+
+const app=initializeApp(firebaseConfig);
+
+const db=getDatabase(app);
+
+
+
+/*=====================================
+DOM
+=====================================*/
+
+const list=
+document.getElementById("bannermin327List");
+
+const loading=
+document.getElementById("bannermin327Loading");
+
+const totalBanner=
+document.getElementById("bannermin327TotalBanner");
+
+const lastUpdate=
+document.getElementById("bannermin327LastUpdate");
+
+const cari=
+document.getElementById("bannermin327Cari");
+
+
+
+let semuaBanner={};
+
+let editKey=null;
+
+
+
+/*=====================================
+FORMAT
+=====================================*/
+
+function formatTanggal(ms){
+
+if(!ms) return "-";
+
+const d=new Date(ms);
+
+return d.toLocaleString("id-ID");
+
+}
+
+
+
+/*=====================================
+TOAST
+=====================================*/
+
+function bannermin327Toast(teks){
+
+const toast=
+document.getElementById("bannermin327Toast");
+
+document.getElementById(
+"bannermin327ToastText"
+).textContent=teks;
+
+toast.classList.add("show");
+
+setTimeout(()=>{
+
+toast.classList.remove("show");
+
+},2500);
+
+}
+
+
+
+/*=====================================
+RENDER
+=====================================*/
+
+function renderBanner(data){
+
+list.innerHTML="";
+
+let jumlah=0;
+
+Object.keys(data)
+.reverse()
+.forEach(key=>{
+
+const item=data[key];
+
+jumlah++;
+
+const card=document.createElement("div");
+
+card.className="bannermin327Card";
+
+card.dataset.key=key;
+
+card.innerHTML=`
+
+<div class="bannermin327Image">
+
+<img
+src="${item.Bannermini}"
+loading="lazy">
+
+</div>
+
+<div class="bannermin327Content">
+
+<div class="bannermin327Title">
+
+Banner Mini
+
+</div>
+
+<div class="bannermin327Row">
+
+<span>Link</span>
+
+<span>
+
+${item["Link tujuan"]||"-"}
+
+</span>
+
+</div>
+
+<div class="bannermin327Row">
+
+<span>Update</span>
+
+<span>
+
+${item["Diperbaharui oleh"]||"-"}
+
+</span>
+
+</div>
+
+<div class="bannermin327Row">
+
+<span>Dibuat</span>
+
+<span>
+
+${formatTanggal(item.dibuatPada)}
+
+</span>
+
+</div>
+
+<div class="bannermin327Actions">
+
+<button
+
+class="bannermin327Btn bannermin327Edit"
+
+data-edit="${key}"
+
+>
+
+Edit
+
+</button>
+
+<button
+
+class="bannermin327Btn bannermin327Delete"
+
+data-delete="${key}"
+
+>
+
+Hapus
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+list.appendChild(card);
+
+});
+
+totalBanner.textContent=jumlah;
+
+}
+
+/*=====================================
+LOAD REALTIME
+=====================================*/
+
+const bannermin327Ref = ref(db,"Bannermini33");
+
+onValue(bannermin327Ref,(snapshot)=>{
+
+loading.style.display="none";
+
+semuaBanner={};
+
+if(!snapshot.exists()){
+
+list.innerHTML=`
+
+<div class="bannermin327Empty">
+
+Belum ada banner.
+
+</div>
+
+`;
+
+totalBanner.textContent="0";
+
+lastUpdate.textContent="-";
+
+return;
+
+}
+
+semuaBanner=snapshot.val();
+
+renderBanner(semuaBanner);
+
+const arr=Object.values(semuaBanner);
+
+arr.sort((a,b)=>
+
+(b.dibuatPada||0)-(a.dibuatPada||0)
+
+);
+
+if(arr.length){
+
+lastUpdate.textContent=
+
+formatTanggal(
+
+arr[0].dibuatPada
+
+);
+
+}
+
+});
+
+
+/*=====================================
+SEARCH
+=====================================*/
+
+cari.oninput=()=>{
+
+const key=cari.value
+.toLowerCase()
+.trim();
+
+if(!key){
+
+renderBanner(semuaBanner);
+
+return;
+
+}
+
+const hasil={};
+
+Object.keys(semuaBanner)
+.forEach(id=>{
+
+const item=semuaBanner[id];
+
+const teks=(
+
+(item.Bannermini||"")+" "+
+
+(item["Link tujuan"]||"")+" "+
+
+(item["Diperbaharui oleh"]||"")
+
+).toLowerCase();
+
+if(teks.includes(key)){
+
+hasil[id]=item;
+
+}
+
+});
+
+renderBanner(hasil);
+
+};
+
+
+
+/*=====================================
+REFRESH
+=====================================*/
+
+document
+
+.getElementById(
+
+"bannermin327Refresh"
+
+)
+
+.onclick=()=>{
+
+loading.style.display="block";
+
+setTimeout(()=>{
+
+loading.style.display="none";
+
+renderBanner(semuaBanner);
+
+bannermin327Toast(
+
+"Data berhasil diperbarui"
+
+);
+
+},600);
+
+};
+
+
+
+/*=====================================
+CLICK CARD
+=====================================*/
+
+list.onclick=(e)=>{
+
+const edit=
+
+e.target.dataset.edit;
+
+const hapus=
+
+e.target.dataset.delete;
+
+if(edit){
+
+editKey=edit;
+
+console.log(
+
+"Edit :",
+
+editKey
+
+);
+
+/* Part berikutnya
+akan membuka modal */
+
+}
+
+if(hapus){
+
+editKey=hapus;
+
+console.log(
+
+"Hapus :",
+
+editKey
+
+);
+
+/* Part berikutnya
+akan membuka confirm */
+
+}
+
+};
+
+
+/*=====================================
+TAMBAH BANNER
+=====================================*/
+
+const inputBanner=
+document.getElementById(
+"bannermin327InputBanner"
+);
+
+const inputLink=
+document.getElementById(
+"bannermin327InputLink"
+);
+
+const inputUpdate=
+document.getElementById(
+"bannermin327InputUpdate"
+);
+
+const btnTambah=
+document.getElementById(
+"bannermin327TambahBtn"
+);
+
+const fullLoading=
+document.getElementById(
+"bannermin327FullLoading"
+);
+
+btnTambah.onclick=async()=>{
+
+const banner=
+inputBanner.value.trim();
+
+const link=
+inputLink.value.trim();
+
+const updateOleh=
+inputUpdate.value.trim();
+
+if(!banner){
+
+bannermin327Toast(
+"URL Banner wajib diisi."
+);
+
+inputBanner.focus();
+
+return;
+
+}
+
+if(!link){
+
+bannermin327Toast(
+"Link tujuan wajib diisi."
+);
+
+inputLink.focus();
+
+return;
+
+}
+
+fullLoading.style.display="flex";
+
+try{
+
+const newRef=
+
+push(
+
+ref(db,"Bannermini33")
+
+);
+
+await set(newRef,{
+
+Bannermini:banner,
+
+"Link tujuan":link,
+
+"Diperbaharui oleh":
+
+updateOleh||
+
+"Tigo.app",
+
+dibuatPada:
+
+Date.now()
+
+});
+
+inputBanner.value="";
+
+inputLink.value="";
+
+inputUpdate.value="Tigo.app";
+
+bannermin327Toast(
+
+"Banner berhasil ditambahkan."
+
+);
+
+}catch(err){
+
+console.log(err);
+
+bannermin327Toast(
+
+"Gagal menambahkan banner."
+
+);
+
+}
+
+fullLoading.style.display="none";
+
+};
+
+
+/*=====================================
+BUKA MODAL EDIT
+=====================================*/
+
+
+const editBanner=
+document.getElementById(
+"bannermin327EditBanner"
+);
+
+const editLink=
+document.getElementById(
+"bannermin327EditLink"
+);
+
+const editUpdate=
+document.getElementById(
+"bannermin327EditUpdate"
+);
+
+
+const modalEdit =
+document.getElementById("bannermin327EditModal");
+
+const btnCancel =
+document.getElementById("bannermin327Cancel");
+
+btnCancel.addEventListener("click",()=>{
+
+modalEdit.style.display="none";
+
+});
+
+
+
+
+
+list.addEventListener("click",(e)=>{
+
+if(!e.target.dataset.edit)return;
+
+editKey=e.target.dataset.edit;
+
+const item=
+semuaBanner[editKey];
+
+editBanner.value=
+item.Bannermini||"";
+
+editLink.value=
+item["Link tujuan"]||"";
+
+editUpdate.value=
+item["Diperbaharui oleh"]||"";
+
+modalEdit.style.display="flex";
+
+});
+
+
+
+
+
+
+
+
+/*=====================================
+SIMPAN EDIT
+=====================================*/
+
+document
+.getElementById("bannermin327Save")
+.onclick=async()=>{
+
+if(!editKey)return;
+
+const banner=
+editBanner.value.trim();
+
+const link=
+editLink.value.trim();
+
+const updateOleh=
+editUpdate.value.trim();
+
+if(!banner){
+
+bannermin327Toast(
+"URL Banner tidak boleh kosong."
+);
+
+return;
+
+}
+
+fullLoading.style.display="flex";
+
+try{
+
+await update(
+
+ref(
+db,
+"Bannermini33/"+editKey
+),
+
+{
+
+Bannermini:banner,
+
+"Link tujuan":link,
+
+"Diperbaharui oleh":
+
+updateOleh||
+
+"Tigo.app"
+
+}
+
+);
+
+modalEdit.style.display="none";
+
+bannermin327Toast(
+
+"Banner berhasil diperbarui."
+
+);
+
+}catch(e){
+
+console.log(e);
+
+bannermin327Toast(
+
+"Gagal memperbarui banner."
+
+);
+
+}
+
+fullLoading.style.display="none";
+
+};
+
+
+
+/*=====================================
+CUSTOM CONFIRM
+=====================================*/
+
+const confirmBox=
+
+document.getElementById(
+"bannermin327Confirm"
+);
+
+const btnYes=
+
+document.getElementById(
+"bannermin327Yes"
+);
+
+const btnNo=
+
+document.getElementById(
+"bannermin327No"
+);
+
+
+
+list.addEventListener("click",(e)=>{
+
+if(!e.target.dataset.delete)return;
+
+editKey=
+
+e.target.dataset.delete;
+
+confirmBox.style.display="flex";
+
+});
+
+btnNo.onclick=()=>{
+
+confirmBox.style.display="none";
+
+};
+
+
+
+
+
+
+
+
+
+
+/*=====================================
+HAPUS
+=====================================*/
+
+btnYes.onclick=async()=>{
+
+if(!editKey)return;
+
+confirmBox.style.display="none";
+
+fullLoading.style.display="flex";
+
+try{
+
+await remove(
+
+ref(
+
+db,
+
+"Bannermini33/"+editKey
+
+)
+
+);
+
+bannermin327Toast(
+
+"Banner berhasil dihapus."
+
+);
+
+}catch(err){
+
+console.log(err);
+
+bannermin327Toast(
+
+"Gagal menghapus banner."
+
+);
+
+}
+
+fullLoading.style.display="none";
+
+};
+
+
+
+/*=====================================
+TUTUP MODAL
+=====================================*/
+
+window.onclick=(e)=>{
+
+if(
+
+e.target===modalEdit
+
+){
+
+modalEdit.style.display="none";
+
+}
+
+if(
+
+e.target===confirmBox
+
+){
+
+confirmBox.style.display="none";
+
+}
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+</body>
+</html>

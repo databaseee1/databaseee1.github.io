@@ -2806,6 +2806,168 @@ background:#0c85ff;
 z-index:0;
 }
 
+
+
+
+
+
+
+
+
+/*=========================
+BANNER MINI 327
+==========================*/
+
+#bannermin327Container{
+
+padding:12px;
+
+}
+
+#bannermin327List{
+
+display:flex;
+flex-direction:column;
+gap:14px;
+
+}
+
+.bannermin327-card{
+
+display:block;
+
+
+border-radius:22px;
+
+overflow:hidden;
+
+
+border:1px solid #0c85ff;
+
+transition:.25s;
+
+text-decoration:none;
+
+}
+
+.bannermin327-card:hover{
+
+transform:translateY(-2px);
+
+}
+
+.bannermin327-image{
+
+width:100%;
+
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+padding:12px;
+
+}
+
+.bannermin327-image img{
+
+width:100%;
+
+height:100%;
+
+object-fit:contain;
+
+display:block;
+
+}
+
+.bannermin327-footer{
+
+padding:10px 14px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+font-size:12px;
+
+color:#777;
+
+border-top:1px solid #ffffff00;
+
+background:#1ea7ff;
+
+}
+
+.bannermin327-go{
+
+font-weight:700;
+
+color:#ffffff;
+
+}
+
+.bannermin327-update{
+
+color:#fff;
+
+font-size:12px;
+
+font-weight:500;
+
+}
+
+/*=========================
+LOADING
+==========================*/
+
+.bannermin327-loading{
+
+height:145px;
+
+margin-bottom:14px;
+
+border-radius:20px;
+
+background:
+
+linear-gradient(
+
+90deg,
+
+#eee,
+
+#fafafa,
+
+#eee
+
+);
+
+background-size:300% 100%;
+
+animation:bannermin327Load 1s linear infinite;
+
+}
+
+@keyframes bannermin327Load{
+
+0%{
+
+background-position:100% 0;
+
+}
+
+100%{
+
+background-position:-100% 0;
+
+}
+
+}
 </style>
 </head>
 <body>
@@ -3060,8 +3222,6 @@ class="mobile-list">
 
 
 
-
-
 <div class="section-line">
 
     <span>
@@ -3273,6 +3433,24 @@ Populer Roblox --------
 
 
 
+
+<!-- =========================
+     BANNER MINI 327
+========================= -->
+
+<div id="bannermin327Container">
+
+<div id="bannermin327Loading">
+
+<div class="bannermin327-loading"></div>
+<div class="bannermin327-loading"></div>
+<div class="bannermin327-loading"></div>
+
+</div>
+
+<div id="bannermin327List"></div>
+
+</div>
 
 
 
@@ -3861,6 +4039,106 @@ document.getElementById("gameList");
 
 const voucherList =
 document.getElementById("voucherList");
+
+const bannermin327Wrap =
+document.getElementById("bannermin327List");
+
+const bannermin327Loading =
+document.getElementById("bannermin327Loading");
+
+onValue(
+
+ref(db,"Bannermini33"),
+
+(snapshot)=>{
+
+bannermin327Loading.style.display="none";
+
+bannermin327Wrap.innerHTML="";
+
+if(!snapshot.exists()){
+
+bannermin327Wrap.innerHTML=`
+
+<div style="text-align:center;
+padding:30px;
+color:#888;">
+
+Belum ada banner.
+
+</div>
+
+`;
+
+return;
+
+}
+
+const data=snapshot.val();
+
+Object.keys(data).reverse().forEach(key=>{
+
+const item=data[key];
+
+const a=document.createElement("a");
+
+a.className="bannermin327-card";
+
+a.href=item["Link tujuan"]||"#";
+
+a.target="_blank";
+
+a.innerHTML=`
+
+<div class="bannermin327-image">
+
+<img
+
+src="${item.Bannermini}"
+
+loading="lazy"
+
+alt="Banner"
+
+>
+
+</div>
+
+<div class="bannermin327-footer">
+
+<span class="bannermin327-update">
+
+${item["Diperbaharui oleh"]||""}
+
+</span>
+
+<span class="bannermin327-go">
+
+Buka →
+
+</span>
+
+</div>
+
+`;
+
+bannermin327Wrap.appendChild(a);
+
+});
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
 
 const gameRef =
 ref(db,"Game-top-up");
