@@ -181,9 +181,6 @@ body{
 
 
 
-
-
-
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -198,9 +195,6 @@ import {
   remove,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-
-
-
 /* FIREBASE */
 const firebaseConfig = {
   apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
@@ -213,7 +207,6 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const realtimeDb = getDatabase(app);
 
-
 let uploadedLinks = [];
 
 const dropZone = document.getElementById("dropZone");
@@ -222,30 +215,163 @@ const gallery = document.getElementById("gallery");
 
 dropZone.onclick = () => fileInput.click();
 
-fileInput.addEventListener("change",(e)=>{
+fileInput.addEventListener("change", (e) => {
   uploadFiles(e.target.files);
 });
 
-dropZone.addEventListener("dragover",(e)=>{
+dropZone.addEventListener("dragover", (e) => {
   e.preventDefault();
   dropZone.classList.add("drag");
 });
 
-dropZone.addEventListener("dragleave",()=>{
+dropZone.addEventListener("dragleave", () => {
   dropZone.classList.remove("drag");
 });
 
-dropZone.addEventListener("drop",(e)=>{
+dropZone.addEventListener("drop", (e) => {
   e.preventDefault();
-
   dropZone.classList.remove("drag");
 
   const files = e.dataTransfer.files;
 
-  if(files.length){
+  if (files.length) {
     uploadFiles(files);
   }
 });
+
+/* =========================
+   KOMPRES GAMBAR
+========================= */
+/* =========================
+   KOMPRES GAMBAR
+========================= */
+
+async function compressImage(file) {
+
+  // Jika bukan gambar langsung upload
+  if (!file.type.startsWith("image/")) {
+    return file;
+  }
+
+  return new Promise((resolve) => {
+
+    const img = new Image();
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      img.src = e.target.result;
+    };
+
+    img.onload = () => {
+
+      const canvas = document.createElement("canvas");
+
+      const MAX_WIDTH = 1080;
+
+      let width = img.width;
+      let height = img.height;
+
+      if (width > MAX_WIDTH) {
+        height = Math.round(
+          height * (MAX_WIDTH / width)
+        );
+
+        width = MAX_WIDTH;
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+
+      const ctx = canvas.getContext("2d");
+
+      /*
+        Pastikan canvas tetap transparan.
+      */
+      ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+      ctx.drawImage(
+        img,
+        0,
+        0,
+        width,
+        height
+      );
+
+      /*
+        PNG dan WEBP dipertahankan
+        agar transparansi tidak hilang.
+      */
+      const isTransparentFormat =
+        file.type === "image/png" ||
+        file.type === "image/webp";
+
+      if (isTransparentFormat) {
+
+        canvas.toBlob(
+          (blob) => {
+
+            const compressedFile = new File(
+              [blob],
+              file.name.replace(
+                /\.[^.]+$/,
+                file.type === "image/png"
+                  ? ".png"
+                  : ".webp"
+              ),
+              {
+                type: file.type,
+                lastModified: Date.now()
+              }
+            );
+
+            resolve(compressedFile);
+
+          },
+          file.type,
+          0.9
+        );
+
+      } else {
+
+        /*
+          JPG/JPEG tetap dikompres sebagai JPEG.
+        */
+        canvas.toBlob(
+          (blob) => {
+
+            const compressedFile = new File(
+              [blob],
+              file.name.replace(
+                /\.[^.]+$/,
+                ".jpg"
+              ),
+              {
+                type: "image/jpeg",
+                lastModified: Date.now()
+              }
+            );
+
+            resolve(compressedFile);
+
+          },
+          "image/jpeg",
+          0.75
+        );
+      }
+
+    };
+
+    reader.readAsDataURL(file);
+
+  });
+
+}
+/* ========================= */
 
 async function uploadFiles(files){
 
@@ -259,15 +385,19 @@ async function uploadFiles(files){
 
 async function uploadSingle(file){
 
+  const compressedFile = await compressImage(file);
+
   const formData = new FormData();
 
-  formData.append("file", file);
-  formData.append("upload_preset", "fotousershost");
+  formData.append("file", compressedFile);
+
+  // CLOUDINARY BARU
+  formData.append("upload_preset", "akunstore");
 
   try{
 
     const res = await fetch(
-      "https://api.cloudinary.com/v1_1/dowoq4a0i/image/upload",
+      "https://api.cloudinary.com/v1_1/yiqzinpc/image/upload",
       {
         method:"POST",
         body:formData
@@ -276,13 +406,21 @@ async function uploadSingle(file){
 
     const data = await res.json();
 
-    uploadedLinks.push(data.secure_url);
+    if (!res.ok || !data.secure_url) {
+      console.error("Cloudinary Error:", data);
+      return;
+    }
 
-renderImage(data.secure_url);
+    const optimizedUrl = data.secure_url.replace(
+      "/upload/",
+      "/upload/f_auto,q_auto:eco,w_1080,c_limit/"
+    );
 
-updateCombinedLinks();
+    uploadedLinks.push(optimizedUrl);
 
+    renderImage(optimizedUrl);
 
+    updateCombinedLinks();
 
   }catch(err){
 
@@ -290,8 +428,6 @@ updateCombinedLinks();
 
   }
 }
-
-
 
 function updateCombinedLinks(){
 
@@ -302,9 +438,6 @@ function updateCombinedLinks(){
     uploadedLinks.join(", ");
 
 }
-
-
-
 
 document
 .getElementById("copyAllBtn")
@@ -332,10 +465,6 @@ document
   },1000);
 
 });
-
-
-
-
 
 function renderImage(url){
 
@@ -393,15 +522,14 @@ document.getElementById("resetBtn")
 
     gallery.innerHTML = "";
 
-uploadedLinks = [];
+    uploadedLinks = [];
 
-document.getElementById(
-  "allLinks"
-).value = "";
+    document.getElementById(
+      "allLinks"
+    ).value = "";
 
   }
 
 });
-
 
 </script>
