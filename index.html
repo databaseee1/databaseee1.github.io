@@ -3868,7 +3868,6 @@ document.getElementById(
 
 
 
-
 let allPosts3289 = [];
 let showLimit3289 = 16;
 let isExpanded3289 = false;
@@ -3892,11 +3891,15 @@ onValue(usersRef, (snap) => {
   users.reverse();
 
   users.forEach(data => {
+
     const img = data.profil || "splash_icon.png";
 
     wrap02.innerHTML += `
       <div class="card02">
-        <img src="${img}">
+        <img
+          src="${img}"
+          onerror="this.onerror=null;this.src='splash_icon.png';"
+        >
         <div class="name02">${data.appName || "vIP"}</div>
       </div>
     `;
@@ -3907,6 +3910,7 @@ onValue(usersRef, (snap) => {
 const fotoGrid = document.getElementById("fotoGrid");
 
 onValue(ref(realtimeDb, "allhost"), (snap) => {
+
     const data = snap.val();
 
     fotoGrid.innerHTML = "";
@@ -3918,23 +3922,29 @@ onValue(ref(realtimeDb, "allhost"), (snap) => {
 
     const items = Object.entries(data)
         .sort((a, b) => {
-            return (b[1].penghasilanMingguIni || 0) - (a[1].penghasilanMingguIni || 0);
+            return (b[1].penghasilanMingguIni || 0) -
+                   (a[1].penghasilanMingguIni || 0);
         })
-        .slice(0, 10); // 🔥 top 10
+        .slice(0, 10);
 
     items.forEach(([id, val]) => {
 
         fotoGrid.innerHTML += `
-        <div class="foto-box"
-        onclick="window.location.href='https://www.tigohost.asia/allhost/allhost.html?id=${id}'">
+        <div
+          class="foto-box"
+          onclick="window.location.href='https://www.tigohost.asia/allhost/allhost.html?id=${id}'"
+        >
 
-            <img src="${val.foto || 'https://via.placeholder.com/300'}" alt="${val.profil || 'host'}">
+            <img
+              src="${val.foto || 'splash_icon.png'}"
+              alt="${val.profil || 'host'}"
+              onerror="this.onerror=null;this.src='splash_icon.png';"
+            >
 
         </div>
         `;
     });
 });
-
 
 
 
