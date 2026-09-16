@@ -4844,6 +4844,7 @@ function showNotif3289(text){
 
 
 /* CLOUDINARY */
+/* CLOUDINARY */
 let profileUrl = "";
 
 /* ================= IMAGE UPLOAD ================= */
@@ -4857,36 +4858,57 @@ window.chooseImage = function () {
     const file = e.target.files[0];
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "fotousershost");
+    try {
 
-    const res = await fetch(
-      "https://api.cloudinary.com/v1_1/dowoq4a0i/image/upload",
-      { method: "POST", body: formData }
-    );
+      const formData = new FormData();
 
-    const data = await res.json();
-    profileUrl = data.secure_url;
+      formData.append("file", file);
 
-    const preview = document.getElementById("preview");
+      /* CLOUDINARY BARU */
+      formData.append("upload_preset", "daftarbaru");
 
-    if (preview) {
-      preview.src = profileUrl;
-      preview.style.display = "block";
+      const res = await fetch(
+        "https://api.cloudinary.com/v1_1/q3r232uh/image/upload",
+        {
+          method: "POST",
+          body: formData
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok || !data.secure_url) {
+        console.error("Cloudinary Error:", data);
+        showToast("Gagal mengupload foto.");
+        return;
+      }
+
+      profileUrl = data.secure_url;
+
+      const preview = document.getElementById("preview");
+
+      if (preview) {
+        preview.src = profileUrl;
+        preview.style.display = "block";
+      }
+
+      /* OPTIONAL: sembunyikan tombol */
+      const uploadBtn = document.getElementById("uploadBtn");
+
+      if (uploadBtn) {
+        uploadBtn.style.display = "none";
+      }
+
+    } catch (error) {
+
+      console.error("Upload Cloudinary Error:", error);
+      showToast("Terjadi kesalahan saat mengupload foto.");
+
     }
-
-    /* OPTIONAL: sembunyikan tombol kalau ada */
-    const uploadBtn = document.getElementById("uploadBtn");
-    if (uploadBtn) {
-      uploadBtn.style.display = "none";
-    }
-
   };
 
   input.click();
 };
-
 
 function normalizeEmail(email){
   return email.trim().toLowerCase();
