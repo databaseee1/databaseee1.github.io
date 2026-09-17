@@ -5347,51 +5347,79 @@ renderBanner(data);
 
 
 
-
 function renderBanner(data){
 
+    bannerHot.innerHTML = "";
 
-bannerHot.innerHTML = "";
+    if(!data || typeof data !== "object"){
 
+        bannerHot.innerHTML = `
+            <div style="
+                width:100%;
+                padding:40px 20px;
+                text-align:center;
+                color:#888;
+            ">
+                Banner belum tersedia.
+            </div>
+        `;
 
+        return;
+    }
 
-let html = "";
+    let html = "";
 
+    Object.values(data).forEach(b => {
 
+        // Lewati data null / kosong
+        if(!b || typeof b !== "object") return;
 
-Object.values(data).forEach(b=>{
+        // Lewati banner yang tidak punya foto
+        if(!b.foto) return;
 
+        const foto = String(b.foto)
+            .replace(/'/g, "\\'");
 
-html += `
+        const link = b.link
+            ? String(b.link).replace(/'/g, "\\'")
+            : "";
 
+        html += `
 
-<div
+            <div
+                class="banner"
+                ${link ? `onclick="window.open('${link}','_blank')"` : ""}
+            >
 
-class="banner"
+                <img
+                    src="${foto}"
+                    loading="lazy"
+                    onerror="this.style.display='none'"
+                >
 
-onclick="window.open('${b.link}','_blank')">
+            </div>
 
+        `;
 
-<img
+    });
 
-src="${b.foto}"
+    if(!html){
 
-onerror="this.style.display='none'">
+        bannerHot.innerHTML = `
+            <div style="
+                width:100%;
+                padding:40px 20px;
+                text-align:center;
+                color:#888;
+            ">
+                Banner belum tersedia.
+            </div>
+        `;
 
+        return;
+    }
 
-</div>
-
-
-`;
-
-
-});
-
-
-
-bannerHot.innerHTML = html;
-
-
+    bannerHot.innerHTML = html;
 
 }
 
@@ -5570,54 +5598,53 @@ return;
 
 
 
-Object.entries(data).forEach(([key,item])=>{
+Object.entries(data).forEach(([key,item]) => {
 
+    // Lewati aplikasi yang datanya kosong/null
+    if(!item || typeof item !== "object") return;
 
-let totalRating = 0;
-let jumlahItem = 0;
-let totalTerjual = 0;
+    let totalRating = 0;
+    let jumlahItem = 0;
+    let totalTerjual = 0;
 
+    Object.entries(item).forEach(([k,v]) => {
 
-Object.entries(item).forEach(([k,v])=>{
+        // Lewati item yang null
+        if(!v || typeof v !== "object") return;
 
-    if(k.startsWith("item")){
+        if(k.startsWith("item")){
 
+            totalRating += Number(v.rating || 0);
 
-        totalRating += Number(v.rating || 0);
+            jumlahItem++;
 
-        jumlahItem++;
+            let angka =
+                Number(
+                    String(v.terjual || "0")
+                    .replace("rb","")
+                );
 
+            totalTerjual += angka;
 
-        let angka =
-        Number(
-            String(v.terjual || "0")
-            .replace("rb","")
-        );
+        }
 
+    });
 
-        totalTerjual += angka;
+    let ratingApp =
+        jumlahItem
+        ?
+        (totalRating / jumlahItem).toFixed(1)
+        :
+        "0.0";
 
+    let terjualApp =
+        totalTerjual > 0
+        ?
+        totalTerjual + "rb"
+        :
+        "0";
 
-    }
-
-});
-
-
-let ratingApp =
-jumlahItem
-?
-(totalRating / jumlahItem).toFixed(1)
-:
-"0.0";
-
-
-let terjualApp =
-totalTerjual > 0
-?
-totalTerjual + "rb"
-:
-"0";
-
+    // lanjutkan kode card kamu di sini...
 
 
 
