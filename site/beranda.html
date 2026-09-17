@@ -5297,52 +5297,101 @@ bannerHot.innerHTML = `
 
 
 
-// ambil cache banner
-const bannerCache =
-localStorage.getItem("banner_cache");
+// ==========================================
+// BANNER CACHE
+// ==========================================
 
+const bannerCache = localStorage.getItem("banner_cache");
 
+if (bannerCache) {
 
-if(bannerCache){
+    try {
 
-    renderBanner(
-        JSON.parse(bannerCache)
-    );
+        const cachedData = JSON.parse(bannerCache);
+
+        if (
+            cachedData &&
+            typeof cachedData === "object"
+        ) {
+
+            renderBanner(cachedData);
+
+        } else {
+
+            localStorage.removeItem("banner_cache");
+
+        }
+
+    } catch (error) {
+
+        console.warn(
+            "Cache banner rusak, menghapus cache..."
+        );
+
+        localStorage.removeItem("banner_cache");
+
+    }
 
 }
 
 
+// ==========================================
+// UPDATE BANNER DARI FIREBASE
+// ==========================================
 
-// update firebase
 onValue(
-ref(db,"BANNERHOT"),
+    ref(db, "BANNERHOT"),
 
-(snapshot)=>{
+    (snapshot) => {
 
+        const data = snapshot.val();
 
-const data =
-snapshot.val();
-
-
-
-if(data){
+        console.log("BANNERHOT Firebase:", data);
 
 
-localStorage.setItem(
-"banner_cache",
-JSON.stringify(data)
+        if (
+            data &&
+            typeof data === "object"
+        ) {
+
+            try {
+
+                // Render Firebase terlebih dahulu
+                renderBanner(data);
+
+
+                // Setelah berhasil, baru simpan cache
+                localStorage.setItem(
+                    "banner_cache",
+                    JSON.stringify(data)
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "Gagal render banner:",
+                    error
+                );
+
+            }
+
+        } else {
+
+            console.warn(
+                "BANNERHOT kosong."
+            );
+
+            bannerHot.innerHTML = "";
+
+            localStorage.removeItem(
+                "banner_cache"
+            );
+
+        }
+
+    }
+
 );
-
-
-
-renderBanner(data);
-
-
-
-}
-
-
-});
 
 
 
@@ -5351,44 +5400,55 @@ function renderBanner(data){
 
     bannerHot.innerHTML = "";
 
-    if(!data || typeof data !== "object"){
-
-        bannerHot.innerHTML = `
-            <div style="
-                width:100%;
-                padding:40px 20px;
-                text-align:center;
-                color:#888;
-            ">
-                Banner belum tersedia.
-            </div>
-        `;
+    if (
+        !data ||
+        typeof data !== "object"
+    ) {
 
         return;
+
     }
+
 
     let html = "";
 
+
     Object.values(data).forEach(b => {
 
-        // Lewati data null / kosong
-        if(!b || typeof b !== "object") return;
+        if (
+            !b ||
+            typeof b !== "object"
+        ) return;
 
-        // Lewati banner yang tidak punya foto
-        if(!b.foto) return;
 
-        const foto = String(b.foto)
+        if (!b.foto) return;
+
+
+        const foto =
+            String(b.foto)
             .replace(/'/g, "\\'");
 
-        const link = b.link
-            ? String(b.link).replace(/'/g, "\\'")
-            : "";
+
+        const link =
+            b.link
+            ?
+            String(b.link)
+                .replace(/'/g, "\\'")
+            :
+            "";
+
 
         html += `
 
             <div
                 class="banner"
-                ${link ? `onclick="window.open('${link}','_blank')"` : ""}
+                ${
+                    link
+                    ?
+                    `onclick="window.open('${link}','_blank')"`
+                    :
+                    ""
+                }
             >
 
                 <img
@@ -5403,21 +5463,13 @@ function renderBanner(data){
 
     });
 
-    if(!html){
 
-        bannerHot.innerHTML = `
-            <div style="
-                width:100%;
-                padding:40px 20px;
-                text-align:center;
-                color:#888;
-            ">
-                Banner belum tersedia.
-            </div>
-        `;
+    if (!html) {
 
         return;
+
     }
+
 
     bannerHot.innerHTML = html;
 
@@ -5520,154 +5572,293 @@ slideBanner(1);
 
 
 
+// ==========================================
+// TOP UP CACHE
+// ==========================================
+
 const cache =
-localStorage.getItem("topup_cache");
+    localStorage.getItem("topup_cache");
 
 
-// tampilkan cache dulu kalau ada
-if(cache){
+// ==========================================
+// TAMPILKAN CACHE TERLEBIH DAHULU
+// ==========================================
 
-    renderApps(
-        JSON.parse(cache)
-    );
+if (cache) {
+
+    try {
+
+        const cachedData =
+            JSON.parse(cache);
+
+        if (
+            cachedData &&
+            typeof cachedData === "object"
+        ) {
+
+            renderApps(cachedData);
+
+        } else {
+
+            console.warn(
+                "Cache top up tidak valid."
+            );
+
+            localStorage.removeItem(
+                "topup_cache"
+            );
+
+        }
+
+    } catch (error) {
+
+        console.warn(
+            "Cache top up rusak, cache dihapus.",
+            error
+        );
+
+        localStorage.removeItem(
+            "topup_cache"
+        );
+
+    }
 
 }
 
 
-// update dari Firebase
+// ==========================================
+// UPDATE DARI FIREBASE
+// ==========================================
+
 onValue(
-ref(db,"Top-up_aplikasi"),
+    ref(db, "Top-up_aplikasi"),
 
-(snapshot)=>{
+    (snapshot) => {
 
-
-const data =
-snapshot.val();
-
+        const data =
+            snapshot.val();
 
 
-if(data){
+        console.log(
+            "Data Top-up_aplikasi Firebase:",
+            data
+        );
 
 
-localStorage.setItem(
-"topup_cache",
-JSON.stringify(data)
+        // ==================================
+        // ADA DATA
+        // ==================================
+
+        if (
+            data &&
+            typeof data === "object"
+        ) {
+
+            // Render data Firebase
+            renderApps(data);
+
+
+            // Simpan data yang sama ke cache
+            localStorage.setItem(
+                "topup_cache",
+                JSON.stringify(data)
+            );
+
+
+        } else {
+
+            // ==================================
+            // FIREBASE KOSONG
+            // ==================================
+
+            console.warn(
+                "Top-up_aplikasi tidak memiliki data."
+            );
+
+
+            // Hapus cache agar tidak menggunakan
+            // data lama
+            localStorage.removeItem(
+                "topup_cache"
+            );
+
+
+            renderApps(null);
+
+        }
+
+    }
+
 );
 
 
 
-renderApps(data);
 
 
-}
+// ==========================================
+// RENDER APLIKASI
+// ==========================================
+
+function renderApps(data) {
 
 
-});
+    appGrid.innerHTML = "";
+
+    loading.style.display = "none";
 
 
+    // ==================================
+    // DATA KOSONG
+    // ==================================
+
+    if (!data) {
+
+        appGrid.innerHTML = `
+
+        <div style="
+            grid-column:1/-1;
+            text-align:center;
+            color:#888;
+            padding:50px;
+        ">
+
+            Belum ada aplikasi tersedia.
+
+        </div>
+
+        `;
+
+        return;
+
+    }
 
 
+    // ==================================
+    // LOOP DATA APLIKASI
+    // ==================================
 
-function renderApps(data){
-
-
-appGrid.innerHTML = "";
-
-loading.style.display = "none";
-
+    Object.entries(data).forEach(
+        ([key,item]) => {
 
 
-if(!data){
+        // Lewati data null
+        if (
+            !item ||
+            typeof item !== "object"
+        ) {
 
-appGrid.innerHTML = `
-
-<div style="
-grid-column:1/-1;
-text-align:center;
-color:#888;
-padding:50px;">
-
-Belum ada aplikasi tersedia.
-
-</div>`;
-
-return;
-
-}
-
-
-
-
-Object.entries(data).forEach(([key,item]) => {
-
-    // Lewati aplikasi yang datanya kosong/null
-    if(!item || typeof item !== "object") return;
-
-    let totalRating = 0;
-    let jumlahItem = 0;
-    let totalTerjual = 0;
-
-    Object.entries(item).forEach(([k,v]) => {
-
-        // Lewati item yang null
-        if(!v || typeof v !== "object") return;
-
-        if(k.startsWith("item")){
-
-            totalRating += Number(v.rating || 0);
-
-            jumlahItem++;
-
-            let angka =
-                Number(
-                    String(v.terjual || "0")
-                    .replace("rb","")
-                );
-
-            totalTerjual += angka;
+            return;
 
         }
 
-    });
 
-    let ratingApp =
-        jumlahItem
-        ?
-        (totalRating / jumlahItem).toFixed(1)
-        :
-        "0.0";
+        let totalRating = 0;
 
-    let terjualApp =
-        totalTerjual > 0
-        ?
-        totalTerjual + "rb"
-        :
-        "0";
+        let jumlahItem = 0;
 
-    // lanjutkan kode card kamu di sini...
+        let totalTerjual = 0;
 
 
+        // ==================================
+        // LOOP ITEM
+        // ==================================
+
+        Object.entries(item).forEach(
+            ([k,v]) => {
 
 
+            // Lewati item null
+            if (
+                !v ||
+                typeof v !== "object"
+            ) {
+
+                return;
+
+            }
 
 
-
-const card =
-document.createElement("a");
-
-
-
-card.className =
-"app-card reveal";
+            if (
+                k.startsWith("item")
+            ) {
 
 
+                totalRating +=
+                    Number(
+                        v.rating || 0
+                    );
 
-card.href =
-`halaman_menu_coin.html?app=${encodeURIComponent(key)}`;
+
+                jumlahItem++;
 
 
+                let angka =
+                    Number(
+                        String(
+                            v.terjual || "0"
+                        )
+                        .replace("rb","")
+                    );
 
-card.innerHTML = `
+
+                if (
+                    !Number.isNaN(angka)
+                ) {
+
+                    totalTerjual +=
+                        angka;
+
+                }
+
+            }
+
+        });
+
+
+        // ==================================
+        // RATING
+        // ==================================
+
+        let ratingApp =
+            jumlahItem
+            ?
+            (
+                totalRating /
+                jumlahItem
+            ).toFixed(1)
+            :
+            "0.0";
+
+
+        // ==================================
+        // TERJUAL
+        // ==================================
+
+        let terjualApp =
+            totalTerjual > 0
+            ?
+            totalTerjual + "rb"
+            :
+            "0";
+
+
+        // ==================================
+        // CARD
+        // ==================================
+
+        const card =
+            document.createElement("a");
+
+
+        card.className =
+            "app-card reveal";
+
+
+        card.href =
+            `halaman_menu_coin.html?app=${encodeURIComponent(key)}`;
+
+
+        card.innerHTML = `
 
 
 <img
@@ -5818,7 +6009,7 @@ align-items:center;
 gap:4px;
 ">
 
-<i 
+<i
 class="fa-solid fa-star"
 style="
 color:#ffb400;
@@ -5846,7 +6037,7 @@ align-items:center;
 gap:4px;
 ">
 
-<i 
+<i
 class="fa-solid fa-bag-shopping"
 style="
 color:#5c27fe;
@@ -5872,43 +6063,85 @@ ${terjualApp} Terjual
 `;
 
 
-appGrid.appendChild(card);
+        appGrid.appendChild(card);
 
 
-
-});
-
+    });
 
 
-reveal();
+    // ==================================
+    // ANIMASI
+    // ==================================
 
+    reveal();
 
 
 }
 
-/* ANIMASI SCROLL BERULANG */
+
+
+// ==========================================
+// ANIMASI SCROLL BERULANG
+// ==========================================
 
 function reveal() {
-    const reveals = document.querySelectorAll('.reveal');
+
+    const reveals =
+        document.querySelectorAll(
+            '.reveal'
+        );
+
 
     reveals.forEach(el => {
-        const windowHeight = window.innerHeight;
-        const elementTop = el.getBoundingClientRect().top;
-        const elementVisible = 120;
+
+        const windowHeight =
+            window.innerHeight;
+
+
+        const elementTop =
+            el.getBoundingClientRect().top;
+
+
+        const elementVisible =
+            120;
+
 
         if (
-            elementTop < windowHeight - elementVisible &&
-            elementTop > -el.offsetHeight
+            elementTop <
+                windowHeight -
+                elementVisible
+            &&
+            elementTop >
+                -el.offsetHeight
         ) {
-            el.classList.add('active');
+
+            el.classList.add(
+                'active'
+            );
+
         } else {
-            el.classList.remove('active');
+
+            el.classList.remove(
+                'active'
+            );
+
         }
+
     });
+
 }
 
-window.addEventListener('scroll', reveal);
-window.addEventListener('load', reveal);
+
+window.addEventListener(
+    'scroll',
+    reveal
+);
+
+
+window.addEventListener(
+    'load',
+    reveal
+);
 
 
 
