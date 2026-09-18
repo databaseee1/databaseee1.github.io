@@ -1,0 +1,3109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Admin Users1</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: #f5f7fb;
+      color: #1f2937;
+    }
+
+    button,
+    input,
+    textarea {
+      font-family: inherit;
+    }
+
+    .header {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      max-width: 1500px;
+      margin: auto;
+      padding: 16px 22px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: #4f46e5;
+      color: white;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 18px;
+    }
+
+    .brand-text h1 {
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .brand-text p {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .container {
+      max-width: 1500px;
+      margin: auto;
+      padding: 22px;
+    }
+
+    .toolbar {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 15px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+
+      margin-bottom: 20px;
+    }
+
+    .search-box {
+      position: relative;
+      flex: 1;
+      max-width: 500px;
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9ca3af;
+      font-size: 14px;
+    }
+
+    .search-box input {
+      width: 100%;
+      height: 42px;
+
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+
+      padding: 0 14px 0 40px;
+      outline: none;
+
+      font-size: 13px;
+      background: #f9fafb;
+    }
+
+    .search-box input:focus {
+      border-color: #6366f1;
+      background: #fff;
+    }
+
+    .btn {
+      height: 40px;
+      border: 0;
+      border-radius: 9px;
+      padding: 0 14px;
+
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+
+      transition: .2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: #4f46e5;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #4338ca;
+    }
+
+    .btn-danger {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    .btn-danger:hover {
+      background: #fecaca;
+    }
+
+    .btn-secondary {
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    .btn-secondary:hover {
+      background: #e5e7eb;
+    }
+
+    .btn-success {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    .stats {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .stat {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 12px 16px;
+      min-width: 150px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    .stat-value {
+      font-size: 20px;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .users-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+      gap: 16px;
+    }
+
+    .user-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,.025);
+    }
+
+    .user-head {
+      padding: 17px;
+
+      display: flex;
+      align-items: center;
+      gap: 13px;
+
+      border-bottom: 1px solid #f0f1f3;
+    }
+
+    .avatar {
+      width: 62px;
+      height: 62px;
+      min-width: 62px;
+
+      border-radius: 50%;
+      overflow: hidden;
+
+      background: #eef2ff;
+      border: 2px solid #e0e7ff;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .avatar i {
+      color: #6366f1;
+      font-size: 22px;
+    }
+
+    .user-title {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .user-title h2 {
+      font-size: 15px;
+      font-weight: 700;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .user-id {
+      font-size: 10px;
+      color: #9ca3af;
+      margin-top: 3px;
+
+      word-break: break-all;
+    }
+
+    .gender-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+
+      margin-top: 7px;
+
+      padding: 4px 8px;
+      border-radius: 20px;
+
+      font-size: 9px;
+      font-weight: 600;
+    }
+
+    .gender-female {
+      background: #fce7f3;
+      color: #be185d;
+    }
+
+    .gender-male {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+
+    .gender-other {
+      background: #f3f4f6;
+      color: #6b7280;
+    }
+
+    .photo-editor {
+      margin: 14px 17px 0;
+      padding: 13px;
+
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      background: #fafafa;
+    }
+
+    .photo-editor-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #374151;
+
+      display: flex;
+      align-items: center;
+      gap: 7px;
+
+      margin-bottom: 10px;
+    }
+
+    .photo-editor-content {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .photo-preview {
+      width: 72px;
+      height: 72px;
+      min-width: 72px;
+
+      border-radius: 12px;
+      overflow: hidden;
+
+      background: #eef2ff;
+      border: 1px solid #e5e7eb;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .photo-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-preview i {
+      color: #9ca3af;
+      font-size: 20px;
+    }
+
+    .photo-input-wrap {
+      flex: 1;
+    }
+
+    .photo-input-wrap label {
+      display: block;
+      font-size: 9px;
+      color: #6b7280;
+      margin-bottom: 5px;
+    }
+
+    .photo-input {
+      width: 100%;
+      height: 38px;
+
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+
+      padding: 0 10px;
+      outline: none;
+
+      font-size: 11px;
+      background: #fff;
+    }
+
+    .photo-input:focus {
+      border-color: #6366f1;
+    }
+
+    .fields {
+      padding: 14px 17px 5px;
+    }
+
+    .field {
+      margin-bottom: 12px;
+    }
+
+    .field-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+
+      margin-bottom: 5px;
+    }
+
+    .field-name {
+      font-size: 10px;
+      font-weight: 600;
+      color: #6b7280;
+    }
+
+    .field-type {
+      font-size: 8px;
+      color: #9ca3af;
+      background: #f3f4f6;
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+
+    .field-input {
+      width: 100%;
+      min-height: 37px;
+
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+
+      padding: 8px 10px;
+
+      outline: none;
+      background: #fff;
+
+      font-size: 11px;
+      color: #374151;
+    }
+
+    input.field-input {
+      height: 37px;
+    }
+
+    textarea.field-input {
+      min-height: 75px;
+      resize: vertical;
+      line-height: 1.5;
+      font-family: monospace;
+      font-size: 10px;
+    }
+
+    .field-input:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 0 2px rgba(99,102,241,.08);
+    }
+
+    .field-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .field-row .field-input {
+      flex: 1;
+    }
+
+    .delete-field {
+      width: 35px;
+      height: 35px;
+      min-width: 35px;
+
+      border: 0;
+      border-radius: 8px;
+
+      background: #fff1f2;
+      color: #e11d48;
+
+      cursor: pointer;
+    }
+
+    .delete-field:hover {
+      background: #ffe4e6;
+    }
+
+    .card-footer {
+      border-top: 1px solid #f0f1f3;
+      padding: 13px 17px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .footer-left,
+    .footer-right {
+      display: flex;
+      gap: 7px;
+      align-items: center;
+    }
+
+    .empty {
+      background: white;
+      border: 1px dashed #d1d5db;
+      border-radius: 14px;
+
+      min-height: 220px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      text-align: center;
+      padding: 30px;
+    }
+
+    .empty i {
+      font-size: 28px;
+      color: #9ca3af;
+      margin-bottom: 10px;
+    }
+
+    .empty h3 {
+      font-size: 14px;
+    }
+
+    .empty p {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-top: 4px;
+    }
+
+    /* MODAL */
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+
+      background: rgba(15,23,42,.55);
+
+      display: none;
+      align-items: center;
+      justify-content: center;
+
+      padding: 20px;
+      z-index: 1000;
+    }
+
+    .modal-overlay.show {
+      display: flex;
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 440px;
+
+      background: white;
+      border-radius: 15px;
+
+      box-shadow: 0 20px 50px rgba(0,0,0,.2);
+
+      overflow: hidden;
+    }
+
+    .modal-head {
+      padding: 16px 18px;
+      border-bottom: 1px solid #eee;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-head h3 {
+      font-size: 14px;
+    }
+
+    .close-modal {
+      width: 32px;
+      height: 32px;
+
+      border: 0;
+      border-radius: 8px;
+
+      background: #f3f4f6;
+      cursor: pointer;
+    }
+
+    .modal-body {
+      padding: 18px;
+    }
+
+    .modal-body label {
+      display: block;
+      font-size: 10px;
+      color: #6b7280;
+      margin-bottom: 5px;
+    }
+
+    .modal-body input,
+    .modal-body textarea {
+      width: 100%;
+
+      border: 1px solid #e5e7eb;
+      border-radius: 9px;
+
+      padding: 10px;
+
+      outline: none;
+      font-size: 12px;
+    }
+
+    .modal-body textarea {
+      resize: vertical;
+      min-height: 100px;
+      font-family: monospace;
+    }
+
+    .modal-body input:focus,
+    .modal-body textarea:focus {
+      border-color: #6366f1;
+    }
+
+    .modal-field {
+      margin-bottom: 13px;
+    }
+
+    .modal-footer {
+      padding: 13px 18px;
+      border-top: 1px solid #eee;
+
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    /* TOAST */
+
+    .toast-container {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+
+      z-index: 2000;
+
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .toast {
+      min-width: 260px;
+      max-width: 360px;
+
+      background: #111827;
+      color: white;
+
+      padding: 12px 14px;
+      border-radius: 10px;
+
+      font-size: 11px;
+
+      box-shadow: 0 10px 30px rgba(0,0,0,.15);
+
+      animation: toastIn .25s ease;
+    }
+
+    .toast.success {
+      border-left: 4px solid #22c55e;
+    }
+
+    .toast.error {
+      border-left: 4px solid #ef4444;
+    }
+
+    .toast.info {
+      border-left: 4px solid #6366f1;
+    }
+
+    @keyframes toastIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* LOADING */
+
+    .loading-overlay {
+      position: fixed;
+      inset: 0;
+
+      background: rgba(255,255,255,.8);
+
+      z-index: 3000;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .loading-box {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+
+      padding: 22px 28px;
+
+      text-align: center;
+      box-shadow: 0 10px 35px rgba(0,0,0,.08);
+    }
+
+    .spinner {
+      width: 28px;
+      height: 28px;
+
+      border: 3px solid #e5e7eb;
+      border-top-color: #4f46e5;
+
+      border-radius: 50%;
+
+      animation: spin .7s linear infinite;
+
+      margin: 0 auto 10px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .loading-box p {
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 800px) {
+
+      .container {
+        padding: 14px;
+      }
+
+      .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .search-box {
+        max-width: none;
+      }
+
+      .stats {
+        overflow-x: auto;
+      }
+
+      .users-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 500px) {
+
+      .header-inner {
+        padding: 13px 14px;
+      }
+
+      .brand-text h1 {
+        font-size: 15px;
+      }
+
+      .header-actions .btn span {
+        display: none;
+      }
+
+      .photo-editor-content {
+        align-items: flex-start;
+      }
+
+      .card-footer {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .footer-left,
+      .footer-right {
+        width: 100%;
+      }
+
+      .footer-right .btn,
+      .footer-left .btn {
+        flex: 1;
+      }
+
+      .user-head {
+        padding: 14px;
+      }
+
+      .fields {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      .photo-editor {
+        margin-left: 14px;
+        margin-right: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-inner">
+
+      <div class="brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-users"></i>
+        </div>
+
+        <div class="brand-text">
+          <h1>Users1 Manager</h1>
+          <p>Kelola seluruh data users1</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+
+        <button
+          class="btn btn-secondary"
+          id="refreshButton"
+          title="Refresh data"
+        >
+          <i class="fa-solid fa-rotate"></i>
+          <span>Refresh</span>
+        </button>
+
+      </div>
+
+    </div>
+  </header>
+
+
+  <main class="container">
+
+    <!-- TOOLBAR -->
+    <div class="toolbar">
+
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Cari nama, email, user ID, WhatsApp..."
+          autocomplete="off"
+        >
+      </div>
+
+    </div>
+
+
+    <!-- STATS -->
+    <div class="stats">
+
+      <div class="stat">
+        <div class="stat-label">
+          Total User
+        </div>
+
+        <div
+          class="stat-value"
+          id="totalUsers"
+        >
+          0
+        </div>
+      </div>
+
+
+      <div class="stat">
+        <div class="stat-label">
+          Perempuan
+        </div>
+
+        <div
+          class="stat-value"
+          id="femaleUsers"
+        >
+          0
+        </div>
+      </div>
+
+
+      <div class="stat">
+        <div class="stat-label">
+          Laki-laki
+        </div>
+
+        <div
+          class="stat-value"
+          id="maleUsers"
+        >
+          0
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- USERS -->
+    <div
+      class="users-grid"
+      id="usersGrid"
+    ></div>
+
+  </main>
+
+
+  <!-- ADD FIELD MODAL -->
+  <div
+    class="modal-overlay"
+    id="addFieldModal"
+  >
+
+    <div class="modal">
+
+      <div class="modal-head">
+
+        <h3>
+          Tambah Field
+        </h3>
+
+        <button
+          class="close-modal"
+          id="closeModal"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+      </div>
+
+
+      <div class="modal-body">
+
+        <div class="modal-field">
+
+          <label>
+            Nama Field
+          </label>
+
+          <input
+            type="text"
+            id="newFieldName"
+            placeholder="contoh: status"
+          >
+
+        </div>
+
+
+        <div class="modal-field">
+
+          <label>
+            Nilai Field
+          </label>
+
+          <textarea
+            id="newFieldValue"
+            placeholder='Contoh: aktif&#10;&#10;Atau JSON: {"contoh":true}'
+          ></textarea>
+
+        </div>
+
+      </div>
+
+
+      <div class="modal-footer">
+
+        <button
+          class="btn btn-secondary"
+          id="cancelModal"
+        >
+          Batal
+        </button>
+
+        <button
+          class="btn btn-primary"
+          id="saveNewField"
+        >
+          <i class="fa-solid fa-plus"></i>
+          Tambahkan
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- TOAST -->
+  <div
+    class="toast-container"
+    id="toastContainer"
+  ></div>
+
+
+  <!-- LOADING -->
+  <div
+    class="loading-overlay"
+    id="loadingOverlay"
+  >
+
+    <div class="loading-box">
+
+      <div class="spinner"></div>
+
+      <p id="loadingText">
+        Memuat data...
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <script type="module">
+
+    import {
+      initializeApp
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+    import {
+      getDatabase,
+      ref,
+      onValue,
+      update,
+      remove,
+      get
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+    /* =========================================================
+       FIREBASE
+    ========================================================= */
+
+    const firebaseConfig = {
+
+      apiKey:
+        "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+
+      authDomain:
+        "users-96dc5.firebaseapp.com",
+
+      databaseURL:
+        "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+      projectId:
+        "users-96dc5",
+
+      storageBucket:
+        "users-96dc5.appspot.com",
+
+      messagingSenderId:
+        "483322415863",
+
+      appId:
+        "1:483322415863:web:1397a8f2e808e66ad9e1f2"
+
+    };
+
+
+    const app = initializeApp(firebaseConfig);
+
+    const db = getDatabase(app);
+
+    const usersRef = ref(db, "users1");
+
+
+    /* =========================================================
+       CACHE
+    ========================================================= */
+
+    const CACHE_KEY =
+      "users1_admin_cache_v2";
+
+
+    let usersData = {};
+
+    let selectedUserForField = null;
+
+
+    function saveCache(data) {
+
+      try {
+
+        localStorage.setItem(
+          CACHE_KEY,
+          JSON.stringify({
+            data: data,
+            savedAt: Date.now()
+          })
+        );
+
+      } catch (error) {
+
+        console.warn(
+          "Gagal menyimpan cache:",
+          error
+        );
+
+      }
+
+    }
+
+
+    function loadCache() {
+
+      try {
+
+        const raw =
+          localStorage.getItem(CACHE_KEY);
+
+        if (!raw) {
+          return null;
+        }
+
+        const parsed =
+          JSON.parse(raw);
+
+        return parsed?.data || null;
+
+      } catch (error) {
+
+        console.warn(
+          "Cache rusak:",
+          error
+        );
+
+        return null;
+
+      }
+
+    }
+
+
+    /* =========================================================
+       ELEMENT
+    ========================================================= */
+
+    const usersGrid =
+      document.getElementById("usersGrid");
+
+    const searchInput =
+      document.getElementById("searchInput");
+
+    const totalUsers =
+      document.getElementById("totalUsers");
+
+    const femaleUsers =
+      document.getElementById("femaleUsers");
+
+    const maleUsers =
+      document.getElementById("maleUsers");
+
+    const loadingOverlay =
+      document.getElementById("loadingOverlay");
+
+    const loadingText =
+      document.getElementById("loadingText");
+
+    const refreshButton =
+      document.getElementById("refreshButton");
+
+    const addFieldModal =
+      document.getElementById("addFieldModal");
+
+    const newFieldName =
+      document.getElementById("newFieldName");
+
+    const newFieldValue =
+      document.getElementById("newFieldValue");
+
+
+    /* =========================================================
+       LOADING
+    ========================================================= */
+
+    function hideLoading() {
+
+      loadingOverlay.style.display =
+        "none";
+
+    }
+
+
+    function showLoading(text = "Memuat data...") {
+
+      loadingText.textContent = text;
+
+      loadingOverlay.style.display =
+        "flex";
+
+    }
+
+
+    /* =========================================================
+       TOAST
+    ========================================================= */
+
+    function showToast(
+      message,
+      type = "info"
+    ) {
+
+      const toast =
+        document.createElement("div");
+
+      toast.className =
+        `toast ${type}`;
+
+      toast.textContent =
+        message;
+
+      document
+        .getElementById("toastContainer")
+        .appendChild(toast);
+
+
+      setTimeout(() => {
+
+        toast.style.opacity = "0";
+
+        toast.style.transform =
+          "translateY(8px)";
+
+        setTimeout(() => {
+          toast.remove();
+        }, 250);
+
+      }, 3000);
+
+    }
+
+
+    /* =========================================================
+       GENDER
+    ========================================================= */
+
+    function normalizeGender(value) {
+
+      return String(value || "")
+        .trim()
+        .toLowerCase()
+        .replace(/_/g, " ")
+        .replace(/\s+/g, " ");
+
+    }
+
+
+    function getGenderType(user) {
+
+      const jk =
+        normalizeGender(user?.jk);
+
+
+      if (
+        [
+          "perempuan",
+          "wanita",
+          "female",
+          "cewek"
+        ].includes(jk)
+      ) {
+
+        return "female";
+
+      }
+
+
+      if (
+        [
+          "laki-laki",
+          "laki laki",
+          "laki",
+          "pria",
+          "male",
+          "cowok"
+        ].includes(jk)
+      ) {
+
+        return "male";
+
+      }
+
+
+      return "other";
+
+    }
+
+
+    function getGenderOrder(user) {
+
+      const gender =
+        getGenderType(user);
+
+
+      if (gender === "female") {
+        return 0;
+      }
+
+      if (gender === "other") {
+        return 1;
+      }
+
+      return 2;
+
+    }
+
+
+    function getGenderLabel(user) {
+
+      const gender =
+        getGenderType(user);
+
+
+      if (gender === "female") {
+        return "Perempuan";
+      }
+
+      if (gender === "male") {
+        return "Laki-laki";
+      }
+
+      return "Tidak diketahui";
+
+    }
+
+
+    function getGenderIcon(user) {
+
+      const gender =
+        getGenderType(user);
+
+
+      if (gender === "female") {
+        return "fa-venus";
+      }
+
+      if (gender === "male") {
+        return "fa-mars";
+      }
+
+      return "fa-question";
+
+    }
+
+
+    /* =========================================================
+       PHOTO
+    ========================================================= */
+
+    function getProfilePhoto(user) {
+
+      if (
+        Array.isArray(user?.foto) &&
+        user.foto.length > 0
+      ) {
+
+        return String(
+          user.foto[0] || ""
+        ).trim();
+
+      }
+
+
+      if (
+        typeof user?.foto === "string"
+      ) {
+
+        return user.foto.trim();
+
+      }
+
+
+      return "";
+
+    }
+
+
+    function createPhotoPreview(url) {
+
+      if (!url) {
+
+        return `
+          <i class="fa-regular fa-image"></i>
+        `;
+
+      }
+
+
+      return `
+        <img
+          src="${escapeHtml(url)}"
+          alt="Foto Profil"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+        >
+
+        <i
+          class="fa-regular fa-image"
+          style="display:none;"
+        ></i>
+      `;
+
+    }
+
+
+    /* =========================================================
+       ESCAPE HTML
+    ========================================================= */
+
+    function escapeHtml(value) {
+
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+    }
+
+
+    function escapeAttribute(value) {
+
+      return escapeHtml(value);
+
+    }
+
+
+    /* =========================================================
+       VALUE TYPE
+    ========================================================= */
+
+    function getValueType(value) {
+
+      if (Array.isArray(value)) {
+        return "array";
+      }
+
+      if (
+        value !== null &&
+        typeof value === "object"
+      ) {
+
+        return "object";
+
+      }
+
+      if (typeof value === "number") {
+        return "number";
+      }
+
+      if (typeof value === "boolean") {
+        return "boolean";
+      }
+
+      if (value === null) {
+        return "null";
+      }
+
+      return "string";
+
+    }
+
+
+    function valueToInput(value) {
+
+      const type =
+        getValueType(value);
+
+
+      if (
+        type === "object" ||
+        type === "array"
+      ) {
+
+        return JSON.stringify(
+          value,
+          null,
+          2
+        );
+
+      }
+
+
+      if (value === null) {
+        return "";
+      }
+
+
+      return String(value);
+
+    }
+
+
+    /* =========================================================
+       PARSE VALUE
+    ========================================================= */
+
+    function parseValue(
+      inputValue,
+      originalValue
+    ) {
+
+      const type =
+        getValueType(originalValue);
+
+
+      if (type === "number") {
+
+        if (inputValue.trim() === "") {
+          return 0;
+        }
+
+        const numberValue =
+          Number(inputValue);
+
+        if (Number.isNaN(numberValue)) {
+          throw new Error(
+            "Nilai bukan angka."
+          );
+        }
+
+        return numberValue;
+
+      }
+
+
+      if (type === "boolean") {
+
+        return (
+          inputValue.toLowerCase() ===
+          "true"
+        );
+
+      }
+
+
+      if (
+        type === "object" ||
+        type === "array"
+      ) {
+
+        try {
+
+          return JSON.parse(
+            inputValue
+          );
+
+        } catch {
+
+          throw new Error(
+            "Format JSON tidak valid."
+          );
+
+        }
+
+      }
+
+
+      if (type === "null") {
+
+        if (
+          inputValue.trim() === ""
+        ) {
+
+          return null;
+
+        }
+
+        return inputValue;
+
+      }
+
+
+      return inputValue;
+
+    }
+
+
+    /* =========================================================
+       FIELD
+    ========================================================= */
+
+    function createField(
+      userId,
+      fieldName,
+      value
+    ) {
+
+      const type =
+        getValueType(value);
+
+      const inputValue =
+        valueToInput(value);
+
+
+      const isComplex =
+        type === "object" ||
+        type === "array";
+
+
+      return `
+
+        <div
+          class="field"
+          data-field-name="${escapeAttribute(fieldName)}"
+          data-original-type="${type}"
+        >
+
+          <div class="field-head">
+
+            <span class="field-name">
+              ${escapeHtml(fieldName)}
+            </span>
+
+            <span class="field-type">
+              ${type}
+            </span>
+
+          </div>
+
+
+          <div class="field-row">
+
+            ${
+              isComplex
+
+              ?
+
+              `
+                <textarea
+                  class="field-input"
+                  data-field="${escapeAttribute(fieldName)}"
+                  spellcheck="false"
+                >${escapeHtml(inputValue)}</textarea>
+              `
+
+              :
+
+              `
+                <input
+                  class="field-input"
+                  data-field="${escapeAttribute(fieldName)}"
+                  value="${escapeAttribute(inputValue)}"
+                  type="${
+                    type === "number"
+                      ? "number"
+                      : "text"
+                  }"
+                >
+              `
+            }
+
+
+            <button
+              class="delete-field"
+              data-action="delete-field"
+              data-user-id="${escapeAttribute(userId)}"
+              data-field-name="${escapeAttribute(fieldName)}"
+              title="Hapus field"
+            >
+              <i class="fa-solid fa-trash"></i>
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }
+
+
+    /* =========================================================
+       USER CARD
+    ========================================================= */
+
+    function createUserCard(
+      userId,
+      user
+    ) {
+
+      const photo =
+        getProfilePhoto(user);
+
+
+      const genderType =
+        getGenderType(user);
+
+
+      const genderLabel =
+        getGenderLabel(user);
+
+
+      const genderIcon =
+        getGenderIcon(user);
+
+
+      let fieldsHtml = "";
+
+
+      Object.entries(user || {})
+        .forEach(
+          ([fieldName, value]) => {
+
+            /*
+             * FOTO DIBUAT KHUSUS DI BAGIAN
+             * FOTO PROFIL, JADI JANGAN
+             * DITAMPILKAN LAGI SEBAGAI
+             * FIELD BIASA.
+             */
+
+            if (
+              fieldName === "foto"
+            ) {
+
+              return;
+
+            }
+
+
+            fieldsHtml +=
+              createField(
+                userId,
+                fieldName,
+                value
+              );
+
+          }
+        );
+
+
+      return `
+
+        <article
+          class="user-card"
+          data-user-id="${escapeAttribute(userId)}"
+        >
+
+          <!-- USER HEADER -->
+
+          <div class="user-head">
+
+            <div class="avatar">
+
+              ${createPhotoPreview(photo)}
+
+            </div>
+
+
+            <div class="user-title">
+
+              <h2>
+                ${escapeHtml(
+                  user?.nama ||
+                  "Tanpa Nama"
+                )}
+              </h2>
+
+              <div class="user-id">
+                ${escapeHtml(userId)}
+              </div>
+
+
+              <span
+                class="gender-badge ${
+                  genderType === "female"
+                    ? "gender-female"
+                    : genderType === "male"
+                      ? "gender-male"
+                      : "gender-other"
+                }"
+              >
+
+                <i
+                  class="fa-solid ${genderIcon}"
+                ></i>
+
+                ${genderLabel}
+
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <!-- FOTO PROFIL -->
+
+          <div class="photo-editor">
+
+            <div class="photo-editor-title">
+
+              <i class="fa-solid fa-camera"></i>
+
+              Foto Profil
+
+            </div>
+
+
+            <div class="photo-editor-content">
+
+              <div
+                class="photo-preview"
+                data-photo-preview="${escapeAttribute(userId)}"
+              >
+
+                ${createPhotoPreview(photo)}
+
+              </div>
+
+
+              <div class="photo-input-wrap">
+
+                <label>
+                  URL Foto Profil
+                </label>
+
+                <input
+                  type="url"
+                  class="photo-input"
+                  data-photo-input="${escapeAttribute(userId)}"
+                  value="${escapeAttribute(photo)}"
+                  placeholder="https://..."
+                >
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- ALL FIELDS -->
+
+          <div class="fields">
+
+            ${fieldsHtml}
+
+          </div>
+
+
+          <!-- FOOTER -->
+
+          <div class="card-footer">
+
+            <div class="footer-left">
+
+              <button
+                class="btn btn-secondary"
+                data-action="add-field"
+                data-user-id="${escapeAttribute(userId)}"
+              >
+
+                <i class="fa-solid fa-plus"></i>
+
+                Tambah Field
+
+              </button>
+
+            </div>
+
+
+            <div class="footer-right">
+
+              <button
+                class="btn btn-danger"
+                data-action="delete-user"
+                data-user-id="${escapeAttribute(userId)}"
+              >
+
+                <i class="fa-solid fa-trash"></i>
+
+                Hapus
+
+              </button>
+
+
+              <button
+                class="btn btn-primary"
+                data-action="save-user"
+                data-user-id="${escapeAttribute(userId)}"
+              >
+
+                <i class="fa-solid fa-floppy-disk"></i>
+
+                Simpan
+
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+      `;
+
+    }
+
+
+    /* =========================================================
+       SORT
+    ========================================================= */
+
+    function sortUsers(entries) {
+
+      return entries.sort(
+        ([idA, userA], [idB, userB]) => {
+
+          const genderA =
+            getGenderOrder(userA);
+
+          const genderB =
+            getGenderOrder(userB);
+
+
+          /*
+           * PRIORITAS:
+           *
+           * 0 = PEREMPUAN
+           * 1 = TIDAK DIKETAHUI
+           * 2 = LAKI-LAKI
+           */
+
+          if (genderA !== genderB) {
+
+            return genderA - genderB;
+
+          }
+
+
+          const nameA =
+            String(
+              userA?.nama ||
+              idA ||
+              ""
+            ).toLowerCase();
+
+
+          const nameB =
+            String(
+              userB?.nama ||
+              idB ||
+              ""
+            ).toLowerCase();
+
+
+          return nameA.localeCompare(
+            nameB,
+            "id"
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =========================================================
+       RENDER USERS
+    ========================================================= */
+
+    function renderUsers() {
+
+      const search =
+        searchInput.value
+          .trim()
+          .toLowerCase();
+
+
+      const entries =
+        Object.entries(
+          usersData || {}
+        );
+
+
+      /*
+       * HITUNG STATISTIK
+       */
+
+      let femaleCount = 0;
+      let maleCount = 0;
+
+
+      entries.forEach(
+        ([, user]) => {
+
+          const gender =
+            getGenderType(user);
+
+
+          if (gender === "female") {
+            femaleCount++;
+          }
+
+
+          if (gender === "male") {
+            maleCount++;
+          }
+
+        }
+      );
+
+
+      totalUsers.textContent =
+        entries.length;
+
+      femaleUsers.textContent =
+        femaleCount;
+
+      maleUsers.textContent =
+        maleCount;
+
+
+      /*
+       * FILTER
+       */
+
+      let filtered =
+        entries.filter(
+          ([userId, user]) => {
+
+            if (!search) {
+              return true;
+            }
+
+
+            const text =
+              JSON.stringify({
+                userId,
+                ...user
+              }).toLowerCase();
+
+
+            return text.includes(search);
+
+          }
+        );
+
+
+      /*
+       * SORT:
+       * PEREMPUAN -> LAINNYA -> LAKI-LAKI
+       */
+
+      filtered =
+        sortUsers(filtered);
+
+
+      /*
+       * EMPTY
+       */
+
+      if (filtered.length === 0) {
+
+        usersGrid.innerHTML = `
+
+          <div
+            class="empty"
+            style="grid-column:1/-1;"
+          >
+
+            <i class="fa-regular fa-folder-open"></i>
+
+            <h3>
+              Data tidak ditemukan
+            </h3>
+
+            <p>
+              Tidak ada user yang sesuai dengan pencarian.
+            </p>
+
+          </div>
+
+        `;
+
+        return;
+
+      }
+
+
+      /*
+       * RENDER
+       */
+
+      usersGrid.innerHTML =
+        filtered
+          .map(
+            ([userId, user]) =>
+              createUserCard(
+                userId,
+                user || {}
+              )
+          )
+          .join("");
+
+    }
+
+
+    /* =========================================================
+       UPDATE LOCAL CACHE
+    ========================================================= */
+
+    function updateLocalUser(
+      userId,
+      userData
+    ) {
+
+      usersData[userId] =
+        userData;
+
+      saveCache(usersData);
+
+      renderUsers();
+
+    }
+
+
+    /* =========================================================
+       SAVE USER
+    ========================================================= */
+
+    async function saveUser(
+      userId
+    ) {
+
+      const user =
+        usersData[userId];
+
+
+      if (!user) {
+        return;
+      }
+
+
+      const card =
+        document.querySelector(
+          `.user-card[data-user-id="${CSS.escape(userId)}"]`
+        );
+
+
+      if (!card) {
+        return;
+      }
+
+
+      const changes = {};
+
+
+      try {
+
+        /*
+         * AMBIL SEMUA FIELD
+         */
+
+        card
+          .querySelectorAll(
+            ".field[data-field-name]"
+          )
+          .forEach(fieldEl => {
+
+            const fieldName =
+              fieldEl.dataset.fieldName;
+
+
+            const originalValue =
+              user[fieldName];
+
+
+            const input =
+              fieldEl.querySelector(
+                ".field-input"
+              );
+
+
+            if (!input) {
+              return;
+            }
+
+
+            const newValue =
+              parseValue(
+                input.value,
+                originalValue
+              );
+
+
+            changes[fieldName] =
+              newValue;
+
+          });
+
+
+        /*
+         * FOTO PROFIL
+         */
+
+        const photoInput =
+          card.querySelector(
+            `[data-photo-input="${CSS.escape(userId)}"]`
+          );
+
+
+        if (photoInput) {
+
+          const newPhoto =
+            photoInput.value.trim();
+
+
+          const oldPhoto =
+            getProfilePhoto(user);
+
+
+          if (newPhoto !== oldPhoto) {
+
+            /*
+             * STRUKTUR FOTO TETAP ARRAY
+             *
+             * foto:
+             *   0: "url"
+             */
+
+            changes.foto =
+              newPhoto
+                ? [newPhoto]
+                : [];
+
+          }
+
+        }
+
+
+        /*
+         * CEK APAKAH ADA PERUBAHAN
+         */
+
+        if (
+          Object.keys(changes).length === 0
+        ) {
+
+          showToast(
+            "Tidak ada perubahan.",
+            "info"
+          );
+
+          return;
+
+        }
+
+
+        /*
+         * KONFIRMASI
+         */
+
+        const confirmSave =
+          confirm(
+            `Simpan semua perubahan untuk user "${user?.nama || userId}"?\n\n` +
+            `Termasuk perubahan foto profil jika ada.`
+          );
+
+
+        if (!confirmSave) {
+          return;
+        }
+
+
+        showLoading(
+          "Menyimpan perubahan..."
+        );
+
+
+        /*
+         * UPDATE FIREBASE
+         */
+
+        await update(
+          ref(
+            db,
+            `users1/${userId}`
+          ),
+          changes
+        );
+
+
+        /*
+         * UPDATE LOCAL DATA
+         */
+
+        const updatedUser = {
+          ...usersData[userId],
+          ...changes
+        };
+
+
+        updateLocalUser(
+          userId,
+          updatedUser
+        );
+
+
+        hideLoading();
+
+
+        showToast(
+          "Perubahan berhasil disimpan.",
+          "success"
+        );
+
+
+      } catch (error) {
+
+        hideLoading();
+
+
+        console.error(
+          error
+        );
+
+
+        showToast(
+          "Gagal menyimpan: " +
+          error.message,
+          "error"
+        );
+
+      }
+
+    }
+
+
+    /* =========================================================
+       DELETE FIELD
+    ========================================================= */
+
+    async function deleteField(
+      userId,
+      fieldName
+    ) {
+
+      const user =
+        usersData[userId];
+
+
+      if (!user) {
+        return;
+      }
+
+
+      const confirmDelete =
+        confirm(
+          `Hapus field "${fieldName}" dari user "${user?.nama || userId}"?\n\nTindakan ini akan menghapus field tersebut dari Firebase.`
+        );
+
+
+      if (!confirmDelete) {
+        return;
+      }
+
+
+      try {
+
+        showLoading(
+          "Menghapus field..."
+        );
+
+
+        await update(
+          ref(
+            db,
+            `users1/${userId}`
+          ),
+          {
+            [fieldName]: null
+          }
+        );
+
+
+        const updatedUser = {
+          ...usersData[userId]
+        };
+
+
+        delete updatedUser[fieldName];
+
+
+        updateLocalUser(
+          userId,
+          updatedUser
+        );
+
+
+        hideLoading();
+
+
+        showToast(
+          `Field "${fieldName}" berhasil dihapus.`,
+          "success"
+        );
+
+
+      } catch (error) {
+
+        hideLoading();
+
+
+        console.error(
+          error
+        );
+
+
+        showToast(
+          "Gagal menghapus field: " +
+          error.message,
+          "error"
+        );
+
+      }
+
+    }
+
+
+    /* =========================================================
+       DELETE USER
+    ========================================================= */
+
+    async function deleteUser(
+      userId
+    ) {
+
+      const user =
+        usersData[userId];
+
+
+      if (!user) {
+        return;
+      }
+
+
+      const confirmFirst =
+        confirm(
+          `Yakin ingin menghapus user "${user?.nama || userId}"?`
+        );
+
+
+      if (!confirmFirst) {
+        return;
+      }
+
+
+      /*
+       * KONFIRMASI KEDUA
+       */
+
+      const confirmSecond =
+        confirm(
+          `PERINGATAN!\n\nData user "${user?.nama || userId}" akan dihapus permanen dari users1.\n\nLanjutkan?`
+        );
+
+
+      if (!confirmSecond) {
+        return;
+      }
+
+
+      try {
+
+        showLoading(
+          "Menghapus user..."
+        );
+
+
+        await remove(
+          ref(
+            db,
+            `users1/${userId}`
+          )
+        );
+
+
+        delete usersData[userId];
+
+
+        saveCache(
+          usersData
+        );
+
+
+        renderUsers();
+
+
+        hideLoading();
+
+
+        showToast(
+          "User berhasil dihapus.",
+          "success"
+        );
+
+
+      } catch (error) {
+
+        hideLoading();
+
+
+        console.error(
+          error
+        );
+
+
+        showToast(
+          "Gagal menghapus user: " +
+          error.message,
+          "error"
+        );
+
+      }
+
+    }
+
+
+    /* =========================================================
+       ADD FIELD MODAL
+    ========================================================= */
+
+    function openAddFieldModal(
+      userId
+    ) {
+
+      selectedUserForField =
+        userId;
+
+      newFieldName.value = "";
+
+      newFieldValue.value = "";
+
+      addFieldModal.classList.add(
+        "show"
+      );
+
+
+      setTimeout(() => {
+
+        newFieldName.focus();
+
+      }, 100);
+
+    }
+
+
+    function closeAddFieldModal() {
+
+      selectedUserForField =
+        null;
+
+      addFieldModal.classList.remove(
+        "show"
+      );
+
+    }
+
+
+    async function addField() {
+
+      const userId =
+        selectedUserForField;
+
+
+      if (!userId) {
+        return;
+      }
+
+
+      const fieldName =
+        newFieldName.value.trim();
+
+
+      const rawValue =
+        newFieldValue.value.trim();
+
+
+      if (!fieldName) {
+
+        alert(
+          "Nama field wajib diisi."
+        );
+
+        return;
+
+      }
+
+
+      if (
+        Object.prototype.hasOwnProperty.call(
+          usersData[userId] || {},
+          fieldName
+        )
+      ) {
+
+        alert(
+          `Field "${fieldName}" sudah ada.`
+        );
+
+        return;
+
+      }
+
+
+      /*
+       * COBA BACA SEBAGAI JSON.
+       *
+       * Kalau bukan JSON,
+       * simpan sebagai string.
+       */
+
+      let value;
+
+
+      if (!rawValue) {
+
+        value = "";
+
+      } else {
+
+        try {
+
+          value =
+            JSON.parse(rawValue);
+
+        } catch {
+
+          value =
+            rawValue;
+
+        }
+
+      }
+
+
+      const confirmAdd =
+        confirm(
+          `Tambahkan field "${fieldName}" ke user "${usersData[userId]?.nama || userId}"?`
+        );
+
+
+      if (!confirmAdd) {
+        return;
+      }
+
+
+      try {
+
+        closeAddFieldModal();
+
+
+        showLoading(
+          "Menambahkan field..."
+        );
+
+
+        await update(
+          ref(
+            db,
+            `users1/${userId}`
+          ),
+          {
+            [fieldName]: value
+          }
+        );
+
+
+        const updatedUser = {
+          ...usersData[userId],
+          [fieldName]: value
+        };
+
+
+        updateLocalUser(
+          userId,
+          updatedUser
+        );
+
+
+        hideLoading();
+
+
+        showToast(
+          `Field "${fieldName}" berhasil ditambahkan.`,
+          "success"
+        );
+
+
+      } catch (error) {
+
+        hideLoading();
+
+
+        console.error(
+          error
+        );
+
+
+        showToast(
+          "Gagal menambahkan field: " +
+          error.message,
+          "error"
+        );
+
+      }
+
+    }
+
+
+    /* =========================================================
+       REFRESH
+    ========================================================= */
+
+    async function refreshData() {
+
+      const confirmRefresh =
+        confirm(
+          "Ambil ulang seluruh data users1 langsung dari Firebase sekarang?"
+        );
+
+
+      if (!confirmRefresh) {
+        return;
+      }
+
+
+      try {
+
+        showLoading(
+          "Mengambil data terbaru..."
+        );
+
+
+        const snapshot =
+          await get(usersRef);
+
+
+        const data =
+          snapshot.val() || {};
+
+
+        usersData =
+          data;
+
+
+        saveCache(
+          usersData
+        );
+
+
+        renderUsers();
+
+
+        hideLoading();
+
+
+        showToast(
+          "Data berhasil diperbarui dari Firebase.",
+          "success"
+        );
+
+
+      } catch (error) {
+
+        hideLoading();
+
+
+        console.error(
+          error
+        );
+
+
+        showToast(
+          "Gagal mengambil data terbaru: " +
+          error.message,
+          "error"
+        );
+
+      }
+
+    }
+
+
+    /* =========================================================
+       PHOTO LIVE PREVIEW
+    ========================================================= */
+
+    document.addEventListener(
+      "input",
+      event => {
+
+        const input =
+          event.target.closest(
+            ".photo-input"
+          );
+
+
+        if (!input) {
+          return;
+        }
+
+
+        const userId =
+          input.dataset.photoInput;
+
+
+        const preview =
+          document.querySelector(
+            `[data-photo-preview="${CSS.escape(userId)}"]`
+          );
+
+
+        if (!preview) {
+          return;
+        }
+
+
+        const url =
+          input.value.trim();
+
+
+        preview.innerHTML =
+          createPhotoPreview(url);
+
+      }
+    );
+
+
+    /* =========================================================
+       EVENT DELEGATION
+    ========================================================= */
+
+    document.addEventListener(
+      "click",
+      event => {
+
+        const button =
+          event.target.closest(
+            "[data-action]"
+          );
+
+
+        if (!button) {
+          return;
+        }
+
+
+        const action =
+          button.dataset.action;
+
+
+        const userId =
+          button.dataset.userId;
+
+
+        if (
+          action === "save-user"
+        ) {
+
+          saveUser(userId);
+
+        }
+
+
+        if (
+          action === "delete-user"
+        ) {
+
+          deleteUser(userId);
+
+        }
+
+
+        if (
+          action === "delete-field"
+        ) {
+
+          deleteField(
+            userId,
+            button.dataset.fieldName
+          );
+
+        }
+
+
+        if (
+          action === "add-field"
+        ) {
+
+          openAddFieldModal(
+            userId
+          );
+
+        }
+
+      }
+    );
+
+
+    /* =========================================================
+       SEARCH
+    ========================================================= */
+
+    searchInput.addEventListener(
+      "input",
+      renderUsers
+    );
+
+
+    /* =========================================================
+       MODAL
+    ========================================================= */
+
+    document
+      .getElementById("closeModal")
+      .addEventListener(
+        "click",
+        closeAddFieldModal
+      );
+
+
+    document
+      .getElementById("cancelModal")
+      .addEventListener(
+        "click",
+        closeAddFieldModal
+      );
+
+
+    document
+      .getElementById("saveNewField")
+      .addEventListener(
+        "click",
+        addField
+      );
+
+
+    addFieldModal.addEventListener(
+      "click",
+      event => {
+
+        if (
+          event.target ===
+          addFieldModal
+        ) {
+
+          closeAddFieldModal();
+
+        }
+
+      }
+    );
+
+
+    refreshButton.addEventListener(
+      "click",
+      refreshData
+    );
+
+
+    /* =========================================================
+       LOAD CACHE FIRST
+    ========================================================= */
+
+    const cachedData =
+      loadCache();
+
+
+    if (cachedData) {
+
+      usersData =
+        cachedData;
+
+
+      renderUsers();
+
+
+      hideLoading();
+
+    }
+
+
+    /* =========================================================
+       REALTIME FIREBASE
+    ========================================================= */
+
+    onValue(
+      usersRef,
+      snapshot => {
+
+        const data =
+          snapshot.val() || {};
+
+
+        usersData =
+          data;
+
+
+        /*
+         * SIMPAN CACHE
+         */
+
+        saveCache(
+          usersData
+        );
+
+
+        /*
+         * RENDER
+         */
+
+        renderUsers();
+
+
+        /*
+         * HILANGKAN LOADING
+         */
+
+        hideLoading();
+
+      },
+
+      error => {
+
+        console.error(
+          "Firebase error:",
+          error
+        );
+
+
+        hideLoading();
+
+
+        /*
+         * Kalau masih ada cache,
+         * jangan kosongkan halaman.
+         */
+
+        if (
+          Object.keys(usersData).length > 0
+        ) {
+
+          showToast(
+            "Firebase bermasalah. Data terakhir dari cache tetap ditampilkan.",
+            "error"
+          );
+
+        } else {
+
+          showToast(
+            "Gagal mengambil data users1: " +
+            error.message,
+            "error"
+          );
+
+        }
+
+      }
+    );
+
+
+  </script>
+
+</body>
+</html>
