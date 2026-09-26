@@ -2968,6 +2968,308 @@ background-position:-100% 0;
 }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================
+   NOTIFIKASI AKTIVITAS TOP UP
+========================================= */
+
+.topup-activity-notification {
+
+    position: fixed;
+
+    left: 20px;
+    bottom: 20px;
+
+    width: 350px;
+    max-width: calc(100vw - 30px);
+
+    background: #ffffff;
+
+    border-radius: 16px;
+
+    padding: 13px 42px 13px 13px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,0.16);
+
+    border: 1px solid rgba(124,58,237,0.10);
+
+    z-index: 999999;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform:
+        translateY(25px)
+        scale(.97);
+
+    transition:
+        opacity .35s ease,
+        transform .35s ease,
+        visibility .35s ease;
+
+    pointer-events: none;
+}
+
+
+.topup-activity-notification.show {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    transform:
+        translateY(0)
+        scale(1);
+
+    pointer-events: auto;
+
+}
+
+
+/* FOTO PROFILE */
+
+.topup-activity-avatar {
+
+    width: 52px;
+    height: 52px;
+
+    min-width: 52px;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    background: #f3f4f6;
+
+    border: 2px solid #eee;
+
+}
+
+
+.topup-activity-avatar img {
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+}
+
+
+/* CONTENT */
+
+.topup-activity-content {
+
+    min-width: 0;
+
+    flex: 1;
+
+}
+
+
+.topup-activity-user {
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    color: #7c3aed;
+
+    margin-bottom: 2px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+}
+
+
+.topup-activity-text {
+
+    font-size: 12px;
+
+    color: #6b7280;
+
+    margin-bottom: 4px;
+
+}
+
+
+.topup-activity-product {
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #1f2937;
+
+    line-height: 1.35;
+
+    display: -webkit-box;
+
+
+
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+
+}
+
+
+.topup-activity-price {
+
+    margin-top: 4px;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    color: #111827;
+
+}
+
+
+.topup-activity-time {
+
+    margin-top: 2px;
+
+    font-size: 10px;
+
+    color: #9ca3af;
+
+}
+
+
+/* CLOSE */
+
+.topup-activity-close {
+
+    position: absolute;
+
+    top: 8px;
+    right: 8px;
+
+    width: 26px;
+    height: 26px;
+
+    border: 0;
+
+    border-radius: 50%;
+
+    background: #f3f4f6;
+
+    color: #6b7280;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    font-size: 12px;
+
+    transition: .2s;
+
+}
+
+
+.topup-activity-close:hover {
+
+    background: #e5e7eb;
+
+    color: #111827;
+
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .topup-activity-notification {
+
+        left: 12px;
+        right: 12px;
+        bottom: 14px;
+
+        width: auto;
+
+        max-width: none;
+
+        padding: 11px 40px 11px 11px;
+
+        border-radius: 14px;
+
+    }
+
+
+    .topup-activity-avatar {
+
+        width: 46px;
+        height: 46px;
+
+        min-width: 46px;
+
+    }
+
+
+    .topup-activity-user {
+
+        font-size: 12px;
+
+    }
+
+
+    .topup-activity-text {
+
+        font-size: 11px;
+
+    }
+
+
+    .topup-activity-product {
+
+        font-size: 12px;
+
+    }
+
+
+    .topup-activity-price {
+
+        font-size: 13px;
+
+    }
+
+}
+
+
+
+
+
+
+
 </style>
 </head>
 <body>
@@ -5567,7 +5869,567 @@ slideBanner(1);
 
 
 
+/* =========================================
+   NOTIFIKASI AKTIVITAS TOP UP
+   RANDOM SEMUA TRANSAKSI
+========================================= */
 
+(function () {
+
+    const notification =
+        document.getElementById("topupActivityNotification");
+
+    const userEl =
+        document.getElementById("topupActivityUser");
+
+    const productEl =
+        document.getElementById("topupActivityProduct");
+
+    const priceEl =
+        document.getElementById("topupActivityPrice");
+
+    const timeEl =
+        document.getElementById("topupActivityTime");
+
+    const closeBtn =
+        document.getElementById("closeTopupActivity");
+
+
+    if (!notification) return;
+
+
+    const SHOW_DURATION = 5000;
+    const NEXT_DELAY = 1200;
+
+
+    let allTransactions = [];
+
+    let isShowing = false;
+
+    let lastShownKey = null;
+
+    let hideTimer = null;
+    let nextTimer = null;
+
+    let firstLoad = true;
+
+
+    /* =========================================
+       RUPIAH
+    ========================================= */
+
+    function formatRupiah(value) {
+
+        return new Intl.NumberFormat(
+            "id-ID",
+            {
+                style: "currency",
+                currency: "IDR",
+                minimumFractionDigits: 0
+            }
+        ).format(
+            Number(value) || 0
+        );
+
+    }
+
+
+    /* =========================================
+       WAKTU
+    ========================================= */
+
+    function formatRelativeTime() {
+
+        return "Baru baru ini";
+
+    }
+
+
+    /* =========================================
+       USER ID
+    ========================================= */
+
+    function getUserId(data) {
+
+        return (
+            data?.userId ||
+            "USR000000000"
+        );
+
+    }
+
+
+    /* =========================================
+       PRODUK
+    ========================================= */
+
+    function getProductName(data) {
+
+        if (
+            data?.produk &&
+            typeof data.produk === "object" &&
+            data.produk.nama
+        ) {
+
+            return String(
+                data.produk.nama
+            );
+
+        }
+
+
+        if (data?.nama) {
+
+            return String(
+                data.nama
+            );
+
+        }
+
+
+        if (
+            data?.item &&
+            typeof data.item === "object" &&
+            data.item.nama
+        ) {
+
+            return String(
+                data.item.nama
+            );
+
+        }
+
+
+        if (data?.item) {
+
+            return String(
+                data.item
+            );
+
+        }
+
+
+        return "Produk Top Up";
+
+    }
+
+
+    /* =========================================
+       HARGA
+    ========================================= */
+
+    function getPrice(data) {
+
+        if (
+            data?.total !== undefined &&
+            data?.total !== null &&
+            data?.total !== ""
+        ) {
+
+            return data.total;
+
+        }
+
+
+        if (
+            data?.harga !== undefined &&
+            data?.harga !== null &&
+            data?.harga !== ""
+        ) {
+
+            return data.harga;
+
+        }
+
+
+        return 0;
+
+    }
+
+
+    /* =========================================
+       NORMALIZE
+    ========================================= */
+
+    function normalizeTransaction(
+        key,
+        data
+    ) {
+
+        if (
+            !data ||
+            typeof data !== "object"
+        ) {
+
+            return null;
+
+        }
+
+
+        return {
+
+            key: key,
+
+            userId:
+                getUserId(data),
+
+            product:
+                getProductName(data),
+
+            price:
+                getPrice(data),
+
+            createdAt:
+                Number(
+                    data.createdAt
+                ) || 0
+
+        };
+
+    }
+
+
+    /* =========================================
+       RANDOM TRANSAKSI
+    ========================================= */
+
+    function getRandomTransaction() {
+
+        if (
+            allTransactions.length === 0
+        ) {
+
+            return null;
+
+        }
+
+
+        if (
+            allTransactions.length === 1
+        ) {
+
+            return allTransactions[0];
+
+        }
+
+
+        let random = null;
+
+        let attempts = 0;
+
+
+        while (
+            attempts < 30
+        ) {
+
+            const index =
+                Math.floor(
+                    Math.random() *
+                    allTransactions.length
+                );
+
+
+            const candidate =
+                allTransactions[index];
+
+
+            if (
+                candidate.key !==
+                lastShownKey
+            ) {
+
+                random =
+                    candidate;
+
+                break;
+
+            }
+
+
+            attempts++;
+
+        }
+
+
+        if (!random) {
+
+            random =
+                allTransactions[
+                    Math.floor(
+                        Math.random() *
+                        allTransactions.length
+                    )
+                ];
+
+        }
+
+
+        return random;
+
+    }
+
+
+    /* =========================================
+       TAMPILKAN
+    ========================================= */
+
+    function showNotification(data) {
+
+        if (!data) return;
+
+
+        lastShownKey =
+            data.key;
+
+
+        userEl.textContent =
+            data.userId;
+
+
+        productEl.textContent =
+            data.product;
+
+
+        priceEl.textContent =
+            formatRupiah(
+                data.price
+            );
+
+
+        timeEl.textContent =
+            formatRelativeTime();
+
+
+        notification.classList.add(
+            "show"
+        );
+
+
+        isShowing = true;
+
+
+        clearTimeout(
+            hideTimer
+        );
+
+
+        hideTimer =
+            setTimeout(
+                hideNotification,
+                SHOW_DURATION
+            );
+
+    }
+
+
+    /* =========================================
+       SEMBUNYIKAN
+    ========================================= */
+
+    function hideNotification() {
+
+        notification.classList.remove(
+            "show"
+        );
+
+
+        isShowing = false;
+
+
+        clearTimeout(
+            nextTimer
+        );
+
+
+        nextTimer =
+            setTimeout(
+                playNext,
+                NEXT_DELAY
+            );
+
+    }
+
+
+    /* =========================================
+       PLAY RANDOM
+    ========================================= */
+
+    function playNext() {
+
+        if (isShowing) return;
+
+
+        const random =
+            getRandomTransaction();
+
+
+        if (!random) return;
+
+
+        showNotification(
+            random
+        );
+
+    }
+
+
+    /* =========================================
+       CLOSE
+    ========================================= */
+
+    if (closeBtn) {
+
+        closeBtn.addEventListener(
+            "click",
+            function () {
+
+                clearTimeout(
+                    hideTimer
+                );
+
+                hideNotification();
+
+            }
+        );
+
+    }
+
+
+    /* =========================================
+       FIREBASE
+    ========================================= */
+
+    try {
+
+        if (
+            typeof db === "undefined"
+        ) {
+
+            console.error(
+                "Firebase db tidak ditemukan."
+            );
+
+            return;
+
+        }
+
+
+        onValue(
+
+            ref(
+                db,
+                "Histori_top-up_mobile"
+            ),
+
+            function (snapshot) {
+
+                const data =
+                    snapshot.val();
+
+
+                if (
+                    !data ||
+                    typeof data !== "object"
+                ) {
+
+                    allTransactions = [];
+
+                    return;
+
+                }
+
+
+                const transactions = [];
+
+
+                Object.entries(data)
+                    .forEach(
+                        function (
+                            [
+                                key,
+                                value
+                            ]
+                        ) {
+
+                            const transaction =
+                                normalizeTransaction(
+                                    key,
+                                    value
+                                );
+
+
+                            if (
+                                transaction
+                            ) {
+
+                                transactions.push(
+                                    transaction
+                                );
+
+                            }
+
+                        }
+                    );
+
+
+                /*
+                 * SEMUA TRANSAKSI
+                 * TANPA FILTER STATUS
+                 */
+
+                allTransactions =
+                    transactions;
+
+
+                /*
+                 * MULAI RANDOM
+                 */
+
+                if (firstLoad) {
+
+                    firstLoad = false;
+
+                    playNext();
+
+                    return;
+
+                }
+
+
+                /*
+                 * Jika ada perubahan Firebase,
+                 * tetap lanjut random.
+                 */
+
+                if (!isShowing) {
+
+                    playNext();
+
+                }
+
+            },
+
+            function (error) {
+
+                console.error(
+                    "Gagal membaca Histori_top-up_mobile:",
+                    error
+                );
+
+            }
+
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Error notifikasi top-up:",
+            error
+        );
+
+    }
+
+})();
 
 
 
@@ -6600,6 +7462,62 @@ window.addEventListener("scroll", () => {
 
 
 </script>
+
+
+
+
+
+
+
+
+<div id="topupActivityNotification" class="topup-activity-notification">
+
+
+    <div class="topup-activity-content">
+
+        <div class="topup-activity-user" id="topupActivityUser">
+            USR000000000
+        </div>
+
+        <div class="topup-activity-text">
+            baru saja melakukan top-up
+        </div>
+
+        <div
+            class="topup-activity-product"
+            id="topupActivityProduct"
+        >
+            -
+        </div>
+
+        <div
+            class="topup-activity-price"
+            id="topupActivityPrice"
+        >
+            Rp 0
+        </div>
+
+        <div
+            class="topup-activity-time"
+            id="topupActivityTime"
+        >
+            baru saja
+        </div>
+
+    </div>
+
+    <button
+        type="button"
+        id="closeTopupActivity"
+        class="topup-activity-close"
+        aria-label="Tutup"
+    >
+        <i class="fa-solid fa-xmark"></i>
+    </button>
+
+</div>
+
+
 
 
 </body>
