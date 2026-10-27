@@ -383,6 +383,176 @@ color:#8c6d1f;
 .bank-name{
   font-weight:600;
 }
+
+
+
+
+
+
+.bank-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.bank-info-btn {
+    border: none;
+    background: transparent;
+    color: #ef4444;
+    font-size: 21px;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform .2s ease;
+}
+
+.bank-info-btn:hover {
+    transform: scale(1.12);
+}
+
+.bank-info-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: rgba(15, 23, 42, .58);
+    backdrop-filter: blur(5px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.bank-info-overlay.active {
+    display: flex;
+}
+
+.bank-info-modal {
+    position: relative;
+    width: 100%;
+    max-width: 390px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 26px 22px 22px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .2);
+    animation: bankPopupIn .25s ease;
+}
+
+@keyframes bankPopupIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.bank-info-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background: #f3f4f6;
+    color: #6b7280;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.bank-info-icon {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    background: #fff1f2;
+    color: #ef4444;
+    font-size: 25px;
+    margin-bottom: 17px;
+}
+
+.bank-info-modal h3 {
+    margin: 0 0 10px;
+    color: #111827;
+    font-size: 20px;
+    font-weight: 750;
+}
+
+.bank-info-modal p {
+    margin: 0 0 16px;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.bank-info-example {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 15px;
+    border: 1px solid #fee2e2;
+    background: #fff7f7;
+    border-radius: 14px;
+    margin-bottom: 16px;
+}
+
+.bank-info-example > i {
+    color: #ef4444;
+    font-size: 20px;
+    margin-top: 2px;
+}
+
+.bank-info-example strong,
+.bank-info-example span {
+    display: block;
+}
+
+.bank-info-example strong {
+    font-size: 13px;
+    color: #1f2937;
+    margin-bottom: 6px;
+}
+
+.bank-info-example span {
+    font-size: 12px;
+    line-height: 1.7;
+    color: #64748b;
+}
+
+.bank-info-modal .bank-info-note {
+    font-size: 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+}
+
+.bank-info-note i {
+    color: #16a34a;
+    margin-top: 3px;
+}
+
+.bank-info-understand {
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    padding: 13px;
+    background: #8100ff;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.bank-info-understand:hover {
+    background: #898989;
+}
+
 </style>
 </head>
 
@@ -529,9 +699,65 @@ Deposit ini hanya sebagai syarat aktivasi akun. Dana yang Anda depositkan akan m
 
   
 
+
 <div class="bank-title">
-Pilih Bank / E-Wallet
+    <span>Pilih Bank / E-Wallet</span>
+
+    <button type="button"
+            class="bank-info-btn"
+            onclick="toggleBankInfo()"
+            aria-label="Informasi pembayaran">
+        <i class="fa-solid fa-circle-exclamation"></i>
+    </button>
 </div>
+
+<div class="bank-info-overlay" id="bankInfoPopup"
+     onclick="if(event.target === this) toggleBankInfo()">
+
+    <div class="bank-info-modal">
+        <button type="button"
+                class="bank-info-close"
+                onclick="toggleBankInfo()">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="bank-info-icon">
+            <i class="fa-solid fa-circle-info"></i>
+        </div>
+
+        <h3>Informasi Pembayaran</h3>
+
+        <p>
+            Silakan pilih bank atau e-wallet yang akan Anda gunakan
+            untuk melakukan pembayaran.
+        </p>
+
+        <div class="bank-info-example">
+            <i class="fa-solid fa-building-columns"></i>
+            <div>
+                <strong>Contoh: Memilih BRI</strong>
+                <span>
+                    Jika Anda memilih BRI, pembayaran nantinya
+                    dilakukan dari rekening BRI Anda ke rekening
+                    tujuan BRI kami.
+                </span>
+            </div>
+        </div>
+
+        <p class="bank-info-note">
+            <i class="fa-solid fa-shield-halved"></i>
+            Pastikan bank atau e-wallet yang dipilih sesuai dengan
+            metode pembayaran yang akan Anda gunakan.
+        </p>
+
+        <button type="button"
+                class="bank-info-understand"
+                onclick="toggleBankInfo()">
+            Saya Mengerti
+        </button>
+    </div>
+</div>
+
 
 <div class="bank-dropdown">
 
@@ -563,7 +789,7 @@ Pilih Bank / E-Wallet
 
 
 <label class="label">
-Nama Rekening
+Nama Rekening (Anda)
 </label>
 
 <input
@@ -573,7 +799,7 @@ class="input"
 placeholder="">
 
 <label class="label">
-Nomor Rekening
+Nomor Rekening (Anda)
 </label>
 
 <input
@@ -1237,6 +1463,27 @@ window.showV99Alert = function(msg){
 window.closeV99Alert = function(){
   document.getElementById("v99alertBox").style.display = "none";
 };
+
+
+
+
+window.toggleBankInfo = function () {
+    const popup = document.getElementById("bankInfoPopup");
+
+    if (!popup) {
+        console.error("Elemen #bankInfoPopup tidak ditemukan.");
+        return;
+    }
+
+    popup.classList.toggle("active");
+};
+
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+        document.getElementById("bankInfoPopup")
+            ?.classList.remove("active");
+    }
+});
 </script>
 
 
