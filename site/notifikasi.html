@@ -153,11 +153,15 @@ Loading...
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+
 import {
     getDatabase,
     ref,
     get,
-    update
+    update,
+    onValue
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 /* FIREBASE */
@@ -182,10 +186,78 @@ document.getElementById("close").onclick = () => {
     popup.style.display = "none";
 };
 
-if(!uid){
+if (!uid) {
     listEl.innerHTML = `<div class="empty">Yuk Login dulu</div>`;
-}else{
-    loadNotif();
+} else {
+    periksaStatusAkun(uid);
+}
+
+let statusListenerAktif = false;
+
+async function periksaStatusAkun(uid) {
+    listEl.innerHTML = `<div class="empty">Memeriksa status akun...</div>`;
+
+    try {
+        const snap = await get(ref(db, "users_topup"));
+
+        if (!snap.exists()) {
+            listEl.innerHTML =
+                `<div class="empty">Data status akun tidak ditemukan.</div>`;
+            return;
+        }
+
+        const users = snap.val();
+        let userKey = null;
+
+        for (const [key, user] of Object.entries(users)) {
+            if (key === uid || String(user.usersid || "") === uid) {
+                userKey = key;
+                break;
+            }
+        }
+
+        if (userKey === null) {
+            listEl.innerHTML =
+                `<div class="empty">Akun tidak ditemukan. Silakan hubungi admin.</div>`;
+            return;
+        }
+
+        function tanganiStatus(statusAkun) {
+            const mode = String(statusAkun?.mode || "active").toLowerCase();
+
+            if (
+                statusAkun?.aktif === true &&
+                ["banned", "suspended", "maintenance"].includes(mode)
+            ) {
+                window.location.replace(
+                    "status-users.html?status=" + encodeURIComponent(mode)
+                );
+                return;
+            }
+
+            if (!statusListenerAktif) {
+                statusListenerAktif = true;
+                loadNotif();
+            }
+        }
+
+        onValue(
+            ref(db, `users_topup/${userKey}/statusAkun`),
+            statusSnap => {
+                tanganiStatus(statusSnap.val());
+            },
+            error => {
+                console.error("Gagal memeriksa status akun:", error);
+                listEl.innerHTML =
+                    `<div class="empty">Status akun gagal diperiksa. Silakan muat ulang halaman.</div>`;
+            }
+        );
+
+    } catch (err) {
+        console.error(err);
+        listEl.innerHTML =
+            `<div class="empty">Gagal memeriksa status akun. Silakan coba lagi.</div>`;
+    }
 }
 
 /* ===================== LOAD NOTIF ===================== */

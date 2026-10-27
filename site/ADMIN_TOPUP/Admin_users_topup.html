@@ -264,6 +264,101 @@ body {
             color: white;
         }
 
+
+        /* ===== MENU STATUS USER ===== */
+.user-status-menu-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.btn-status-menu {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.2s ease;
+}
+
+.btn-status-menu:hover,
+.btn-status-menu.active {
+    background: var(--accent-color);
+    color: #fff;
+    border-color: var(--accent-color);
+}
+
+.user-status-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 999;
+    width: 190px;
+    padding: 6px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+    display: none;
+}
+
+.user-status-dropdown.show {
+    display: block;
+    animation: statusMenuAppear 0.16s ease-out;
+}
+
+.user-status-dropdown button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 12px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    text-align: left;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.user-status-dropdown button:hover {
+    background: var(--bg-color);
+}
+
+.user-status-dropdown .status-banned {
+    color: #dc2626;
+}
+
+.user-status-dropdown .status-maintenance {
+    color: #d97706;
+}
+
+.user-status-dropdown .status-suspended {
+    color: #7c3aed;
+}
+
+@keyframes statusMenuAppear {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
         /* Custom Modal System */
         .custom-modal-overlay {
             position: fixed;
@@ -834,6 +929,56 @@ body {
     background:#f8fafc;
 
 }
+
+
+
+
+
+
+
+
+/* BADGE STATUS USER */
+.user-status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 5px 9px;
+    border-radius: 7px;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.2;
+    white-space: nowrap;
+    letter-spacing: 0.2px;
+}
+
+.user-status-badge i {
+    font-size: 10px;
+}
+
+.user-status-badge.badge-banned {
+    color: #dc2626;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+}
+
+.user-status-badge.badge-maintenance {
+    color: #b45309;
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+}
+
+.user-status-badge.badge-suspended {
+    color: #7c3aed;
+    background: #f5f3ff;
+    border: 1px solid #ddd6fe;
+}
+
+.user-status-cell {
+    text-align: right;
+    white-space: nowrap;
+}
+
     </style>
 </head>
 
@@ -1145,154 +1290,406 @@ loadUsers();
 RENDER USER
 ==================================================*/
 
-function renderUsers(){
 
-    const tbody=document.getElementById("userTableBody");
 
-    tbody.innerHTML="";
+
+
+
+
+
+/*==================================================
+RENDER USER
+==================================================*/
+
+function renderUsers() {
+    const tbody = document.getElementById("userTableBody");
+    tbody.innerHTML = "";
 
     Object.values(dbUsers)
+        .sort((a, b) => (b.dibuatPada || 0) - (a.dibuatPada || 0))
+        .forEach(user => {
+            const saldo = new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+                maximumFractionDigits: 0
+            }).format(user.saldo || 0).replace("IDR", "Rp");
 
-    .sort((a,b)=>(b.dibuatPada||0)-(a.dibuatPada||0))
+            const tanggal = user.dibuatPada
+                ? new Date(user.dibuatPada).toLocaleString("id-ID")
+                : "-";
 
-    .forEach(user=>{
+            // Tentukan badge status akun
+            const statusMode = user.statusAkun?.mode || "";
+            let statusBadge = "";
 
-        const saldo=new Intl.NumberFormat(
-
-            "id-ID",
-
-            {
-
-                style:"currency",
-
-                currency:"IDR",
-
-                maximumFractionDigits:0
-
+            if (user.statusAkun?.aktif === true) {
+                if (statusMode === "banned") {
+                    statusBadge = `
+                        <span class="user-status-badge badge-banned">
+                            <i class="fa-solid fa-ban"></i> Banned
+                        </span>`;
+                } else if (statusMode === "maintenance") {
+                    statusBadge = `
+                        <span class="user-status-badge badge-maintenance">
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                            Maintenance
+                        </span>`;
+                } else if (statusMode === "suspended") {
+                    statusBadge = `
+                        <span class="user-status-badge badge-suspended">
+                            <i class="fa-solid fa-user-lock"></i> Suspended
+                        </span>`;
+                }
             }
 
-        ).format(user.saldo||0).replace("IDR","Rp");
+            tbody.innerHTML += `
+                <tr id="row-${user.usersid}">
+                    <td>
+                        <div class="user-info-cell">
+                            <img
+                                class="user-avatar"
+                                src="${user.profil || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'}">
 
-        const tanggal=user.dibuatPada?
+                            <div>
+                                <div style="font-weight:600; position:relative; padding-right:8px;"
+                                     id="txt-email-${user.usersid}">
+                                    ${user.email || "-"}
+                                </div>
 
-        new Date(user.dibuatPada).toLocaleString("id-ID"):
+                                <div class="user-uid">
+                                    ${user.usersid}
+                                </div>
+                            </div>
+                        </div>
+                    </td>
 
-        "-";
+                    <td id="txt-whatsapp-${user.usersid}">
+                        ${user.whatsapp || "-"}
+                    </td>
+
+                    <td>
+                        <img
+                            class="sampul-preview"
+                            src="${user.fotoSampul || ''}"
+                            onclick="window.open('${user.fotoSampul || ''}')">
+                    </td>
+
+                    <td>
+                        <span class="saldo-badge" id="txt-saldo-${user.usersid}">
+                            ${saldo}
+                        </span>
+                    </td>
+
+                    <td>
+                        ${tanggal}
+                    </td>
+
+                    <td>
+                        <div class="btn-action-group">
+                            <button
+                                class="btn-icon btn-edit"
+                                onclick="openEditModal('${user.usersid}')"
+                                title="Edit User">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+
+                            <button
+                                class="btn-icon btn-delete"
+                                onclick="openDeleteModal('${user.usersid}')"
+                                title="Hapus User">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+
+                            <div class="user-status-menu-wrap">
+                                <button
+                                    type="button"
+                                    class="btn-status-menu"
+                                    onclick="toggleUserStatusMenu(event, '${user.usersid}')"
+                                    title="Pengaturan Status User">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </button>
+
+                                <div
+                                    class="user-status-dropdown"
+                                    id="status-menu-${user.usersid}">
+
+                                    <button type="button" class="status-active"
+                                        onclick="confirmUserStatus('${user.usersid}', 'active')">
+                                        <i class="fa-solid fa-circle-check"></i>
+                                        <span>Aktif</span>
+                                    </button>
+
+                                    <button type="button" class="status-banned"
+                                        onclick="confirmUserStatus('${user.usersid}', 'banned')">
+                                        <i class="fa-solid fa-ban"></i>
+                                        <span>Banned</span>
+                                    </button>
+
+                                    <button type="button" class="status-maintenance"
+                                        onclick="confirmUserStatus('${user.usersid}', 'maintenance')">
+                                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                                        <span>Maintenance</span>
+                                    </button>
+
+                                    <button type="button" class="status-suspended"
+                                        onclick="confirmUserStatus('${user.usersid}', 'suspended')">
+                                        <i class="fa-solid fa-user-lock"></i>
+                                        <span>Suspended</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td class="user-status-cell">
+                        ${statusBadge}
+                    </td>
+                </tr>
+            `;
+        });
+}
 
 
-        tbody.innerHTML+=`
 
-<tr id="row-${user.usersid}">
 
-<td>
+/*==================================================
+MENU STATUS USER
+==================================================*/
 
-<div class="user-info-cell">
+window.toggleUserStatusMenu = function(event, id) {
+    event.preventDefault();
+    event.stopPropagation();
 
-<img
+    const menu = document.getElementById("status-menu-" + id);
 
-class="user-avatar"
+    if (!menu) {
+        console.error("Menu status tidak ditemukan untuk user:", id);
+        window.showToast?.("Menu status tidak ditemukan.", "danger");
+        return;
+    }
 
-src="${user.profil || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'}">
+    const isOpen = menu.classList.contains("show");
 
-<div>
+    document.querySelectorAll(".user-status-dropdown.show")
+        .forEach(item => item.classList.remove("show"));
 
-<div
+    document.querySelectorAll(".btn-status-menu.active")
+        .forEach(item => item.classList.remove("active"));
 
-style="font-weight:600"
+    if (!isOpen) {
+        menu.classList.add("show");
 
-id="txt-email-${user.usersid}">
+        const button = event.currentTarget;
+        if (button) button.classList.add("active");
+    }
+};
 
-${user.email||"-"}
+document.addEventListener("click", function(event) {
+    if (!event.target.closest(".user-status-menu-wrap")) {
+        document.querySelectorAll(".user-status-dropdown.show")
+            .forEach(item => item.classList.remove("show"));
 
-</div>
+        document.querySelectorAll(".btn-status-menu.active")
+            .forEach(item => item.classList.remove("active"));
+    }
+});
 
-<div
 
-class="user-uid">
+/*==================================================
+KONFIRMASI STATUS USER
+==================================================*/
 
-${user.usersid}
+window.confirmUserStatus = function(id, mode) {
+    console.log("Menu status dipilih:", { id, mode });
 
-</div>
+    document.querySelectorAll(".user-status-dropdown.show")
+        .forEach(item => item.classList.remove("show"));
 
-</div>
+    document.querySelectorAll(".btn-status-menu.active")
+        .forEach(item => item.classList.remove("active"));
 
-</div>
+    // Cari user berdasarkan key Firebase atau usersid
+    let userKey = Object.keys(dbUsers).find(key =>
+        key === id || dbUsers[key]?.usersid === id
+    );
 
-</td>
+    if (!userKey) {
+        console.error("User tidak ditemukan:", id, dbUsers);
+        window.showToast?.("Data user tidak ditemukan.", "danger");
+        return;
+    }
 
-<td id="txt-whatsapp-${user.usersid}">
+    const user = dbUsers[userKey];
 
-${user.whatsapp||"-"}
+    const statusInfo = {
+        banned: {
+            title: "Banned User",
+            message: "Yakin ingin memblokir user ini?",
+            button: "Ya, Banned",
+            color: "#dc2626"
+        },
+        maintenance: {
+            title: "Maintenance User",
+            message: "Yakin ingin mengaktifkan status maintenance untuk user ini?",
+            button: "Ya, Maintenance",
+            color: "#d97706"
+        },
 
-</td>
+        active: {
+    title: "Aktifkan User",
+    message: "Yakin ingin mengaktifkan kembali akun user ini?",
+    button: "Ya, Aktifkan",
+    color: "#16a34a"
+},
 
-<td>
+        suspended: {
+            title: "Suspended User",
+            message: "Yakin ingin menangguhkan user ini?",
+            button: "Ya, Suspended",
+            color: "#7c3aed"
+        }
 
-<img
 
-class="sampul-preview"
 
-src="${user.fotoSampul||''}"
 
-onclick="window.open('${user.fotoSampul||''}')">
+    };
 
-</td>
+    const info = statusInfo[mode];
 
-<td>
+    if (!info) {
+        console.error("Mode status tidak valid:", mode);
+        return;
+    }
 
-<span
+    document.getElementById("statusConfirmOverlay")?.remove();
 
-class="saldo-badge"
+    const overlay = document.createElement("div");
+    overlay.id = "statusConfirmOverlay";
+    overlay.className = "custom-modal-overlay active";
 
-id="txt-saldo-${user.usersid}">
+    overlay.innerHTML = `
+        <div class="custom-modal"
+             style="max-width:420px;width:calc(100% - 32px);padding:24px">
 
-${saldo}
+            <div style="
+                width:48px;height:48px;border-radius:14px;
+                display:flex;align-items:center;justify-content:center;
+                background:${info.color}18;color:${info.color};
+                font-size:22px;margin-bottom:16px">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
 
-</span>
+            <h3 style="margin:0 0 10px;font-size:19px">
+                ${info.title}
+            </h3>
 
-</td>
+            <p style="margin:0 0 8px;color:var(--text-muted);font-size:14px">
+                ${info.message}
+            </p>
 
-<td>
+            <p style="margin:0 0 22px;font-size:13px;overflow-wrap:anywhere">
+                User: <strong id="statusConfirmEmail"></strong>
+            </p>
 
-${tanggal}
+            <div style="display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap">
+                <button type="button" id="cancelStatusConfirm"
+                    class="btn-base btn-secondary">
+                    Batal
+                </button>
 
-</td>
+                <button type="button" id="submitStatusConfirm"
+                    class="btn-base"
+                    style="background:${info.color};color:#fff">
+                    ${info.button}
+                </button>
+            </div>
+        </div>
+    `;
 
-<td>
+    document.body.appendChild(overlay);
 
-<div class="btn-action-group">
+    document.getElementById("statusConfirmEmail").textContent =
+        user.email || userKey;
 
-<button
+    const closeModal = () => overlay.remove();
 
-class="btn-icon btn-edit"
+    document.getElementById("cancelStatusConfirm")
+        .addEventListener("click", closeModal);
 
-onclick="openEditModal('${user.usersid}')">
-
-<i class="fa-solid fa-pen-to-square"></i>
-
-</button>
-
-<button
-
-class="btn-icon btn-delete"
-
-onclick="openDeleteModal('${user.usersid}')">
-
-<i class="fa-solid fa-trash-can"></i>
-
-</button>
-
-</div>
-
-</td>
-
-</tr>
-
-`;
-
+    overlay.addEventListener("click", function(event) {
+        if (event.target === overlay) closeModal();
     });
 
-}
+    document.getElementById("submitStatusConfirm")
+        .addEventListener("click", async function() {
+            const button = this;
+
+            if (button.disabled) return;
+
+            button.disabled = true;
+            button.textContent = "Menyimpan...";
+
+            try {
+                console.log("Menyimpan status ke Firebase:", {
+                    path: "users_topup/" + userKey + "/statusAkun",
+                    mode
+                });
+
+const statusData = mode === "active"
+    ? {
+        statusAkun: {
+            mode: "active",
+            aktif: false,
+            updatedAt: Date.now()
+        }
+    }
+    : {
+        statusAkun: {
+            mode: mode,
+            aktif: true,
+            updatedAt: Date.now()
+        }
+    };
+
+await update(
+    ref(db, "users_topup/" + userKey),
+    statusData
+);
+
+                localStorage.removeItem(CACHE_KEY);
+                localStorage.removeItem(CACHE_TIME_KEY);
+
+                closeModal();
+
+                window.showToast(
+                    "Status " + mode + " berhasil disimpan ke Firebase.",
+                    "success"
+                );
+
+                await loadUsers(true);
+
+            } catch (error) {
+                console.error("Gagal mengubah status user:", error);
+
+                button.disabled = false;
+                button.textContent = info.button;
+
+                window.showToast(
+                    "Gagal menyimpan status: " +
+                    (error?.message || "Periksa izin Firebase."),
+                    "danger"
+                );
+            }
+        });
+};
+
+
+
+
+
+
+
+
 
 
 /*==================================================

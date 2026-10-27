@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Status Akun</title>
+
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:22px;
+    font-family:Arial,sans-serif;
+    background:linear-gradient(145deg,#f7f5ff,#eee7ff);
+    color:#25213a;
+}
+.card{
+    width:100%;
+    max-width:410px;
+    background:#fff;
+    border-radius:24px;
+    padding:32px 24px;
+    text-align:center;
+    box-shadow:0 18px 55px rgba(70,30,140,.12);
+}
+.icon{
+    width:82px;
+    height:82px;
+    margin:0 auto 20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:25px;
+    background:#f0e8ff;
+    color:#6a00ff;
+    font-size:38px;
+    font-weight:bold;
+}
+h1{font-size:23px;margin:0 0 12px}
+p{font-size:14px;color:#777;line-height:1.7;margin:0}
+.status{
+    display:inline-block;
+    margin:20px 0;
+    padding:8px 16px;
+    border-radius:30px;
+    background:#f1e9ff;
+    color:#6a00ff;
+    font-size:12px;
+    font-weight:bold;
+    text-transform:uppercase;
+}
+.note{
+    background:#faf8ff;
+    border-radius:13px;
+    padding:13px;
+    font-size:12px;
+    color:#777;
+    line-height:1.6;
+    margin-bottom:20px;
+}
+button{
+    width:100%;
+    border:0;
+    border-radius:13px;
+    padding:14px;
+    background:#6a00ff;
+    color:white;
+    font-size:14px;
+    font-weight:bold;
+    cursor:pointer;
+}
+button:active{transform:scale(.98)}
+.small{margin-top:17px;font-size:11px;color:#aaa}
+</style>
+</head>
+
+<body>
+<div class="card">
+    <div class="icon" id="icon">!</div>
+    <h1 id="title">Memeriksa status akun</h1>
+    <p id="description">Mohon tunggu, kami sedang memeriksa status akun Anda.</p>
+    <div class="status" id="status">Memeriksa</div>
+    <div class="note" id="note">
+        Status akun diperiksa melalui sistem.
+    </div>
+    <button id="action" hidden>Kembali ke halaman utama</button>
+    <div class="small">Perlu bantuan? Silakan hubungi administrator.</div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+    getDatabase,
+    ref,
+    get,
+    onValue
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+    authDomain: "users-96dc5.firebaseapp.com",
+    databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "users-96dc5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const uid = localStorage.getItem("usersid");
+
+const iconEl = document.getElementById("icon");
+const titleEl = document.getElementById("title");
+const descriptionEl = document.getElementById("description");
+const statusEl = document.getElementById("status");
+const noteEl = document.getElementById("note");
+const actionEl = document.getElementById("action");
+
+const messages = {
+    banned: {
+        icon: "⊘",
+        title: "Akun Diblokir",
+        description: "Akun Anda saat ini diblokir sehingga beberapa layanan tidak dapat diakses.",
+        note: "Silakan hubungi administrator untuk mendapatkan informasi lebih lanjut."
+    },
+    suspended: {
+        icon: "🔒",
+        title: "Akun Ditangguhkan",
+        description: "Akses akun Anda sedang ditangguhkan untuk sementara waktu.",
+        note: "Hubungi administrator jika Anda membutuhkan penjelasan mengenai status akun."
+    },
+    maintenance: {
+        icon: "⚙",
+        title: "Layanan Dalam Pemeliharaan",
+        description: "Akses layanan untuk akun Anda sedang dibatasi selama pemeliharaan.",
+        note: "Silakan coba kembali setelah administrator mengaktifkan akses Anda."
+    }
+};
+
+function tampilkanStatus(mode) {
+    mode = String(mode || "").toLowerCase();
+
+    if (messages[mode]) {
+        const data = messages[mode];
+        iconEl.textContent = data.icon;
+        titleEl.textContent = data.title;
+        descriptionEl.textContent = data.description;
+        statusEl.textContent = mode;
+        noteEl.textContent = data.note;
+        actionEl.hidden = true;
+        return;
+    }
+
+    iconEl.textContent = "✓";
+    titleEl.textContent = "Akun Aktif";
+    descriptionEl.textContent = "Status akun Anda aktif. Anda dapat kembali menggunakan layanan.";
+    statusEl.textContent = "Active";
+    noteEl.textContent = "Akses ke halaman yang dilindungi tersedia selama status akun tetap aktif.";
+    actionEl.hidden = false;
+}
+
+async function periksaStatus() {
+    if (!uid) {
+        titleEl.textContent = "Login Diperlukan";
+        descriptionEl.textContent = "Silakan login terlebih dahulu untuk memeriksa status akun.";
+        statusEl.textContent = "Belum Login";
+        noteEl.textContent = "Identitas pengguna tidak ditemukan di perangkat ini.";
+        actionEl.hidden = false;
+        actionEl.textContent = "Kembali";
+        actionEl.onclick = () => history.back();
+        return;
+    }
+
+    try {
+        const snap = await get(ref(db, "users_topup"));
+
+        if (!snap.exists()) {
+            throw new Error("Data users_topup tidak ditemukan.");
+        }
+
+        let userKey = null;
+        const users = snap.val();
+
+        for (const [key, user] of Object.entries(users)) {
+            if (key === uid || String(user.usersid || "") === uid) {
+                userKey = key;
+                break;
+            }
+        }
+
+        if (userKey === null) {
+            titleEl.textContent = "Akun Tidak Ditemukan";
+            descriptionEl.textContent = "Data akun Anda tidak ditemukan pada sistem.";
+            statusEl.textContent = "Tidak Ditemukan";
+            noteEl.textContent = "Silakan hubungi administrator untuk memeriksa data akun.";
+            return;
+        }
+
+        const statusRef = ref(db, `users_topup/${userKey}/statusAkun`);
+
+        onValue(statusRef, statusSnap => {
+            const data = statusSnap.val();
+            const mode = String(data?.mode || "active").toLowerCase();
+            const isBlocked =
+                data?.aktif === true &&
+                ["banned", "suspended", "maintenance"].includes(mode);
+
+            tampilkanStatus(isBlocked ? mode : "active");
+        }, error => {
+            console.error(error);
+            titleEl.textContent = "Status Belum Dapat Diperiksa";
+            descriptionEl.textContent = "Koneksi atau izin database tidak memungkinkan status akun diperiksa.";
+            statusEl.textContent = "Pemeriksaan Gagal";
+            noteEl.textContent = "Silakan muat ulang halaman atau hubungi administrator.";
+        });
+
+    } catch (error) {
+        console.error(error);
+        titleEl.textContent = "Status Belum Dapat Diperiksa";
+        descriptionEl.textContent = "Sistem tidak dapat memverifikasi status akun Anda.";
+        statusEl.textContent = "Pemeriksaan Gagal";
+        noteEl.textContent = "Silakan coba lagi nanti atau hubungi administrator.";
+    }
+}
+
+actionEl.onclick = () => {
+    window.location.href = "index.html";
+};
+
+periksaStatus();
+</script>
+</body>
+</html>
