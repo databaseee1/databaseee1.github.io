@@ -1038,11 +1038,13 @@ if (key === "customer_service") {
           <img src="message_see_me_item_icon.png"
      class="service-icon-img">
         </div>
+        
 
         <div class="text">
           <div class="name">Pengunjung</div>
           <div class="msg">${lastData.isiChat || ""}</div>
         </div>
+
 
         <div class="chat-right">
           ${unreadCount > 0 ? `<div class="badge">${unreadCount}</div>` : ""}
@@ -1051,7 +1053,12 @@ if (key === "customer_service") {
 
       </div>`;
       continue;
+
+      
     }
+
+
+    
 
     /* ================= NOTIFIKASI ================= */
 /* ================= NOTIFIKASI ================= */
@@ -1089,6 +1096,10 @@ if (key === "notifikasi") {
       });
 
     }
+
+
+
+    
 
     // ================= WITHDRAW (SUDAH BENAR DI USER NODE) =================
     const snapWithdraw = await get(
@@ -1149,10 +1160,14 @@ if (key === "notifikasi") {
         <img src="${d.foto}" class="service-icon-img">
       </div>
 
+      
+
       <div class="text">
         <div class="name">${d.nama}</div>
         ${key !== "customer_service" ? `<div class="msg">${d._lastText || ""}</div>` : ""}
       </div>
+
+      
 
  <div class="chat-right">
   ${d.time ? `<div class="chat-time">${d.time}</div>` : ""}

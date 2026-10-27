@@ -432,277 +432,157 @@ loadAll();
 
 
 
-async function loadAll(){
 
-const snap=
-
-await get(
-
-ref(
-db,
-"History_Topup"
-)
-
-);
-
-
-if(!snap.exists()){
-
-listEl.innerHTML=
-
-`<div class="empty">
-
-Belum ada transaksi.
-
-</div>`;
-
-return;
-
-}
-
-
-const data=snap.val();
-
-let html="";
-
-
-Object.entries(data).reverse().forEach(
-
-([uid,user])=>{
-
-Object.entries(user).reverse().forEach(
-
-([id,item])=>{
-
-html+=`
-
-<div class="card">
-
-<div class="top">
-
-<img
-class="avatar"
-src="${
-item.profil ||
-'https://cdn-icons-png.flaticon.com/512/149/149071.png'
-}">
-
-<img
-class="logo"
-src="${
-item.logoAplikasi ||
-item.produkThumbnail ||
-'https://cdn-icons-png.flaticon.com/512/1828/1828640.png'
-}">
-
-<div class="flex">
-
-<div class="title">
-
-${item.aplikasi ||
-item.produk ||
-"-"}
-
-</div>
-
-<div class="subtitle">
-
-${item.email || "-"}
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="row">
-
-<div class="label">
-Nama Akun
-</div>
-
-<div class="value">
-
-${item.namaAkun ||
-"-"}
-
-</div>
-
-</div>
-
-
-<div class="row">
-
-<div class="label">
-ID Akun
-</div>
-
-<div class="value">
-
-${item.idAkun ||
-"-"}
-
-</div>
-
-</div>
-
-
-<div class="row">
-
-<div class="label">
-Paket
-</div>
-
-<div class="value">
-
-${item.paket ||
-item.itemNama ||
-"-"}
-
-</div>
-
-</div>
-
-
-<div class="row">
-
-<div class="label">
-Pembayaran
-</div>
-
-<div class="value">
-
-${item.namaBank ||
-"-"}
-
-</div>
-
-</div>
-
-
-<div class="row">
-
-<div class="label">
-Total
-</div>
-
-<div class="total">
-
-Rp ${Number(
-item.total || 0
-).toLocaleString("id-ID")}
-
-</div>
-
-
-
-</div>
-
-<div class="row">
-  <div class="label">
-    Tanggal & Waktu
-  </div>
-
-  <div class="value">
-    ${
-      item.dibuatPada
-        ? new Date(Number(item.dibuatPada)).toLocaleString("id-ID", {
-            day: "2-digit",
-            month: "long",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: false
-          }).replace(/\./g, ":")
-        : "-"
+async function loadAll() {
+    const snap = await get(ref(db, "History_Topup"));
+
+    if (!snap.exists()) {
+        listEl.innerHTML = `
+            <div class="empty">Belum ada transaksi.</div>
+        `;
+        return;
     }
-  </div>
-</div>
 
+    const data = snap.val();
+    const transactions = [];
 
-<div class="row">
+    // Ambil seluruh transaksi dari semua UID
+    Object.entries(data).forEach(([uid, user]) => {
+        if (!user || typeof user !== "object") return;
 
-<div class="label">
-Status
-</div>
+        Object.entries(user).forEach(([id, item]) => {
+            if (!item || typeof item !== "object") return;
 
-<div>
+            transactions.push({
+                uid,
+                id,
+                item,
+                // Gunakan timestamp transaksi
+                timestamp: Number(item.dibuatPada || 0)
+            });
+        });
+    });
 
-<span class="badge ${item.status}">
+    // Urutkan terbaru di atas
+    transactions.sort((a, b) => b.timestamp - a.timestamp);
 
-${item.status}
+    let html = "";
 
-</span>
+    transactions.forEach(({ uid, id, item }) => {
+        html += `
+            <div class="card">
+                <div class="top">
+                    <img
+                        class="avatar"
+                        src="${item.profil || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'}"
+                    >
 
-</div>
+                    <img
+                        class="logo"
+                        src="${item.logoAplikasi || item.produkThumbnail || 'https://cdn-icons-png.flaticon.com/512/1828/1828640.png'}"
+                    >
 
-</div>
+                    <div class="flex">
+                        <div class="title">
+                            ${item.aplikasi || item.produk || "-"}
+                        </div>
+                        <div class="subtitle">
+                            ${item.email || "-"}
+                        </div>
+                    </div>
+                </div>
 
+                <div class="row">
+                    <div class="label">Nama Akun</div>
+                    <div class="value">${item.namaAkun || "-"}</div>
+                </div>
 
-<div class="actions">
+                <div class="row">
+                    <div class="label">ID Akun</div>
+                    <div class="value">${item.idAkun || "-"}</div>
+                </div>
 
-<button
-class="btn approve"
-onclick="approve('${uid}','${id}')">
+                <div class="row">
+                    <div class="label">Paket</div>
+                    <div class="value">${item.paket || item.itemNama || "-"}</div>
+                </div>
 
-Approve
+                <div class="row">
+                    <div class="label">Pembayaran</div>
+                    <div class="value">${item.namaBank || "-"}</div>
+                </div>
 
-</button>
+                <div class="row">
+                    <div class="label">Total</div>
+                    <div class="total">
+                        Rp ${Number(item.total || 0).toLocaleString("id-ID")}
+                    </div>
+                </div>
 
-<button
-class="btn pending"
-onclick="pending('${uid}','${id}')">
+                <div class="row">
+                    <div class="label">Tanggal & Waktu</div>
+                    <div class="value">
+                        ${item.dibuatPada
+                            ? new Date(Number(item.dibuatPada)).toLocaleString("id-ID", {
+                                day: "2-digit",
+                                month: "long",
+                                year: "numeric",
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                hour12: false
+                            }).replace(/\./g, ":")
+                            : "-"
+                        }
+                    </div>
+                </div>
 
-Pending
+                <div class="row">
+                    <div class="label">Status</div>
+                    <div>
+                        <span class="badge ${item.status || 'Pending'}">
+                            ${item.status || "-"}
+                        </span>
+                    </div>
+                </div>
 
-</button>
+                <div class="actions">
+                    <button class="btn approve"
+                        onclick="approve('${uid}','${id}')">
+                        Approve
+                    </button>
 
-<button
-class="btn reject"
-onclick="reject('${uid}','${id}')">
+                    <button class="btn pending"
+                        onclick="pending('${uid}','${id}')">
+                        Pending
+                    </button>
 
-Tolak
+                    <button class="btn reject"
+                        onclick="reject('${uid}','${id}')">
+                        Tolak
+                    </button>
 
-</button>
+                    <button class="btn delete"
+                        onclick="hapus('${uid}','${id}')">
+                        Hapus
+                    </button>
 
-<button
-class="btn delete"
-onclick="hapus('${uid}','${id}')">
+                    <button class="btn copy-info"
+                        onclick="copyInfo('${uid}','${id}')">
+                        <i class="fa-solid fa-copy"></i> Salin Informasi
+                    </button>
 
-Hapus
+                    <button class="btn restock-info"
+                        onclick="copyRestockInfo('${uid}','${id}')">
+                        <i class="fa-solid fa-box-open"></i> Restok
+                    </button>
+                </div>
+            </div>
+        `;
+    });
 
-</button>
-
-
-
-<button
-  class="btn copy-info"
-  onclick="copyInfo('${uid}','${id}')">
-  <i class="fa-solid fa-copy"></i> Salin Informasi
-</button>
-
-
-<button
-  class="btn restock-info"
-  onclick="copyRestockInfo('${uid}','${id}')">
-  <i class="fa-solid fa-box-open"></i> Restok
-</button>
-
-
-</div>
-
-</div>
-
-`;
-
-});
-
-});
-
-listEl.innerHTML=html;
-
+    listEl.innerHTML = html;
 }
+
 
 
 
