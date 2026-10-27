@@ -3267,7 +3267,46 @@ background-position:-100% 0;
 
 
 
+#appGrid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(3, auto);
+    grid-auto-columns: 145px;
+    gap: 12px;
 
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    padding: 10px 2px 15px;
+
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+#appGrid::-webkit-scrollbar {
+    display: none;
+}
+
+#appGrid .app-card {
+    width: 145px;
+    min-width: 145px;
+    scroll-snap-align: start;
+}
+
+
+
+#appGrid .app-card:nth-child(3n + 1) {
+    grid-row: 1;
+}
+
+#appGrid .app-card:nth-child(3n + 2) {
+    grid-row: 2;
+}
+
+#appGrid .app-card:nth-child(3n) {
+    grid-row: 3;
+}
 
 
 </style>
@@ -5542,22 +5581,24 @@ showLogoSkeleton();
 // RENDER DATA FIREBASE
 // =====================
 
-function renderLogo(data){
-logoList.innerHTML="";
-data.forEach(item=>{
-logoList.innerHTML += `
+function renderLogo(data) {
+  logoList.innerHTML = "";
 
-<div class="app-logo-item">
+  data.forEach(item => {
+    logoList.innerHTML += `
+      <div
+        class="app-logo-item"
+        onclick="window.location.href='dating_apps.html'"
+        style="cursor:pointer;"
+      >
+        <img src="${item.logo}">
 
-<img src="${item.logo}">
-
-<span>${item.nama || item.aplikasi}</span>
-
-</div>
-
-`;
-});
+        <span>${item.nama || item.aplikasi}</span>
+      </div>
+    `;
+  });
 }
+
 
 // =====================
 // FIREBASE LOAD

@@ -323,6 +323,37 @@ font-size:15px;
 
 }
 
+
+
+
+
+
+
+
+
+.copy-info {
+  background: linear-gradient(135deg, #5b24ff, #7a5cff);
+  color: #fff;
+  flex: 1 1 100%;
+}
+
+.copy-info:active {
+  transform: scale(.98);
+}
+
+
+
+
+
+
+
+.restock-info {
+  background: linear-gradient(135deg, #f59e0b, #ea580c);
+  color: #fff;
+  flex: 1 1 100%;
+}
+
+
 </style>
 
 </head>
@@ -564,6 +595,29 @@ item.total || 0
 
 </div>
 
+
+
+</div>
+
+<div class="row">
+  <div class="label">
+    Tanggal & Waktu
+  </div>
+
+  <div class="value">
+    ${
+      item.dibuatPada
+        ? new Date(Number(item.dibuatPada)).toLocaleString("id-ID", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false
+          }).replace(/\./g, ":")
+        : "-"
+    }
+  </div>
 </div>
 
 
@@ -619,6 +673,22 @@ onclick="hapus('${uid}','${id}')">
 Hapus
 
 </button>
+
+
+
+<button
+  class="btn copy-info"
+  onclick="copyInfo('${uid}','${id}')">
+  <i class="fa-solid fa-copy"></i> Salin Informasi
+</button>
+
+
+<button
+  class="btn restock-info"
+  onclick="copyRestockInfo('${uid}','${id}')">
+  <i class="fa-solid fa-box-open"></i> Restok
+</button>
+
 
 </div>
 
@@ -1257,6 +1327,126 @@ x
 ).toLocaleString("id-ID");
 
 }
+
+
+
+
+window.copyInfo = async (uid, id) => {
+  try {
+    const snap = await get(
+      ref(db, `History_Topup/${uid}/${id}`)
+    );
+
+    if (!snap.exists()) {
+      alert("Data transaksi tidak ditemukan.");
+      return;
+    }
+
+    const item = snap.val();
+
+    const aplikasi = item.aplikasi || item.produk || "-";
+    const email = item.email || "-";
+    const namaAkun = item.namaAkun || "-";
+    const idAkun = item.idAkun || "-";
+    const paket = item.paket || item.itemNama || "-";
+    const pembayaran = item.namaBank || "-";
+    const total = Number(item.total || 0).toLocaleString("id-ID");
+
+    let status = item.status || "Menunggu Status";
+
+    if (status.toLowerCase() === "pending") {
+      status = "Menunggu Status";
+    } else if (status.toLowerCase() === "menunggu pembayaran") {
+      status = "Menunggu Pembayaran";
+    }
+
+    const teks = `**INFORMASI PEMBELIAN COIN**
+
+Kami melihat adanya pembelian coin aplikasi dengan rincian data sebagai berikut:
+
+*Nama Aplikasi:* ${aplikasi}
+*Email Akun:* ${email}
+*Nama Akun:* ${namaAkun}
+*ID Akun:* ${idAkun}
+*Paket:* ${paket}
+*Metode Pembayaran:* ${pembayaran}
+*Total Pembayaran:* Rp${total}
+*Status:* ${status}
+
+Mohon untuk melakukan pemeriksaan kembali terhadap rincian pembelian di atas. Apabila data tersebut sudah sesuai dan Anda ingin melanjutkan transaksi, silakan menyelesaikan pembayaran sesuai dengan detail yang tertera.`;
+
+    await navigator.clipboard.writeText(teks);
+
+    alert("Informasi transaksi berhasil disalin!");
+
+  } catch (error) {
+    console.error("Gagal menyalin informasi:", error);
+    alert("Gagal menyalin. Pastikan halaman dibuka melalui HTTPS.");
+  }
+};
+
+
+
+
+
+
+window.copyRestockInfo = async (uid, id) => {
+  try {
+    const snap = await get(
+      ref(db, `History_Topup/${uid}/${id}`)
+    );
+
+    if (!snap.exists()) {
+      alert("Data transaksi tidak ditemukan.");
+      return;
+    }
+
+    const item = snap.val();
+
+    const aplikasi = item.aplikasi || item.produk || "-";
+    const email = item.email || "-";
+    const namaAkun = item.namaAkun || "-";
+    const idAkun = item.idAkun || "-";
+    const paket = item.paket || item.itemNama || "-";
+    const pembayaran = item.namaBank || "-";
+    const total = Number(item.total || 0).toLocaleString("id-ID");
+
+    let status = item.status || "Menunggu Status";
+
+    if (status.toLowerCase() === "pending") {
+      status = "Menunggu Status";
+    } else if (status.toLowerCase() === "menunggu pembayaran") {
+      status = "Menunggu Pembayaran";
+    }
+
+    const teks = `**INFORMASI RESTOK PEMBELIAN COIN APLIKASI**
+
+Kami informasikan bahwa paket tersebut saat ini **tidak tersedia atau telah habis**.
+
+Mohon untuk memilih paket COIN lainnya yang masih tersedia. Apabila harga paket yang dipilih lebih tinggi dari nominal pembayaran sebelumnya, Anda dapat **menambahkan kekurangan pembayaran** sesuai dengan selisih harga paket tersebut.
+
+*Nama Aplikasi:* ${aplikasi}
+*Email Akun:* ${email}
+*Nama Akun:* ${namaAkun}
+*ID Akun:* ${idAkun}
+*Paket:* ${paket}
+*Metode Pembayaran:* ${pembayaran}
+*Total Pembayaran:* Rp${total}
+*Status:* ${status}
+
+Mohon memilih paket pengganti terlebih dahulu agar proses pembelian dapat kami lanjutkan. Terima kasih atas perhatian dan kerja samanya.`;
+
+    await navigator.clipboard.writeText(teks);
+
+    alert("Pesan restok diamonds berhasil disalin!");
+
+  } catch (error) {
+    console.error("Gagal menyalin pesan restok:", error);
+    alert("Gagal menyalin. Pastikan halaman dibuka melalui HTTPS.");
+  }
+};
+
+
 
 </script>
 
