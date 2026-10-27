@@ -1303,152 +1303,231 @@ RENDER USER
 
 function renderUsers() {
     const tbody = document.getElementById("userTableBody");
+    if (!tbody) return;
+
     tbody.innerHTML = "";
 
-    Object.values(dbUsers)
-        .sort((a, b) => (b.dibuatPada || 0) - (a.dibuatPada || 0))
-        .forEach(user => {
-            const saldo = new Intl.NumberFormat("id-ID", {
-                style: "currency",
-                currency: "IDR",
-                maximumFractionDigits: 0
-            }).format(user.saldo || 0).replace("IDR", "Rp");
+    // Normalisasi timestamp Firebase
+    function getTimestamp(value) {
+        if (value === undefined || value === null || value === "") {
+            return 0;
+        }
 
-            const tanggal = user.dibuatPada
-                ? new Date(user.dibuatPada).toLocaleString("id-ID")
-                : "-";
+        if (typeof value === "number" || !isNaN(Number(value))) {
+            let timestamp = Number(value);
 
-            // Tentukan badge status akun
-            const statusMode = user.statusAkun?.mode || "";
-            let statusBadge = "";
-
-            if (user.statusAkun?.aktif === true) {
-                if (statusMode === "banned") {
-                    statusBadge = `
-                        <span class="user-status-badge badge-banned">
-                            <i class="fa-solid fa-ban"></i> Banned
-                        </span>`;
-                } else if (statusMode === "maintenance") {
-                    statusBadge = `
-                        <span class="user-status-badge badge-maintenance">
-                            <i class="fa-solid fa-screwdriver-wrench"></i>
-                            Maintenance
-                        </span>`;
-                } else if (statusMode === "suspended") {
-                    statusBadge = `
-                        <span class="user-status-badge badge-suspended">
-                            <i class="fa-solid fa-user-lock"></i> Suspended
-                        </span>`;
-                }
+            // Ubah timestamp detik menjadi milidetik
+            if (timestamp > 0 && timestamp < 100000000000) {
+                timestamp *= 1000;
             }
 
-            tbody.innerHTML += `
-                <tr id="row-${user.usersid}">
-                    <td>
-                        <div class="user-info-cell">
-                            <img
-                                class="user-avatar"
-                                src="${user.profil || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'}">
+            return Number.isFinite(timestamp) ? timestamp : 0;
+        }
 
-                            <div>
-                                <div style="font-weight:600; position:relative; padding-right:8px;"
-                                     id="txt-email-${user.usersid}">
-                                    ${user.email || "-"}
-                                </div>
+        const parsed = Date.parse(String(value));
+        return Number.isNaN(parsed) ? 0 : parsed;
+    }
 
-                                <div class="user-uid">
-                                    ${user.usersid}
-                                </div>
+    // Ambil data dan urutkan berdasarkan waktu pembuatan
+    const sortedUsers = Object.entries(dbUsers || {})
+        .filter(([key, user]) => {
+            return user && typeof user === "object";
+        })
+        .map(([firebaseKey, user]) => ({
+            ...user,
+            _firebaseKey: firebaseKey,
+            _sortTimestamp: getTimestamp(user.dibuatPada)
+        }))
+        .sort((a, b) => {
+            // Timestamp terbaru selalu di posisi pertama
+            if (a._sortTimestamp !== b._sortTimestamp) {
+                return b._sortTimestamp - a._sortTimestamp;
+            }
+
+            // Jika timestamp sama, gunakan ID sebagai urutan konsisten
+            return String(b._firebaseKey).localeCompare(
+                String(a._firebaseKey),
+                undefined,
+                { numeric: true }
+            );
+        });
+
+    if (sortedUsers.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="7"
+                    style="padding:60px;text-align:center;color:#888">
+                    Belum ada user.
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    // Render data sesuai urutan terbaru
+    const rows = sortedUsers.map(user => {
+        const id = user._firebaseKey;
+
+        const saldo = new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            maximumFractionDigits: 0
+        }).format(Number(user.saldo) || 0).replace("IDR", "Rp");
+
+        const timestamp = user._sortTimestamp;
+
+        const tanggal = timestamp
+            ? new Date(timestamp).toLocaleString("id-ID")
+            : "-";
+
+        // Status akun
+        const statusMode = user.statusAkun?.mode || "";
+        let statusBadge = "";
+
+        if (user.statusAkun?.aktif === true) {
+            if (statusMode === "banned") {
+                statusBadge = `
+                    <span class="user-status-badge badge-banned">
+                        <i class="fa-solid fa-ban"></i> Banned
+                    </span>`;
+            } else if (statusMode === "maintenance") {
+                statusBadge = `
+                    <span class="user-status-badge badge-maintenance">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                        Maintenance
+                    </span>`;
+            } else if (statusMode === "suspended") {
+                statusBadge = `
+                    <span class="user-status-badge badge-suspended">
+                        <i class="fa-solid fa-user-lock"></i> Suspended
+                    </span>`;
+            }
+        }
+
+        const email = user.email || "-";
+        const whatsapp = user.whatsapp || "-";
+        const profil = user.profil ||
+            "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+        const fotoSampul = user.fotoSampul || "";
+
+        return `
+            <tr id="row-${id}">
+                <td>
+                    <div class="user-info-cell">
+                        <img
+                            class="user-avatar"
+                            src="${profil}"
+                            alt="Profil user"
+                            loading="lazy">
+
+                        <div>
+                            <div
+                                style="font-weight:600;position:relative;padding-right:8px"
+                                id="txt-email-${id}">
+                                ${email}
+                            </div>
+
+                            <div class="user-uid">
+                                ${user.usersid || id}
                             </div>
                         </div>
-                    </td>
+                    </div>
+                </td>
 
-                    <td id="txt-whatsapp-${user.usersid}">
-                        ${user.whatsapp || "-"}
-                    </td>
+                <td id="txt-whatsapp-${id}">
+                    ${whatsapp}
+                </td>
 
-                    <td>
+                <td>
+                    ${fotoSampul ? `
                         <img
                             class="sampul-preview"
-                            src="${user.fotoSampul || ''}"
-                            onclick="window.open('${user.fotoSampul || ''}')">
-                    </td>
+                            src="${fotoSampul}"
+                            alt="Foto sampul"
+                            loading="lazy"
+                            onclick="window.open(this.src, '_blank', 'noopener')">
+                    ` : "-"}
+                </td>
 
-                    <td>
-                        <span class="saldo-badge" id="txt-saldo-${user.usersid}">
-                            ${saldo}
-                        </span>
-                    </td>
+                <td>
+                    <span class="saldo-badge" id="txt-saldo-${id}">
+                        ${saldo}
+                    </span>
+                </td>
 
-                    <td>
-                        ${tanggal}
-                    </td>
+                <td>${tanggal}</td>
 
-                    <td>
-                        <div class="btn-action-group">
+                <td>
+                    <div class="btn-action-group">
+                        <button
+                            class="btn-icon btn-edit"
+                            onclick="openEditModal('${id}')"
+                            title="Edit User">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+
+                        <button
+                            class="btn-icon btn-delete"
+                            onclick="openDeleteModal('${id}')"
+                            title="Hapus User">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+
+                        <div class="user-status-menu-wrap">
                             <button
-                                class="btn-icon btn-edit"
-                                onclick="openEditModal('${user.usersid}')"
-                                title="Edit User">
-                                <i class="fa-solid fa-pen-to-square"></i>
+                                type="button"
+                                class="btn-status-menu"
+                                onclick="toggleUserStatusMenu(event, '${id}')"
+                                title="Pengaturan Status User">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
                             </button>
 
-                            <button
-                                class="btn-icon btn-delete"
-                                onclick="openDeleteModal('${user.usersid}')"
-                                title="Hapus User">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </button>
+                            <div
+                                class="user-status-dropdown"
+                                id="status-menu-${id}">
 
-                            <div class="user-status-menu-wrap">
-                                <button
-                                    type="button"
-                                    class="btn-status-menu"
-                                    onclick="toggleUserStatusMenu(event, '${user.usersid}')"
-                                    title="Pengaturan Status User">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                <button type="button"
+                                    class="status-active"
+                                    onclick="confirmUserStatus('${id}', 'active')">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                    <span>Aktif</span>
                                 </button>
 
-                                <div
-                                    class="user-status-dropdown"
-                                    id="status-menu-${user.usersid}">
+                                <button type="button"
+                                    class="status-banned"
+                                    onclick="confirmUserStatus('${id}', 'banned')">
+                                    <i class="fa-solid fa-ban"></i>
+                                    <span>Banned</span>
+                                </button>
 
-                                    <button type="button" class="status-active"
-                                        onclick="confirmUserStatus('${user.usersid}', 'active')">
-                                        <i class="fa-solid fa-circle-check"></i>
-                                        <span>Aktif</span>
-                                    </button>
+                                <button type="button"
+                                    class="status-maintenance"
+                                    onclick="confirmUserStatus('${id}', 'maintenance')">
+                                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                                    <span>Maintenance</span>
+                                </button>
 
-                                    <button type="button" class="status-banned"
-                                        onclick="confirmUserStatus('${user.usersid}', 'banned')">
-                                        <i class="fa-solid fa-ban"></i>
-                                        <span>Banned</span>
-                                    </button>
-
-                                    <button type="button" class="status-maintenance"
-                                        onclick="confirmUserStatus('${user.usersid}', 'maintenance')">
-                                        <i class="fa-solid fa-screwdriver-wrench"></i>
-                                        <span>Maintenance</span>
-                                    </button>
-
-                                    <button type="button" class="status-suspended"
-                                        onclick="confirmUserStatus('${user.usersid}', 'suspended')">
-                                        <i class="fa-solid fa-user-lock"></i>
-                                        <span>Suspended</span>
-                                    </button>
-                                </div>
+                                <button type="button"
+                                    class="status-suspended"
+                                    onclick="confirmUserStatus('${id}', 'suspended')">
+                                    <i class="fa-solid fa-user-lock"></i>
+                                    <span>Suspended</span>
+                                </button>
                             </div>
                         </div>
-                    </td>
+                    </div>
+                </td>
 
-                    <td class="user-status-cell">
-                        ${statusBadge}
-                    </td>
-                </tr>
-            `;
-        });
+                <td class="user-status-cell">
+                    ${statusBadge}
+                </td>
+            </tr>
+        `;
+    });
+
+    // Masukkan seluruh baris sekaligus sesuai urutan yang sudah diurutkan
+    tbody.innerHTML = rows.join("");
 }
-
 
 
 
@@ -1656,34 +1735,36 @@ await update(
     statusData
 );
 
-                localStorage.removeItem(CACHE_KEY);
-                localStorage.removeItem(CACHE_TIME_KEY);
+// Hapus cache lama
+localStorage.removeItem(CACHE_KEY);
+localStorage.removeItem(CACHE_TIME_KEY);
 
-                closeModal();
+// Tutup modal konfirmasi
+closeModal();
 
-                window.showToast(
-                    "Status " + mode + " berhasil disimpan ke Firebase.",
-                    "success"
-                );
+// Tampilkan notifikasi
+window.showToast(
+    "Status " + mode + " berhasil disimpan ke Firebase.",
+    "success"
+);
 
-                await loadUsers(true);
+// Muat ulang data terbaru
+await loadUsers(true);
 
-            } catch (error) {
-                console.error("Gagal mengubah status user:", error);
+} catch (error) {
+    console.error("Gagal mengubah status user:", error);
 
-                button.disabled = false;
-                button.textContent = info.button;
+    button.disabled = false;
+    button.textContent = info.button;
 
-                window.showToast(
-                    "Gagal menyimpan status: " +
-                    (error?.message || "Periksa izin Firebase."),
-                    "danger"
-                );
-            }
-        });
+    window.showToast(
+        "Gagal menyimpan status: " +
+        (error?.message || "Periksa izin Firebase."),
+        "danger"
+    );
+}
+});
 };
-
-
 
 
 
@@ -1866,10 +1947,7 @@ window.saveEditData = async function(event){
 
 }
 
-localStorage.removeItem(CACHE_KEY);
-localStorage.removeItem(CACHE_TIME_KEY);
 
-await loadUsers(true);
 /*==================================================
 DELETE MODAL
 ==================================================*/
