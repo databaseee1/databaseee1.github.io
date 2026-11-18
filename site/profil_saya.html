@@ -469,6 +469,64 @@ input,textarea,select{
     .card{padding:20px}
     .bonus-value,.saldo-value{font-size:16px}
 }
+
+
+
+.info .label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.info .label i {
+    width: 16px;
+    color: #bb0493;
+    font-size: 13px;
+    text-align: center;
+}
+
+
+
+.menu a span:first-child{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:14px;
+    font-weight:500;
+}
+
+.menu a span:first-child i{
+    width:22px;
+    text-align:center;
+    color:#bb0493;
+    font-size:16px;
+}
+
+.menu a > i{
+    font-size:12px;
+    color:#aaa;
+}
+
+#notifBadge{
+    position:absolute;
+    right:25px;
+    top:10px;
+    background:#ef4444;
+    color:#fff;
+    font-size:10px;
+    padding:2px 6px;
+    border-radius:10px;
+    display:none;
+    min-width:16px;
+    text-align:center;
+}
+
+.logout{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+}
 </style>
 </head>
 
@@ -720,38 +778,44 @@ async function processBonus(){
          * ID ditentukan dari waktu interval.
          */
 
-        const historyRef = ref(
-            db,
-            `History_Bonus/${usersid}`
-        );
+      /*
+ * BUAT RIWAYAT BONUS RP300
+ *
+ * Hanya mencatat bonus interval terbaru.
+ * Tidak membuat ulang seluruh riwayat lama.
+ */
 
-        const historySnap = await get(historyRef);
+const historyRef = ref(
+    db,
+    `History_Bonus/${usersid}`
+);
 
-        const existingHistory = historySnap.exists()
-            ? historySnap.val()
-            : {};
+const historyId = "bonus_masuk_" + newCycleStart + "_" + completedIntervals;
 
-        for(let i = 1; i <= completedIntervals; i++){
+if(completedIntervals > 0){
 
-            const intervalTime =
-                newCycleStart + (i * BONUS_INTERVAL);
+    const intervalTime =
+        newCycleStart + (completedIntervals * BONUS_INTERVAL);
 
-            const historyId =
-                "bonus_masuk_" + intervalTime;
+    const latestHistoryRef = ref(
+        db,
+        `History_Bonus/${usersid}/bonus_masuk_${intervalTime}`
+    );
 
-            if(existingHistory[historyId]){
-                continue;
-            }
+    const latestHistorySnap = await get(latestHistoryRef);
 
-            historyUpdates[historyId] = {
-                keterangan:"Bonus Saldo Masuk",
-                jumlah:BONUS_PER_INTERVAL,
-                tipe:"bonus_masuk",
-                waktu:intervalTime
-            };
+    if(!latestHistorySnap.exists()){
 
-        }
+        await set(latestHistoryRef,{
+            keterangan:"Bonus Saldo Masuk",
+            jumlah:BONUS_PER_INTERVAL,
+            tipe:"bonus_masuk",
+            waktu:intervalTime
+        });
 
+    }
+
+}
         /*
          * Simpan semua riwayat bonus sekaligus.
          */
@@ -1037,31 +1101,33 @@ async function loadProfil(){
 
                 </div>
 
-                <div class="info">
+               <div class="info">
 
-                    <div class="item">
+    <div class="item">
+        <div class="label">
+            <i class="fa-solid fa-user"></i>
+            User ID
+        </div>
+        <div class="value" id="profileUserId"></div>
+    </div>
 
-                        <div class="label">User ID</div>
+    <div class="item">
+        <div class="label">
+            <i class="fa-solid fa-envelope"></i>
+            Email
+        </div>
+        <div class="value" id="profileEmailInfo"></div>
+    </div>
 
-                        <div class="value" id="profileUserId"></div>
+    <div class="item">
+        <div class="label">
+            <i class="fa-brands fa-whatsapp"></i>
+            WhatsApp
+        </div>
+        <div class="value" id="profileWhatsapp"></div>
+    </div>
 
-                    </div>
 
-                    <div class="item">
-
-                        <div class="label">Email</div>
-
-                        <div class="value" id="profileEmailInfo"></div>
-
-                    </div>
-
-                    <div class="item">
-
-                        <div class="label">WhatsApp</div>
-
-                        <div class="value" id="profileWhatsapp"></div>
-
-                    </div>
 
 
                     <!-- SALDO UTAMA -->
@@ -1149,61 +1215,48 @@ async function loadProfil(){
 
                 <!-- MENU -->
 
-                <div class="menu">
+<div class="menu">
 
-                    <a href="edit_profil.html">
+    <a href="edit_profil.html">
+        <span>
+            <i class="fa-solid fa-user-pen"></i>
+            Edit Profil
+        </span>
+        <i class="fa-solid fa-chevron-right"></i>
+    </a>
 
-                        <span>Edit Profil</span>
-                        <span>›</span>
+    <a href="History_topup_saya.html">
+        <span>
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            Riwayat Pesanan
+        </span>
+        <i class="fa-solid fa-chevron-right"></i>
+    </a>
 
-                    </a>
+    <a
+        href="notifikasi.html"
+        id="notifMenu"
+        style="position:relative;"
+    >
+        <span>
+            <i class="fa-solid fa-bell"></i>
+            Notifikasi
+        </span>
 
+        <i class="fa-solid fa-chevron-right"></i>
 
-                    <a href="History_topup_saya.html">
+        <span id="notifBadge">0</span>
+    </a>
 
-                        <span>Riwayat Pesanan</span>
-                        <span>›</span>
+</div>
 
-                    </a>
-
-
-                    <a
-                        href="notifikasi.html"
-                        id="notifMenu"
-                        style="position:relative;display:flex;justify-content:space-between;align-items:center;padding:12px 0;"
-                    >
-
-                        <span>Notifikasi</span>
-                        <span>›</span>
-
-                        <span
-                            id="notifBadge"
-                            style="
-                                position:absolute;
-                                right:10px;
-                                top:10px;
-                                background:red;
-                                color:#fff;
-                                font-size:10px;
-                                padding:2px 6px;
-                                border-radius:10px;
-                                display:none;
-                                min-width:16px;
-                                text-align:center;
-                            "
-                        >0</span>
-
-                    </a>
-
-                </div>
-
-
-                <button
-                    class="logout"
-                    id="logoutBtn"
-                >
-                    Logout
-                </button>
+<button
+    class="logout"
+    id="logoutBtn"
+>
+    <i class="fa-solid fa-right-from-bracket"></i>
+    Logout
+</button>
 
             </div>
 
