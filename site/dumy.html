@@ -1,4 +1,4 @@
-<button id="buatDummy">Buat 5 Data Dummy</button>
+<button id="buatDummy">Buat 50 Data Dummy</button>
 
 <script type="module">
 import {
@@ -22,35 +22,146 @@ projectId:"users-96dc5"
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-const banners = [
-"https://res.cloudinary.com/dowoq4a0i/image/upload/v1783169148/dqhn5sw2uckfz6a6bimk.webp",
-"https://res.cloudinary.com/dowoq4a0i/image/upload/v1783187623/idkkzuco4560rrvhete0.png",
-"https://res.cloudinary.com/dowoq4a0i/image/upload/v1783171150/luokiiaenwwhkpms0nuc.webp",
-"https://res.cloudinary.com/dowoq4a0i/image/upload/v1783187233/ekbqkumahzuxkq2pjoi1.png",
-"https://res.cloudinary.com/dowoq4a0i/image/upload/v1783171246/dxjmprgzjbyohnjrvbzg.webp"
+const dataEwallet = [
+{
+    logoBank: "https://logo.clearbit.com/dana.id",
+    Bank: "DANA",
+    Provider: "E-Wallet"
+},
+{
+    logoBank: "https://logo.clearbit.com/ovo.id",
+    Bank: "OVO",
+    Provider: "E-Wallet"
+},
+{
+    logoBank: "https://logo.clearbit.com/gopay.co.id",
+    Bank: "GoPay",
+    Provider: "E-Wallet"
+},
+{
+    logoBank: "https://logo.clearbit.com/shopeepay.co.id",
+    Bank: "ShopeePay",
+    Provider: "E-Wallet"
+},
+{
+    logoBank: "https://logo.clearbit.com/linkaja.id",
+    Bank: "LinkAja",
+    Provider: "E-Wallet"
+},
+{
+    logoBank: "https://logo.clearbit.com/astrapay.com",
+    Bank: "AstraPay",
+    Provider: "E-Wallet"
+},
+{
+    logoBank: "https://logo.clearbit.com/isaku.co.id",
+    Bank: "i.saku",
+    Provider: "E-Wallet"
+},
+{
+    logoBank: "https://logo.clearbit.com/sakuku.com",
+    Bank: "Sakuku",
+    Provider: "E-Wallet"
+},
+{
+    logoBank: "https://logo.clearbit.com/motionpay.id",
+    Bank: "MotionPay",
+    Provider: "E-Wallet"
+},
+{
+    logoBank: "https://logo.clearbit.com/maximindonesia.co.id",
+    Bank: "Maxim Wallet",
+    Provider: "E-Wallet"
+},
+{
+    logoBank: "https://logo.clearbit.com/paytren.com",
+    Bank: "Paytren",
+    Provider: "E-Wallet"
+},
+{
+    logoBank: "https://logo.clearbit.com/spinjam.com",
+    Bank: "SPinjam",
+    Provider: "E-Wallet"
+},
+{
+    logoBank: "https://logo.clearbit.com/aladinbank.id",
+    Bank: "Aladin Wallet",
+    Provider: "E-Wallet"
+},
+{
+    logoBank: "https://logo.clearbit.com/blu.id",
+    Bank: "blu by BCA Digital",
+    Provider: "E-Wallet"
+},
+{
+    logoBank: "https://logo.clearbit.com/doku.com",
+    Bank: "DOKU",
+    Provider: "E-Wallet"
+}
 ];
+// ==============================
+// Upload ke Firebase
+// Node : BANK-Brimo
+// ==============================
 
-document.getElementById("buatDummy").onclick = async () => {
+// ==============================
+// Upload E-Wallet ke Firebase
+// Node : BANK-Brimo
+// ==============================
 
-for(const banner of banners){
+const btn = document.getElementById("buatDummy");
 
-const newRef = push(ref(db,"Bannermini33"));
+btn.addEventListener("click", async () => {
 
-await set(newRef,{
+    btn.disabled = true;
+    btn.textContent = "Sedang Upload...";
 
-Bannermini: banner,
+    try {
 
-"Link tujuan":"https://tigohost.asia",
+        const bankRef = ref(db, "BANK-Brimo");
 
-"Diperbaharui oleh":"Tigo.app",
+        for (const item of dataEwallet) {
 
-dibuatPada: Date.now()
+            const newRef = push(bankRef);
+
+            await set(newRef, {
+                logoBank: item.logoBank,
+                Bank: item.Bank,
+                Provider: item.Provider
+            });
+
+        }
+
+        alert(`✅ Berhasil menambahkan ${dataEwallet.length} E-Wallet ke BANK-Brimo`);
+
+    } catch (err) {
+
+        console.error(err);
+        alert("❌ Gagal upload : " + err.message);
+
+    }
+
+    btn.disabled = false;
+    btn.textContent = "Buat 15 Data Dummy";
 
 });
 
-}
 
-alert("Berhasil membuat 5 data dummy.");
 
-};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </script>

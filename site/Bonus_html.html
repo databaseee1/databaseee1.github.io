@@ -596,6 +596,19 @@ button{
     font-size:9px;
     padding-top:8px;
 }
+
+
+.info-link {
+    margin-left: 6px;
+    color: #6c4ce8;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.info-link:hover {
+    text-decoration: underline;
+}
 </style>
 </head>
 
@@ -672,12 +685,15 @@ button{
 
     <!-- INFORMASI -->
 
-    <div class="info-box">
-        <i class="fa-solid fa-circle-info"></i>
-        Pencairan hanya dapat diajukan jika kamu mempunyai minimal
-        satu transaksi pembelian sukses dengan nilai minimal
-        Rp519.200 dalam satu transaksi.
-    </div>
+<div class="info-box">
+    <i class="fa-solid fa-circle-info"></i>
+
+    Pencairan hanya dapat diajukan jika kamu mempunyai minimal
+    satu transaksi pembelian sukses dengan nilai minimal
+    Rp519.200 dalam satu transaksi.
+
+    <a href="pengertian_bonus.html" class="info-link">Baca Syarat Pencairan</a>
+</div>
 
 
     <!-- RIWAYAT BONUS -->
@@ -1345,6 +1361,9 @@ onValue(historyBonusRef,snapshot=>{
 /* =====================================
    RIWAYAT PENGAJUAN
 ===================================== */
+/* =====================================
+   RIWAYAT PENGAJUAN
+===================================== */
 
 function renderWithdrawHistory(){
 
@@ -1398,6 +1417,15 @@ function renderWithdrawHistory(){
         const row = document.createElement("div");
 
         row.className = "history-item";
+        row.style.cursor = "pointer";
+
+        // KLIK ITEM UNTUK MELIHAT DETAIL RIWAYAT
+        row.addEventListener("click",()=>{
+
+            window.location.href =
+                `riwayat_bonus.html?id=${encodeURIComponent(item.id)}`;
+
+        });
 
         row.innerHTML = `
 

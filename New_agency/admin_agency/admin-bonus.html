@@ -1,0 +1,1980 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Admin - Pengajuan Bonus</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root{
+  --primary:#bb0493;
+  --primary-light:#fce7f6;
+  --bg:#f7f7fb;
+  --text:#252238;
+  --muted:#8b8999;
+  --border:#eeeaf2;
+  --green:#16a36a;
+  --red:#e34b5b;
+  --orange:#e99a27;
+  --purple:#7545d8;
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif}
+body{background:var(--bg);color:var(--text);font-size:13px}
+button,input,textarea{font-family:inherit}
+button{cursor:pointer}
+
+.sidebar{
+  position:fixed;left:0;top:0;bottom:0;width:245px;
+  background:#fff;border-right:1px solid var(--border);
+  padding:25px 17px;z-index:10;transition:.25s
+}
+.brand{display:flex;align-items:center;gap:11px;padding:0 10px 28px}
+.brand img{width:42px;height:42px;object-fit:contain}
+.brand strong{font-size:15px;line-height:1.4}
+.brand small{display:block;color:var(--muted);font-size:10px;font-weight:400}
+.nav-title{font-size:10px;color:#aaa5b5;font-weight:700;padding:15px 12px 9px}
+.nav-item{
+  display:flex;align-items:center;gap:12px;width:100%;
+  padding:12px;border:0;border-radius:10px;background:transparent;
+  color:#777386;text-align:left;font-size:12px;margin-bottom:5px
+}
+.nav-item i{width:18px;text-align:center;font-size:15px}
+.nav-item.active,.nav-item:hover{background:var(--primary-light);color:var(--primary);font-weight:600}
+.sidebar-bottom{position:absolute;bottom:20px;left:17px;right:17px}
+.admin-profile{display:flex;align-items:center;gap:10px;padding:12px;background:#faf9fc;border-radius:12px}
+.admin-avatar{width:34px;height:34px;border-radius:50%;background:var(--primary-light);color:var(--primary);display:grid;place-items:center}
+.admin-profile strong{font-size:11px;display:block}
+.admin-profile small{font-size:10px;color:var(--muted)}
+
+.main{margin-left:245px;padding:27px 30px;min-height:100vh}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;gap:15px}
+.topbar h1{font-size:21px;font-weight:700}
+.topbar p{font-size:11px;color:var(--muted);margin-top:4px}
+.top-actions{display:flex;align-items:center;gap:10px}
+.icon-btn{width:38px;height:38px;border:1px solid var(--border);background:#fff;border-radius:10px;color:#777}
+.menu-btn{display:none}
+
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-bottom:23px}
+.stat-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px}
+.stat-top{display:flex;justify-content:space-between;align-items:center}
+.stat-icon{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-size:15px}
+.stat-card small{color:var(--muted);font-size:11px}
+.stat-card h2{font-size:25px;margin-top:13px}
+.stat-card p{font-size:10px;color:var(--muted);margin-top:3px}
+.pink{background:#fce7f6;color:var(--primary)}
+.orange{background:#fff4df;color:var(--orange)}
+.green{background:#e4f8ef;color:var(--green)}
+.red{background:#ffe9ec;color:var(--red)}
+
+.content-card{background:#fff;border:1px solid var(--border);border-radius:15px;overflow:hidden}
+.tabs{display:flex;gap:5px;padding:17px 18px 0;border-bottom:1px solid var(--border);overflow-x:auto}
+.tab{border:0;background:transparent;padding:11px 15px;color:var(--muted);font-size:11px;font-weight:600;white-space:nowrap;border-bottom:2px solid transparent}
+.tab.active{color:var(--primary);border-color:var(--primary)}
+.tab span{margin-left:5px;background:#f3f1f6;padding:2px 7px;border-radius:20px;font-size:10px}
+
+.toolbar{display:flex;justify-content:space-between;gap:12px;padding:17px 18px;flex-wrap:wrap}
+.search-box{position:relative;flex:1;min-width:200px;max-width:350px}
+.search-box i{position:absolute;left:12px;top:12px;color:#aaa}
+.search-box input{width:100%;padding:10px 12px 10px 35px;border:1px solid var(--border);border-radius:9px;outline:none;font-size:11px}
+.search-box input:focus{border-color:var(--primary)}
+.toolbar-right{display:flex;gap:8px}
+.refresh-btn{border:1px solid var(--border);background:#fff;border-radius:9px;padding:9px 12px;font-size:11px;color:#696477}
+.refresh-btn:hover{color:var(--primary);border-color:var(--primary)}
+
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:850px}
+thead{background:#faf9fc}
+th{padding:13px 16px;text-align:left;color:#8b8798;font-size:10px;font-weight:600;white-space:nowrap}
+td{padding:14px 16px;border-top:1px solid #f2eff5;font-size:11px;vertical-align:middle}
+.user-id{font-weight:600;color:#4a4558}
+.sub-text{font-size:10px;color:var(--muted);margin-top:3px;overflow-wrap:anywhere}
+.amount{font-weight:700;color:#332c43}
+
+.status{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:30px;font-size:9px;font-weight:600}
+.status.wait{background:#fff4df;color:#bb7810}
+.status.success{background:#e4f8ef;color:#168b59}
+.status.failed{background:#ffe9ec;color:#d83f50}
+
+.actions{display:flex;gap:6px;align-items:center}
+.action-btn{
+  width:30px;height:30px;border:0;border-radius:8px;
+  display:grid;place-items:center;font-size:11px;flex-shrink:0
+}
+.action-detail{background:#f0edff;color:var(--purple)}
+.action-approve{background:#e4f8ef;color:var(--green)}
+.action-reject{background:#fff0e5;color:#d67c26}
+.action-delete{background:#ffe9ec;color:var(--red)}
+.action-copy{background:#e8f2ff;color:#2876d9}
+.action-btn:hover{filter:brightness(.96);transform:translateY(-1px)}
+.action-btn:disabled{opacity:.4;cursor:not-allowed}
+
+.empty{padding:55px 20px;text-align:center;color:var(--muted)}
+.empty i{font-size:30px;color:#d8d2e0;margin-bottom:12px}
+.empty p{font-size:12px}
+.loading{padding:45px;text-align:center;color:var(--muted)}
+.loading i{margin-right:7px}
+.pagination{display:flex;justify-content:space-between;align-items:center;padding:15px 18px;color:var(--muted);font-size:10px}
+
+.modal-backdrop{position:fixed;inset:0;background:rgba(28,20,39,.48);z-index:30;display:none;align-items:center;justify-content:center;padding:15px}
+.modal-backdrop.show{display:flex}
+.modal{background:#fff;width:100%;max-width:510px;border-radius:16px;padding:22px;max-height:90vh;overflow-y:auto}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.modal-head h3{font-size:15px}
+.close-modal{border:0;background:#f5f3f7;width:30px;height:30px;border-radius:8px;color:#777}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.detail-box{background:#faf9fc;padding:12px;border-radius:10px;min-width:0}
+.detail-box small{font-size:9px;color:var(--muted);display:block;margin-bottom:5px}
+.detail-box strong{font-size:11px;overflow-wrap:anywhere}
+.modal-actions{display:flex;gap:8px;margin-top:18px}
+.modal-actions button{flex:1;padding:11px;border:0;border-radius:9px;font-size:11px;font-weight:600}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-light{background:#f1eff4;color:#655e70}
+.btn-danger{background:var(--red);color:#fff}
+.notice{padding:12px;background:#fff5df;color:#98620c;border-radius:9px;font-size:10px;line-height:1.7;margin-top:15px}
+.action-description{font-size:11px;color:#777386;line-height:1.8;margin-bottom:14px}
+.action-reason{width:100%;min-height:85px;resize:vertical;border:1px solid var(--border);border-radius:9px;padding:11px;font-size:11px;outline:none}
+.action-reason:focus{border-color:var(--primary)}
+
+.toast{
+  position:fixed;right:20px;bottom:20px;z-index:100;
+  background:#292438;color:white;padding:13px 17px;border-radius:10px;
+  font-size:11px;max-width:calc(100% - 40px);
+  box-shadow:0 8px 30px #0002;display:none;line-height:1.6
+}
+.toast.show{display:block}
+.toast.success{background:#13865a}
+.toast.error{background:#c93649}
+.toast.warning{background:#a66a0b}
+button:disabled{opacity:.55;cursor:not-allowed}
+
+@media(max-width:1050px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:700px){
+  .sidebar{transform:translateX(-100%);box-shadow:none}
+  .sidebar.open{transform:translateX(0);box-shadow:0 0 0 100vmax #0005}
+  .main{margin-left:0;padding:20px 13px}
+  .menu-btn{display:grid;place-items:center}
+  .topbar h1{font-size:17px}
+  .stats{gap:9px}
+  .stat-card{padding:13px}
+  .stat-card h2{font-size:21px}
+  .stat-card p{font-size:9px}
+  .stat-icon{width:32px;height:32px}
+  .toolbar{padding:13px}
+  .search-box{max-width:none;flex-basis:100%}
+  .tabs{padding-left:8px}
+}
+@media(max-width:380px){
+  .stats{grid-template-columns:1fr 1fr}
+  .detail-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <img src="assets/images/agencylogo.png" alt="Logo">
+    <div><strong>AGENCY ADMIN</strong><small>Management Dashboard</small></div>
+  </div>
+
+  <div class="nav-title">MENU UTAMA</div>
+
+  <button class="nav-item active" onclick="switchTab('menunggu',this)">
+    <i class="fa-solid fa-clock"></i> Pengajuan Menunggu
+  </button>
+
+  <button class="nav-item" onclick="switchTab('disetujui',this)">
+    <i class="fa-solid fa-circle-check"></i> Riwayat Disetujui
+  </button>
+
+  <button class="nav-item" onclick="switchTab('gagal',this)">
+    <i class="fa-solid fa-circle-xmark"></i> Pengajuan Gagal
+  </button>
+
+  <div class="nav-title">LAINNYA</div>
+
+  <button class="nav-item" onclick="loadData()">
+    <i class="fa-solid fa-rotate"></i> Refresh Data
+  </button>
+
+  <div class="sidebar-bottom">
+    <div class="admin-profile">
+      <div class="admin-avatar"><i class="fa-solid fa-user-shield"></i></div>
+      <div>
+        <strong id="adminName">Administrator</strong>
+        <small id="adminEmail">Admin Panel</small>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<main class="main">
+
+  <header class="topbar">
+    <div style="display:flex;align-items:center;gap:12px">
+      <button class="icon-btn menu-btn" onclick="toggleSidebar()">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <div>
+        <h1>Pengajuan Bonus</h1>
+        <p>Kelola pengajuan dan riwayat pencairan bonus</p>
+      </div>
+    </div>
+
+    <div class="top-actions">
+      <button class="icon-btn" onclick="loadData()" title="Refresh">
+        <i class="fa-solid fa-rotate"></i>
+      </button>
+    </div>
+  </header>
+
+  <section class="stats">
+
+    <div class="stat-card">
+      <div class="stat-top">
+        <small>Total Pengajuan</small>
+        <div class="stat-icon pink"><i class="fa-solid fa-file-invoice"></i></div>
+      </div>
+      <h2 id="totalAll">0</h2>
+      <p>Semua data pengajuan</p>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-top">
+        <small>Menunggu</small>
+        <div class="stat-icon orange"><i class="fa-solid fa-hourglass-half"></i></div>
+      </div>
+      <h2 id="totalWaiting">0</h2>
+      <p>Menunggu keputusan admin</p>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-top">
+        <small>Disetujui</small>
+        <div class="stat-icon green"><i class="fa-solid fa-check"></i></div>
+      </div>
+      <h2 id="totalApproved">0</h2>
+      <p>Pengajuan berhasil disetujui</p>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-top">
+        <small>Pengajuan Gagal</small>
+        <div class="stat-icon red"><i class="fa-solid fa-ban"></i></div>
+      </div>
+      <h2 id="totalFailed">0</h2>
+      <p>Pengajuan ditolak atau tidak memenuhi syarat</p>
+    </div>
+
+  </section>
+
+  <section class="content-card">
+
+    <div class="tabs">
+      <button class="tab active" data-tab="menunggu" onclick="switchTab('menunggu')">
+        Menunggu <span id="countWaiting">0</span>
+      </button>
+
+      <button class="tab" data-tab="disetujui" onclick="switchTab('disetujui')">
+        Disetujui <span id="countApproved">0</span>
+      </button>
+
+      <button class="tab" data-tab="gagal" onclick="switchTab('gagal')">
+        Pengajuan Gagal <span id="countFailed">0</span>
+      </button>
+    </div>
+
+    <div class="toolbar">
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input
+          id="searchInput"
+          placeholder="Cari ID pengguna, WhatsApp, bank, rekening..."
+          oninput="renderTable()">
+      </div>
+
+      <div class="toolbar-right">
+        <button class="refresh-btn" onclick="loadData()">
+          <i class="fa-solid fa-rotate"></i> Refresh
+        </button>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>PENGGUNA</th>
+            <th>JUMLAH</th>
+            <th>REKENING</th>
+            <th>SALDO DITAHAN</th>
+            <th>TANGGAL</th>
+            <th>STATUS</th>
+            <th>AKSI</th>
+          </tr>
+        </thead>
+
+        <tbody id="tableBody">
+          <tr>
+            <td colspan="7">
+              <div class="loading">
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                Memuat data...
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination">
+      <span id="tableInfo">Memuat data...</span>
+      <span>Tigohost Indonesia Asia</span>
+    </div>
+
+  </section>
+</main>
+
+<!-- MODAL DETAIL -->
+<div class="modal-backdrop" id="detailModal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+
+    <div class="modal-head">
+      <h3>
+        <i class="fa-solid fa-file-lines" style="color:var(--primary);margin-right:7px"></i>
+        Detail Pengajuan
+      </h3>
+
+      <button class="close-modal" onclick="closeModal()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="detail-grid" id="detailContent"></div>
+
+    <div class="notice">
+      Detail ini hanya menampilkan data pengajuan. Password pengguna tidak dibaca atau ditampilkan.
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-light" onclick="closeModal()">Tutup</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL KONFIRMASI AKSI -->
+<div class="modal-backdrop" id="actionModal" onclick="if(event.target===this)closeActionModal()">
+  <div class="modal">
+
+    <div class="modal-head">
+      <h3 id="actionTitle">Konfirmasi Tindakan</h3>
+
+      <button class="close-modal" onclick="closeActionModal()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <p class="action-description" id="actionDescription"></p>
+
+    <div id="rejectReasonWrap" style="display:none">
+      <label style="display:block;font-size:10px;font-weight:600;margin-bottom:7px">
+        Alasan penolakan (opsional)
+      </label>
+
+      <textarea
+        id="rejectReason"
+        class="action-reason"
+        placeholder="Tuliskan alasan penolakan..."></textarea>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-light" onclick="closeActionModal()">Batal</button>
+
+      <button class="btn-primary" id="confirmActionButton" onclick="confirmAction()">
+        Konfirmasi
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+
+import {
+  initializeApp,
+  getApps
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  get,
+  update,
+  remove
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+
+/* =========================================================
+   ADMIN SESSION
+========================================================= */
+
+const session = JSON.parse(
+  localStorage.getItem("adminLogin") || "null"
+);
+
+if (!session || !session.uid) {
+  window.location.href = "login_admin.html";
+  throw new Error("Sesi administrator tidak ditemukan.");
+}
+
+document.getElementById("adminName").textContent =
+  session.nama || "Administrator";
+
+document.getElementById("adminEmail").textContent =
+  session.email || "";
+
+
+/* =========================================================
+   FIREBASE CONFIG
+========================================================= */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+  authDomain: "users-96dc5.firebaseapp.com",
+  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "users-96dc5",
+  storageBucket: "users-96dc5.appspot.com",
+  messagingSenderId: "483322415863",
+  appId: "1:483322415863:web:1397a8f2e808e66ad9e1f2"
+};
+
+const app = getApps().length
+  ? getApps()[0]
+  : initializeApp(firebaseConfig);
+
+const db = getDatabase(app);
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let activeTab = "menunggu";
+
+let waitingData = [];
+let approvedData = [];
+let failedData = [];
+let allRows = [];
+
+let pendingAction = null;
+let isProcessingAction = false;
+
+/*
+  Cache informasi pengguna.
+  Diambil dari users_topup/{uid}.
+  Hanya email dan whatsapp yang digunakan.
+*/
+
+let userInfoByUid = {};
+
+
+/* =========================================================
+   HELPER
+========================================================= */
+
+const money = value => {
+  return new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    maximumFractionDigits: 0
+  }).format(Number(value || 0));
+};
+
+
+const dateFormat = value => {
+  if (!value) return "-";
+
+  const date = new Date(Number(value));
+
+  if (isNaN(date.getTime())) return "-";
+
+  return date.toLocaleString("id-ID", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+};
+
+
+const safe = value => {
+  return String(value ?? "-").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  }[char]));
+};
+
+
+const getStatus = item => {
+  return String(item.status || "Menunggu").toLowerCase();
+};
+
+
+function showToast(message, type = "") {
+
+  const toast = document.getElementById("toast");
+
+  toast.textContent = message;
+  toast.className = "toast show " + type;
+
+  clearTimeout(window.bonusAdminToastTimer);
+
+  window.bonusAdminToastTimer = setTimeout(() => {
+    toast.className = "toast";
+  }, 4000);
+}
+
+
+function normalize(path, data) {
+
+  const rows = [];
+
+  Object.entries(data || {}).forEach(([uid, requests]) => {
+
+    if (!requests || typeof requests !== "object") return;
+
+    Object.entries(requests).forEach(([id, item]) => {
+
+      if (!item || typeof item !== "object") return;
+
+      rows.push({
+        ...item,
+        id,
+        uid,
+        path
+      });
+
+    });
+
+  });
+
+  return rows;
+}
+
+
+function requestRef(item) {
+  return ref(db, `${item.path}/${item.uid}/${item.id}`);
+}
+
+
+function userRef(uid) {
+  return ref(db, `users_topup/${uid}`);
+}
+
+
+/* =========================================================
+   AMBIL EMAIL DAN WHATSAPP PENGGUNA
+========================================================= */
+
+async function loadUserInformation(rows) {
+
+  const uniqueUIDs = [
+    ...new Set(
+      rows.map(item => item.uid).filter(Boolean)
+    )
+  ];
+
+  const results = await Promise.allSettled(
+    uniqueUIDs.map(async uid => {
+
+      const snapshot = await get(userRef(uid));
+
+      const account = snapshot.exists()
+        ? snapshot.val()
+        : {};
+
+      return {
+        uid,
+        email: account.email || "-",
+        whatsapp: account.whatsapp || "-"
+      };
+
+    })
+  );
+
+  results.forEach(result => {
+
+    if (result.status !== "fulfilled") return;
+
+    const data = result.value;
+
+    userInfoByUid[data.uid] = {
+      email: data.email,
+      whatsapp: data.whatsapp
+    };
+
+  });
+}
+
+
+function getUserInformation(uid) {
+
+  return userInfoByUid[uid] || {
+    email: "-",
+    whatsapp: "-"
+  };
+
+}
+
+
+/* =========================================================
+   LOAD DATA
+========================================================= */
+
+async function loadData() {
+
+  const body = document.getElementById("tableBody");
+
+  body.innerHTML = `
+    <tr>
+      <td colspan="7">
+        <div class="loading">
+          <i class="fa-solid fa-spinner fa-spin"></i>
+          Memuat data...
+        </div>
+      </td>
+    </tr>
+  `;
+
+  try {
+
+    const [activeSnap, failedSnap] = await Promise.all([
+
+      get(ref(db, "pengajuanbonus")),
+
+      get(ref(db, "pengajuanbonusgagal"))
+
+    ]);
+
+
+    const activeRows = normalize(
+      "pengajuanbonus",
+      activeSnap.val()
+    );
+
+    const failedPathRows = normalize(
+      "pengajuanbonusgagal",
+      failedSnap.val()
+    );
+
+
+    waitingData = activeRows.filter(item =>
+      getStatus(item) === "menunggu"
+    );
+
+
+    approvedData = activeRows.filter(item =>
+      getStatus(item) === "disetujui"
+    );
+
+
+    const rejectedRows = activeRows.filter(item =>
+      getStatus(item) === "ditolak"
+    );
+
+
+    failedData = [
+      ...failedPathRows,
+      ...rejectedRows
+    ];
+
+
+    allRows = [
+      ...waitingData,
+      ...approvedData,
+      ...failedData
+    ];
+
+
+    /*
+      Ambil nomor WhatsApp dan email setiap pengguna.
+      Proses ini berlaku untuk semua tab.
+    */
+
+    userInfoByUid = {};
+
+    await loadUserInformation(allRows);
+
+
+    document.getElementById("totalAll").textContent =
+      allRows.length;
+
+    document.getElementById("totalWaiting").textContent =
+      waitingData.length;
+
+    document.getElementById("totalApproved").textContent =
+      approvedData.length;
+
+    document.getElementById("totalFailed").textContent =
+      failedData.length;
+
+    document.getElementById("countWaiting").textContent =
+      waitingData.length;
+
+    document.getElementById("countApproved").textContent =
+      approvedData.length;
+
+    document.getElementById("countFailed").textContent =
+      failedData.length;
+
+
+    renderTable();
+
+  } catch (error) {
+
+    console.error("Gagal memuat pengajuan bonus:", error);
+
+    body.innerHTML = `
+      <tr>
+        <td colspan="7">
+          <div class="empty">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <p>Gagal membaca Firebase. Periksa koneksi dan Database Rules.</p>
+          </div>
+        </td>
+      </tr>
+    `;
+
+    document.getElementById("tableInfo").textContent =
+      "Gagal memuat data";
+
+    showToast("Gagal memuat data dari Firebase.", "error");
+
+  }
+
+}
+
+window.loadData = loadData;
+
+
+/* =========================================================
+   TAB NAVIGATION
+========================================================= */
+
+window.switchTab = function(tab, navButton) {
+
+  activeTab = tab;
+
+  document.querySelectorAll(".tab").forEach(element => {
+
+    element.classList.toggle(
+      "active",
+      element.dataset.tab === tab
+    );
+
+  });
+
+
+  document.querySelectorAll(".nav-item").forEach(element => {
+    element.classList.remove("active");
+  });
+
+
+  if (navButton) {
+    navButton.classList.add("active");
+  } else {
+
+    const navItems = document.querySelectorAll(".nav-item");
+
+    const navIndex = {
+      menunggu: 0,
+      disetujui: 1,
+      gagal: 2
+    };
+
+    if (navItems[navIndex[tab]]) {
+      navItems[navIndex[tab]].classList.add("active");
+    }
+
+  }
+
+
+  renderTable();
+
+  if (window.innerWidth <= 700) {
+    document.getElementById("sidebar").classList.remove("open");
+  }
+
+};
+
+
+function currentRows() {
+
+  if (activeTab === "menunggu") return waitingData;
+
+  if (activeTab === "disetujui") return approvedData;
+
+  return failedData;
+
+}
+
+
+/* =========================================================
+   RENDER TABLE
+========================================================= */
+
+window.renderTable = function() {
+
+  const query = document
+    .getElementById("searchInput")
+    .value
+    .toLowerCase()
+    .trim();
+
+  const body = document.getElementById("tableBody");
+
+
+  const rows = currentRows()
+
+    .filter(item => {
+
+      const user = getUserInformation(item.uid);
+
+      return [
+
+        item.uid,
+        item.usersid,
+        item.bank,
+        item.namaRekening,
+        item.noRekening,
+        item.id,
+        user.whatsapp,
+        user.email
+
+      ].some(value =>
+
+        String(value || "")
+          .toLowerCase()
+          .includes(query)
+
+      );
+
+    })
+
+    .sort((a, b) =>
+
+      Number(b.dibuatPada || 0) -
+      Number(a.dibuatPada || 0)
+
+    );
+
+
+  if (!rows.length) {
+
+    body.innerHTML = `
+      <tr>
+        <td colspan="7">
+          <div class="empty">
+            <i class="fa-solid fa-folder-open"></i>
+            <p>Tidak ada pengajuan pada tab ini.</p>
+          </div>
+        </td>
+      </tr>
+    `;
+
+    document.getElementById("tableInfo").textContent =
+      "0 pengajuan ditampilkan";
+
+    return;
+
+  }
+
+
+  body.innerHTML = rows.map(item => {
+
+    const status = getStatus(item);
+
+    const user = getUserInformation(item.uid);
+
+    const statusClass =
+
+      status === "disetujui" ? "success" :
+
+      status === "ditolak" || status === "gagal" ? "failed" :
+
+      "wait";
+
+
+    const index = allRows.indexOf(item);
+
+    const isWaiting = status === "menunggu";
+
+
+    return `
+
+      <tr>
+
+        <td>
+
+          <div class="user-id">
+            ${safe(item.usersid || item.uid)}
+          </div>
+
+          <div class="sub-text">
+            <i class="fa-brands fa-whatsapp" style="color:#16a36a"></i>
+            ${safe(user.whatsapp)}
+          </div>
+
+        </td>
+
+
+        <td>
+          <div class="amount">${money(item.jumlah)}</div>
+        </td>
+
+
+        <td>
+
+          <div>${safe(item.bank)}</div>
+
+          <div class="sub-text">
+            ${safe(item.namaRekening)}
+          </div>
+
+          <div class="sub-text">
+            ${safe(item.noRekening)}
+          </div>
+
+        </td>
+
+
+        <td>
+
+          <div>${money(item.saldoUtamaDitahan)}</div>
+
+          <div class="sub-text">
+            Bonus: ${money(item.bonusSaldoDitahan)}
+          </div>
+
+        </td>
+
+
+        <td>${dateFormat(item.dibuatPada)}</td>
+
+
+        <td>
+
+          <span class="status ${statusClass}">
+            ${safe(item.status || "Menunggu")}
+          </span>
+
+        </td>
+
+
+        <td>
+
+          <div class="actions">
+
+            <!-- DETAIL -->
+
+            <button
+              class="action-btn action-detail"
+              title="Detail"
+              onclick="showDetail(${index})">
+
+              <i class="fa-solid fa-eye"></i>
+
+            </button>
+
+
+            <!-- COPY -->
+
+            <button
+              class="action-btn action-copy"
+              title="Copy pemberitahuan dan semua detail"
+              onclick="copyNotification(${index})">
+
+              <i class="fa-solid fa-copy"></i>
+
+            </button>
+
+
+            <!-- APPROVE DAN REJECT -->
+
+            ${isWaiting ? `
+
+              <button
+                class="action-btn action-approve"
+                title="Approve"
+                onclick="openAction('approve',${index})">
+
+                <i class="fa-solid fa-check"></i>
+
+              </button>
+
+
+              <button
+                class="action-btn action-reject"
+                title="Reject"
+                onclick="openAction('reject',${index})">
+
+                <i class="fa-solid fa-xmark"></i>
+
+              </button>
+
+            ` : ""}
+
+
+            <!-- DELETE -->
+
+            <button
+              class="action-btn action-delete"
+              title="Hapus"
+              onclick="openAction('delete',${index})">
+
+              <i class="fa-solid fa-trash"></i>
+
+            </button>
+
+          </div>
+
+        </td>
+
+      </tr>
+
+    `;
+
+  }).join("");
+
+
+  document.getElementById("tableInfo").textContent =
+    `${rows.length} pengajuan ditampilkan`;
+
+};
+
+
+/* =========================================================
+   COPY PEMBERITAHUAN + SEMUA DETAIL PENGAJUAN
+========================================================= */
+
+window.copyNotification = async function(index) {
+
+  const item = allRows[index];
+
+  if (!item) {
+
+    showToast("Data pengajuan tidak ditemukan.", "error");
+
+    return;
+
+  }
+
+
+  const user = getUserInformation(item.uid);
+
+  const email = user.email || "-";
+
+  const whatsapp = user.whatsapp || "-";
+
+
+  /*
+    Susunan semua informasi pengajuan.
+    Tidak mengambil atau menampilkan password pengguna.
+  */
+
+  const message = `Halo, ${email}
+
+Kami ingin menyampaikan informasi terkait pengajuan penarikan Saldo Utama dan Saldo Bonus pada akun Anda.
+
+Sistem kami mendeteksi adanya percobaan penarikan Saldo Utama dan Saldo Bonus. Namun, berdasarkan pemeriksaan sistem, akun Anda belum memenuhi persyaratan transaksi pembelian dengan nominal yang telah ditentukan.
+
+Agar Saldo Utama dan Saldo Bonus Anda dapat diproses untuk pencairan ke rekening, kami mengimbau Anda untuk terlebih dahulu melakukan transaksi pembelian pada platform kami sesuai dengan ketentuan yang berlaku.
+
+Berikut adalah detail lengkap pengajuan Anda:
+
+================================
+DETAIL PENGAJUAN PENARIKAN
+================================
+
+ID PENGGUNA:
+${item.usersid || item.uid}
+
+EMAIL:
+${email}
+
+NOMOR WHATSAPP:
+${whatsapp}
+
+ID PENGAJUAN:
+${item.id}
+
+STATUS PENGAJUAN:
+${item.status || "Menunggu"}
+
+JUMLAH PENGAJUAN:
+${money(item.jumlah)}
+
+================================
+DETAIL REKENING
+================================
+
+BANK / E-WALLET:
+${item.bank || "-"}
+
+NAMA PEMILIK REKENING:
+${item.namaRekening || "-"}
+
+NOMOR REKENING:
+${item.noRekening || "-"}
+
+================================
+DETAIL SALDO
+================================
+
+SALDO UTAMA DITAHAN:
+${money(item.saldoUtamaDitahan)}
+
+BONUS SALDO DITAHAN:
+${money(item.bonusSaldoDitahan)}
+
+MINIMUM PEMBELIAN:
+${money(item.minimumPembelian)}
+
+SALDO UTAMA SAAT PENGAJUAN:
+${money(item.saldoUtama)}
+
+BONUS SALDO SAAT PENGAJUAN:
+${money(item.bonusSaldo)}
+
+================================
+INFORMASI WAKTU
+================================
+
+TANGGAL PENGAJUAN:
+${dateFormat(item.dibuatPada)}
+
+WAKTU PEMERIKSAAN:
+${dateFormat(item.waktuPembelianDiperiksa)}
+
+WAKTU PERSETUJUAN:
+${dateFormat(item.disetujuiPada)}
+
+WAKTU PENOLAKAN:
+${dateFormat(item.ditolakPada)}
+
+================================
+INFORMASI TAMBAHAN
+================================
+
+ALASAN:
+${item.alasan || "-"}
+
+ALASAN PENOLAKAN:
+${item.alasanPenolakan || "-"}
+
+STATUS REFUND:
+${item.refundProcessed === true ? "Sudah diproses" : "Belum diproses"}
+
+================================
+
+Kami menyarankan Anda untuk memperhatikan ketentuan transaksi yang berlaku agar proses pengajuan selanjutnya dapat berjalan dengan lancar.
+
+Mohon maaf atas ketidaknyamanan yang mungkin timbul. Terima kasih atas perhatian, pengertian, dan kepercayaan Anda terhadap platform kami.
+
+Hormat kami,
+Tim Customer Service PT.Tigohost Indonesia`;
+
+  
+  try {
+
+    /*
+      Gunakan Clipboard API terlebih dahulu.
+    */
+
+    if (
+      navigator.clipboard &&
+      window.isSecureContext
+    ) {
+
+      await navigator.clipboard.writeText(message);
+
+    } else {
+
+      /*
+        Fallback untuk browser yang tidak mendukung Clipboard API.
+      */
+
+      const textarea = document.createElement("textarea");
+
+      textarea.value = message;
+
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      textarea.style.left = "-9999px";
+      textarea.style.top = "0";
+
+      document.body.appendChild(textarea);
+
+      textarea.focus();
+      textarea.select();
+
+      const copied = document.execCommand("copy");
+
+      textarea.remove();
+
+      if (!copied) {
+        throw new Error("Browser tidak berhasil menyalin teks.");
+      }
+
+    }
+
+
+    showToast(
+      "Seluruh pemberitahuan dan detail pengajuan berhasil disalin!",
+      "success"
+    );
+
+  } catch (error) {
+
+    console.error("Gagal menyalin pemberitahuan:", error);
+
+    showToast(
+      "Gagal menyalin. Periksa izin clipboard browser.",
+      "error"
+    );
+
+  }
+
+};
+
+
+/* =========================================================
+   DETAIL MODAL
+========================================================= */
+
+window.showDetail = function(index) {
+
+  const item = allRows[index];
+
+  if (!item) {
+
+    showToast("Data pengajuan tidak ditemukan.", "error");
+
+    return;
+
+  }
+
+
+  const user = getUserInformation(item.uid);
+
+
+  const fields = [
+
+    ["ID Pengguna", item.usersid || item.uid],
+
+    ["Email Pengguna", user.email],
+
+    ["Nomor WhatsApp", user.whatsapp],
+
+    ["ID Pengajuan", item.id],
+
+    ["Status", item.status || "Menunggu"],
+
+    ["Jumlah Pengajuan", money(item.jumlah)],
+
+    ["Bank / E-Wallet", item.bank],
+
+    ["Nama Rekening", item.namaRekening],
+
+    ["Nomor Rekening", item.noRekening],
+
+    ["Saldo Utama Ditahan", money(item.saldoUtamaDitahan)],
+
+    ["Bonus Ditahan", money(item.bonusSaldoDitahan)],
+
+    ["Minimum Pembelian", money(item.minimumPembelian)],
+
+    ["Saldo Utama Saat Pengajuan", money(item.saldoUtama)],
+
+    ["Bonus Saldo Saat Pengajuan", money(item.bonusSaldo)],
+
+    ["Dibuat Pada", dateFormat(item.dibuatPada)],
+
+    ["Waktu Pemeriksaan", dateFormat(item.waktuPembelianDiperiksa)],
+
+    ["Waktu Persetujuan", dateFormat(item.disetujuiPada)],
+
+    ["Waktu Penolakan", dateFormat(item.ditolakPada)],
+
+    ["Refund Diproses", item.refundProcessed ? "Ya" : "Belum"],
+
+    ["Alasan", item.alasan || "-"],
+
+    ["Alasan Penolakan", item.alasanPenolakan || "-"]
+
+  ];
+
+
+  document.getElementById("detailContent").innerHTML =
+
+    fields.map(([label, value]) => `
+
+      <div class="detail-box">
+
+        <small>${safe(label)}</small>
+
+        <strong>${safe(value ?? "-")}</strong>
+
+      </div>
+
+    `).join("");
+
+
+  document.getElementById("detailModal").classList.add("show");
+
+};
+
+
+window.closeModal = function() {
+
+  document.getElementById("detailModal").classList.remove("show");
+
+};
+
+
+/* =========================================================
+   ACTION CONFIRMATION
+========================================================= */
+
+window.openAction = function(type, index) {
+
+  const item = allRows[index];
+
+  if (!item) {
+
+    showToast("Data pengajuan tidak ditemukan.", "error");
+
+    return;
+
+  }
+
+
+  const status = getStatus(item);
+
+
+  if (type === "approve" && status !== "menunggu") {
+
+    showToast("Hanya pengajuan Menunggu yang dapat disetujui.", "warning");
+
+    return;
+
+  }
+
+
+  if (type === "reject" && status !== "menunggu") {
+
+    showToast("Hanya pengajuan Menunggu yang dapat ditolak.", "warning");
+
+    return;
+
+  }
+
+
+  if (type === "delete" && status === "menunggu") {
+
+    showToast(
+      "Pengajuan Menunggu tidak dapat dihapus. Selesaikan dengan Approve atau Reject terlebih dahulu.",
+      "warning"
+    );
+
+    return;
+
+  }
+
+
+  pendingAction = { type, index };
+
+
+  const title = document.getElementById("actionTitle");
+
+  const description = document.getElementById("actionDescription");
+
+  const confirmButton = document.getElementById("confirmActionButton");
+
+  const reasonWrap = document.getElementById("rejectReasonWrap");
+
+
+  reasonWrap.style.display =
+    type === "reject" ? "block" : "none";
+
+  document.getElementById("rejectReason").value = "";
+
+
+  if (type === "approve") {
+
+    title.textContent = "Setujui Pengajuan Bonus";
+
+    description.textContent =
+
+      `Apakah kamu yakin ingin menyetujui pengajuan ${money(item.jumlah)} dari pengguna ${item.usersid || item.uid}? Status akan berubah menjadi Disetujui. Persetujuan ini tidak melakukan transfer uang otomatis.`;
+
+    confirmButton.textContent = "Ya, Setujui";
+
+    confirmButton.className = "btn-primary";
+
+
+  } else if (type === "reject") {
+
+    title.textContent = "Tolak Pengajuan Bonus";
+
+    description.textContent =
+
+      `Pengajuan ${money(item.jumlah)} akan ditolak. Saldo utama sebesar ${money(item.saldoUtamaDitahan)} dan bonus sebesar ${money(item.bonusSaldoDitahan)} akan dikembalikan ke akun pengguna.`;
+
+    confirmButton.textContent = "Ya, Tolak dan Kembalikan Saldo";
+
+    confirmButton.className = "btn-danger";
+
+
+  } else {
+
+    title.textContent = "Hapus Riwayat Pengajuan";
+
+    description.textContent =
+
+      "Apakah kamu yakin ingin menghapus data pengajuan ini secara permanen? Tindakan ini tidak dapat dibatalkan.";
+
+    confirmButton.textContent = "Ya, Hapus";
+
+    confirmButton.className = "btn-danger";
+
+  }
+
+
+  document.getElementById("actionModal").classList.add("show");
+
+};
+
+
+window.closeActionModal = function() {
+
+  if (isProcessingAction) return;
+
+  document.getElementById("actionModal").classList.remove("show");
+
+  pendingAction = null;
+
+};
+
+
+/* =========================================================
+   APPROVE REQUEST
+========================================================= */
+
+async function approveRequest(item) {
+
+  const targetRef = requestRef(item);
+
+  const snapshot = await get(targetRef);
+
+
+  if (!snapshot.exists()) {
+
+    throw new Error("Data pengajuan tidak ditemukan.");
+
+  }
+
+
+  const current = snapshot.val();
+
+  const status = String(current.status || "Menunggu")
+    .trim()
+    .toLowerCase();
+
+
+  if (status !== "menunggu") {
+
+    throw new Error(
+      "Status Firebase saat ini: " + current.status
+    );
+
+  }
+
+
+  await update(targetRef, {
+
+    status: "Disetujui",
+
+    disetujuiPada: Date.now(),
+
+    disetujuiOleh: session.uid,
+
+    namaAdminPenyetuju:
+      session.nama || session.email || "Administrator"
+
+  });
+
+
+  // Lepaskan penanda pengajuan aktif pengguna.
+
+  const accountRef = userRef(item.uid);
+
+  const accountSnapshot = await get(accountRef);
+
+
+  if (accountSnapshot.exists()) {
+
+    const account = accountSnapshot.val();
+
+    if (
+
+      account.pengajuanBonusAktif === item.id ||
+
+      account.pengajuanBonusAktif === true
+
+    ) {
+
+      await update(accountRef, {
+
+        pengajuanBonusAktif: null
+
+      });
+
+    }
+
+  }
+
+
+  return true;
+
+}
+
+
+/* =========================================================
+   REJECT REQUEST + REFUND
+========================================================= */
+
+async function rejectRequest(item, reason) {
+
+  const targetRef = requestRef(item);
+
+
+  // Baca data pengajuan terbaru.
+
+  const snapshot = await get(targetRef);
+
+
+  if (!snapshot.exists()) {
+
+    throw new Error("Data pengajuan tidak ditemukan.");
+
+  }
+
+
+  const current = snapshot.val();
+
+  const status = String(current.status || "Menunggu")
+    .trim()
+    .toLowerCase();
+
+
+  if (status === "ditolak" && current.refundProcessed === true) {
+
+    throw new Error("Pengajuan sudah ditolak dan refund sudah selesai.");
+
+  }
+
+
+  if (status !== "menunggu" && status !== "ditolak") {
+
+    throw new Error(
+      "Status pengajuan saat ini: " + current.status
+    );
+
+  }
+
+
+  // Ubah status hanya jika masih Menunggu.
+
+  if (status === "menunggu") {
+
+    await update(targetRef, {
+
+      status: "Ditolak",
+
+      ditolakPada: Date.now(),
+
+      ditolakOleh: session.uid,
+
+      namaAdminPenolak:
+        session.nama || session.email || "Administrator",
+
+      alasanPenolakan:
+        reason || "Ditolak oleh administrator",
+
+      refundProcessed: false
+
+    });
+
+  }
+
+
+  // Baca ulang data pengajuan.
+
+  const latestSnapshot = await get(targetRef);
+
+
+  if (!latestSnapshot.exists()) {
+
+    throw new Error("Data pengajuan tidak ditemukan.");
+
+  }
+
+
+  const request = latestSnapshot.val();
+
+
+  if (request.refundProcessed === true) {
+
+    return true;
+
+  }
+
+
+  const mainRefund = Number(request.saldoUtamaDitahan || 0);
+
+  const bonusRefund = Number(request.bonusSaldoDitahan || 0);
+
+
+  if (
+
+    !Number.isFinite(mainRefund) ||
+
+    !Number.isFinite(bonusRefund) ||
+
+    mainRefund < 0 ||
+
+    bonusRefund < 0
+
+  ) {
+
+    throw new Error("Nominal refund tidak valid.");
+
+  }
+
+
+  // Baca akun pengguna.
+
+  const accountRef = userRef(item.uid);
+
+  const accountSnapshot = await get(accountRef);
+
+
+  if (!accountSnapshot.exists()) {
+
+    throw new Error("Data akun pengguna tidak ditemukan.");
+
+  }
+
+
+  const account = accountSnapshot.val();
+
+
+  if (!account.bonusRefundIds) {
+
+    account.bonusRefundIds = {};
+
+  }
+
+
+  // Cegah pengembalian saldo dua kali.
+
+  if (account.bonusRefundIds[item.id] !== true) {
+
+    const newSaldo =
+
+      Number(account.saldo || 0) + mainRefund;
+
+
+    const newBonusSaldo =
+
+      Number(account.bonusSaldo || 0) + bonusRefund;
+
+
+    const updates = {
+
+      saldo: newSaldo,
+
+      bonusSaldo: newBonusSaldo
+
+    };
+
+
+    updates[`bonusRefundIds/${item.id}`] = true;
+
+
+    if (
+
+      account.pengajuanBonusAktif === item.id ||
+
+      account.pengajuanBonusAktif === true
+
+    ) {
+
+      updates.pengajuanBonusAktif = null;
+
+    }
+
+
+    await update(accountRef, updates);
+
+  }
+
+
+  // Tandai refund selesai.
+
+  await update(targetRef, {
+
+    refundProcessed: true,
+
+    refundProcessedAt: Date.now(),
+
+    refundProcessedBy: session.uid
+
+  });
+
+
+  return true;
+
+}
+
+
+/* =========================================================
+   DELETE REQUEST
+========================================================= */
+
+async function deleteRequest(item) {
+
+  const targetRef = requestRef(item);
+
+
+  // Ambil data terbaru sebelum menghapus.
+
+  const snapshot = await get(targetRef);
+
+
+  if (!snapshot.exists()) {
+
+    throw new Error("Data pengajuan sudah tidak ditemukan.");
+
+  }
+
+
+  const latest = snapshot.val();
+
+  const status = String(latest.status || "Menunggu").toLowerCase();
+
+
+  if (status === "menunggu") {
+
+    throw new Error(
+      "Pengajuan Menunggu tidak boleh dihapus. Selesaikan terlebih dahulu."
+    );
+
+  }
+
+
+  if (status === "ditolak" && latest.refundProcessed !== true) {
+
+    throw new Error(
+      "Pengajuan ditolak tetapi refund belum selesai. Selesaikan refund sebelum menghapus."
+    );
+
+  }
+
+
+  await remove(targetRef);
+
+
+  return true;
+
+}
+
+
+/* =========================================================
+   EXECUTE ACTION
+========================================================= */
+
+window.confirmAction = async function() {
+
+  if (!pendingAction || isProcessingAction) return;
+
+
+  const { type, index } = pendingAction;
+
+  const item = allRows[index];
+
+
+  if (!item) {
+
+    showToast("Data pengajuan tidak ditemukan.", "error");
+
+    closeActionModal();
+
+    return;
+
+  }
+
+
+  const button = document.getElementById("confirmActionButton");
+
+  const originalText = button.textContent;
+
+
+  isProcessingAction = true;
+
+  button.disabled = true;
+
+  button.innerHTML =
+    '<i class="fa-solid fa-spinner fa-spin"></i> Memproses...';
+
+
+  try {
+
+    if (type === "approve") {
+
+      await approveRequest(item);
+
+
+      document.getElementById("actionModal").classList.remove("show");
+
+      pendingAction = null;
+
+
+      showToast(
+        "Pengajuan berhasil disetujui. Tidak ada transfer otomatis yang dilakukan.",
+        "success"
+      );
+
+
+    } else if (type === "reject") {
+
+      const reason = document
+        .getElementById("rejectReason")
+        .value
+        .trim();
+
+
+      await rejectRequest(item, reason);
+
+
+      document.getElementById("actionModal").classList.remove("show");
+
+      pendingAction = null;
+
+
+      showToast(
+        "Pengajuan ditolak dan pengembalian saldo berhasil diproses.",
+        "success"
+      );
+
+
+    } else if (type === "delete") {
+
+      await deleteRequest(item);
+
+
+      document.getElementById("actionModal").classList.remove("show");
+
+      pendingAction = null;
+
+
+      showToast("Data pengajuan berhasil dihapus.", "success");
+
+    }
+
+
+    await loadData();
+
+
+  } catch (error) {
+
+    console.error("Aksi pengajuan bonus gagal:", error);
+
+
+    showToast(
+      error.message || "Tindakan gagal. Periksa Firebase Database Rules.",
+      "error"
+    );
+
+
+  } finally {
+
+    isProcessingAction = false;
+
+    button.disabled = false;
+
+    button.textContent = originalText;
+
+  }
+
+};
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+window.toggleSidebar = function() {
+
+  document.getElementById("sidebar").classList.toggle("open");
+
+};
+
+
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+document.addEventListener("keydown", event => {
+
+  if (event.key === "Escape") {
+
+    if (!isProcessingAction) {
+
+      closeModal();
+
+      closeActionModal();
+
+    }
+
+  }
+
+});
+
+
+/* =========================================================
+   INITIAL LOAD
+========================================================= */
+
+loadData();
+
+</script>
+
+</body>
+</html>

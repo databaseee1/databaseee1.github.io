@@ -1,0 +1,1188 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#7138ed">
+<title>Detail Riwayat Pengajuan</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --primary: #7138ed;
+    --primary-dark: #5926c9;
+    --bg: #f7f7fb;
+    --text: #252238;
+    --muted: #9290a1;
+    --border: #efedf5;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+button {
+    font-family: inherit;
+}
+
+.page-wrapper {
+    width: 100%;
+    max-width: 650px;
+    margin: auto;
+    min-height: 100vh;
+    padding-bottom: 35px;
+}
+
+/* HEADER */
+
+.top-header {
+    background: #fff;
+    padding: 19px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.back-btn {
+    width: 39px;
+    height: 39px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: #fff;
+    color: var(--text);
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.header-title h2 {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.header-title p {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+}
+
+/* CONTENT */
+
+.content {
+    padding: 20px 16px;
+}
+
+.page-intro {
+    margin-bottom: 18px;
+}
+
+.page-intro h3 {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.page-intro p {
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 4px;
+}
+
+/* STATUS CARD */
+
+.status-card {
+    background: linear-gradient(135deg, #7138ed, #9569f5);
+    color: #fff;
+    padding: 23px 20px;
+    border-radius: 18px;
+    margin-bottom: 17px;
+    position: relative;
+    overflow: hidden;
+}
+
+.status-card::after {
+    content: "";
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.09);
+    right: -45px;
+    top: -65px;
+}
+
+.status-label {
+    font-size: 11px;
+    opacity: .85;
+}
+
+.status-amount {
+    font-size: 27px;
+    font-weight: 800;
+    margin: 7px 0 15px;
+    position: relative;
+    z-index: 1;
+    overflow-wrap: anywhere;
+}
+
+.status-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,.19);
+    border: 1px solid rgba(255,255,255,.25);
+    padding: 7px 12px;
+    border-radius: 30px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.status-id {
+    font-size: 10px;
+    opacity: .85;
+    overflow-wrap: anywhere;
+}
+
+/* CARD */
+
+.detail-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 19px 17px;
+    margin-bottom: 15px;
+    border: 1px solid var(--border);
+}
+
+.card-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 5px;
+}
+
+.heading-icon {
+    width: 35px;
+    height: 35px;
+    border-radius: 11px;
+    background: #f1ebff;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.card-heading h4 {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* DETAIL ROW */
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 12px 0;
+    border-bottom: 1px dashed #efedf5;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    font-size: 11px;
+    color: var(--muted);
+    flex: 1;
+}
+
+.detail-value {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text);
+    text-align: right;
+    flex: 1.2;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.detail-value.highlight {
+    color: var(--primary);
+}
+
+.detail-value.success {
+    color: #16a34a;
+}
+
+.detail-value.danger {
+    color: #ef4444;
+}
+
+/* ACCOUNT INFO */
+
+.account-box {
+    background: #faf9ff;
+    border: 1px solid #eee8ff;
+    padding: 14px;
+    border-radius: 12px;
+    margin-top: 10px;
+}
+
+.account-label {
+    font-size: 10px;
+    color: var(--muted);
+    margin-bottom: 5px;
+}
+
+.account-value {
+    font-size: 13px;
+    font-weight: 700;
+    word-break: break-word;
+}
+
+.copy-btn {
+    border: none;
+    background: #eee8ff;
+    color: var(--primary);
+    border-radius: 7px;
+    padding: 6px 9px;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* STATUS DESCRIPTION */
+
+.info-notice {
+    padding: 13px;
+    background: #f6f2ff;
+    border: 1px solid #e9ddff;
+    border-radius: 12px;
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    color: #6536c8;
+}
+
+.info-notice i {
+    margin-top: 2px;
+}
+
+.info-notice p {
+    font-size: 10px;
+    line-height: 1.8;
+}
+
+/* BUTTON */
+
+.bottom-actions {
+    margin-top: 20px;
+}
+
+.back-main-btn {
+    width: 100%;
+    border: none;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.back-main-btn:hover {
+    background: var(--primary-dark);
+}
+
+/* LOADING & ERROR */
+
+.loading-box,
+.error-box {
+    background: #fff;
+    border-radius: 16px;
+    padding: 45px 20px;
+    text-align: center;
+    border: 1px solid var(--border);
+}
+
+.loading-box i {
+    font-size: 27px;
+    color: var(--primary);
+    margin-bottom: 13px;
+}
+
+.error-box i {
+    font-size: 35px;
+    color: #ef4444;
+    margin-bottom: 13px;
+}
+
+.loading-box p,
+.error-box p {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.error-box h3 {
+    font-size: 15px;
+    margin-bottom: 7px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+@media (max-width: 380px) {
+    .content {
+        padding: 15px 12px;
+    }
+
+    .status-amount {
+        font-size: 23px;
+    }
+
+    .detail-card {
+        padding: 16px 13px;
+    }
+
+    .detail-row {
+        gap: 8px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <!-- HEADER -->
+    <header class="top-header">
+
+        <button class="back-btn" onclick="history.back()">
+            <i class="fa-solid fa-arrow-left"></i>
+        </button>
+
+        <div class="header-title">
+            <h2>Detail Riwayat Pengajuan</h2>
+            <p>Informasi lengkap pencairan bonus</p>
+        </div>
+
+    </header>
+
+    <main class="content">
+
+        <div class="page-intro">
+            <h3>Detail Transaksi</h3>
+            <p>Berikut merupakan informasi lengkap pengajuan pencairan kamu.</p>
+        </div>
+
+        <div id="loadingBox" class="loading-box">
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            <p>Memuat detail pengajuan...</p>
+        </div>
+
+        <div id="errorBox" class="error-box hidden">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <h3 id="errorTitle">Data Tidak Ditemukan</h3>
+            <p id="errorMessage">Riwayat pengajuan tidak tersedia.</p>
+        </div>
+
+        <div id="detailContent" class="hidden">
+
+            <!-- STATUS DAN NOMINAL -->
+            <section class="status-card">
+
+                <div class="status-label">Total Pengajuan Pencairan</div>
+
+                <div class="status-amount" id="totalAmount">Rp0</div>
+
+                <div class="status-bottom">
+
+                    <span class="status-badge" id="statusBadge">
+                        <i class="fa-solid fa-clock"></i>
+                        Menunggu
+                    </span>
+
+                    <span class="status-id" id="transactionId">ID: -</span>
+
+                </div>
+
+            </section>
+
+            <!-- INFORMASI PENGAJUAN -->
+            <section class="detail-card">
+
+                <div class="card-heading">
+                    <div class="heading-icon">
+                        <i class="fa-solid fa-file-invoice"></i>
+                    </div>
+                    <h4>Informasi Pengajuan</h4>
+                </div>
+
+                <div id="applicationDetails"></div>
+
+            </section>
+
+            <!-- INFORMASI REKENING -->
+            <section class="detail-card">
+
+                <div class="card-heading">
+                    <div class="heading-icon">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </div>
+                    <h4>Informasi Rekening Tujuan</h4>
+                </div>
+
+                <div id="accountDetails"></div>
+
+                <div class="account-box">
+                    <div class="account-label">Nomor Rekening</div>
+
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+
+                        <div class="account-value" id="accountNumber">-</div>
+
+                        <button class="copy-btn" id="copyAccount">
+                            <i class="fa-regular fa-copy"></i>
+                            Salin
+                        </button>
+
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- RINCIAN SALDO -->
+            <section class="detail-card">
+
+                <div class="card-heading">
+                    <div class="heading-icon">
+                        <i class="fa-solid fa-wallet"></i>
+                    </div>
+                    <h4>Rincian Saldo</h4>
+                </div>
+
+                <div id="balanceDetails"></div>
+
+            </section>
+
+            <!-- PEMERIKSAAN TRANSAKSI -->
+            <section class="detail-card" id="purchaseCard">
+
+                <div class="card-heading">
+                    <div class="heading-icon">
+                        <i class="fa-solid fa-receipt"></i>
+                    </div>
+                    <h4>Persyaratan Pembelian</h4>
+                </div>
+
+                <div id="purchaseDetails"></div>
+
+            </section>
+
+            <!-- INFORMASI STATUS -->
+            <section class="detail-card">
+
+                <div class="card-heading">
+                    <div class="heading-icon">
+                        <i class="fa-solid fa-circle-info"></i>
+                    </div>
+                    <h4>Informasi Status</h4>
+                </div>
+
+                <div id="statusDetails"></div>
+
+                <div class="info-notice" id="statusNotice">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <p id="statusDescription">
+                        Informasi status pengajuan.
+                    </p>
+                </div>
+
+            </section>
+
+            <!-- DATA TAMBAHAN -->
+            <section class="detail-card hidden" id="additionalCard">
+
+                <div class="card-heading">
+                    <div class="heading-icon">
+                        <i class="fa-solid fa-list-check"></i>
+                    </div>
+                    <h4>Informasi Tambahan</h4>
+                </div>
+
+                <div id="additionalDetails"></div>
+
+            </section>
+
+            <div class="bottom-actions">
+                <button class="back-main-btn" onclick="history.back()">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Kembali ke Riwayat
+                </button>
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getDatabase,
+    ref,
+    get
+} from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+/* =====================================
+   FIREBASE CONFIGURATION
+===================================== */
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+    authDomain: "users-96dc5.firebaseapp.com",
+    databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "users-96dc5",
+    storageBucket: "users-96dc5.appspot.com",
+    messagingSenderId: "483322415863",
+    appId: "1:483322415863:web:1397a8f2e808e66ad9e1f2"
+};
+
+const app = initializeApp(firebaseConfig, "BonusRiwayatDetailApp");
+const db = getDatabase(app);
+
+
+/* =====================================
+   ELEMENTS
+===================================== */
+
+const loadingBox = document.getElementById("loadingBox");
+const errorBox = document.getElementById("errorBox");
+const detailContent = document.getElementById("detailContent");
+
+
+/* =====================================
+   USER & ID PENGAJUAN
+===================================== */
+
+const usersid = localStorage.getItem("usersid");
+
+const params = new URLSearchParams(window.location.search);
+const requestId = params.get("id");
+
+
+/* =====================================
+   FORMAT RUPIAH
+===================================== */
+
+function formatRupiah(value) {
+
+    const number = Number(value || 0);
+
+    return new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+        maximumFractionDigits: 0
+    }).format(number);
+
+}
+
+
+/* =====================================
+   FORMAT TANGGAL
+===================================== */
+
+function formatDate(value) {
+
+    if (!value) return "-";
+
+    let date;
+
+    if (typeof value === "number" || !isNaN(Number(value))) {
+        date = new Date(Number(value));
+    } else {
+        date = new Date(value);
+    }
+
+    if (isNaN(date.getTime())) return String(value);
+
+    return new Intl.DateTimeFormat("id-ID", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+    }).format(date) + " WIB";
+
+}
+
+
+/* =====================================
+   ESCAPE HTML
+===================================== */
+
+function escapeHTML(value) {
+
+    return String(value ?? "-").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+    })[char]);
+
+}
+
+
+/* =====================================
+   LABEL FIELD FIREBASE
+===================================== */
+
+const fieldLabels = {
+
+    bank: "Bank Tujuan",
+    namaRekening: "Nama Pemilik Rekening",
+    noRekening: "Nomor Rekening",
+    jumlah: "Jumlah Pencairan",
+
+    status: "Status Pengajuan",
+    dibuatPada: "Tanggal Pengajuan",
+
+    saldoUtamaDitahan: "Saldo Utama Ditahan",
+    bonusSaldoDitahan: "Saldo Bonus Ditahan",
+
+    minimumPembelian: "Minimum Pembelian",
+    waktuPembelianDiperiksa: "Waktu Pemeriksaan Pembelian",
+
+    alasan: "Alasan",
+    alasanPenolakan: "Alasan Penolakan",
+    keterangan: "Keterangan",
+    catatan: "Catatan Admin",
+    pesanAdmin: "Pesan Admin",
+
+    updatedAt: "Terakhir Diperbarui",
+    diprosesPada: "Tanggal Diproses",
+    disetujuiPada: "Tanggal Persetujuan",
+    ditolakPada: "Tanggal Penolakan",
+    selesaiPada: "Tanggal Selesai",
+
+    refundProcessed: "Pengembalian Saldo Diproses",
+    refundProcessedAt: "Waktu Pengembalian Saldo",
+    refundId: "ID Pengembalian Saldo"
+
+};
+
+
+/* =====================================
+   FIELD FORMAT
+===================================== */
+
+const moneyFields = [
+    "jumlah",
+    "saldoUtamaDitahan",
+    "bonusSaldoDitahan",
+    "minimumPembelian"
+];
+
+const dateFields = [
+    "dibuatPada",
+    "waktuPembelianDiperiksa",
+    "updatedAt",
+    "diprosesPada",
+    "disetujuiPada",
+    "ditolakPada",
+    "selesaiPada",
+    "refundProcessedAt"
+];
+
+const excludedFields = [
+    "uid",
+    "usersid",
+    "userId",
+    "email"
+];
+
+
+/* =====================================
+   FORMAT NILAI
+===================================== */
+
+function formatField(key, value) {
+
+    if (value === null || value === undefined || value === "") {
+        return "-";
+    }
+
+    if (moneyFields.includes(key)) {
+        return formatRupiah(value);
+    }
+
+    if (dateFields.includes(key)) {
+        return formatDate(value);
+    }
+
+    if (typeof value === "boolean") {
+        return value ? "Ya" : "Tidak";
+    }
+
+    if (typeof value === "object") {
+        return JSON.stringify(value, null, 2);
+    }
+
+    return String(value);
+
+}
+
+
+/* =====================================
+   CREATE DETAIL ROW
+===================================== */
+
+function createRow(label, value, className = "") {
+
+    return `
+        <div class="detail-row">
+
+            <div class="detail-label">
+                ${escapeHTML(label)}
+            </div>
+
+            <div class="detail-value ${className}">
+                ${escapeHTML(value)}
+            </div>
+
+        </div>
+    `;
+
+}
+
+
+/* =====================================
+   STATUS CONFIGURATION
+===================================== */
+
+function getStatusConfig(status) {
+
+    const normalized = String(status || "Menunggu").toLowerCase();
+
+    if (
+        normalized === "disetujui" ||
+        normalized === "berhasil" ||
+        normalized === "approved"
+    ) {
+        return {
+            label: "Disetujui",
+            icon: "fa-circle-check",
+            color: "#16a34a",
+            bg: "#e7f9ed",
+            description: "Pengajuan pencairan kamu telah disetujui. Silakan periksa rekening tujuan untuk memastikan dana telah diterima."
+        };
+    }
+
+    if (
+        normalized === "ditolak" ||
+        normalized === "rejected"
+    ) {
+        return {
+            label: "Ditolak",
+            icon: "fa-circle-xmark",
+            color: "#ef4444",
+            bg: "#ffe9e9",
+            description: "Pengajuan pencairan kamu ditolak. Periksa alasan penolakan dan informasi pengembalian saldo di bawah ini."
+        };
+    }
+
+    if (
+        normalized === "berhasil"
+    ) {
+        return {
+            label: "Berhasil",
+            icon: "fa-circle-check",
+            color: "#16a34a",
+            bg: "#e7f9ed",
+            description: "Pengajuan pencairan telah berhasil."
+        };
+    }
+
+    return {
+        label: status || "Menunggu",
+        icon: "fa-clock",
+        color: "#d97706",
+        bg: "#fff5df",
+        description: "Pengajuan kamu sedang menunggu proses pemeriksaan dan persetujuan admin."
+    };
+
+}
+
+
+/* =====================================
+   LOAD DETAIL
+===================================== */
+
+async function loadBonusDetail() {
+
+    try {
+
+        if (!usersid) {
+
+            window.location.replace("login_topup.html");
+            return;
+
+        }
+
+        if (!requestId) {
+
+            throw new Error("ID pengajuan tidak ditemukan. Silakan buka detail melalui daftar riwayat.");
+
+        }
+
+        /*
+         * Ambil hanya data milik pengguna yang sedang login.
+         */
+
+        const requestRef = ref(
+            db,
+            `pengajuanbonus/${usersid}/${requestId}`
+        );
+
+        const snapshot = await get(requestRef);
+
+        if (!snapshot.exists()) {
+
+            throw new Error("Riwayat pengajuan tidak ditemukan atau sudah tidak tersedia.");
+
+        }
+
+        const item = snapshot.val();
+
+        renderBonusDetail(item);
+
+        loadingBox.classList.add("hidden");
+        detailContent.classList.remove("hidden");
+
+    } catch (error) {
+
+        console.error("Gagal memuat detail pengajuan:", error);
+
+        loadingBox.classList.add("hidden");
+        errorBox.classList.remove("hidden");
+
+        document.getElementById("errorTitle").textContent =
+            "Detail Tidak Tersedia";
+
+        document.getElementById("errorMessage").textContent =
+            error.message || "Terjadi kesalahan ketika mengambil data.";
+
+    }
+
+}
+
+
+/* =====================================
+   RENDER DETAIL PENGAJUAN
+===================================== */
+
+function renderBonusDetail(item) {
+
+    const status = getStatusConfig(item.status);
+
+    /* NOMINAL */
+
+    document.getElementById("totalAmount").textContent =
+        formatRupiah(item.jumlah);
+
+    document.getElementById("transactionId").textContent =
+        "ID: " + requestId;
+
+
+    /* STATUS BADGE */
+
+    const badge = document.getElementById("statusBadge");
+
+    badge.innerHTML = `
+        <i class="fa-solid ${status.icon}"></i>
+        ${escapeHTML(status.label)}
+    `;
+
+    badge.style.background = status.bg;
+    badge.style.color = status.color;
+    badge.style.borderColor = status.color + "30";
+
+
+    /* INFORMASI PENGAJUAN */
+
+    let applicationHTML = "";
+
+    applicationHTML += createRow(
+        "ID Pengajuan",
+        requestId,
+        "highlight"
+    );
+
+    applicationHTML += createRow(
+        "Tanggal Pengajuan",
+        formatDate(item.dibuatPada)
+    );
+
+    applicationHTML += createRow(
+        "Jumlah Pencairan",
+        formatRupiah(item.jumlah),
+        "highlight"
+    );
+
+    applicationHTML += createRow(
+        "Status",
+        status.label,
+        status.color === "#16a34a" ? "success" :
+        status.color === "#ef4444" ? "danger" : ""
+    );
+
+    document.getElementById("applicationDetails").innerHTML =
+        applicationHTML;
+
+
+    /* INFORMASI REKENING */
+
+    document.getElementById("accountDetails").innerHTML = `
+        ${createRow("Bank Tujuan", item.bank || "-")}
+        ${createRow("Nama Pemilik Rekening", item.namaRekening || "-")}
+    `;
+
+    document.getElementById("accountNumber").textContent =
+        item.noRekening || "-";
+
+    document.getElementById("copyAccount").onclick = async () => {
+
+        if (!item.noRekening) return;
+
+        try {
+
+            await navigator.clipboard.writeText(String(item.noRekening));
+
+            const button = document.getElementById("copyAccount");
+
+            button.innerHTML = `
+                <i class="fa-solid fa-check"></i>
+                Tersalin
+            `;
+
+            setTimeout(() => {
+                button.innerHTML = `
+                    <i class="fa-regular fa-copy"></i>
+                    Salin
+                `;
+            }, 1800);
+
+        } catch (error) {
+
+            alert("Tidak dapat menyalin nomor rekening.");
+
+        }
+
+    };
+
+
+    /* RINCIAN SALDO */
+
+    let balanceHTML = "";
+
+    balanceHTML += createRow(
+        "Saldo Utama Ditahan",
+        formatRupiah(item.saldoUtamaDitahan)
+    );
+
+    balanceHTML += createRow(
+        "Saldo Bonus Ditahan",
+        formatRupiah(item.bonusSaldoDitahan)
+    );
+
+    balanceHTML += createRow(
+        "Total Pengajuan",
+        formatRupiah(item.jumlah),
+        "highlight"
+    );
+
+    document.getElementById("balanceDetails").innerHTML =
+        balanceHTML;
+
+
+    /* PEMERIKSAAN PEMBELIAN */
+
+    const purchaseFields = [
+        "minimumPembelian",
+        "waktuPembelianDiperiksa"
+    ];
+
+    let purchaseHTML = "";
+
+    purchaseFields.forEach(key => {
+
+        if (item[key] !== undefined && item[key] !== null) {
+
+            purchaseHTML += createRow(
+                fieldLabels[key] || key,
+                formatField(key, item[key])
+            );
+
+        }
+
+    });
+
+    if (!purchaseHTML) {
+
+        purchaseHTML = createRow(
+            "Informasi",
+            "Tidak ada data pemeriksaan pembelian."
+        );
+
+    }
+
+    document.getElementById("purchaseDetails").innerHTML =
+        purchaseHTML;
+
+
+    /* INFORMASI STATUS */
+
+    let statusHTML = "";
+
+    const statusFields = [
+        "diprosesPada",
+        "disetujuiPada",
+        "ditolakPada",
+        "selesaiPada",
+        "updatedAt",
+        "refundProcessed",
+        "refundProcessedAt",
+        "refundId",
+        "alasanPenolakan",
+        "alasan",
+        "keterangan",
+        "catatan",
+        "pesanAdmin"
+    ];
+
+    statusFields.forEach(key => {
+
+        if (item[key] !== undefined && item[key] !== null) {
+
+            statusHTML += createRow(
+                fieldLabels[key] || key,
+                formatField(key, item[key])
+            );
+
+        }
+
+    });
+
+    document.getElementById("statusDetails").innerHTML =
+        statusHTML || createRow("Informasi", "Belum ada informasi tambahan.");
+
+
+    document.getElementById("statusDescription").textContent =
+        status.description;
+
+
+    /* INFORMASI TAMBAHAN */
+
+    const knownFields = [
+        "bank",
+        "namaRekening",
+        "noRekening",
+        "jumlah",
+        "status",
+        "dibuatPada",
+        "saldoUtamaDitahan",
+        "bonusSaldoDitahan",
+        "minimumPembelian",
+        "waktuPembelianDiperiksa",
+        ...statusFields
+    ];
+
+    let additionalHTML = "";
+
+    Object.entries(item).forEach(([key, value]) => {
+
+        if (
+            knownFields.includes(key) ||
+            excludedFields.includes(key) ||
+            key.toLowerCase().includes("password")
+        ) {
+            return;
+        }
+
+        if (value === null || value === undefined) return;
+
+        const label = fieldLabels[key] ||
+            key.replace(/([A-Z])/g, " $1")
+               .replace(/^./, char => char.toUpperCase());
+
+        additionalHTML += createRow(
+            label,
+            formatField(key, value)
+        );
+
+    });
+
+    const additionalCard = document.getElementById("additionalCard");
+
+    if (additionalHTML) {
+
+        document.getElementById("additionalDetails").innerHTML =
+            additionalHTML;
+
+        additionalCard.classList.remove("hidden");
+
+    } else {
+
+        additionalCard.classList.add("hidden");
+        
+    }
+
+}
+
+
+/* =====================================
+   START
+===================================== */
+
+loadBonusDetail();
+
+</script>
+
+</body>
+</html>
