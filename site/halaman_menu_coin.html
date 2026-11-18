@@ -822,7 +822,7 @@ font-family:Poppins,Arial;
 .bonus-popup-overlay {
     position: absolute;
     inset: 0;
-    background: rgb(255 255 255 / 9%);
+    background: rgb(0 0 0 / 71%);
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(7px);
 }
@@ -950,6 +950,239 @@ font-family:Poppins,Arial;
         font-size: 15px;
     }
 
+}
+
+
+
+/* =========================================
+   BONUS EVENT HEADLINE
+========================================= */
+
+.bonus-popup-content {
+    flex-direction: column;
+    gap: 17px;
+    width: min(760px, 100%);
+}
+
+.bonus-popup-header {
+    width: 100%;
+    text-align: center;
+    padding: 5px 15px 0;
+    color: #fff;
+}
+
+.bonus-popup-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 15px;
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 30px;
+    background: rgba(255,255,255,.12);
+    color: #ffe58a;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+
+.bonus-popup-header h2 {
+    margin: 0;
+    font-size: clamp(25px, 5vw, 42px);
+    line-height: 1.15;
+    font-weight: 900;
+    letter-spacing: -.8px;
+    color: #fff;
+    text-shadow: 0 4px 18px rgba(0,0,0,.35);
+}
+
+.bonus-popup-header h2 span {
+    display: block;
+    color: #ffdf65;
+}
+
+.bonus-popup-header p {
+    margin: 10px 0 0;
+    color: rgba(255,255,255,.88);
+    font-size: clamp(12px, 2vw, 15px);
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+.bonus-popup-header p strong {
+    color: #ffe477;
+    font-weight: 900;
+}
+
+.bonus-popup-line {
+    width: 65px;
+    height: 3px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #ffdf65, #fff);
+    margin: 15px auto 0;
+}
+
+/* GAMBAR */
+.bonus-popup-image {
+    cursor: pointer;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+
+    .bonus-popup-content {
+        gap: 13px;
+    }
+
+    .bonus-popup-header {
+        padding: 8px 5px 0;
+    }
+
+    .bonus-popup-label {
+        font-size: 9px;
+        padding: 6px 12px;
+        margin-bottom: 9px;
+    }
+
+    .bonus-popup-header h2 {
+        font-size: 27px;
+    }
+
+    .bonus-popup-header p {
+        font-size: 12px;
+        margin-top: 7px;
+    }
+
+    .bonus-popup-line {
+        margin-top: 11px;
+    }
+
+}
+
+
+/* =========================================
+   ANIMATED BONUS PRIZE BOX
+========================================= */
+
+.bonus-prize-box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    width: fit-content;
+    max-width: 100%;
+    margin: 18px auto 5px;
+    padding: 13px 30px;
+
+    border: 2px solid #ffe36b;
+    border-radius: 16px;
+
+    background: linear-gradient(
+        135deg,
+        #7a1600,
+        #d62800,
+        #ff7b00,
+        #a51b00
+    );
+
+    background-size: 250% 250%;
+
+    box-shadow:
+        0 0 12px rgba(255, 196, 0, .7),
+        0 0 30px rgba(255, 100, 0, .45),
+        inset 0 0 15px rgba(255,255,255,.15);
+
+    animation:
+        prizeGlow 2s ease-in-out infinite,
+        prizeGradient 5s ease infinite;
+}
+
+.bonus-prize-caption {
+    color: #fff2a3;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.bonus-prize-box strong {
+    display: block;
+
+    color: #fff36a;
+    font-size: clamp(30px, 6vw, 45px);
+    font-weight: 1000;
+    line-height: 1.2;
+    letter-spacing: -1px;
+
+    animation: prizeTextPulse 1.5s ease-in-out infinite;
+}
+
+.bonus-prize-footer {
+    color: #fff;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+/* BOX GLOW */
+@keyframes prizeGlow {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow:
+            0 0 12px rgba(255,196,0,.5),
+            0 0 25px rgba(255,100,0,.3);
+    }
+
+    50% {
+        transform: scale(1.045);
+        box-shadow:
+            0 0 20px rgba(255,230,0,.9),
+            0 0 45px rgba(255,100,0,.7);
+    }
+}
+
+/* GRADIENT */
+@keyframes prizeGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* NOMINAL BERKEDIP HALUS */
+@keyframes prizeTextPulse {
+    0%, 100% {
+        opacity: 1;
+        filter: brightness(1);
+    }
+
+    50% {
+        opacity: .85;
+        filter: brightness(1.4);
+    }
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+    .bonus-prize-box {
+        padding: 11px 22px;
+        margin-top: 14px;
+        border-radius: 13px;
+    }
+
+    .bonus-prize-box strong {
+        font-size: 34px;
+    }
 }
 </style>
 </head>
@@ -1970,6 +2203,10 @@ document.addEventListener("DOMContentLoaded", function () {
 <!-- =========================================
      POPUP BONUS EVENT
 ========================================= -->
+
+<!-- =========================================
+     POPUP BONUS EVENT
+========================================= -->
 <div id="bonusEventPopup" class="bonus-popup">
 
     <div class="bonus-popup-overlay"></div>
@@ -1980,6 +2217,39 @@ document.addEventListener("DOMContentLoaded", function () {
             <i class="fa-solid fa-xmark"></i>
         </button>
 
+        <!-- HEADLINE BONUS -->
+        <div class="bonus-popup-header">
+            <span class="bonus-popup-label">
+                <i class="fa-solid fa-gift"></i>
+                SPECIAL BONUS EVENT
+            </span>
+
+            <h2>
+                AYOOO <span>TOP-UP SEKARANG!</span>
+            </h2>
+
+            <p>
+                Dapatkan Perkalian <strong>BONUS UANG</strong>
+                dan nikmati keuntungan lebih besar!
+            </p><br><div class="bonus-prize-box">
+    <span class="bonus-prize-caption">
+        <i class="fa-solid fa-trophy"></i>
+        TOTAL BONUS HADIAH
+    </span>
+
+    <strong>Rp 10.000.000</strong>
+
+    <span class="bonus-prize-footer">
+        <i class="fa-solid fa-sparkles"></i>
+        KESEMPATAN BONUS MENANTIMU!
+        <i class="fa-solid fa-sparkles"></i>
+    </span>
+</div>
+
+            <div class="bonus-popup-line"></div>
+        </div>
+
+        <!-- GAMBAR EVENT -->
         <img
             src="https://res.cloudinary.com/yiqzinpc/image/upload/f_auto,q_auto:eco,w_1080,c_limit/v1794986362/u51yc7ktq17rm4pwfvye.png"
             alt="Bonus Event Top Up"
