@@ -1,435 +1,1343 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-<title>Pembayaran</title>
+<meta name="theme-color" content="#5c27fe">
+<title>Pembayaran - Top Up</title>
 
-<link
-href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-
-
-
-
-*{
--webkit-tap-highlight-color: transparent;
+:root{
+    --primary:#5c27fe;
+    --primary-dark:#4818db;
+    --primary-light:#f3efff;
+    --text:#202033;
+    --muted:#85859a;
+    --border:#eceaf3;
+    --background:#f5f5fa;
+    --green:#16a36a;
 }
 
-button,
-a,
-img,
-div{
--webkit-tap-highlight-color: transparent;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+    -webkit-tap-highlight-color:transparent;
 }
 
 body{
-user-select:none;
--webkit-user-select:none;
+    background:var(--background);
+    color:var(--text);
+    min-height:100vh;
+    user-select:none;
+    -webkit-user-select:none;
 }
 
 img{
--webkit-user-drag:none;
+    -webkit-user-drag:none;
 }
 
-input,
-textarea,
-select{
-user-select:text;
--webkit-user-select:text;
+button{
+    font-family:inherit;
+    cursor:pointer;
 }
 
-
-
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Poppins,sans-serif;
-}
-
-body{
-background:#f5f5f5;
-}
+/* HEADER */
 
 .header{
-background:#5c27fe;
-color:#fff;
-padding:18px;
-font-size:20px;
-font-weight:700;
-position:sticky;
-top:0;
+    background:linear-gradient(135deg,#5c27fe,#7952ff);
+    color:#fff;
+    padding:19px 20px;
+    position:sticky;
+    top:0;
+    z-index:50;
+    box-shadow:0 4px 18px rgba(92,39,254,.18);
 }
+
+.header-inner{
+    max-width:650px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    gap:13px;
+}
+
+.header-icon{
+    width:42px;
+    height:42px;
+    background:rgba(255,255,255,.17);
+    border:1px solid rgba(255,255,255,.2);
+    border-radius:13px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:18px;
+}
+
+.header-text h2{
+    font-size:17px;
+    font-weight:700;
+}
+
+.header-text p{
+    font-size:11px;
+    opacity:.85;
+    margin-top:2px;
+}
+
+/* CONTAINER */
 
 .container{
-max-width:700px;
-margin:auto;
-padding:20px;
+    max-width:650px;
+    margin:auto;
+    padding:19px 15px 45px;
 }
+
+/* INTRO */
+
+.page-intro{
+    margin:3px 2px 18px;
+}
+
+.page-intro h2{
+    font-size:20px;
+    font-weight:800;
+    color:#29213d;
+}
+
+.page-intro p{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:4px;
+}
+
+/* CARD / RECEIPT */
 
 .card{
-background:#fff;
-border-radius:10px;
-padding:20px;
-margin-bottom:20px;
-
+    background:#fff;
+    border-radius:19px;
+    margin-bottom:17px;
+    overflow:hidden;
+    border:1px solid #efedf5;
+    box-shadow:0 5px 20px rgba(35,20,75,.045);
 }
 
-.title{
-font-size:17px;
-font-weight:700;
-margin-bottom:20px;
+.card-header{
+    padding:17px 18px 14px;
+    display:flex;
+    align-items:center;
+    gap:11px;
 }
 
-.bank{
-display:flex;
-align-items:center;
-gap:15px;
+.card-icon{
+    width:38px;
+    height:38px;
+    border-radius:12px;
+    background:var(--primary-light);
+    color:var(--primary);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:15px;
+    flex-shrink:0;
 }
 
-.bank img{
-width:70px;
-height:70px;
-object-fit:contain;
+.card-heading h3{
+    font-size:14px;
+    font-weight:700;
 }
 
-.rekening{
-background:#f8f8f8;
-padding:15px;
-border-radius:15px;
-margin-top:20px;
+.card-heading p{
+    font-size:10px;
+    color:var(--muted);
+    margin-top:2px;
 }
 
-.rekening div{
-margin-bottom:12px;
+.card-body{
+    padding:0 18px 19px;
 }
 
-.nomor{
-font-size:25px;
-font-weight:700;
-color:#5c27fe;
-word-break:break-all;
+/* RECEIPT DIVIDER */
+
+.receipt-divider{
+    border-top:1px dashed #dcd8e8;
+    margin:0 18px 16px;
 }
+
+.receipt-label{
+    font-size:10px;
+    font-weight:600;
+    color:var(--muted);
+    letter-spacing:.7px;
+    text-transform:uppercase;
+}
+
+/* BANK */
+
+.bank-info{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    padding:14px;
+    background:#faf9ff;
+    border:1px solid #f0ecff;
+    border-radius:14px;
+}
+
+.bank-logo{
+    width:55px;
+    height:55px;
+    border-radius:12px;
+    background:#fff;
+    border:1px solid #eeeaf8;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    flex-shrink:0;
+}
+
+.bank-logo img{
+    width:85%;
+    height:85%;
+    object-fit:contain;
+}
+
+.bank-details{
+    min-width:0;
+}
+
+.bank-details h3{
+    font-size:15px;
+    font-weight:800;
+    color:#28223b;
+}
+
+.bank-details p{
+    font-size:11px;
+    color:var(--muted);
+    margin-top:3px;
+    word-break:break-word;
+}
+
+/* ACCOUNT */
+
+.account-box{
+    margin-top:15px;
+    background:#fff;
+    border:1px dashed #cfc3ff;
+    border-radius:14px;
+    padding:15px;
+}
+
+.account-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+}
+
+.account-number{
+    font-size:23px;
+    color:var(--primary);
+    font-weight:800;
+    letter-spacing:.5px;
+    word-break:break-all;
+    margin-top:7px;
+}
+
+.account-name{
+    font-size:11px;
+    color:var(--muted);
+    margin-top:5px;
+}
+
+.copy-btn{
+    border:none;
+    background:var(--primary-light);
+    color:var(--primary);
+    padding:10px 13px;
+    border-radius:10px;
+    font-size:11px;
+    font-weight:700;
+    white-space:nowrap;
+}
+
+.copy-btn:active{
+    transform:scale(.96);
+}
+
+/* BUTTON */
 
 .btn{
-width:100%;
-border:none;
-background:#5c27fe;
-color:#fff;
-padding:16px;
-border-radius:15px;
-font-size:16px;
-font-weight:700;
-cursor:pointer;
-margin-top:15px;
+    width:100%;
+    border:none;
+    background:linear-gradient(135deg,#5c27fe,#7952ff);
+    color:#fff;
+    padding:15px;
+    border-radius:13px;
+    font-size:13px;
+    font-weight:700;
+    margin-top:15px;
+    box-shadow:0 5px 13px rgba(92,39,254,.17);
+}
+
+.btn:active{
+    transform:scale(.98);
+}
+
+/* DETAIL RECEIPT */
+
+#detailPesanan{
+    position:relative;
+}
+
+.receipt-top{
+    text-align:center;
+    padding:20px 18px 17px;
+    background:linear-gradient(135deg,#5c27fe,#7952ff);
+    color:#fff;
+}
+
+.receipt-brand-icon{
+    width:45px;
+    height:45px;
+    margin:0 auto 9px;
+    background:rgba(255,255,255,.18);
+    border:1px solid rgba(255,255,255,.25);
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:19px;
+}
+
+.receipt-top h3{
+    font-size:16px;
+    font-weight:800;
+}
+
+.receipt-top p{
+    font-size:10px;
+    opacity:.85;
+    margin-top:4px;
+}
+
+.receipt-content{
+    padding:19px 18px 18px;
+}
+
+.receipt-status{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+    background:#fff7e8;
+    color:#bd7910;
+    border:1px solid #ffebc4;
+    padding:9px;
+    border-radius:10px;
+    font-size:10px;
+    font-weight:700;
+    margin-bottom:18px;
 }
 
 .summary{
-display:flex;
-justify-content:space-between;
-margin-bottom:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:15px;
+    padding:10px 0;
+    border-bottom:1px dashed #eae7f1;
+}
+
+.summary:last-of-type{
+    border-bottom:none;
+}
+
+.summary-label{
+    color:var(--muted);
+    font-size:11px;
+    flex-shrink:0;
+}
+
+.summary-value{
+    font-size:11px;
+    font-weight:700;
+    text-align:right;
+    word-break:break-word;
+    max-width:62%;
+}
+
+.total-area{
+    margin-top:15px;
+    padding:16px;
+    background:var(--primary-light);
+    border:1px dashed #c9baff;
+    border-radius:13px;
+}
+
+.total-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.total-label{
+    font-size:12px;
+    color:#665a83;
+    font-weight:600;
 }
 
 .total{
-font-size:22px;
-font-weight:700;
-color:#5c27fe;
+    font-size:21px;
+    font-weight:800;
+    color:var(--primary);
+    text-align:right;
+    word-break:break-word;
 }
 
-.invoice{
-background:#f8f8f8;
-padding:12px;
-border-radius:12px;
-word-break:break-all;
+.receipt-bottom{
+    border-top:1px dashed #dcd8e8;
+    margin-top:17px;
+    padding-top:14px;
+    text-align:center;
+    color:var(--muted);
+    font-size:10px;
+    line-height:1.8;
 }
+
+.btn-pdf{
+    width:100%;
+    border:none;
+    background:#202033;
+    color:#fff;
+    padding:14px;
+    border-radius:12px;
+    font-size:12px;
+    font-weight:700;
+    margin-top:17px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+}
+
+.btn-pdf:active{
+    transform:scale(.98);
+}
+
+/* PROCESS */
+
+.process-text{
+    color:#666477;
+    font-size:11px;
+    line-height:1.9;
+}
+
+.process-list{
+    margin-top:15px;
+    display:grid;
+    gap:10px;
+}
+
+.process-item{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:12px;
+    background:#faf9ff;
+    border:1px solid #f0edfa;
+    border-radius:12px;
+}
+
+.process-check{
+    width:27px;
+    height:27px;
+    border-radius:9px;
+    background:#e8fff2;
+    color:#16a36a;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:11px;
+    flex-shrink:0;
+}
+
+.process-item span{
+    font-size:11px;
+    font-weight:600;
+    color:#514b65;
+}
+
+/* INVOICE */
+
+.invoice-box{
+    margin:0 18px 18px;
+    padding:17px;
+    text-align:center;
+    background:#faf9ff;
+    border:1px dashed #cfc3ff;
+    border-radius:14px;
+}
+
+.invoice-code{
+    color:var(--primary);
+    font-size:17px;
+    font-weight:800;
+    letter-spacing:.6px;
+    word-break:break-all;
+    margin-top:7px;
+}
+
+.invoice-caption{
+    font-size:10px;
+    color:var(--muted);
+    margin-top:5px;
+}
+
+/* TOAST */
+
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:25px;
+    transform:translate(-50%,20px);
+    background:#252238;
+    color:#fff;
+    padding:12px 18px;
+    border-radius:12px;
+    font-size:11px;
+    font-weight:600;
+    z-index:9999;
+    opacity:0;
+    visibility:hidden;
+    transition:.25s;
+    width:max-content;
+    max-width:90%;
+    box-shadow:0 6px 20px rgba(0,0,0,.18);
+}
+
+.toast.show{
+    opacity:1;
+    visibility:visible;
+    transform:translate(-50%,0);
+}
+
+/* FOOTER */
+
+.footer{
+    text-align:center;
+    padding:5px 10px 20px;
+    color:#aaa6b8;
+    font-size:10px;
+    line-height:1.8;
+}
+
+/* MOBILE */
+
+@media(max-width:420px){
+    .container{
+        padding:15px 12px 35px;
+    }
+
+    .account-number{
+        font-size:20px;
+    }
+
+    .summary{
+        gap:9px;
+    }
+
+    .summary-value{
+        max-width:65%;
+    }
+
+    .total{
+        font-size:19px;
+    }
+}
+
+/* PRINT PDF */
+
+@media print{
+    @page{
+        size:A4;
+        margin:12mm;
+    }
+
+    body{
+        background:#fff !important;
+    }
+
+    body *{
+        visibility:hidden !important;
+    }
+
+    #detailPesanan,
+    #detailPesanan *{
+        visibility:visible !important;
+    }
+
+    #detailPesanan{
+        position:absolute !important;
+        left:0 !important;
+        top:0 !important;
+        width:100% !important;
+        margin:0 !important;
+        border:1px solid #ddd !important;
+        border-radius:0 !important;
+        box-shadow:none !important;
+        overflow:visible !important;
+        print-color-adjust:exact;
+        -webkit-print-color-adjust:exact;
+    }
+
+    #detailPesanan .btn-pdf{
+        display:none !important;
+    }
+
+    #detailPesanan .summary{
+        page-break-inside:avoid;
+    }
+}
+
+
+
+
+
+/* PROGRESS TRANSAKSI */
+.payment-progress{
+    background:#fff;
+    padding:20px 15px;
+    border-radius:18px;
+    margin-bottom:17px;
+    border:1px solid #efedf5;
+    box-shadow:0 5px 20px rgba(35,20,75,.045);
+}
+
+.progress-heading{
+    font-size:13px;
+    font-weight:800;
+    margin-bottom:22px;
+    color:#29213d;
+}
+
+.progress-steps{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    position:relative;
+}
+
+.progress-line{
+    position:absolute;
+    top:17px;
+    left:16%;
+    right:16%;
+    height:4px;
+    background:#eeeaf8;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.progress-line-active{
+    width:50%;
+    height:100%;
+    background:linear-gradient(90deg,#16a36a,#5c27fe);
+    border-radius:10px;
+}
+
+.progress-step{
+    width:33.333%;
+    position:relative;
+    z-index:2;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+}
+
+.progress-circle{
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:13px;
+    background:#f0eef5;
+    color:#aaa5b7;
+    border:3px solid #fff;
+    box-shadow:0 0 0 1px #e8e4f0;
+}
+
+.progress-step.done .progress-circle{
+    background:#16a36a;
+    color:#fff;
+    box-shadow:0 0 0 3px #d9f7e8;
+}
+
+.progress-step.active .progress-circle{
+    background:#5c27fe;
+    color:#fff;
+    box-shadow:0 0 0 4px #e9e1ff;
+    animation:waitingPulse 1.5s infinite;
+}
+
+.progress-step strong{
+    font-size:10px;
+    margin-top:10px;
+    color:#aaa5b7;
+    font-weight:600;
+}
+
+.progress-step.done strong{
+    color:#16a36a;
+}
+
+.progress-step.active strong{
+    color:#5c27fe;
+    font-weight:800;
+}
+
+.progress-step small{
+    font-size:9px;
+    color:#aaa5b7;
+    margin-top:4px;
+}
+
+.progress-step.active small{
+    color:#8a70df;
+}
+
+.waiting-dot{
+    display:inline-block;
+    width:5px;
+    height:5px;
+    background:#5c27fe;
+    border-radius:50%;
+    margin-left:3px;
+    animation:waitingDot 1s infinite;
+}
+
+@keyframes waitingPulse{
+    0%,100%{
+        box-shadow:0 0 0 3px #e9e1ff;
+    }
+    50%{
+        box-shadow:0 0 0 8px rgba(92,39,254,.10);
+    }
+}
+
+@keyframes waitingDot{
+    0%,100%{
+        opacity:.3;
+        transform:scale(.7);
+    }
+    50%{
+        opacity:1;
+        transform:scale(1.3);
+    }
+}
+
+@media(max-width:380px){
+    .progress-step strong{
+        font-size:9px;
+    }
+    .progress-step small{
+        font-size:8px;
+    }
+}
+
 </style>
 </head>
+
 <body>
 
-<div class="header">
-Pembayaran
-</div>
+<header class="header">
+    <div class="header-inner">
+        <div class="header-icon">
+            <i class="fa-solid fa-wallet"></i>
+        </div>
+        <div class="header-text">
+            <h2>Pembayaran</h2>
+            <p>Transaksi top up kamu</p>
+        </div>
+    </div>
+</header>
 
-<div
-class="container"
-id="content">
+<main class="container" id="content">
 
-</div>
+</main>
+
+<div class="toast" id="toast"></div>
 
 <script>
+"use strict";
 
-const data =
-JSON.parse(
-sessionStorage.getItem(
-"dataPembayaran"
-)
-);
+/* DATA PEMBAYARAN */
 
-const content =
-document.getElementById(
-"content"
-);
+let data = null;
 
-if(!data){
-    location.href =
-    "index.html";
+try{
+    data = JSON.parse(
+        sessionStorage.getItem("dataPembayaran")
+    );
+}catch(error){
+    data = null;
 }
 
-const invoice =
-"INV"+
-Date.now();
+const content = document.getElementById("content");
 
-content.innerHTML = `
-<div class="card">
+if(!data){
+    location.href = "index.html";
+}else{
 
-<div class="title">
-Informasi Pembayaran
+    /* UTILITAS */
+
+    function escapeHTML(value){
+        return String(value ?? "-").replace(/[&<>"']/g,function(char){
+            return {
+                "&":"&amp;",
+                "<":"&lt;",
+                ">":"&gt;",
+                '"':"&quot;",
+                "'":"&#39;"
+            }[char];
+        });
+    }
+
+    function safeImageURL(value){
+        try{
+            const url = new URL(String(value || ""),location.href);
+
+            if(url.protocol === "https:" || url.protocol === "http:"){
+                return escapeHTML(url.href);
+            }
+        }catch(error){}
+
+        return "";
+    }
+
+    function formatRupiah(value){
+        const amount = Number(value);
+
+        if(!Number.isFinite(amount)){
+            return "Rp 0";
+        }
+
+        return "Rp " + amount.toLocaleString("id-ID");
+    }
+
+    function showToast(message){
+        const toast = document.getElementById("toast");
+
+        toast.textContent = message;
+        toast.classList.add("show");
+
+        clearTimeout(window.paymentToastTimer);
+
+        window.paymentToastTimer = setTimeout(function(){
+            toast.classList.remove("show");
+        },2500);
+    }
+
+    /* INVOICE */
+
+    const invoice = data.invoice || (
+        "INV" + Date.now()
+    );
+
+    /* DATA AMAN */
+
+    const namaBank = escapeHTML(data.namaBank);
+    const namaRekening = escapeHTML(data.namaRekening);
+    const noRekening = escapeHTML(data.noRekening);
+    const logoBank = safeImageURL(data.logoBank);
+
+    const usersid = escapeHTML(data.usersid);
+    const idAkun = escapeHTML(data.idAkun || "-");
+    const namaAkun = escapeHTML(data.namaAkun || "-");
+    const whatsapp = escapeHTML(data.whatsapp || "-");
+    const email = escapeHTML(data.email || "-");
+    const aplikasi = escapeHTML(data.aplikasi);
+    const paket = escapeHTML(data.paket);
+
+    const invoiceSafe = escapeHTML(invoice);
+    const total = formatRupiah(data.total);
+
+    /* TAMPILAN */
+
+    content.innerHTML = `
+
+        <div class="page-intro">
+            <h2>Konfirmasi Pembayaran</h2>
+            <p>Periksa informasi pembayaran dan detail pesanan kamu.</p>
+        </div>
+
+        <!-- INFORMASI PEMBAYARAN -->
+
+        <section class="card">
+
+            <div class="card-header">
+                <div class="card-icon">
+                    <i class="fa-solid fa-building-columns"></i>
+                </div>
+
+                <div class="card-heading">
+                    <h3>Informasi Pembayaran</h3>
+                    <p>Tujuan transfer pembayaran</p>
+                </div>
+            </div>
+
+            <div class="receipt-divider"></div>
+
+            <div class="card-body">
+
+                <div class="bank-info">
+
+                    <div class="bank-logo">
+                        ${
+                            logoBank
+                            ? `<img src="${logoBank}" alt="Logo Bank">`
+                            : `<i class="fa-solid fa-building-columns" style="color:#5c27fe;font-size:22px"></i>`
+                        }
+                    </div>
+
+                    <div class="bank-details">
+                        <h3>${namaBank}</h3>
+                        <p>${namaRekening}</p>
+                    </div>
+
+                </div>
+
+                <div class="account-box">
+
+                    <div class="account-top">
+                        <span class="receipt-label">Nomor Rekening</span>
+
+                        <button class="copy-btn" id="copyBtn">
+                            <i class="fa-regular fa-copy"></i>
+                            Salin
+                        </button>
+                    </div>
+
+                    <div class="account-number">
+                        ${noRekening}
+                    </div>
+
+                    <div class="account-name">
+                        Penerima: ${namaRekening}
+                    </div>
+
+                </div>
+
+                <button class="btn" id="copyBtnMain">
+                    <i class="fa-solid fa-copy"></i>
+                    Salin Nomor Rekening
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+
+<!-- PROGRESS TRANSAKSI -->
+
+<div class="payment-progress">
+
+    <div class="progress-heading">
+        <i class="fa-solid fa-route" style="color:#5c27fe"></i>
+        Proses Pesanan
+    </div>
+
+    <div class="progress-steps">
+
+        <div class="progress-line">
+            <div class="progress-line-active"></div>
+        </div>
+
+        <!-- TAHAP 1 -->
+
+        <div class="progress-step done">
+
+            <div class="progress-circle">
+                <i class="fa-solid fa-check"></i>
+            </div>
+
+            <strong>Membuat Pesanan</strong>
+            <small>Selesai</small>
+
+        </div>
+
+        <!-- TAHAP 2 -->
+
+        <div class="progress-step active">
+
+            <div class="progress-circle">
+                <i class="fa-solid fa-clock"></i>
+            </div>
+
+            <strong>
+                Menunggu Pembayaran
+                <span class="waiting-dot"></span>
+            </strong>
+
+            <small>Sedang berlangsung</small>
+
+        </div>
+
+        <!-- TAHAP 3 -->
+
+        <div class="progress-step">
+
+            <div class="progress-circle">
+                <i class="fa-solid fa-check"></i>
+            </div>
+
+            <strong>Sukses</strong>
+            <small>Belum selesai</small>
+
+        </div>
+
+    </div>
+
 </div>
 
-<div class="bank">
+<!-- DETAIL PESANAN -->
 
-<img src="${data.logoBank}">
 
-<div>
 
-<h3>
-${data.namaBank}
-</h3>
 
-<p>
-${data.namaRekening}
-</p>
 
-</div>
 
-</div>
+        <!-- DETAIL PESANAN -->
 
-<div class="rekening">
+        <section class="card" id="detailPesanan">
 
-<div>
-Nomor Rekening
-</div>
+            <div class="receipt-top">
 
-<div class="nomor">
-${data.noRekening}
-</div>
+                <div class="receipt-brand-icon">
+                    <i class="fa-solid fa-receipt"></i>
+                </div>
 
-<button
-class="btn"
-id="copyBtn">
-Salin Nomor Rekening
-</button>
+                <h3>DETAIL PESANAN</h3>
+                <p>Bukti rincian transaksi top up</p>
 
-</div>
+            </div>
 
-</div>
+            <div class="receipt-content">
 
-<div class="card">
+                <div class="receipt-status">
+                    <i class="fa-solid fa-clock"></i>
+                    MENUNGGU PEMBAYARAN
+                </div>
 
-<div class="title">
-Detail Pesanan
-</div>
+                <div class="summary">
+                    <span class="summary-label">User ID</span>
+                    <span class="summary-value">${usersid}</span>
+                </div>
 
-<div class="summary">
-<span>User ID</span>
-<span>${data.usersid}</span>
-</div>
+                <div class="summary">
+                    <span class="summary-label">ID Akun</span>
+                    <span class="summary-value">${idAkun}</span>
+                </div>
 
+                <div class="summary">
+                    <span class="summary-label">Nama Akun</span>
+                    <span class="summary-value">${namaAkun}</span>
+                </div>
 
-<div class="summary">
-<span>ID Akun</span>
-<span>
-${data.idAkun || "-"}
-</span>
-</div>
+                <div class="summary">
+                    <span class="summary-label">WhatsApp</span>
+                    <span class="summary-value">${whatsapp}</span>
+                </div>
 
+                <div class="summary">
+                    <span class="summary-label">Email</span>
+                    <span class="summary-value">${email}</span>
+                </div>
 
-<div class="summary">
-<span>Nama Akun</span>
-<span>
-${data.namaAkun || "-"}
-</span>
-</div>
+                <div class="summary">
+                    <span class="summary-label">Aplikasi</span>
+                    <span class="summary-value">${aplikasi}</span>
+                </div>
 
+                <div class="summary">
+                    <span class="summary-label">Paket</span>
+                    <span class="summary-value">${paket}</span>
+                </div>
 
-<div class="summary">
-<span>Whatsapp</span>
-<span>
-${data.whatsapp || "-"}
-</span>
-</div>
+                <div class="total-area">
+                    <div class="total-row">
+                        <span class="total-label">TOTAL PEMBAYARAN</span>
+                        <span class="total">${total}</span>
+                    </div>
+                </div>
 
+                <div class="receipt-bottom">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    Simpan bukti rincian pesanan ini sebagai referensi transaksi.<br>
+                    Terima kasih telah melakukan pemesanan.
+                </div>
 
-<div class="summary">
-<span>Email</span>
-<span>
-${data.email || "-"}
-</span>
-</div>
+                <button
+                    class="btn-pdf"
+                    id="printPdfBtn"
+                    onclick="cetakDetailPesanan()">
 
+                    <i class="fa-solid fa-file-pdf"></i>
+                    Cetak Detail Pesanan (PDF)
 
+                </button>
 
-<div class="summary">
-<span>Aplikasi</span>
-<span>${data.aplikasi}</span>
-</div>
+            </div>
 
-<div class="summary">
-<span>Paket</span>
-<span>${data.paket}</span>
-</div>
+        </section>
 
-<div class="summary">
-<span>Total Bayar</span>
-<span class="total">
-Rp ${Number(
-data.total
-).toLocaleString(
-'id-ID'
-)}
-</span>
-</div>
+        <!-- INFORMASI PROSES -->
 
-</div>
+        <section class="card">
 
+            <div class="card-header">
 
+                <div class="card-icon">
+                    <i class="fa-solid fa-circle-info"></i>
+                </div>
 
+                <div class="card-heading">
+                    <h3>Informasi Proses Pembayaran</h3>
+                    <p>Petunjuk setelah melakukan transfer</p>
+                </div>
 
-<div class="card">
+            </div>
 
-<div class="title">
-Informasi Proses Pembayaran
-</div>
+            <div class="receipt-divider"></div>
 
+            <div class="card-body">
 
-<p style="
-color:#555;
-line-height:1.8;
-font-size:14px;
-">
+                <p class="process-text">
 
-Setelah pembayaran berhasil dilakukan dan pembayaran
-telah terverifikasi oleh sistem, pesanan akan diproses
-secara otomatis.
+                    Setelah pembayaran berhasil dilakukan dan pembayaran
+                    telah terverifikasi oleh sistem, pesanan akan diproses
+                    secara otomatis.
 
-Coin akan dikirim ke ID akun aplikasi yang telah Anda
-masukkan pada saat checkout. Pastikan ID akun,
-nama akun, dan aplikasi yang dipilih sudah benar agar
-coin masuk ke akun yang sesuai.
+                    Coin akan dikirim ke ID akun aplikasi yang telah Anda
+                    masukkan pada saat checkout. Pastikan ID akun,
+                    nama akun, dan aplikasi yang dipilih sudah benar agar
+                    coin masuk ke akun yang sesuai.
 
-Proses approval dilakukan secara otomatis oleh sistem
-dan dapat memerlukan waktu beberapa saat tergantung
-proses verifikasi pembayaran.
+                    Proses approval dilakukan secara otomatis oleh sistem
+                    dan dapat memerlukan waktu beberapa saat tergantung
+                    proses verifikasi pembayaran.
 
-Jika pembayaran berhasil namun coin belum masuk,
-silakan hubungi Customer Service dengan menyertakan
-nomor invoice dan bukti pembayaran.
+                    Jika pembayaran berhasil namun coin belum masuk,
+                    silakan hubungi Customer Service dengan menyertakan
+                    nomor invoice dan bukti pembayaran.
 
-</p>
+                </p>
 
+                <div class="process-list">
 
-<div style="
-margin-top:15px;
-background:#f3ecff;
-padding:15px;
-border-radius:14px;
-color:#5c27fe;
-font-size:14px;
-font-weight:600;
-">
+                    <div class="process-item">
+                        <div class="process-check">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <span>Pembayaran aman dan terverifikasi</span>
+                    </div>
 
-✓ Pembayaran aman  
-<br>
-✓ Verifikasi otomatis  
-<br>
-✓ Coin dikirim ke ID tujuan
+                    <div class="process-item">
+                        <div class="process-check">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <span>Verifikasi otomatis oleh sistem</span>
+                    </div>
 
-</div>
+                    <div class="process-item">
+                        <div class="process-check">
+                            <i class="fa-solid fa-coins"></i>
+                        </div>
+                        <span>Coin dikirim ke ID tujuan</span>
+                    </div>
 
+                </div>
 
-</div>
+            </div>
 
+        </section>
 
-<div class="card">
+        <!-- INVOICE -->
 
-<div class="title">
-Nomor Invoice
-</div>
+        <section class="card">
 
-<div class="invoice">
-${invoice}
-</div>
+            <div class="card-header">
 
-</div>
-`;
+                <div class="card-icon">
+                    <i class="fa-solid fa-barcode"></i>
+                </div>
 
-document
-.getElementById(
-"copyBtn"
-)
-.onclick = ()=>{
+                <div class="card-heading">
+                    <h3>Nomor Invoice</h3>
+                    <p>Identitas transaksi kamu</p>
+                </div>
 
-navigator.clipboard
-.writeText(
-data.noRekening
-);
+            </div>
 
-alert(
-"Nomor rekening berhasil disalin."
-);
+            <div class="receipt-divider"></div>
 
-};
+            <div class="invoice-box">
 
+                <div class="receipt-label">
+                    KODE INVOICE
+                </div>
 
+                <div class="invoice-code">
+                    ${invoiceSafe}
+                </div>
 
+                <div class="invoice-caption">
+                    Gunakan nomor invoice ini ketika menghubungi Customer Service.
+                </div>
 
+            </div>
 
+        </section>
 
+        <div class="footer">
+            <i class="fa-solid fa-lock"></i>
+            Transaksi kamu dilindungi oleh sistem keamanan.<br>
+            Harap pastikan data pesanan sudah benar.
+        </div>
 
+    `;
 
+    /* SALIN REKENING */
 
+    async function salinRekening(){
 
+        const rekening = String(data.noRekening || "");
 
+        if(!rekening){
+            showToast("Nomor rekening tidak tersedia.");
+            return;
+        }
 
+        try{
 
+            if(navigator.clipboard && window.isSecureContext){
+                await navigator.clipboard.writeText(rekening);
+            }else{
 
+                const textarea = document.createElement("textarea");
 
-// PROTEKSI
-document.addEventListener("contextmenu",e=>e.preventDefault());
-document.addEventListener("copy",e=>e.preventDefault());
-document.addEventListener("cut",e=>e.preventDefault());
-document.addEventListener("selectstart",e=>e.preventDefault());
+                textarea.value = rekening;
+                textarea.style.position = "fixed";
+                textarea.style.opacity = "0";
 
-document.addEventListener("dragstart",e=>{
-if(e.target.tagName==="IMG")e.preventDefault();
+                document.body.appendChild(textarea);
+
+                textarea.select();
+
+                const berhasil = document.execCommand("copy");
+
+                textarea.remove();
+
+                if(!berhasil){
+                    throw new Error("Gagal menyalin");
+                }
+            }
+
+            showToast("Nomor rekening berhasil disalin!");
+
+        }catch(error){
+            showToast("Tidak dapat menyalin nomor rekening.");
+        }
+    }
+
+    document.getElementById("copyBtn").addEventListener(
+        "click",
+        salinRekening
+    );
+
+    document.getElementById("copyBtnMain").addEventListener(
+        "click",
+        salinRekening
+    );
+
+}
+
+/* CETAK DETAIL PESANAN */
+
+function cetakDetailPesanan(){
+
+    window.print();
+
+}
+
+/* PROTEKSI */
+
+document.addEventListener("contextmenu",function(e){
+    e.preventDefault();
 });
 
-document.addEventListener("keydown",e=>{
-if(
-(e.ctrlKey&&["s","u","c"].includes(e.key.toLowerCase()))
-||e.key==="F12"
-)e.preventDefault();
+document.addEventListener("copy",function(e){
+    e.preventDefault();
 });
 
+document.addEventListener("cut",function(e){
+    e.preventDefault();
+});
 
-let lastTouch=0;
+document.addEventListener("selectstart",function(e){
+    e.preventDefault();
+});
 
-document.addEventListener("touchend",e=>{
-let now=Date.now();
-if(now-lastTouch<300)e.preventDefault();
-lastTouch=now;
+document.addEventListener("dragstart",function(e){
+    if(e.target.tagName === "IMG"){
+        e.preventDefault();
+    }
+});
+
+document.addEventListener("keydown",function(e){
+
+    if(
+        (e.ctrlKey && ["s","u","c"].includes(e.key.toLowerCase()))
+        || e.key === "F12"
+    ){
+        e.preventDefault();
+    }
+
+});
+
+let lastTouch = 0;
+
+document.addEventListener("touchend",function(e){
+
+    const now = Date.now();
+
+    if(now - lastTouch < 300){
+        e.preventDefault();
+    }
+
+    lastTouch = now;
+
 },{passive:false});
 
+document.addEventListener("gesturestart",function(e){
+    e.preventDefault();
+});
 
-document.addEventListener("gesturestart",e=>e.preventDefault());
-// PROTEKSI
-
-
+/* SELESAI */
 
 </script>
 

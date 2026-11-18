@@ -1,0 +1,1197 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#5c27fe">
+<meta name="description" content="Pelajari program Bonus Reward, cara mendapatkan bonus, pemindahan bonus ke saldo utama, persyaratan, dan ketentuan pencairan saldo bonus.">
+<title>Pengertian Bonus Reward</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root {
+    --primary: #5c27fe;
+    --primary-dark: #4518d5;
+    --primary-light: #eee9ff;
+    --text: #202033;
+    --muted: #73758a;
+    --bg: #f5f6fc;
+    --white: #ffffff;
+    --border: #ececf4;
+    --green: #159b65;
+    --red: #dc4141;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+button {
+    font-family: inherit;
+}
+
+.page-header {
+    background: linear-gradient(135deg, #5421ed, #805bff);
+    color: white;
+    padding: 20px 17px 35px;
+    border-radius: 0 0 25px 25px;
+    position: relative;
+    overflow: hidden;
+}
+
+.page-header::before,
+.page-header::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,.08);
+}
+
+.page-header::before {
+    width: 190px;
+    height: 190px;
+    right: -65px;
+    top: -80px;
+}
+
+.page-header::after {
+    width: 120px;
+    height: 120px;
+    right: 70px;
+    bottom: -85px;
+}
+
+.header-top {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    position: relative;
+    z-index: 2;
+}
+
+.back-btn {
+    width: 39px;
+    height: 39px;
+    border: 1px solid rgba(255,255,255,.25);
+    background: rgba(255,255,255,.13);
+    color: white;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.header-title {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.header-description {
+    position: relative;
+    z-index: 2;
+    margin-top: 25px;
+}
+
+.header-description .eyebrow {
+    display: inline-block;
+    background: rgba(255,255,255,.17);
+    padding: 6px 11px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .5px;
+    margin-bottom: 10px;
+}
+
+.header-description h1 {
+    font-size: 23px;
+    line-height: 1.4;
+    font-weight: 800;
+    max-width: 330px;
+}
+
+.header-description p {
+    color: rgba(255,255,255,.86);
+    font-size: 12px;
+    line-height: 1.8;
+    margin-top: 8px;
+    max-width: 420px;
+}
+
+.container {
+    width: 100%;
+    max-width: 720px;
+    padding: 0 15px 35px;
+    margin: -15px auto 0;
+    position: relative;
+    z-index: 3;
+}
+
+.intro-card {
+    background: white;
+    border-radius: 19px;
+    padding: 19px;
+    box-shadow: 0 7px 25px rgba(36,25,90,.07);
+    margin-bottom: 15px;
+}
+
+.intro-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    background: var(--primary-light);
+    font-size: 21px;
+    margin-bottom: 13px;
+}
+
+.intro-card h2 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.intro-card p {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.9;
+}
+
+.section-card {
+    background: white;
+    border-radius: 18px;
+    padding: 19px;
+    margin-bottom: 13px;
+    border: 1px solid rgba(230,230,240,.8);
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin-bottom: 13px;
+}
+
+.section-number {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-light);
+    color: var(--primary);
+    font-weight: 800;
+    font-size: 13px;
+}
+
+.section-heading h2 {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.section-card p {
+    color: #66697e;
+    font-size: 12px;
+    line-height: 1.95;
+    margin-bottom: 10px;
+}
+
+.section-card p:last-child {
+    margin-bottom: 0;
+}
+
+.section-card strong {
+    color: #29283d;
+    font-weight: 700;
+}
+
+.info-box {
+    background: #f4f0ff;
+    border-left: 3px solid var(--primary);
+    border-radius: 9px;
+    padding: 12px;
+    margin-top: 12px;
+    color: #57448e;
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+.warning-box {
+    background: #fff7e9;
+    border-left: 3px solid #efa62b;
+    border-radius: 9px;
+    padding: 12px;
+    margin-top: 12px;
+    color: #89611e;
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+.success-box {
+    background: #eaf9f1;
+    border-left: 3px solid var(--green);
+    border-radius: 9px;
+    padding: 12px;
+    margin-top: 12px;
+    color: #26724e;
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+.balance-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 13px 0;
+}
+
+.balance-item {
+    padding: 14px 11px;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    background: #fcfcff;
+}
+
+.balance-item i {
+    font-size: 17px;
+    color: var(--primary);
+    margin-bottom: 9px;
+}
+
+.balance-item h3 {
+    font-size: 11px;
+    margin-bottom: 5px;
+}
+
+.balance-item p {
+    font-size: 10px;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.steps {
+    margin-top: 13px;
+}
+
+.step {
+    display: flex;
+    gap: 12px;
+    position: relative;
+    padding-bottom: 17px;
+}
+
+.step:last-child {
+    padding-bottom: 0;
+}
+
+.step-icon {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-light);
+    color: var(--primary);
+    font-size: 12px;
+    z-index: 1;
+}
+
+.step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 15px;
+    top: 32px;
+    height: calc(100% - 32px);
+    border-left: 1px dashed #c8b9ff;
+}
+
+.step-content h3 {
+    font-size: 12px;
+    margin: 2px 0 5px;
+}
+
+.step-content p {
+    margin: 0;
+    font-size: 11px;
+}
+
+.requirement-list {
+    list-style: none;
+    margin-top: 12px;
+}
+
+.requirement-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    font-size: 11px;
+    color: #66697e;
+    line-height: 1.8;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f5;
+}
+
+.requirement-list li:last-child {
+    border-bottom: none;
+}
+
+.requirement-list i {
+    color: var(--green);
+    margin-top: 4px;
+}
+
+.amount-card {
+    background: linear-gradient(135deg, #5421ed, #815cff);
+    padding: 18px;
+    border-radius: 15px;
+    color: white;
+    margin: 13px 0;
+}
+
+.amount-card span {
+    display: block;
+    font-size: 10px;
+    color: rgba(255,255,255,.8);
+}
+
+.amount-card strong {
+    display: block;
+    color: white;
+    font-size: 25px;
+    margin: 5px 0;
+}
+
+.amount-card small {
+    font-size: 10px;
+    color: rgba(255,255,255,.8);
+}
+
+.faq-item {
+    border-bottom: 1px solid #eeeeF4;
+}
+
+.faq-item:last-child {
+    border-bottom: none;
+}
+
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 0;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    color: #343348;
+}
+
+.faq-question i {
+    color: var(--primary);
+    transition: transform .2s;
+}
+
+.faq-answer {
+    display: none;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.9;
+    padding: 0 0 14px;
+}
+
+.faq-item.active .faq-answer {
+    display: block;
+}
+
+.faq-item.active .faq-question i {
+    transform: rotate(180deg);
+}
+
+.bottom-note {
+    text-align: center;
+    color: #9293a5;
+    font-size: 10px;
+    line-height: 1.8;
+    padding: 12px 15px 25px;
+}
+
+.bottom-note i {
+    color: var(--primary);
+    margin-right: 4px;
+}
+
+.bottom-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.action-btn {
+    flex: 1;
+    border: none;
+    border-radius: 12px;
+    padding: 13px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+
+.action-primary {
+    color: white;
+    background: var(--primary);
+}
+
+.action-secondary {
+    color: var(--primary);
+    background: var(--primary-light);
+}
+
+@media (max-width: 380px) {
+    .balance-comparison {
+        grid-template-columns: 1fr;
+    }
+
+    .header-description h1 {
+        font-size: 21px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="page-header">
+    <div class="header-top">
+        <button class="back-btn" onclick="kembaliHalaman()" aria-label="Kembali">
+            <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <div class="header-title">Informasi Bonus Reward</div>
+    </div>
+
+    <div class="header-description">
+        <span class="eyebrow">
+            <i class="fa-solid fa-gift"></i> PROGRAM BONUS PENGGUNA
+        </span>
+        <h1>Kenali Program Bonus Reward</h1>
+        <p>
+            Pelajari bagaimana bonus dikumpulkan, kapan bonus masuk ke saldo utama,
+            serta ketentuan yang berlaku untuk melakukan pencairan dana.
+        </p>
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="intro-card">
+        <div class="intro-icon">
+            <i class="fa-solid fa-gift"></i>
+        </div>
+        <h2>Apa Itu Bonus Reward?</h2>
+        <p>
+            Bonus Reward merupakan program penghargaan yang disediakan untuk
+            pengguna sebagai bentuk apresiasi atas aktivitas dan partisipasi
+            dalam menggunakan layanan platform. Melalui program ini, pengguna
+            dapat memperoleh tambahan saldo bonus sesuai dengan ketentuan
+            program yang berlaku.
+        </p>
+        <p>
+            Bonus yang diperoleh akan dicatat secara terpisah dari saldo utama.
+            Dengan demikian, pengguna dapat mengetahui jumlah saldo yang sudah
+            tersedia dan jumlah bonus yang masih berada dalam proses
+            pengumpulan sebelum dipindahkan ke saldo utama.
+        </p>
+    </section>
+
+    <section class="section-card">
+        <div class="section-heading">
+            <div class="section-number">01</div>
+            <h2>Mengenal Saldo Utama dan Bonus Saldo</h2>
+        </div>
+
+        <p>
+            Dalam akun pengguna terdapat dua jenis saldo yang memiliki fungsi
+            berbeda. Keduanya ditampilkan secara terpisah agar pengguna dapat
+            memantau perkembangan bonus dengan lebih mudah.
+        </p>
+
+        <div class="balance-comparison">
+            <div class="balance-item">
+                <i class="fa-solid fa-wallet"></i>
+                <h3>Saldo Utama</h3>
+                <p>
+                    Saldo yang sudah masuk ke akun utama dan dapat digunakan
+                    sesuai fitur serta ketentuan layanan.
+                </p>
+            </div>
+
+            <div class="balance-item">
+                <i class="fa-solid fa-coins"></i>
+                <h3>Bonus Saldo</h3>
+                <p>
+                    Akumulasi bonus yang sedang dikumpulkan dan menunggu
+                    proses pemindahan ke saldo utama.
+                </p>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <strong>Perlu diketahui:</strong> Bonus Saldo bukan berarti
+            langsung menjadi Saldo Utama pada saat bonus diperoleh.
+            Bonus harus melewati periode pengumpulan terlebih dahulu.
+        </div>
+    </section>
+
+    <section class="section-card">
+        <div class="section-heading">
+            <div class="section-number">02</div>
+            <h2>Bagaimana Bonus Dikumpulkan?</h2>
+        </div>
+
+        <p>
+            Sistem Bonus Reward melakukan pencatatan akumulasi bonus ke dalam
+            akun pengguna. Jumlah bonus yang terkumpul mengikuti mekanisme
+            dan ketentuan program yang ditetapkan oleh platform.
+        </p>
+
+        <p>
+            Selama proses pengumpulan berlangsung, nilai bonus akan ditampilkan
+            pada bagian <strong>Bonus Saldo</strong>. Pengguna dapat membuka
+            halaman profil untuk melihat perkembangan saldo tersebut.
+        </p>
+
+        <p>
+            Setiap perubahan bonus yang berhasil diproses akan mengikuti
+            pencatatan sistem. Riwayat bonus disediakan agar pengguna dapat
+            meninjau transaksi pemindahan bonus yang pernah dilakukan.
+        </p>
+
+        <div class="warning-box">
+            Bonus tidak boleh dianggap sebagai dana yang sudah berhasil
+            dicairkan sebelum proses pemindahan dan persyaratan pencairan
+            dinyatakan terpenuhi.
+        </div>
+    </section>
+
+    <section class="section-card">
+        <div class="section-heading">
+            <div class="section-number">03</div>
+            <h2>Pemindahan Bonus Setiap 1 Jam</h2>
+        </div>
+
+        <p>
+            Salah satu mekanisme dalam program ini adalah pemindahan Bonus Saldo
+            ke Saldo Utama berdasarkan periode pengumpulan selama satu jam.
+        </p>
+
+        <p>
+            Setelah satu periode pengumpulan selama <strong>1 jam</strong>
+            selesai, sistem akan menjalankan proses pemindahan bonus yang
+            memenuhi ketentuan. Nilai bonus yang berhasil diproses akan
+            ditambahkan ke Saldo Utama pengguna.
+        </p>
+
+        <div class="steps">
+            <div class="step">
+                <div class="step-icon">
+                    <i class="fa-solid fa-coins"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Bonus Mulai Dikumpulkan</h3>
+                    <p>
+                        Bonus tercatat pada bagian Bonus Saldo dan belum
+                        menjadi bagian dari Saldo Utama.
+                    </p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-icon">
+                    <i class="fa-solid fa-clock"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Menunggu Periode 1 Jam</h3>
+                    <p>
+                        Sistem menghitung periode pengumpulan bonus sesuai
+                        mekanisme yang berlaku.
+                    </p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-icon">
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Proses Pemindahan</h3>
+                    <p>
+                        Setelah periode selesai, sistem memproses pemindahan
+                        bonus yang memenuhi ketentuan.
+                    </p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-icon">
+                    <i class="fa-solid fa-wallet"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Masuk ke Saldo Utama</h3>
+                    <p>
+                        Bonus yang berhasil dipindahkan akan tercatat sebagai
+                        penambahan Saldo Utama.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="success-box">
+            <strong>Contoh:</strong> Apabila pengguna memiliki Bonus Saldo
+            yang sudah memenuhi periode pengumpulan, bonus tersebut akan
+            diproses untuk dipindahkan ke Saldo Utama. Hasil pemindahan
+            dapat diperiksa melalui saldo dan riwayat bonus.
+        </div>
+    </section>
+
+    <section class="section-card">
+        <div class="section-heading">
+            <div class="section-number">04</div>
+            <h2>Riwayat Bonus Reward</h2>
+        </div>
+
+        <p>
+            Setiap pemindahan bonus yang berhasil diproses akan memiliki
+            catatan pada riwayat bonus akun pengguna. Riwayat ini berfungsi
+            sebagai informasi mengenai aktivitas pemindahan saldo bonus.
+        </p>
+
+        <p>
+            Pengguna dapat memeriksa informasi seperti jumlah bonus yang
+            dipindahkan, keterangan transaksi, serta waktu pencatatan.
+            Dengan adanya riwayat ini, pengguna dapat memantau perubahan
+            saldo secara lebih transparan.
+        </p>
+
+        <p>
+            Riwayat bonus berbeda dengan riwayat pembelian produk dan
+            riwayat pengajuan pencairan. Masing-masing memiliki fungsi
+            pencatatan tersendiri.
+        </p>
+    </section>
+
+    <section class="section-card">
+        <div class="section-heading">
+            <div class="section-number">05</div>
+            <h2>Ketentuan Pencairan Saldo</h2>
+        </div>
+
+        <p>
+            Pengguna dapat mengajukan pencairan saldo melalui halaman
+            pencairan yang tersedia pada akun. Namun, pengajuan pencairan
+            harus memenuhi persyaratan transaksi pembelian yang telah
+            ditentukan oleh platform.
+        </p>
+
+        <div class="amount-card">
+            <span>Minimal pembelian yang harus dipenuhi</span>
+            <strong>Rp519.200</strong>
+            <small>Harus berasal dari satu transaksi pembelian yang memenuhi ketentuan.</small>
+        </div>
+
+        <p>
+            Untuk memenuhi persyaratan tersebut, pengguna wajib memiliki
+            setidaknya <strong>satu transaksi pembelian produk</strong>
+            dengan total minimal Rp519.200 dan status transaksi
+            <strong>Sukses atau Berhasil</strong>.
+        </p>
+
+        <p>
+            Sistem akan memeriksa riwayat pembelian pada akun pengguna
+            sebelum pengajuan pencairan diproses.
+        </p>
+
+        <div class="warning-box">
+            <strong>Penting:</strong> Nilai dari beberapa transaksi
+            pembelian yang berbeda tidak dapat dijumlahkan untuk memenuhi
+            batas minimal Rp519.200. Persyaratan harus dipenuhi oleh
+            satu transaksi secara utuh.
+        </div>
+
+        <p>
+            Sebagai contoh, apabila pengguna memiliki tiga transaksi
+            masing-masing Rp200.000, Rp200.000, dan Rp200.000, total
+            keseluruhannya memang Rp600.000. Namun, ketiga transaksi
+            tersebut tidak dapat digabungkan untuk memenuhi persyaratan
+            pencairan karena tidak ada satu transaksi yang mencapai
+            Rp519.200.
+        </p>
+    </section>
+
+    <section class="section-card">
+        <div class="section-heading">
+            <div class="section-number">06</div>
+            <h2>Transaksi yang Dapat Digunakan</h2>
+        </div>
+
+        <p>
+            Tidak semua riwayat pembelian dapat digunakan untuk memenuhi
+            persyaratan pencairan. Sistem memperhatikan jumlah transaksi
+            dan status keberhasilannya.
+        </p>
+
+        <ul class="requirement-list">
+            <li>
+                <i class="fa-solid fa-circle-check"></i>
+                <span>
+                    Transaksi pembelian harus tercatat pada riwayat
+                    pembelian akun pengguna.
+                </span>
+            </li>
+            <li>
+                <i class="fa-solid fa-circle-check"></i>
+                <span>
+                    Total satu transaksi minimal sebesar Rp519.200.
+                </span>
+            </li>
+            <li>
+                <i class="fa-solid fa-circle-check"></i>
+                <span>
+                    Status transaksi harus Sukses atau Berhasil.
+                </span>
+            </li>
+            <li>
+                <i class="fa-solid fa-circle-check"></i>
+                <span>
+                    Satu transaksi harus memenuhi batas minimal tanpa
+                    menggabungkan transaksi lainnya.
+                </span>
+            </li>
+        </ul>
+
+        <div class="info-box">
+            Transaksi berstatus Gagal, Dibatalkan, Menunggu, atau status
+            lain yang belum dinyatakan berhasil tidak memenuhi
+            persyaratan pencairan.
+        </div>
+    </section>
+
+    <section class="section-card">
+        <div class="section-heading">
+            <div class="section-number">07</div>
+            <h2>Bagaimana Jika Persyaratan Belum Terpenuhi?</h2>
+        </div>
+
+        <p>
+            Apabila pengguna belum memiliki satu transaksi pembelian
+            sukses dengan total minimal Rp519.200, pengajuan pencairan
+            tidak dapat dilanjutkan.
+        </p>
+
+        <p>
+            Dalam kondisi tersebut, sistem akan mencatat pengajuan
+            sebagai pengajuan gagal beserta alasan kegagalannya.
+            Pengguna akan mendapatkan informasi bahwa persyaratan
+            pembelian belum terpenuhi.
+        </p>
+
+        <div class="warning-box">
+            <strong>Informasi untuk pengguna:</strong><br>
+            Saldo tidak dapat dicairkan apabila tidak ada pembelian
+            sebelumnya yang sukses. Anda dapat melakukan pembelian
+            produk minimal Rp519.200 untuk mencairkan seluruh saldo
+            Anda ke rekening Anda.
+        </div>
+
+        <p>
+            Pengajuan yang gagal karena persyaratan pembelian belum
+            terpenuhi tidak akan mengurangi Saldo Utama maupun
+            Bonus Saldo pengguna.
+        </p>
+    </section>
+
+    <section class="section-card">
+        <div class="section-heading">
+            <div class="section-number">08</div>
+            <h2>Proses Pengajuan Pencairan</h2>
+        </div>
+
+        <p>
+            Jika persyaratan telah terpenuhi, pengguna dapat mengisi
+            formulir pencairan dengan informasi rekening atau
+            dompet digital yang benar.
+        </p>
+
+        <div class="steps">
+            <div class="step">
+                <div class="step-icon">
+                    <i class="fa-solid fa-building-columns"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Pilih Bank atau E-Wallet</h3>
+                    <p>
+                        Pilih tujuan pencairan yang tersedia pada
+                        formulir pengajuan.
+                    </p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Masukkan Data Penerima</h3>
+                    <p>
+                        Isi nama pemilik rekening dan nomor rekening
+                        atau nomor tujuan dengan benar.
+                    </p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Verifikasi Persyaratan</h3>
+                    <p>
+                        Sistem memeriksa riwayat pembelian dan
+                        persyaratan pencairan.
+                    </p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-icon">
+                    <i class="fa-solid fa-file-circle-check"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Pengajuan Dicatat</h3>
+                    <p>
+                        Jika memenuhi persyaratan, pengajuan akan
+                        dicatat dengan status Menunggu.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-box">
+            Pengajuan berstatus Menunggu berarti permintaan telah
+            tercatat dan masih memerlukan proses pemeriksaan.
+            Status Menunggu bukan bukti bahwa dana sudah dikirim
+            ke rekening penerima.
+        </div>
+    </section>
+
+    <section class="section-card">
+        <div class="section-heading">
+            <div class="section-number">09</div>
+            <h2>Status Pengajuan Pencairan</h2>
+        </div>
+
+        <p>
+            Setiap pengajuan memiliki status agar pengguna dapat
+            mengetahui perkembangan permintaan pencairannya.
+        </p>
+
+        <ul class="requirement-list">
+            <li>
+                <i class="fa-solid fa-hourglass-half" style="color:#d99a27"></i>
+                <span>
+                    <strong>Menunggu:</strong> Pengajuan telah dicatat
+                    dan sedang menunggu pemeriksaan atau tindakan admin.
+                </span>
+            </li>
+            <li>
+                <i class="fa-solid fa-circle-check"></i>
+                <span>
+                    <strong>Berhasil:</strong> Pengajuan telah disetujui
+                    dan diproses sesuai ketentuan layanan. Pengguna tetap
+                    perlu memeriksa informasi pencairan yang tersedia.
+                </span>
+            </li>
+            <li>
+                <i class="fa-solid fa-circle-xmark" style="color:#dc4141"></i>
+                <span>
+                    <strong>Ditolak:</strong> Pengajuan tidak disetujui.
+                    Saldo yang sebelumnya dicadangkan akan dikembalikan
+                    sesuai mekanisme pengembalian yang berlaku.
+                </span>
+            </li>
+            <li>
+                <i class="fa-solid fa-circle-exclamation" style="color:#dc4141"></i>
+                <span>
+                    <strong>Gagal:</strong> Pengajuan tidak dapat
+                    dilanjutkan, misalnya karena persyaratan pembelian
+                    belum terpenuhi.
+                </span>
+            </li>
+        </ul>
+    </section>
+
+    <section class="section-card">
+        <div class="section-heading">
+            <div class="section-number">10</div>
+            <h2>Perlindungan Saldo Saat Pengajuan</h2>
+        </div>
+
+        <p>
+            Untuk menghindari penggunaan saldo yang sama pada beberapa
+            pengajuan, saldo yang digunakan dalam pengajuan pencairan
+            dapat dicadangkan selama permintaan masih dalam proses.
+        </p>
+
+        <p>
+            Selama pengajuan masih berstatus Menunggu, saldo yang
+            dicadangkan tidak dapat digunakan kembali untuk pengajuan
+            pencairan lainnya.
+        </p>
+
+        <p>
+            Apabila pengajuan ditolak oleh admin, saldo yang telah
+            dicadangkan akan dikembalikan ke komponen saldo semula
+            sesuai catatan pencadangan. Pengembalian tersebut
+            harus diproses secara benar dan tidak boleh dilakukan
+            lebih dari satu kali untuk pengajuan yang sama.
+        </p>
+
+        <div class="success-box">
+            Tujuan mekanisme ini adalah menjaga pencatatan saldo
+            tetap konsisten, menghindari pengajuan ganda, dan
+            melindungi hak pengguna selama proses pemeriksaan.
+        </div>
+    </section>
+
+    <section class="section-card">
+        <div class="section-heading">
+            <div class="section-number">11</div>
+            <h2>Keamanan dan Ketepatan Data</h2>
+        </div>
+
+        <p>
+            Pengguna bertanggung jawab untuk memastikan seluruh data
+            yang dimasukkan pada formulir pencairan sudah benar.
+            Kesalahan dalam penulisan nama, nomor rekening, atau
+            nomor dompet digital dapat menyebabkan proses
+            pencairan terhambat.
+        </p>
+
+        <p>
+            Jangan membagikan kata sandi, kode OTP, atau informasi
+            keamanan akun kepada pihak lain. Pengguna juga disarankan
+            untuk memeriksa riwayat bonus, riwayat pembelian, dan
+            status pengajuan secara berkala.
+        </p>
+
+        <p>
+            Seluruh pencatatan saldo dan pengajuan harus mengikuti
+            data yang tercatat pada sistem platform. Jika terdapat
+            ketidaksesuaian, pengguna dapat menghubungi layanan
+            bantuan yang tersedia.
+        </p>
+    </section>
+
+    <section class="section-card">
+        <div class="section-heading">
+            <div class="section-number">12</div>
+            <h2>Pertanyaan yang Sering Diajukan</h2>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                Apakah Bonus Saldo langsung masuk ke Saldo Utama?
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                Tidak langsung. Bonus terlebih dahulu dikumpulkan
+                pada bagian Bonus Saldo. Pemindahan ke Saldo Utama
+                dilakukan setelah periode pengumpulan satu jam
+                selesai dan bonus berhasil diproses oleh sistem.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                Apakah beberapa pembelian bisa digabungkan?
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                Tidak. Persyaratan minimal Rp519.200 harus dipenuhi
+                oleh satu transaksi pembelian yang berstatus Sukses
+                atau Berhasil. Beberapa transaksi tidak dapat
+                dijumlahkan untuk memenuhi batas minimal tersebut.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                Apakah transaksi berstatus Gagal bisa digunakan?
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                Tidak. Transaksi yang digunakan sebagai persyaratan
+                harus memiliki status Sukses atau Berhasil.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                Apakah saldo berkurang jika pengajuan gagal?
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                Jika pengajuan gagal karena tidak memenuhi
+                persyaratan pembelian, saldo tidak akan dikurangi.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                Apa arti status Menunggu?
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                Status Menunggu berarti permintaan pencairan sudah
+                tercatat dan masih menunggu pemeriksaan atau
+                tindakan admin. Status ini belum berarti dana
+                sudah diterima.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                Bagaimana jika pengajuan saya ditolak?
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                Jika pengajuan ditolak, saldo yang sebelumnya
+                dicadangkan akan dikembalikan sesuai catatan
+                pencadangan dan mekanisme pengembalian yang berlaku.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                Apakah status Menunggu berarti uang sudah dikirim?
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                Tidak. Status Menunggu hanya menunjukkan bahwa
+                permintaan telah dicatat. Pengguna perlu menunggu
+                perubahan status dan informasi tindak lanjut
+                dari pihak pengelola.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                Di mana saya bisa melihat riwayat bonus?
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                Riwayat bonus dapat diperiksa melalui bagian
+                riwayat Bonus Reward pada halaman akun yang
+                menyediakan informasi tersebut.
+            </div>
+        </div>
+    </section>
+
+    <section class="section-card">
+        <div class="section-heading">
+            <div class="section-number">
+                <i class="fa-solid fa-file-contract"></i>
+            </div>
+            <h2>Ketentuan Penutup</h2>
+        </div>
+
+        <p>
+            Dengan menggunakan program Bonus Reward, pengguna
+            dianggap telah membaca dan memahami informasi serta
+            ketentuan yang dijelaskan pada halaman ini.
+        </p>
+
+        <p>
+            Program bonus, mekanisme pengumpulan, pemindahan saldo,
+            persyaratan pembelian, dan proses pencairan mengikuti
+            ketentuan resmi yang ditetapkan oleh pengelola platform.
+        </p>
+
+        <p>
+            Pengelola dapat melakukan penyesuaian terhadap mekanisme
+            program apabila diperlukan. Setiap perubahan ketentuan
+            akan mengikuti informasi resmi yang disampaikan melalui
+            platform.
+        </p>
+
+        <div class="info-box">
+            <strong>Terima kasih telah menggunakan layanan kami.</strong>
+            Kami berkomitmen menyediakan informasi bonus yang jelas
+            agar pengguna dapat memahami setiap proses dengan baik.
+        </div>
+
+        <div class="bottom-actions">
+            <button class="action-btn action-secondary" onclick="kembaliHalaman()">
+                <i class="fa-solid fa-arrow-left"></i>
+                Kembali
+            </button>
+
+            <button class="action-btn action-primary" onclick="keHalamanBonus()">
+                <i class="fa-solid fa-gift"></i>
+                Halaman Bonus
+            </button>
+        </div>
+    </section>
+
+    <div class="bottom-note">
+        <i class="fa-solid fa-shield-halved"></i>
+        Informasi Program Bonus Reward<br>
+        Harap membaca seluruh ketentuan sebelum melakukan pengajuan pencairan.
+    </div>
+
+</main>
+
+<script>
+function kembaliHalaman() {
+    if (window.history.length > 1) {
+        window.history.back();
+    } else {
+        window.location.href = "profil_saya.html";
+    }
+}
+
+function keHalamanBonus() {
+    window.location.href = "Bonus_html.html";
+}
+
+function toggleFaq(element) {
+    const parent = element.closest(".faq-item");
+
+    if (!parent) return;
+
+    parent.classList.toggle("active");
+}
+</script>
+
+</body>
+</html>

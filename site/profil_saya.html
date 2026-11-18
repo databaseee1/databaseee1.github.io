@@ -7,56 +7,31 @@
 <title>Profil Saya</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
-
-
-
-
-
-*{
--webkit-tap-highlight-color: transparent;
-}
-
-button,
-a,
-img,
-div{
--webkit-tap-highlight-color: transparent;
-}
-
-body{
-user-select:none;
--webkit-user-select:none;
-}
-
-img{
--webkit-user-drag:none;
-}
-
-input,
-textarea,
-select{
-user-select:text;
--webkit-user-select:text;
-}
-
-
-
-
-
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
     font-family:Poppins,sans-serif;
+    -webkit-tap-highlight-color:transparent;
 }
 
 body{
     background:#f5f6fb;
     min-height:100vh;
+    user-select:none;
+    -webkit-user-select:none;
+}
+
+img{
+    -webkit-user-drag:none;
+}
+
+input,textarea,select{
+    user-select:text;
+    -webkit-user-select:text;
 }
 
 /* HEADER */
@@ -108,6 +83,7 @@ body{
 .name h2{
     color:#222;
     font-size:25px;
+    overflow-wrap:anywhere;
 }
 
 .name p{
@@ -125,6 +101,7 @@ body{
     align-items:center;
     padding:18px 0;
     border-bottom:1px solid #eee;
+    gap:12px;
 }
 
 .item:last-child{
@@ -140,6 +117,7 @@ body{
     color:#222;
     font-weight:600;
     text-align:right;
+    overflow-wrap:anywhere;
 }
 
 .menu{
@@ -175,545 +153,359 @@ body{
 
 .loading{
     text-align:center;
-    padding:80px;
+    padding:80px 20px;
     color:#777;
 }
 
-@media(max-width:600px){
-
-    .cover{
-        height:180px;
-    }
-
-    .profile-box img{
-        width:110px;
-        height:110px;
-    }
-
-    .name h2{
-        font-size:22px;
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-.confirm-popup{
-
-position:fixed;
-
-inset:0;
-
-background:rgba(0,0,0,.45);
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-opacity:0;
-
-visibility:hidden;
-
-transition:.25s;
-
-z-index:999999;
-
-backdrop-filter:blur(4px);
-
-}
-
-.confirm-popup.show{
-
-opacity:1;
-
-visibility:visible;
-
-}
-
-.confirm-box{
-
-width:320px;
-
-background:#fff;
-
-border-radius:22px;
-
-padding:24px;
-
-text-align:center;
-
-font-family:Poppins,sans-serif;
-
-animation:pop .25s;
-
-}
-
-@keyframes pop{
-
-from{
-
-transform:scale(.85);
-
-opacity:0;
-
-}
-
-to{
-
-transform:scale(1);
-
-opacity:1;
-
-}
-
-}
-
-.confirm-icon{
-
-width:64px;
-
-height:64px;
-
-margin:auto;
-
-border-radius:50%;
-
-background:#ffe8e8;
-
-color:#ef4444;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-font-size:28px;
-
-margin-bottom:14px;
-
-}
-
-.confirm-box h3{
-
-margin:0;
-
-font-size:20px;
-
-font-weight:700;
-
-}
-
-.confirm-box p{
-
-margin:10px 0 24px;
-
-font-size:14px;
-
-color:#666;
-
-line-height:1.5;
-
-}
-
-.confirm-btns{
-
-display:flex;
-
-gap:10px;
-
-}
-
-.confirm-btns button{
-
-flex:1;
-
-border:none;
-
-border-radius:12px;
-
-padding:12px;
-
-font-size:14px;
-
-font-weight:600;
-
-cursor:pointer;
-
-transition:.2s;
-
-}
-
-#cancelConfirm{
-
-background:#ececec;
-
-color:#444;
-
-}
-
-#cancelConfirm:hover{
-
-background:#ddd;
-
-}
-
-#yesConfirm{
-
-background:#ef4444;
-
-color:#fff;
-
-}
-
-#yesConfirm:hover{
-
-background:#dc2626;
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* SALDO UTAMA */
 
 .saldo-card{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-padding:16px 18px;
-
-border-radius:18px;
-
-background:linear-gradient(135deg,#0c85ff,#2563eb);
-
-color:#fff;
-
-box-shadow:
-0 12px 30px rgba(12,133,255,.25);
-
-margin-top:12px;
-
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 18px;
+    border-radius:18px;
+    background:linear-gradient(135deg,#0c85ff,#2563eb);
+    color:#fff;
+    box-shadow:0 12px 30px rgba(12,133,255,.25);
+    margin-top:12px;
+    gap:10px;
 }
 
 .saldo-left{
-
-display:flex;
-
-align-items:center;
-
-gap:14px;
-
+    display:flex;
+    align-items:center;
+    gap:14px;
+    position:relative;
+    z-index:1;
+    min-width:0;
 }
 
 .saldo-icon{
-
-width:52px;
-
-height:52px;
-
-border-radius:16px;
-
-background:rgba(255,255,255,.18);
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-font-size:22px;
-
+    flex-shrink:0;
+    width:52px;
+    height:52px;
+    border-radius:16px;
+    background:rgba(255,255,255,.18);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:22px;
 }
 
 .saldo-label{
-
-font-size:13px;
-
-opacity:.85;
-
-font-weight:500;
-
+    font-size:13px;
+    opacity:.85;
+    font-weight:500;
 }
 
 .saldo-value{
-
-margin-top:3px;
-font-size:18px;
-font-weight:600;
-letter-spacing:.3px;
-
+    margin-top:3px;
+    font-size:18px;
+    font-weight:600;
+    letter-spacing:.3px;
+    overflow-wrap:anywhere;
 }
 
 .saldo-badge{
-
-padding:6px 12px;
-
-border-radius:999px;
-
-background:rgba(255,255,255,.18);
-
-font-size:12px;
-
-font-weight:700;
-
+    position:relative;
+    z-index:1;
+    flex-shrink:0;
+    padding:6px 12px;
+    border-radius:999px;
+    background:rgba(255,255,255,.18);
+    font-size:12px;
+    font-weight:700;
+    cursor:pointer;
 }
 
 .saldo-card::after{
-
-content:"";
-
-position:absolute;
-
-left:-30px;
-
-bottom:-30px;
-
-width:100px;
-
-height:100px;
-
-border-radius:50%;
-
-background:rgba(255,255,255,.05);
-
+    content:"";
+    position:absolute;
+    left:-30px;
+    bottom:-30px;
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    background:rgba(255,255,255,.05);
 }
 
+/* BONUS SALDO */
 
+.bonus-card{
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    padding:16px 18px;
+    border-radius:18px;
+    margin-top:12px;
+    color:#fff;
+    background:linear-gradient(135deg,#7138ed,#a855f7);
+    box-shadow:0 12px 30px rgba(124,58,237,.20);
+}
 
+.bonus-left{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    min-width:0;
+    position:relative;
+    z-index:1;
+}
 
+.bonus-icon{
+    flex-shrink:0;
+    width:52px;
+    height:52px;
+    border-radius:16px;
+    background:rgba(255,255,255,.18);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:22px;
+}
 
+.bonus-label{
+    font-size:13px;
+    font-weight:500;
+    opacity:.9;
+}
 
+.bonus-value{
+    margin-top:3px;
+    font-size:18px;
+    font-weight:700;
+    overflow-wrap:anywhere;
+}
 
+.bonus-info{
+    position:relative;
+    z-index:1;
+    flex-shrink:0;
+    font-size:11px;
+    font-weight:600;
+    padding:6px 10px;
+    border-radius:20px;
+    background:rgba(255,255,255,.18);
+}
 
+.bonus-description{
+    margin-top:9px;
+    font-size:11px;
+    color:#777;
+    line-height:1.6;
+}
 
+/* POPUP LOGOUT */
 
+.confirm-popup{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    opacity:0;
+    visibility:hidden;
+    transition:.25s;
+    z-index:999999;
+    backdrop-filter:blur(4px);
+}
 
+.confirm-popup.show{
+    opacity:1;
+    visibility:visible;
+}
 
+.confirm-box{
+    width:320px;
+    max-width:90%;
+    background:#fff;
+    border-radius:22px;
+    padding:24px;
+    text-align:center;
+    animation:pop .25s;
+}
 
+@keyframes pop{
+    from{transform:scale(.85);opacity:0}
+    to{transform:scale(1);opacity:1}
+}
 
-/*=========================
-BANNER MINI 327
-==========================*/
+.confirm-icon{
+    width:64px;
+    height:64px;
+    margin:0 auto 14px;
+    border-radius:50%;
+    background:#ffe8e8;
+    color:#ef4444;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:28px;
+}
+
+.confirm-box h3{
+    font-size:20px;
+    font-weight:700;
+}
+
+.confirm-box p{
+    margin:10px 0 24px;
+    font-size:14px;
+    color:#666;
+    line-height:1.5;
+}
+
+.confirm-btns{
+    display:flex;
+    gap:10px;
+}
+
+.confirm-btns button{
+    flex:1;
+    border:none;
+    border-radius:12px;
+    padding:12px;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+#cancelConfirm{
+    background:#ececec;
+    color:#444;
+}
+
+#yesConfirm{
+    background:#ef4444;
+    color:#fff;
+}
+
+/* BANNER MINI 327 */
 
 #bannermin327Container{
-
-padding:12px;
-
+    padding:12px;
 }
 
 #bannermin327List{
-
-display:flex;
-flex-direction:column;
-gap:14px;
-
+    display:flex;
+    flex-direction:column;
+    gap:14px;
 }
 
 .bannermin327-card{
-
-display:block;
-
-
-border-radius:22px;
-
-overflow:hidden;
-
-
-border:1px solid #0c85ff;
-
-transition:.25s;
-
-text-decoration:none;
-
+    display:block;
+    border-radius:22px;
+    overflow:hidden;
+    border:1px solid #0c85ff;
+    transition:.25s;
+    text-decoration:none;
 }
 
 .bannermin327-card:hover{
-
-transform:translateY(-2px);
-
+    transform:translateY(-2px);
 }
 
 .bannermin327-image{
-
-width:100%;
-
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-padding:12px;
-
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:12px;
 }
 
 .bannermin327-image img{
-
-width:100%;
-
-height:100%;
-
-object-fit:contain;
-
-display:block;
-
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    display:block;
 }
 
 .bannermin327-footer{
-
-padding:10px 14px;
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-font-size:12px;
-
-color:#777;
-
-border-top:1px solid #ffffff00;
-
-background:#1ea7ff;
-
+    padding:10px 14px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:12px;
+    color:#777;
+    background:#1ea7ff;
 }
 
 .bannermin327-go{
-
-font-weight:700;
-
-color:#ffffff;
-
+    font-weight:700;
+    color:#fff;
 }
 
 .bannermin327-update{
-
-color:#fff;
-
-font-size:12px;
-
-font-weight:500;
-
+    color:#fff;
+    font-size:12px;
+    font-weight:500;
 }
 
-/*=========================
-LOADING
-==========================*/
-
 .bannermin327-loading{
-
-height:145px;
-
-margin-bottom:14px;
-
-border-radius:20px;
-
-background:
-
-linear-gradient(
-
-90deg,
-
-#eee,
-
-#fafafa,
-
-#eee
-
-);
-
-background-size:300% 100%;
-
-animation:bannermin327Load 1s linear infinite;
-
+    height:145px;
+    margin-bottom:14px;
+    border-radius:20px;
+    background:linear-gradient(90deg,#eee,#fafafa,#eee);
+    background-size:300% 100%;
+    animation:bannermin327Load 1s linear infinite;
 }
 
 @keyframes bannermin327Load{
-
-0%{
-
-background-position:100% 0;
-
+    0%{background-position:100% 0}
+    100%{background-position:-100% 0}
 }
 
-100%{
-
-background-position:-100% 0;
-
+@media(max-width:600px){
+    .cover{height:180px}
+    .profile-box img{width:110px;height:110px}
+    .name h2{font-size:22px}
+    .card{padding:20px}
+    .bonus-value,.saldo-value{font-size:16px}
 }
-
-}
-
 </style>
 </head>
+
 <body>
 
 <div id="content">
-
-<div class="loading">
-Memuat data profil...
+    <div class="loading">Memuat data profil...</div>
 </div>
 
-</div>
-
-
-
-
-
-
-
-
-<!-- =========================
-     BANNER MINI 327
-========================= -->
+<!-- BANNER MINI -->
 
 <div id="bannermin327Container">
-
-<div id="bannermin327Loading">
-
-<div class="bannermin327-loading"></div>
-<div class="bannermin327-loading"></div>
-<div class="bannermin327-loading"></div>
-
+    <div id="bannermin327Loading">
+        <div class="bannermin327-loading"></div>
+        <div class="bannermin327-loading"></div>
+        <div class="bannermin327-loading"></div>
+    </div>
+    <div id="bannermin327List"></div>
 </div>
 
-<div id="bannermin327List"></div>
+<!-- POPUP LOGOUT -->
 
+<div id="confirmPopup" class="confirm-popup">
+    <div class="confirm-box">
+        <div class="confirm-icon">
+            <i class="fa-solid fa-right-from-bracket"></i>
+        </div>
+
+        <h3>Keluar Akun</h3>
+        <p>Apakah kamu yakin ingin keluar dari akun?</p>
+
+        <div class="confirm-btns">
+            <button id="cancelConfirm">Batal</button>
+            <button id="yesConfirm">Keluar</button>
+        </div>
+    </div>
 </div>
-
-
-
-
-
-
-
-
 
 <script type="module">
 
@@ -725,548 +517,953 @@ import {
     ref,
     get,
     update,
-    onValue
+    set,
+    push,
+    onValue,
+    runTransaction
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
+
+/* =========================
+   FIREBASE
+========================= */
+
 const firebaseConfig = {
-  apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
-  authDomain: "users-96dc5.firebaseapp.com",
-  databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "users-96dc5"
+    apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+    authDomain: "users-96dc5.firebaseapp.com",
+    databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "users-96dc5"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 
+/* =========================
+   IDENTITAS LOGIN
+========================= */
 
+const usersid = localStorage.getItem("usersid");
 
-const bannermin327Wrap =
-document.getElementById("bannermin327List");
-
-const bannermin327Loading =
-document.getElementById("bannermin327Loading");
-
-onValue(
-
-ref(db,"Bannermini33"),
-
-(snapshot)=>{
-
-bannermin327Loading.style.display="none";
-
-bannermin327Wrap.innerHTML="";
-
-if(!snapshot.exists()){
-
-bannermin327Wrap.innerHTML=`
-
-<div style="text-align:center;
-padding:30px;
-color:#888;">
-
-Belum ada banner.
-
-</div>
-
-`;
-
-return;
-
-}
-
-const data=snapshot.val();
-
-Object.keys(data).reverse().forEach(key=>{
-
-const item=data[key];
-
-const a=document.createElement("a");
-
-a.className="bannermin327-card";
-
-a.href=item["Link tujuan"]||"#";
-
-a.target="_blank";
-
-a.innerHTML=`
-
-<div class="bannermin327-image">
-
-<img
-
-src="${item.Bannermini}"
-
-loading="lazy"
-
-alt="Banner"
-
->
-
-</div>
-
-<div class="bannermin327-footer">
-
-<span class="bannermin327-update">
-
-${item["Diperbaharui oleh"]||""}
-
-</span>
-
-<span class="bannermin327-go">
-
-Buka →
-
-</span>
-
-</div>
-
-`;
-
-bannermin327Wrap.appendChild(a);
-
-});
-
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-const content =
-document.getElementById("content");
-
-const usersid =
-localStorage.getItem("usersid");
+const content = document.getElementById("content");
 
 if(!usersid){
-    location.href =
-    "login_topup.html";
+    location.href = "login_topup.html";
+    throw new Error("Pengguna belum login.");
 }
+
+
+/* =========================
+   FORMAT RUPIAH
+========================= */
+
+function formatRupiah(angka){
+    return "Rp " + Number(angka || 0).toLocaleString("id-ID");
+}
+
+
+/* =========================
+   WAKTU SERVER FIREBASE
+========================= */
+
+let serverTimeOffset = 0;
+
+async function loadServerTime(){
+
+    try{
+
+        const snap = await get(
+            ref(db,".info/serverTimeOffset")
+        );
+
+        if(snap.exists()){
+            serverTimeOffset = Number(snap.val()) || 0;
+        }
+
+    }catch(error){
+        console.error("Gagal membaca waktu server:",error);
+    }
+
+}
+
+function getServerTime(){
+    return Date.now() + serverTimeOffset;
+}
+
+
+
+/* =========================
+   SISTEM BONUS
+========================= */
+
+const BONUS_PER_INTERVAL = 300;
+const BONUS_INTERVAL = 3000;
+const BONUS_CYCLE = 60 * 60 * 1000;
+const BONUS_PER_HOUR = 360000;
+
+let bonusTimer = null;
+let bonusProcessing = false;
+let currentUser = null;
+let lastKnownCycleStart = 0;
+
+/* =========================
+   PROSES BONUS + RIWAYAT
+========================= */
+
+async function processBonus(){
+
+    if(bonusProcessing || !usersid) return;
+
+    bonusProcessing = true;
+
+    try{
+
+        const now = getServerTime();
+
+        const userRef = ref(
+            db,
+            `users_topup/${usersid}`
+        );
+
+        const result = await runTransaction(
+            userRef,
+            (userData)=>{
+
+                if(!userData) return userData;
+
+                const data = {...userData};
+
+                let cycleStart = Number(
+                    data.bonusCycleStartAt || 0
+                );
+
+                if(!cycleStart || !Number.isFinite(cycleStart)){
+                    cycleStart = now;
+                }
+
+                const elapsed = Math.max(0, now - cycleStart);
+
+                const completedCycles = Math.floor(
+                    elapsed / BONUS_CYCLE
+                );
+
+                let payout = 0;
+
+                if(completedCycles > 0){
+
+                    payout = completedCycles * BONUS_PER_HOUR;
+
+                    cycleStart += completedCycles * BONUS_CYCLE;
+
+                    data.saldo =
+                        Number(data.saldo || 0) + payout;
+
+                    data.bonusLastPayoutAt = now;
+                    data.bonusLastPayoutAmount = payout;
+                    data.bonusLastPayoutCycles = completedCycles;
+                }
+
+                const remainingTime = Math.max(
+                    0,
+                    now - cycleStart
+                );
+
+                const completedIntervals = Math.floor(
+                    remainingTime / BONUS_INTERVAL
+                );
+
+                const bonusSaldo =
+                    completedIntervals * BONUS_PER_INTERVAL;
+
+                data.bonusCycleStartAt = cycleStart;
+                data.bonusSaldo = bonusSaldo;
+
+                return data;
+
+            },
+            {
+                applyLocally:false
+            }
+        );
+
+        if(!result.committed || !result.snapshot.exists()){
+            return;
+        }
+
+        const updatedUser = result.snapshot.val();
+
+        const newCycleStart = Number(
+            updatedUser.bonusCycleStartAt || now
+        );
+
+        /*
+         * BUAT RIWAYAT BONUS RP300
+         *
+         * Setiap interval 3 detik memiliki
+         * satu ID riwayat yang tetap.
+         */
+
+        const elapsed = Math.max(
+            0,
+            now - newCycleStart
+        );
+
+        const completedIntervals = Math.floor(
+            elapsed / BONUS_INTERVAL
+        );
+
+        const historyUpdates = {};
+
+        /*
+         * Riwayat bonus yang belum tercatat.
+         * ID ditentukan dari waktu interval.
+         */
+
+        const historyRef = ref(
+            db,
+            `History_Bonus/${usersid}`
+        );
+
+        const historySnap = await get(historyRef);
+
+        const existingHistory = historySnap.exists()
+            ? historySnap.val()
+            : {};
+
+        for(let i = 1; i <= completedIntervals; i++){
+
+            const intervalTime =
+                newCycleStart + (i * BONUS_INTERVAL);
+
+            const historyId =
+                "bonus_masuk_" + intervalTime;
+
+            if(existingHistory[historyId]){
+                continue;
+            }
+
+            historyUpdates[historyId] = {
+                keterangan:"Bonus Saldo Masuk",
+                jumlah:BONUS_PER_INTERVAL,
+                tipe:"bonus_masuk",
+                waktu:intervalTime
+            };
+
+        }
+
+        /*
+         * Simpan semua riwayat bonus sekaligus.
+         */
+
+        if(Object.keys(historyUpdates).length > 0){
+
+            await update(
+                historyRef,
+                historyUpdates
+            );
+
+        }
+
+        /*
+         * RIWAYAT PEMINDAHAN KE SALDO UTAMA
+         */
+
+        const oldCycleStart = lastKnownCycleStart;
+
+        if(
+            oldCycleStart > 0 &&
+            newCycleStart > oldCycleStart
+        ){
+
+            const payoutAmount = Number(
+                updatedUser.bonusLastPayoutAmount || 0
+            );
+
+            const cyclesPassed = Math.round(
+                (newCycleStart - oldCycleStart) / BONUS_CYCLE
+            );
+
+            const historyId =
+                "bonus_transfer_" + newCycleStart;
+
+            await set(
+                ref(
+                    db,
+                    `History_Bonus/${usersid}/${historyId}`
+                ),
+                {
+                    keterangan:"Bonus Dipindahkan ke Saldo Utama",
+                    jumlah:payoutAmount,
+                    tipe:"bonus_transfer",
+                    jumlahJam:cyclesPassed,
+                    waktu:now
+                }
+            );
+
+        }
+
+        lastKnownCycleStart = newCycleStart;
+        currentUser = updatedUser;
+
+        updateSaldoDisplay(updatedUser);
+
+    }catch(error){
+
+        console.error("Proses bonus gagal:",error);
+
+    }finally{
+
+        bonusProcessing = false;
+
+    }
+
+}
+
+/* =========================
+   TAMPILAN SALDO
+========================= */
+
+function updateSaldoDisplay(user){
+
+    const saldoElement =
+        document.getElementById("saldoValue");
+
+    const bonusElement =
+        document.getElementById("bonusSaldoValue");
+
+    if(saldoElement){
+
+        saldoElement.textContent =
+            formatRupiah(user.saldo);
+
+    }
+
+    if(bonusElement){
+
+        bonusElement.textContent =
+            formatRupiah(user.bonusSaldo);
+
+    }
+
+}
+
+
+/* =========================
+   JALANKAN SISTEM BONUS
+========================= */
+
+async function startBonusSystem(user){
+
+    currentUser = user;
+
+    lastKnownCycleStart = Number(
+        user.bonusCycleStartAt || 0
+    );
+
+    await loadServerTime();
+
+    /*
+     * Langsung hitung ketika profil dibuka.
+     */
+
+    await processBonus();
+
+    /*
+     * Saat halaman tetap terbuka,
+     * perbarui perhitungan setiap 3 detik.
+     */
+
+    if(bonusTimer){
+        clearInterval(bonusTimer);
+    }
+
+    bonusTimer = setInterval(async()=>{
+
+        await processBonus();
+
+    },BONUS_INTERVAL);
+
+}
+
+
+/* =========================
+   BANNER MINI 327
+========================= */
+
+const bannermin327Wrap =
+    document.getElementById("bannermin327List");
+
+const bannermin327Loading =
+    document.getElementById("bannermin327Loading");
+
+onValue(
+    ref(db,"Bannermini33"),
+    (snapshot)=>{
+
+        bannermin327Loading.style.display = "none";
+        bannermin327Wrap.innerHTML = "";
+
+        if(!snapshot.exists()){
+
+            bannermin327Wrap.innerHTML = `
+                <div style="text-align:center;padding:30px;color:#888;">
+                    Belum ada banner.
+                </div>
+            `;
+
+            return;
+        }
+
+        const data = snapshot.val();
+
+        Object.keys(data).reverse().forEach(key=>{
+
+            const item = data[key] || {};
+
+            const a = document.createElement("a");
+
+            a.className = "bannermin327-card";
+            a.href = item["Link tujuan"] || "#";
+            a.target = "_blank";
+            a.rel = "noopener noreferrer";
+
+            const image = document.createElement("div");
+            image.className = "bannermin327-image";
+
+            const img = document.createElement("img");
+            img.src = item.Bannermini || "";
+            img.loading = "lazy";
+            img.alt = "Banner";
+
+            image.appendChild(img);
+
+            const footer = document.createElement("div");
+            footer.className = "bannermin327-footer";
+
+            const updated = document.createElement("span");
+            updated.className = "bannermin327-update";
+            updated.textContent = item["Diperbaharui oleh"] || "";
+
+            const go = document.createElement("span");
+            go.className = "bannermin327-go";
+            go.textContent = "Buka →";
+
+            footer.appendChild(updated);
+            footer.appendChild(go);
+
+            a.appendChild(image);
+            a.appendChild(footer);
+
+            bannermin327Wrap.appendChild(a);
+
+        });
+
+    },
+    (error)=>{
+        console.error("Banner gagal dimuat:",error);
+        bannermin327Loading.style.display = "none";
+    }
+);
+
+
+/* =========================
+   MEMUAT PROFIL
+========================= */
 
 async function loadProfil(){
 
     try{
 
-        const snap =
-        await get(
-            ref(
-                db,
-                `users_topup/${usersid}`
-            )
+        const snap = await get(
+            ref(db,`users_topup/${usersid}`)
         );
 
         if(!snap.exists()){
 
-            localStorage.removeItem(
-                "usersid"
-            );
+            localStorage.removeItem("usersid");
+            localStorage.removeItem("user_topup");
 
-            localStorage.removeItem(
-                "user_topup"
-            );
-
-            location.href =
-            "login_topup.html";
-
+            location.href = "login_topup.html";
             return;
         }
 
-        const user =
-        snap.val();
+        const user = snap.val();
+
+        currentUser = user;
 
         localStorage.setItem(
             "user_topup",
             JSON.stringify(user)
         );
 
+        const fotoSampul =
+            user.fotoSampul ||
+            "https://images.unsplash.com/photo-1506744038136-46273834b3fb";
+
+        const fotoProfil =
+            user.profil ||
+            "https://ui-avatars.com/api/?name=U";
+
         content.innerHTML = `
-        <div class="cover">
-            <img
-            src="${user.fotoSampul}"
-            onerror="this.src='https://images.unsplash.com/photo-1506744038136-46273834b3fb'">
-        </div>
 
-        <div class="profile-box">
-            <img
-            src="${user.profil}"
-            onerror="this.src='https://ui-avatars.com/api/?name=U'">
-        </div>
+            <div class="cover">
 
-        <div class="card">
+                <img
+                    src="${fotoSampul}"
+                    onerror="this.src='https://images.unsplash.com/photo-1506744038136-46273834b3fb'"
+                    alt="Sampul"
+                >
 
-            <div class="name">
-                <h2>${user.email}</h2>
-                <p>Akun Top Up Coin</p>
             </div>
 
-            <div class="info">
+            <div class="profile-box">
 
-                <div class="item">
-                    <div class="label">
-                        User ID
-                    </div>
+                <img
+                    src="${fotoProfil}"
+                    onerror="this.src='https://ui-avatars.com/api/?name=U'"
+                    alt="Profil"
+                >
 
-                    <div class="value">
-                        ${user.usersid}
-                    </div>
-                </div>
-
-                <div class="item">
-                    <div class="label">
-                        Email
-                    </div>
-
-                    <div class="value">
-                        ${user.email}
-                    </div>
-                </div>
-
-                <div class="item">
-                    <div class="label">
-                        WhatsApp
-                    </div>
-
-                    <div class="value">
-                        ${user.whatsapp}
-                    </div>
-                </div>
-
-         <div class="saldo-card">
-
-    <div class="saldo-left">
-
-        <div class="saldo-icon">
-            <i class="fa-solid fa-wallet"></i>
-        </div>
-
-        <div>
-
-            <div class="saldo-label">
-                Saldo
             </div>
 
-            <div class="saldo-value">
-                Rp ${Number(user.saldo || 0).toLocaleString("id-ID")}
-            </div>
+            <div class="card">
 
-        </div>
+                <div class="name">
 
-    </div>
+                    <h2 id="profileEmail"></h2>
 
-<div class="saldo-badge"
-     onclick="location.href='isi_saldo_topup.html'">
-    Isi Saldo
+                    <p>Akun Top Up Coin</p>
+
+                </div>
+
+                <div class="info">
+
+                    <div class="item">
+
+                        <div class="label">User ID</div>
+
+                        <div class="value" id="profileUserId"></div>
+
+                    </div>
+
+                    <div class="item">
+
+                        <div class="label">Email</div>
+
+                        <div class="value" id="profileEmailInfo"></div>
+
+                    </div>
+
+                    <div class="item">
+
+                        <div class="label">WhatsApp</div>
+
+                        <div class="value" id="profileWhatsapp"></div>
+
+                    </div>
+
+
+                    <!-- SALDO UTAMA -->
+
+                    <div class="saldo-card">
+
+                        <div class="saldo-left">
+
+                            <div class="saldo-icon">
+                                <i class="fa-solid fa-wallet"></i>
+                            </div>
+
+                            <div>
+
+                                <div class="saldo-label">
+                                    Saldo Utama
+                                </div>
+
+                                <div class="saldo-value" id="saldoValue">
+                                    ${formatRupiah(user.saldo)}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div
+                            class="saldo-badge"
+                            id="isiSaldoButton"
+                        >
+                            Isi Saldo
+                        </div>
+
+                    </div>
+
+
+                    <!-- BONUS SALDO -->
+
+                    <div class="bonus-card">
+
+                        <div class="bonus-left">
+
+                            <div class="bonus-icon">
+                                <i class="fa-solid fa-gift"></i>
+                            </div>
+
+                            <div>
+
+                                <div class="bonus-label">
+                                    Bonus Saldo
+                                </div>
+
+                                <div class="bonus-value" id="bonusSaldoValue">
+                                    ${formatRupiah(user.bonusSaldo)}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+<div class="bonus-info"
+     onclick="location.href='Bonus_html.html'"
+     style="cursor:pointer;">
+    Riwayat Bonus ›
 </div>
 
-</div>
-
-                <div class="item">
-                    <div class="label">
-                        Bergabung
                     </div>
 
-                    <div class="value">
-                        ${new Date(
-                            user.dibuatPada
-                        ).toLocaleDateString(
-                            "id-ID"
-                        )}
+                    <div class="bonus-description">
+                        Bonus bertambah Rp300 setiap 3 detik.
+                        Setelah 1 jam, bonus akan dipindahkan ke Saldo Utama.
                     </div>
+
+
+                    <div class="item">
+
+                        <div class="label">Bergabung</div>
+
+                        <div class="value" id="profileJoinDate"></div>
+
+                    </div>
+
                 </div>
 
+
+                <!-- MENU -->
+
+                <div class="menu">
+
+                    <a href="edit_profil.html">
+
+                        <span>Edit Profil</span>
+                        <span>›</span>
+
+                    </a>
+
+
+                    <a href="History_topup_saya.html">
+
+                        <span>Riwayat Pesanan</span>
+                        <span>›</span>
+
+                    </a>
+
+
+                    <a
+                        href="notifikasi.html"
+                        id="notifMenu"
+                        style="position:relative;display:flex;justify-content:space-between;align-items:center;padding:12px 0;"
+                    >
+
+                        <span>Notifikasi</span>
+                        <span>›</span>
+
+                        <span
+                            id="notifBadge"
+                            style="
+                                position:absolute;
+                                right:10px;
+                                top:10px;
+                                background:red;
+                                color:#fff;
+                                font-size:10px;
+                                padding:2px 6px;
+                                border-radius:10px;
+                                display:none;
+                                min-width:16px;
+                                text-align:center;
+                            "
+                        >0</span>
+
+                    </a>
+
+                </div>
+
+
+                <button
+                    class="logout"
+                    id="logoutBtn"
+                >
+                    Logout
+                </button>
+
             </div>
 
-            <div class="menu">
-
-<a href="edit_profil.html">
-    <span>Edit Profil</span>
-    <span>›</span>
-</a>
-
-<a href="History_topup_saya.html">
-    <span>Riwayat Pesanan</span>
-    <span>›</span>
-</a>
-
-
-<a href="notifikasi.html"
-   id="notifMenu"
-   style="position:relative; display:flex; justify-content:space-between; align-items:center; padding:12px 0;">
-
-    <span>Notifikasi</span>
-    <span>›</span>
-
-    <span id="notifBadge" style="
-        position:absolute;
-        right:10px;
-        top:10px;
-        background:red;
-        color:#fff;
-        font-size:10px;
-        padding:2px 6px;
-        border-radius:10px;
-        display:none;
-        min-width:16px;
-        text-align:center;
-    ">0</span>
-
-</a>
-
-            </div>
-
-            <button
-            class="logout"
-            id="logoutBtn">
-                Logout
-            </button>
-
-        </div>
         `;
 
-        requestAnimationFrame(() => {
-    loadNotifBadge();
-});
+        /*
+         * Isi teks data pengguna.
+         */
+
+        document.getElementById("profileEmail").textContent =
+            user.email || "-";
+
+        document.getElementById("profileEmailInfo").textContent =
+            user.email || "-";
+
+        document.getElementById("profileUserId").textContent =
+            user.usersid || usersid;
+
+        document.getElementById("profileWhatsapp").textContent =
+            user.whatsapp || "-";
+
+        document.getElementById("profileJoinDate").textContent =
+            user.dibuatPada
+                ? new Date(user.dibuatPada).toLocaleDateString("id-ID")
+                : "-";
 
 
-setTimeout(() => {
+        /*
+         * Tombol isi saldo.
+         */
 
-    const notifMenu = document.getElementById("notifMenu");
+        document.getElementById("isiSaldoButton").onclick = ()=>{
+            location.href = "isi_saldo_topup.html";
+        };
 
-    if (!notifMenu) return;
 
-    notifMenu.addEventListener("click", async () => {
+        /*
+         * Jalankan sistem bonus.
+         */
 
-        const uid = localStorage.getItem("usersid");
-        if (!uid) return;
+        await startBonusSystem(user);
 
-        const snap = await get(ref(db, `notifications/${uid}`));
-        if (!snap.exists()) return;
+
+        /*
+         * Notifikasi.
+         */
+
+        await loadNotifBadge();
+
+
+        const notifMenu =
+            document.getElementById("notifMenu");
+
+        if(notifMenu){
+
+            notifMenu.addEventListener("click",async()=>{
+
+                const uid = localStorage.getItem("usersid");
+
+                if(!uid) return;
+
+                try{
+
+                    const notificationSnap = await get(
+                        ref(db,`notifications/${uid}`)
+                    );
+
+                    if(!notificationSnap.exists()) return;
+
+                    const data = notificationSnap.val();
+
+                    const updates = {};
+
+                    for(const key in data){
+
+                        updates[`notifications/${uid}/${key}/read`] = true;
+
+                    }
+
+                    await update(ref(db),updates);
+
+                    const badge =
+                        document.getElementById("notifBadge");
+
+                    if(badge){
+                        badge.style.display = "none";
+                    }
+
+                }catch(error){
+
+                    console.error("Gagal memperbarui notifikasi:",error);
+
+                }
+
+            });
+
+        }
+
+
+        /*
+         * LOGOUT POPUP.
+         */
+
+        const popup =
+            document.getElementById("confirmPopup");
+
+        document.getElementById("logoutBtn").onclick = ()=>{
+            popup.classList.add("show");
+        };
+
+        document.getElementById("cancelConfirm").onclick = ()=>{
+            popup.classList.remove("show");
+        };
+
+        document.getElementById("yesConfirm").onclick = ()=>{
+
+            if(bonusTimer){
+                clearInterval(bonusTimer);
+            }
+
+            localStorage.removeItem("usersid");
+            localStorage.removeItem("user_topup");
+
+            location.href = "login_topup.html";
+
+        };
+
+        popup.onclick = (e)=>{
+
+            if(e.target === popup){
+                popup.classList.remove("show");
+            }
+
+        };
+
+    }catch(error){
+
+        console.error("Gagal memuat profil:",error);
+
+        content.innerHTML = `
+            <div class="loading">
+                Gagal memuat profil. Silakan muat ulang halaman.
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* =========================
+   NOTIFIKASI BADGE
+========================= */
+
+async function loadNotifBadge(){
+
+    const badge =
+        document.getElementById("notifBadge");
+
+    if(!badge || !usersid) return;
+
+    try{
+
+        const snap = await get(
+            ref(db,`notifications/${usersid}`)
+        );
+
+        if(!snap.exists()){
+
+            badge.style.display = "none";
+            return;
+
+        }
 
         const data = snap.val();
 
-        for (const key in data) {
-            await update(
-                ref(db, `notifications/${uid}/${key}`),
-                {
-                    read: true
-                }
-            );
-        }
+        let count = 0;
 
-        const badge = document.getElementById("notifBadge");
-        if (badge) {
+        Object.values(data).forEach(item=>{
+
+            if(
+                item.read === false ||
+                item.read === "false" ||
+                item.read == null
+            ){
+                count++;
+            }
+
+        });
+
+        if(count > 0){
+
+            badge.style.display = "inline-block";
+            badge.innerText = count;
+
+        }else{
+
             badge.style.display = "none";
+
         }
 
-    });
+    }catch(error){
 
-}, 100);
-
-
-
-      const popup =
-document.getElementById("confirmPopup");
-
-document
-.getElementById("logoutBtn")
-.onclick=()=>{
-
-popup.classList.add("show");
-
-};
-
-document
-.getElementById("cancelConfirm")
-.onclick=()=>{
-
-popup.classList.remove("show");
-
-};
-
-document
-.getElementById("yesConfirm")
-.onclick=()=>{
-
-localStorage.removeItem("usersid");
-
-localStorage.removeItem("user_topup");
-
-location.href="login_topup.html";
-
-};
-
-popup.onclick=(e)=>{
-
-if(e.target===popup){
-
-popup.classList.remove("show");
-
-}
-
-};
-
-    }catch(err){
-
-        console.error(err);
-
-        content.innerHTML = `
-        <div class="loading">
-            Gagal memuat profil.
-        </div>
-        `;
-
-
+        console.error("Gagal memuat badge notifikasi:",error);
 
     }
+
 }
+
+
+/* =========================
+   JALANKAN PROFIL
+========================= */
 
 loadProfil();
 
 
+/* =========================
+   PROTEKSI
+========================= */
 
-
-
-
-const uid = localStorage.getItem("usersid");
-
-async function loadNotifBadge() {
-
-    const badge = document.getElementById("notifBadge");
-
-    if (!badge) {
-        
-        return;
-    }
-
-    if (!uid) {
-        
-        return;
-    }
-
-    const snap = await get(ref(db, `notifications/${uid}`));
-
-    if (!snap.exists()) {
-        
-        badge.style.display = "none";
-        return;
-    }
-
-    const data = snap.val();
-
-    
-
-    let count = 0;
-
-    Object.values(data).forEach(item => {
-
-        // 🔥 FIX IMPORTANT: handle string + boolean
-        if (item.read === false || item.read === "false" || item.read == null) {
-            count++;
-        }
-
-    });
-
-    
-
-    if (count > 0) {
-        badge.style.display = "inline-block";
-        badge.innerText = count;
-    } else {
-        badge.style.display = "none";
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-// PROTEKSI
 document.addEventListener("contextmenu",e=>e.preventDefault());
 document.addEventListener("copy",e=>e.preventDefault());
 document.addEventListener("cut",e=>e.preventDefault());
 document.addEventListener("selectstart",e=>e.preventDefault());
 
 document.addEventListener("dragstart",e=>{
-if(e.target.tagName==="IMG")e.preventDefault();
+    if(e.target.tagName === "IMG"){
+        e.preventDefault();
+    }
 });
 
 document.addEventListener("keydown",e=>{
-if(
-(e.ctrlKey&&["s","u","c"].includes(e.key.toLowerCase()))
-||e.key==="F12"
-)e.preventDefault();
+
+    if(
+        (e.ctrlKey && ["s","u","c"].includes(e.key.toLowerCase())) ||
+        e.key === "F12"
+    ){
+        e.preventDefault();
+    }
+
 });
 
-
-let lastTouch=0;
+let lastTouch = 0;
 
 document.addEventListener("touchend",e=>{
-let now=Date.now();
-if(now-lastTouch<300)e.preventDefault();
-lastTouch=now;
+
+    const now = Date.now();
+
+    if(now - lastTouch < 300){
+        e.preventDefault();
+    }
+
+    lastTouch = now;
+
 },{passive:false});
 
-
 document.addEventListener("gesturestart",e=>e.preventDefault());
-// PROTEKSI
-
-
-
-
 
 </script>
 
-
-
-
-
-
-
-
-<div id="confirmPopup" class="confirm-popup">
-
-    <div class="confirm-box">
-
-        <div class="confirm-icon">
-            <i class="fa-solid fa-right-from-bracket"></i>
-        </div>
-
-        <h3>Keluar Akun</h3>
-
-        <p>Apakah kamu yakin ingin keluar dari akun?</p>
-
-        <div class="confirm-btns">
-
-            <button id="cancelConfirm">
-                Batal
-            </button>
-
-            <button id="yesConfirm">
-                Keluar
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
 </body>
 </html>
-

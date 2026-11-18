@@ -1,0 +1,2103 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#5c27fe">
+<title>Riwayat Bonus & Pencairan</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Poppins,sans-serif;
+    -webkit-tap-highlight-color:transparent;
+}
+
+body{
+    background:#f5f6fb;
+    min-height:100vh;
+    color:#222;
+    padding-bottom:35px;
+}
+
+button,input,select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.top-header{
+    background:linear-gradient(135deg,#5c27fe,#8055ff);
+    padding:25px 20px 65px;
+    color:#fff;
+    position:relative;
+    overflow:hidden;
+}
+
+.top-header::after{
+    content:"";
+    position:absolute;
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    background:rgba(255,255,255,.07);
+    right:-50px;
+    bottom:-90px;
+}
+
+.header-back{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:#fff;
+    text-decoration:none;
+    font-size:15px;
+    font-weight:600;
+    position:relative;
+    z-index:1;
+}
+
+.header-back i{
+    font-size:18px;
+}
+
+.header-title{
+    margin-top:30px;
+    position:relative;
+    z-index:1;
+}
+
+.header-title h2{
+    font-size:23px;
+    font-weight:700;
+}
+
+.header-title p{
+    font-size:12px;
+    opacity:.85;
+    margin-top:5px;
+}
+
+.container{
+    width:94%;
+    max-width:700px;
+    margin:-42px auto 0;
+    position:relative;
+    z-index:2;
+}
+
+.balance-card{
+    background:#fff;
+    border-radius:23px;
+    padding:20px;
+    box-shadow:0 10px 35px rgba(0,0,0,.08);
+}
+
+.balance-heading{
+    font-size:14px;
+    font-weight:700;
+    margin-bottom:15px;
+    color:#333;
+}
+
+.balance-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.balance-item{
+    padding:15px;
+    border-radius:17px;
+    color:#fff;
+    min-width:0;
+}
+
+.balance-main{
+    background:linear-gradient(135deg,#087fff,#2563eb);
+}
+
+.balance-bonus{
+    background:linear-gradient(135deg,#7138ed,#a855f7);
+}
+
+.balance-icon{
+    font-size:19px;
+    margin-bottom:12px;
+}
+
+.balance-label{
+    font-size:11px;
+    opacity:.9;
+}
+
+.balance-value{
+    font-size:16px;
+    font-weight:700;
+    margin-top:5px;
+    overflow-wrap:anywhere;
+}
+
+.balance-total{
+    border-top:1px solid #eee;
+    padding-top:15px;
+    margin-top:16px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+}
+
+.balance-total span:first-child{
+    font-size:12px;
+    color:#777;
+}
+
+.balance-total strong{
+    font-size:17px;
+    color:#5c27fe;
+    overflow-wrap:anywhere;
+    text-align:right;
+}
+
+.withdraw-btn{
+    width:100%;
+    border:none;
+    background:linear-gradient(135deg,#5c27fe,#8055ff);
+    color:#fff;
+    padding:16px;
+    border-radius:15px;
+    font-size:14px;
+    font-weight:700;
+    margin-top:18px;
+    box-shadow:0 8px 20px rgba(92,39,254,.22);
+}
+
+.withdraw-btn i{
+    margin-right:8px;
+}
+
+.section-card{
+    background:#fff;
+    border-radius:22px;
+    padding:20px;
+    margin-top:18px;
+    box-shadow:0 8px 25px rgba(0,0,0,.045);
+}
+
+.section-heading{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+}
+
+.section-heading h3{
+    font-size:15px;
+    font-weight:700;
+}
+
+.section-heading small{
+    color:#888;
+    font-size:10px;
+}
+
+.history-list{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.history-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:13px;
+    background:#f8f7ff;
+    border-radius:15px;
+    border:1px solid #f0edff;
+}
+
+.history-icon{
+    flex-shrink:0;
+    width:43px;
+    height:43px;
+    border-radius:14px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#eee8ff;
+    color:#7138ed;
+    font-size:18px;
+}
+
+.history-content{
+    flex:1;
+    min-width:0;
+}
+
+.history-content h4{
+    font-size:12px;
+    font-weight:700;
+    overflow-wrap:anywhere;
+}
+
+.history-content p{
+    color:#999;
+    font-size:10px;
+    margin-top:4px;
+}
+
+.history-right{
+    text-align:right;
+    flex-shrink:0;
+}
+
+.history-amount{
+    font-size:12px;
+    font-weight:700;
+    color:#16a34a;
+}
+
+.history-status{
+    display:inline-block;
+    font-size:9px;
+    margin-top:5px;
+    padding:4px 8px;
+    border-radius:20px;
+    background:#e7f9ed;
+    color:#15803d;
+}
+
+.empty-state{
+    text-align:center;
+    padding:35px 15px;
+    color:#999;
+}
+
+.empty-state i{
+    font-size:35px;
+    color:#c9c1e8;
+    margin-bottom:12px;
+}
+
+.empty-state p{
+    font-size:12px;
+}
+
+.loading-state{
+    text-align:center;
+    padding:30px 10px;
+    color:#999;
+    font-size:12px;
+}
+
+.info-box{
+    background:#fff8e8;
+    border:1px solid #ffe7b0;
+    color:#946200;
+    padding:13px;
+    border-radius:14px;
+    font-size:11px;
+    line-height:1.7;
+    margin-top:15px;
+}
+
+.info-box i{
+    margin-right:5px;
+}
+
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    backdrop-filter:blur(4px);
+    z-index:99999;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:15px;
+    opacity:0;
+    visibility:hidden;
+    transition:.25s;
+}
+
+.modal-overlay.show{
+    opacity:1;
+    visibility:visible;
+}
+
+.modal-box{
+    width:100%;
+    max-width:430px;
+    max-height:90vh;
+    overflow-y:auto;
+    background:#fff;
+    border-radius:23px;
+    padding:22px;
+    transform:translateY(20px);
+    transition:.25s;
+}
+
+.modal-overlay.show .modal-box{
+    transform:translateY(0);
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.modal-header h3{
+    font-size:17px;
+    font-weight:700;
+}
+
+.modal-close{
+    width:34px;
+    height:34px;
+    border:none;
+    border-radius:50%;
+    background:#f1f1f1;
+    color:#555;
+}
+
+.form-group{
+    margin-bottom:16px;
+}
+
+.form-group label{
+    display:block;
+    font-size:12px;
+    font-weight:600;
+    color:#555;
+    margin-bottom:8px;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    height:49px;
+    border:1px solid #e3e3e3;
+    border-radius:12px;
+    outline:none;
+    padding:0 13px;
+    font-size:13px;
+    background:#fff;
+    color:#333;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+    border-color:#7138ed;
+    box-shadow:0 0 0 3px rgba(113,56,237,.08);
+}
+
+.withdraw-summary{
+    padding:14px;
+    border-radius:14px;
+    background:#f5f1ff;
+    margin-bottom:18px;
+}
+
+.withdraw-summary div{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    font-size:11px;
+    margin-bottom:8px;
+}
+
+.withdraw-summary div:last-child{
+    margin-bottom:0;
+    padding-top:9px;
+    border-top:1px solid #e3d9ff;
+    font-weight:700;
+    color:#5c27fe;
+}
+
+.withdraw-summary strong{
+    text-align:right;
+}
+
+.submit-btn{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:13px;
+    color:#fff;
+    background:linear-gradient(135deg,#5c27fe,#8055ff);
+    font-size:13px;
+    font-weight:700;
+}
+
+.submit-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.notice-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.5);
+    z-index:100000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    opacity:0;
+    visibility:hidden;
+    transition:.2s;
+}
+
+.notice-overlay.show{
+    opacity:1;
+    visibility:visible;
+}
+
+.notice-box{
+    width:100%;
+    max-width:340px;
+    background:#fff;
+    border-radius:22px;
+    padding:25px;
+    text-align:center;
+    transform:scale(.9);
+    transition:.2s;
+}
+
+.notice-overlay.show .notice-box{
+    transform:scale(1);
+}
+
+.notice-icon{
+    width:62px;
+    height:62px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 14px;
+    font-size:26px;
+}
+
+.notice-icon.success{
+    background:#e5f9ed;
+    color:#16a34a;
+}
+
+.notice-icon.error{
+    background:#ffe9e9;
+    color:#ef4444;
+}
+
+.notice-icon.warning{
+    background:#fff4db;
+    color:#e59a00;
+}
+
+.notice-box h3{
+    font-size:17px;
+    margin-bottom:9px;
+}
+
+.notice-box p{
+    font-size:12px;
+    color:#777;
+    line-height:1.7;
+    margin-bottom:20px;
+    overflow-wrap:anywhere;
+}
+
+.notice-box button{
+    width:100%;
+    padding:13px;
+    border:none;
+    border-radius:12px;
+    background:#5c27fe;
+    color:#fff;
+    font-size:13px;
+    font-weight:700;
+}
+
+@media(max-width:380px){
+    .balance-item{
+        padding:12px;
+    }
+
+    .balance-value{
+        font-size:14px;
+    }
+
+    .section-card{
+        padding:16px;
+    }
+}
+
+
+
+/* =================================
+   RIWAYAT - MAKSIMAL 5 ITEM
+================================= */
+
+.history-list{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+/* Area riwayat hanya setinggi 5 item */
+.history-list.scroll-history{
+    max-height:365px;
+    overflow-y:auto;
+    padding-right:4px;
+    scrollbar-width:thin;
+    scrollbar-color:#cfc4f8 transparent;
+}
+
+/* Scrollbar Chrome / Edge */
+.history-list.scroll-history::-webkit-scrollbar{
+    width:5px;
+}
+
+.history-list.scroll-history::-webkit-scrollbar-track{
+    background:transparent;
+}
+
+.history-list.scroll-history::-webkit-scrollbar-thumb{
+    background:#d5ccf5;
+    border-radius:20px;
+}
+
+/* Email pada riwayat */
+.history-email{
+    color:#7138ed !important;
+    font-size:9px !important;
+    font-weight:600;
+    margin-top:3px !important;
+    overflow-wrap:anywhere;
+}
+
+/* Penanda masih ada riwayat */
+.history-scroll-info{
+    text-align:center;
+    color:#999;
+    font-size:9px;
+    padding-top:8px;
+}
+</style>
+</head>
+
+<body>
+
+<header class="top-header">
+
+    <a href="profil_saya.html" class="header-back">
+        <i class="fa-solid fa-arrow-left"></i>
+        Kembali
+    </a>
+
+    <div class="header-title">
+        <h2>Bonus & Pencairan</h2>
+        <p>Lihat bonus dan ajukan pencairan saldo kamu.</p>
+    </div>
+
+</header>
+
+<main class="container">
+
+    <!-- RINGKASAN SALDO -->
+
+    <section class="balance-card">
+
+        <div class="balance-heading">
+            Ringkasan Saldo Kamu
+        </div>
+
+        <div class="balance-grid">
+
+            <div class="balance-item balance-main">
+
+                <div class="balance-icon">
+                    <i class="fa-solid fa-wallet"></i>
+                </div>
+
+                <div class="balance-label">Saldo Utama</div>
+
+                <div class="balance-value" id="saldoUtama">
+                    Rp 0
+                </div>
+
+            </div>
+
+            <div class="balance-item balance-bonus">
+
+                <div class="balance-icon">
+                    <i class="fa-solid fa-gift"></i>
+                </div>
+
+                <div class="balance-label">Bonus Saldo</div>
+
+                <div class="balance-value" id="saldoBonus">
+                    Rp 0
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="balance-total">
+            <span>Total Saldo Kamu</span>
+            <strong id="totalSaldo">Rp 0</strong>
+        </div>
+
+        <button class="withdraw-btn" id="openWithdraw">
+            <i class="fa-solid fa-money-bill-transfer"></i>
+            TARIK SALDO SEKARANG
+        </button>
+
+    </section>
+
+
+    <!-- INFORMASI -->
+
+    <div class="info-box">
+        <i class="fa-solid fa-circle-info"></i>
+        Pencairan hanya dapat diajukan jika kamu mempunyai minimal
+        satu transaksi pembelian sukses dengan nilai minimal
+        Rp519.200 dalam satu transaksi.
+    </div>
+
+
+    <!-- RIWAYAT BONUS -->
+
+    <section class="section-card">
+
+        <div class="section-heading">
+            <h3>
+                <i class="fa-solid fa-clock-rotate-left"
+                   style="color:#7138ed;margin-right:6px;"></i>
+                Semua Riwayat Bonus
+            </h3>
+
+            <small id="historyCount">0 Bonus</small>
+        </div>
+
+        <div class="history-list scroll-history" id="bonusHistory">
+
+            <div class="loading-state">
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                Memuat riwayat bonus...
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- RIWAYAT PENGAJUAN -->
+
+    <section class="section-card">
+
+        <div class="section-heading">
+            <h3>
+                <i class="fa-solid fa-money-check-dollar"
+                   style="color:#7138ed;margin-right:6px;"></i>
+                Riwayat Pengajuan
+            </h3>
+        </div>
+
+        <div class="history-list scroll-history" id="withdrawHistory">
+
+            <div class="loading-state">
+                Memuat pengajuan...
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- FORM PENCAIRAN -->
+
+<div class="modal-overlay" id="withdrawModal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h3>FORM PENCAIRAN DANA</h3>
+
+            <button class="modal-close" id="closeWithdraw">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+        <form id="withdrawForm">
+
+            <div class="withdraw-summary">
+
+                <div>
+                    <span>Saldo Utama</span>
+                    <strong id="formSaldoUtama">Rp 0</strong>
+                </div>
+
+                <div>
+                    <span>Bonus Saldo</span>
+                    <strong id="formSaldoBonus">Rp 0</strong>
+                </div>
+
+                <div>
+                    <span>Total Pengajuan</span>
+                    <strong id="formTotalSaldo">Rp 0</strong>
+                </div>
+
+            </div>
+
+
+<div class="form-group">
+
+    <label>BANK / E-WALLET PENCAIRAN</label>
+
+    <select id="withdrawBank" required>
+
+        <option value="">Pilih Bank / E-Wallet</option>
+
+        <optgroup label="BANK NASIONAL">
+            <option value="BCA">BCA</option>
+            <option value="BRI">BRI</option>
+            <option value="BNI">BNI</option>
+            <option value="Mandiri">Bank Mandiri</option>
+            <option value="BTN">BTN</option>
+            <option value="BSI">Bank Syariah Indonesia (BSI)</option>
+            <option value="CIMB Niaga">CIMB Niaga</option>
+            <option value="Danamon">Bank Danamon</option>
+            <option value="Permata">Bank Permata</option>
+            <option value="Maybank">Maybank Indonesia</option>
+            <option value="Panin">Panin Bank</option>
+            <option value="OCBC">OCBC</option>
+            <option value="UOB">UOB Indonesia</option>
+            <option value="Mega">Bank Mega</option>
+            <option value="Sinarmas">Bank Sinarmas</option>
+            <option value="BTPN">SMBC Indonesia</option>
+            <option value="J Trust">J Trust Bank</option>
+            <option value="Hana Bank">Hana Bank</option>
+            <option value="DBS">DBS Indonesia</option>
+            <option value="HSBC">HSBC Indonesia</option>
+            <option value="Standard Chartered">Standard Chartered</option>
+            <option value="Mayapada">Bank Mayapada</option>
+            <option value="Muamalat">Bank Muamalat</option>
+            <option value="BCA Syariah">BCA Syariah</option>
+            <option value="Mega Syariah">Bank Mega Syariah</option>
+            <option value="Bukopin">KB Bank</option>
+            <option value="Jago">Bank Jago</option>
+            <option value="SeaBank">SeaBank</option>
+            <option value="Blu BCA Digital">blu by BCA Digital</option>
+            <option value="Allo Bank">Allo Bank</option>
+            <option value="Neo Commerce">Bank Neo Commerce</option>
+            <option value="Amar Bank">Amar Bank</option>
+            <option value="Aladin">Bank Aladin Syariah</option>
+            <option value="Bank Raya">Bank Raya</option>
+            <option value="Bank Saqu">Bank Saqu</option>
+            <option value="Bank Ina">Bank Ina Perdana</option>
+            <option value="Bank Mestika">Bank Mestika</option>
+            <option value="Bank Victoria">Bank Victoria</option>
+            <option value="Bank Nationalnobu">Bank Nobu</option>
+            <option value="Bank Ganesha">Bank Ganesha</option>
+            <option value="Bank Maspion">Bank Maspion</option>
+            <option value="Bank SBI Indonesia">Bank SBI Indonesia</option>
+            <option value="Bank Woori Saudara">Bank Woori Saudara</option>
+            <option value="Bank China Construction">China Construction Bank Indonesia</option>
+            <option value="ICBC">ICBC Indonesia</option>
+            <option value="Mizuho">Mizuho Indonesia</option>
+            <option value="MUFG">MUFG Bank</option>
+            <option value="Bank of China">Bank of China</option>
+        </optgroup>
+
+        <optgroup label="BANK PEMBANGUNAN DAERAH (BPD)">
+            <option value="Bank Aceh Syariah">Bank Aceh Syariah</option>
+            <option value="Bank Sumut">Bank Sumut</option>
+            <option value="Bank Nagari">Bank Nagari</option>
+            <option value="Bank Riau Kepri Syariah">Bank Riau Kepri Syariah</option>
+            <option value="Bank Jambi">Bank Jambi</option>
+            <option value="Bank Sumsel Babel">Bank Sumsel Babel</option>
+            <option value="Bank Bengkulu">Bank Bengkulu</option>
+            <option value="Bank Lampung">Bank Lampung</option>
+            <option value="Bank DKI">Bank DKI</option>
+            <option value="Bank BJB">Bank BJB</option>
+            <option value="Bank BPD DIY">Bank BPD DIY</option>
+            <option value="Bank Jateng">Bank Jateng</option>
+            <option value="Bank Jatim">Bank Jatim</option>
+            <option value="Bank Kalbar">Bank Kalbar</option>
+            <option value="Bank Kalteng">Bank Kalteng</option>
+            <option value="Bank Kalsel">Bank Kalsel</option>
+            <option value="Bank Kaltimtara">Bank Kaltimtara</option>
+            <option value="Bank Bali">Bank BPD Bali</option>
+            <option value="Bank NTB Syariah">Bank NTB Syariah</option>
+            <option value="Bank NTT">Bank NTT</option>
+            <option value="Bank SulutGo">Bank SulutGo</option>
+            <option value="Bank Sulteng">Bank Sulteng</option>
+            <option value="Bank Sultra">Bank Sultra</option>
+            <option value="Bank Sulselbar">Bank Sulselbar</option>
+            <option value="Bank Maluku Malut">Bank Maluku Malut</option>
+            <option value="Bank Papua">Bank Papua</option>
+        </optgroup>
+
+        <optgroup label="E-WALLET INDONESIA">
+            <option value="DANA">DANA</option>
+            <option value="OVO">OVO</option>
+            <option value="GoPay">GoPay</option>
+            <option value="ShopeePay">ShopeePay</option>
+            <option value="LinkAja">LinkAja</option>
+            <option value="i.saku">i.saku</option>
+            <option value="Sakuku">Sakuku</option>
+            <option value="AstraPay">AstraPay</option>
+            <option value="DOKU">DOKU</option>
+            <option value="MotionPay">MotionPay</option>
+            <option value="OctoPay">OCTO Pay</option>
+            <option value="Finpay">Finpay</option>
+            <option value="YUKK">YUKK</option>
+            <option value="Ezeelink">Ezeelink</option>
+            <option value="GDCPay">GDCPay</option>
+            <option value="Paytren">PayTren</option>
+        </optgroup>
+
+    </select>
+
+</div>
+
+
+            <div class="form-group">
+
+                <label>NAMA REKENING</label>
+
+                <input
+                    type="text"
+                    id="withdrawName"
+                    placeholder="Masukkan nama pemilik rekening"
+                    maxlength="100"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>NOMOR REKENING</label>
+
+                <input
+                    type="text"
+                    id="withdrawAccount"
+                    placeholder="Masukkan nomor rekening"
+                    inputmode="numeric"
+                    maxlength="30"
+                    required
+                >
+
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitWithdraw">
+                <i class="fa-solid fa-paper-plane"></i>
+                TARIK UANG SEKARANG
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- POPUP NOTIFIKASI -->
+
+<div class="notice-overlay" id="noticePopup">
+
+    <div class="notice-box">
+
+        <div class="notice-icon warning" id="noticeIcon">
+            <i class="fa-solid fa-circle-info"></i>
+        </div>
+
+        <h3 id="noticeTitle">Informasi</h3>
+
+        <p id="noticeMessage"></p>
+
+        <button id="noticeClose">MENGERTI</button>
+
+    </div>
+
+</div>
+
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getDatabase,
+    ref,
+    get,
+    set,
+    push,
+    onValue,
+    runTransaction,
+    update
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+/* =====================================
+   FIREBASE
+===================================== */
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDkkrmYKIh6hejmTWf3acvLVImIAMOMNKU",
+    authDomain: "users-96dc5.firebaseapp.com",
+    databaseURL: "https://users-96dc5-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "users-96dc5"
+};
+
+const app = initializeApp(firebaseConfig,"BonusHtmlApp");
+const db = getDatabase(app);
+
+
+/* =====================================
+   IDENTITAS LOGIN
+===================================== */
+
+const usersid = localStorage.getItem("usersid");
+
+if(!usersid){
+    location.href = "login_topup.html";
+    throw new Error("Pengguna belum login.");
+}
+
+
+/* =====================================
+   KONFIGURASI
+===================================== */
+
+const MINIMUM_PEMBELIAN = 519200;
+
+const userRef = ref(
+    db,
+    `users_topup/${usersid}`
+);
+
+const historyBonusRef = ref(
+    db,
+    `History_Bonus/${usersid}`
+);
+
+const historyTopupRef = ref(
+    db,
+    `History_Topup/${usersid}`
+);
+
+const pengajuanRef = ref(
+    db,
+    `pengajuanbonus/${usersid}`
+);
+
+const pengajuanGagalRef = ref(
+    db,
+    `pengajuanbonusgagal/${usersid}`
+);
+
+let currentUser = null;
+let currentSaldo = 0;
+let currentBonus = 0;
+let currentRequests = {};
+let currentUserEmail = "";
+let submitting = false;
+let refundRunning = new Set();
+
+/* =====================================
+   FORMAT
+===================================== */
+
+function formatRupiah(value){
+
+    return "Rp " + Number(value || 0).toLocaleString("id-ID");
+
+}
+
+function escapeHTML(value){
+
+    return String(value ?? "").replace(/[&<>"']/g,char=>({
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+    })[char]);
+
+}
+
+function formatDate(value){
+
+    if(!value) return "-";
+
+    let date;
+
+    if(typeof value === "number"){
+        date = new Date(value);
+    }else{
+        date = new Date(value);
+    }
+
+    if(isNaN(date.getTime())) return "-";
+
+    return date.toLocaleString("id-ID",{
+        day:"2-digit",
+        month:"long",
+        year:"numeric",
+        hour:"2-digit",
+        minute:"2-digit"
+    });
+
+}
+
+function getTimestamp(item){
+
+    return Number(
+        item.waktu ||
+        item.dibuatPada ||
+        item.timestamp ||
+        0
+    );
+
+}
+
+
+/* =====================================
+   NOTIFIKASI CUSTOM
+===================================== */
+
+function showNotice(title,message,type="warning"){
+
+    const popup = document.getElementById("noticePopup");
+    const icon = document.getElementById("noticeIcon");
+
+    document.getElementById("noticeTitle").textContent = title;
+    document.getElementById("noticeMessage").textContent = message;
+
+    icon.className = "notice-icon " + type;
+
+    let iconName = "fa-circle-info";
+
+    if(type === "success"){
+        iconName = "fa-circle-check";
+    }
+
+    if(type === "error"){
+        iconName = "fa-circle-xmark";
+    }
+
+    icon.innerHTML = `<i class="fa-solid ${iconName}"></i>`;
+
+    popup.classList.add("show");
+
+}
+
+document.getElementById("noticeClose").onclick = ()=>{
+
+    document.getElementById("noticePopup").classList.remove("show");
+
+};
+
+
+/* =====================================
+   UPDATE SALDO
+===================================== */
+
+function updateBalance(user){
+
+   currentUser = user || {};
+
+   currentUserEmail =
+       currentUser.email ||
+       currentUser.emailUser ||
+       currentUser.userEmail ||
+       "";
+
+   currentSaldo = Number(currentUser.saldo || 0);
+   currentBonus = Number(currentUser.bonusSaldo || 0);
+
+    document.getElementById("saldoUtama").textContent =
+        formatRupiah(currentSaldo);
+
+    document.getElementById("saldoBonus").textContent =
+        formatRupiah(currentBonus);
+
+    document.getElementById("totalSaldo").textContent =
+        formatRupiah(currentSaldo + currentBonus);
+
+    document.getElementById("formSaldoUtama").textContent =
+        formatRupiah(currentSaldo);
+
+    document.getElementById("formSaldoBonus").textContent =
+        formatRupiah(currentBonus);
+
+    document.getElementById("formTotalSaldo").textContent =
+        formatRupiah(currentSaldo + currentBonus);
+
+}
+
+
+/* =====================================
+   MEMUAT SALDO REALTIME
+===================================== */
+
+onValue(userRef,snapshot=>{
+
+    if(!snapshot.exists()){
+
+        localStorage.removeItem("usersid");
+        localStorage.removeItem("user_topup");
+
+        location.href = "login_topup.html";
+        return;
+
+    }
+
+    updateBalance(snapshot.val());
+
+},error=>{
+
+    console.error("Saldo gagal dimuat:",error);
+
+});
+
+
+/* =====================================
+  RIWAYAT BONUS
+===================================== */
+
+onValue(historyBonusRef,snapshot=>{
+
+   const container =
+       document.getElementById("bonusHistory");
+
+   container.innerHTML = "";
+
+   if(!snapshot.exists()){
+
+       container.innerHTML = `
+           <div class="empty-state">
+               <i class="fa-solid fa-gift"></i>
+               <p>Belum ada riwayat bonus.</p>
+           </div>
+       `;
+
+       document.getElementById("historyCount").textContent =
+           "0 transaksi";
+
+       return;
+
+   }
+
+   const data = snapshot.val();
+
+   const entries = Object.entries(data).map(([id,item])=>({
+       id,
+       ...(item || {})
+   }));
+
+   entries.sort((a,b)=>getTimestamp(b)-getTimestamp(a));
+
+   document.getElementById("historyCount").textContent =
+       entries.length + " transaksi";
+
+   /*
+    * Hanya 5 item pertama yang langsung terlihat.
+    * Sisanya tetap dirender di dalam area scroll.
+    */
+   entries.forEach(item=>{
+
+       const amount = Number(item.jumlah || 0);
+
+       let title =
+           item.keterangan ||
+           "Bonus Saldo Masuk";
+
+       let status = "Berhasil";
+
+       if(item.tipe === "bonus_transfer"){
+           title = "Bonus Dipindahkan ke Saldo Utama";
+       }
+
+       if(item.status){
+           status = item.status;
+       }
+
+       /*
+        * Ambil email.
+        * Prioritas:
+        * 1. Email pada riwayat
+        * 2. Email user yang sedang login
+        */
+       const email =
+           item.email ||
+           item.emailUser ||
+           item.userEmail ||
+           currentUserEmail ||
+           "-";
+
+       const row = document.createElement("div");
+
+       row.className = "history-item";
+
+       row.innerHTML = `
+
+           <div class="history-icon">
+               <i class="fa-solid fa-gift"></i>
+           </div>
+
+           <div class="history-content">
+
+               <h4>
+                   ${escapeHTML(title)}
+               </h4>
+
+               <p>
+                   ${escapeHTML(formatDate(getTimestamp(item)))}
+               </p>
+
+               <p class="history-email">
+                   <i class="fa-solid fa-envelope"></i>
+                   ${escapeHTML(email)}
+               </p>
+
+               ${item.jumlahJam ? `
+                   <p>
+                       ${escapeHTML(item.jumlahJam)}
+                       periode bonus
+                   </p>
+               ` : ""}
+
+           </div>
+
+           <div class="history-right">
+
+               <div class="history-amount">
+                   +${formatRupiah(amount)}
+               </div>
+
+               <span class="history-status">
+                   ${escapeHTML(status)}
+               </span>
+
+           </div>
+
+       `;
+
+       container.appendChild(row);
+
+   });
+
+   /*
+    * Jika lebih dari 5 riwayat,
+    * tampilkan keterangan scroll.
+    */
+   if(entries.length > 5){
+
+       const info = document.createElement("div");
+
+       info.className = "history-scroll-info";
+
+       info.innerHTML = `
+           <i class="fa-solid fa-arrows-up-down"></i>
+           Geser untuk melihat riwayat lainnya
+       `;
+
+       container.appendChild(info);
+
+   }
+
+},error=>{
+
+   console.error("Riwayat bonus gagal:",error);
+
+   document.getElementById("bonusHistory").innerHTML = `
+       <div class="empty-state">
+           <p>Gagal memuat riwayat bonus.</p>
+       </div>
+   `;
+
+});
+
+/* =====================================
+   RIWAYAT PENGAJUAN
+===================================== */
+
+function renderWithdrawHistory(){
+
+    const container =
+        document.getElementById("withdrawHistory");
+
+    const entries = Object.entries(currentRequests || {})
+        .map(([id,item])=>({
+            id,
+            ...(item || {})
+        }))
+        .sort((a,b)=>Number(b.dibuatPada || 0)-Number(a.dibuatPada || 0));
+
+    container.innerHTML = "";
+
+    if(entries.length === 0){
+
+        container.innerHTML = `
+            <div class="empty-state">
+                <i class="fa-solid fa-file-circle-question"></i>
+                <p>Belum ada pengajuan pencairan.</p>
+            </div>
+        `;
+
+        return;
+
+    }
+
+    entries.forEach(item=>{
+
+        const status = item.status || "Menunggu";
+
+        let color = "#f59e0b";
+        let bg = "#fff5df";
+
+        if(
+            status.toLowerCase() === "disetujui" ||
+            status.toLowerCase() === "berhasil"
+        ){
+            color = "#16a34a";
+            bg = "#e7f9ed";
+        }
+
+        if(
+            status.toLowerCase() === "ditolak"
+        ){
+            color = "#ef4444";
+            bg = "#ffe9e9";
+        }
+
+        const row = document.createElement("div");
+
+        row.className = "history-item";
+
+        row.innerHTML = `
+
+            <div class="history-icon">
+                <i class="fa-solid fa-money-bill-transfer"></i>
+            </div>
+
+            <div class="history-content">
+
+                <h4>${escapeHTML(item.bank || "Pengajuan Pencairan")}</h4>
+
+                <p>${escapeHTML(formatDate(item.dibuatPada))}</p>
+
+                <p>${escapeHTML(item.namaRekening || "-")}</p>
+
+            </div>
+
+            <div class="history-right">
+
+                <div class="history-amount" style="color:#5c27fe;">
+                    ${formatRupiah(item.jumlah)}
+                </div>
+
+                <span class="history-status"
+                    style="background:${bg};color:${color};">
+                    ${escapeHTML(status)}
+                </span>
+
+            </div>
+
+        `;
+
+        container.appendChild(row);
+
+    });
+
+}
+
+
+onValue(pengajuanRef,snapshot=>{
+
+    currentRequests = snapshot.exists() ? snapshot.val() : {};
+
+    renderWithdrawHistory();
+
+    /*
+     * Periksa status penolakan admin.
+     * Saldo dikembalikan dengan ID refund
+     * agar tidak dikembalikan dua kali.
+     */
+
+    Object.entries(currentRequests).forEach(([id,item])=>{
+
+        if(!item) return;
+
+        const status = String(item.status || "").toLowerCase();
+
+        if(status === "ditolak" || status === "rejected"){
+
+            processRefund(id,item);
+
+        }
+
+        if(
+            status === "disetujui" ||
+            status === "berhasil" ||
+            status === "approved"
+        ){
+
+            releaseActiveRequest(id);
+
+        }
+
+    });
+
+},error=>{
+
+    console.error("Pengajuan gagal dimuat:",error);
+
+});
+
+
+/* =====================================
+   KEMBALIKAN SALDO JIKA DITOLAK
+===================================== */
+
+async function processRefund(id,item){
+
+    if(refundRunning.has(id)) return;
+
+    if(item.refundProcessed === true) return;
+
+    refundRunning.add(id);
+
+    try{
+
+        const result = await runTransaction(
+            userRef,
+            user=>{
+
+                if(!user) return user;
+
+                const data = {...user};
+
+                const refundIds = {
+                    ...(data.bonusRefundIds || {})
+                };
+
+                /*
+                 * Cegah saldo dikembalikan dua kali.
+                 */
+
+                if(refundIds[id]){
+                    return data;
+                }
+
+                const saldoKembali = Number(
+                    item.saldoUtamaDitahan || 0
+                );
+
+                const bonusKembali = Number(
+                    item.bonusSaldoDitahan || 0
+                );
+
+                data.saldo =
+                    Number(data.saldo || 0) + saldoKembali;
+
+                data.bonusSaldo =
+                    Number(data.bonusSaldo || 0) + bonusKembali;
+
+                refundIds[id] = true;
+
+                data.bonusRefundIds = refundIds;
+
+                if(data.pengajuanBonusAktif === id){
+                    data.pengajuanBonusAktif = null;
+                }
+
+                return data;
+
+            },
+            {
+                applyLocally:false
+            }
+        );
+
+        if(!result.committed){
+            throw new Error("Pengembalian saldo tidak berhasil.");
+        }
+
+        /*
+         * Tandai pengajuan sudah dikembalikan.
+         */
+
+        await update(
+            ref(db,`pengajuanbonus/${usersid}/${id}`),
+            {
+                refundProcessed:true,
+                refundProcessedAt:Date.now()
+            }
+        );
+
+    }catch(error){
+
+        console.error("Pengembalian saldo gagal:",error);
+
+    }finally{
+
+        refundRunning.delete(id);
+
+    }
+
+}
+
+
+/* =====================================
+   LEPASKAN STATUS PENGAJUAN AKTIF
+===================================== */
+
+async function releaseActiveRequest(id){
+
+    try{
+
+        await runTransaction(
+            userRef,
+            user=>{
+
+                if(!user) return user;
+
+                const data = {...user};
+
+                if(data.pengajuanBonusAktif === id){
+                    data.pengajuanBonusAktif = null;
+                }
+
+                return data;
+
+            },
+            {
+                applyLocally:false
+            }
+        );
+
+    }catch(error){
+
+        console.error("Gagal memperbarui status pengajuan:",error);
+
+    }
+
+}
+
+
+/* =====================================
+   BUKA FORM PENCAIRAN
+===================================== */
+
+const withdrawModal =
+    document.getElementById("withdrawModal");
+
+document.getElementById("openWithdraw").onclick = ()=>{
+
+    if(!currentUser){
+
+        showNotice(
+            "Tunggu Sebentar",
+            "Data saldo sedang dimuat. Silakan coba kembali.",
+            "warning"
+        );
+
+        return;
+
+    }
+
+    const total = currentSaldo + currentBonus;
+
+    if(total <= 0){
+
+        showNotice(
+            "Saldo Kosong",
+            "Kamu belum mempunyai saldo yang dapat diajukan.",
+            "warning"
+        );
+
+        return;
+
+    }
+
+    withdrawModal.classList.add("show");
+
+};
+
+document.getElementById("closeWithdraw").onclick = ()=>{
+
+    withdrawModal.classList.remove("show");
+
+};
+
+withdrawModal.onclick = event=>{
+
+    if(event.target === withdrawModal){
+        withdrawModal.classList.remove("show");
+    }
+
+};
+
+
+/* =====================================
+   CEK TRANSAKSI PEMBELIAN SUKSES
+===================================== */
+
+async function checkSuccessfulPurchase(){
+
+    const snapshot = await get(historyTopupRef);
+
+    if(!snapshot.exists()){
+        return false;
+    }
+
+    const data = snapshot.val();
+
+    return Object.values(data).some(item=>{
+
+        if(!item) return false;
+
+        const status = String(item.status || "")
+            .trim()
+            .toLowerCase();
+
+        const total = Number(
+            String(item.total || 0).replace(/[^\d.-]/g,"")
+        );
+
+        const sukses =
+            status === "sukses" ||
+            status === "berhasil";
+
+        return sukses && total >= MINIMUM_PEMBELIAN;
+
+    });
+
+}
+
+
+/* =====================================
+   SUBMIT PENGAJUAN
+===================================== */
+
+document.getElementById("withdrawForm").onsubmit =
+async event=>{
+
+    event.preventDefault();
+
+    if(submitting) return;
+
+    const bank =
+        document.getElementById("withdrawBank").value;
+
+    const namaRekening =
+        document.getElementById("withdrawName").value.trim();
+
+    const noRekening =
+        document.getElementById("withdrawAccount").value.trim();
+
+    if(!bank || !namaRekening || !noRekening){
+
+        showNotice(
+            "Data Belum Lengkap",
+            "Silakan lengkapi semua data rekening.",
+            "warning"
+        );
+
+        return;
+
+    }
+
+    if(!/^[0-9]{5,30}$/.test(noRekening)){
+
+        showNotice(
+            "Nomor Rekening Tidak Valid",
+            "Nomor rekening harus berupa angka dengan panjang 5 sampai 30 digit.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    const button =
+        document.getElementById("submitWithdraw");
+
+    submitting = true;
+
+    button.disabled = true;
+
+    button.innerHTML =
+        '<i class="fa-solid fa-spinner fa-spin"></i> MEMERIKSA...';
+
+    let requestId = null;
+    let reserved = false;
+
+    try{
+
+        /*
+         * Periksa pembelian sebelum menahan saldo.
+         */
+
+        const purchaseValid =
+            await checkSuccessfulPurchase();
+
+        const latestUserSnap = await get(userRef);
+
+        if(!latestUserSnap.exists()){
+            throw new Error("Data akun tidak ditemukan.");
+        }
+
+        const latestUser = latestUserSnap.val();
+
+        const saldoUtama = Number(latestUser.saldo || 0);
+        const bonusSaldo = Number(latestUser.bonusSaldo || 0);
+
+        const totalSaldo = saldoUtama + bonusSaldo;
+
+        if(totalSaldo <= 0){
+
+            showNotice(
+                "Saldo Kosong",
+                "Saldo kamu tidak tersedia untuk diajukan.",
+                "warning"
+            );
+
+            return;
+
+        }
+
+        /*
+         * Buat ID terlebih dahulu.
+         */
+
+        requestId = push(pengajuanRef).key;
+
+        if(!requestId){
+            throw new Error("ID pengajuan gagal dibuat.");
+        }
+
+        const waktu = Date.now();
+
+        /*
+         * Jika pembelian tidak memenuhi syarat,
+         * simpan ke pengajuanbonusgagal.
+         * Saldo TIDAK dipotong.
+         */
+
+        if(!purchaseValid){
+
+            await set(
+                ref(
+                    db,
+                    `pengajuanbonusgagal/${usersid}/${requestId}`
+                ),
+                {
+                    usersid:usersid,
+                    bank:bank,
+                    namaRekening:namaRekening,
+                    noRekening:noRekening,
+
+                    jumlah:totalSaldo,
+
+                    saldoUtama:saldoUtama,
+                    bonusSaldo:bonusSaldo,
+
+                    saldoUtamaDitahan:0,
+                    bonusSaldoDitahan:0,
+
+                    status:"Gagal",
+
+                    alasan:
+                        "Belum memiliki satu transaksi pembelian sukses minimal Rp519.200.",
+
+                    minimumPembelian:MINIMUM_PEMBELIAN,
+
+                    dibuatPada:waktu
+                }
+            );
+
+            withdrawModal.classList.remove("show");
+
+            event.target.reset();
+
+            showNotice(
+                "Pengajuan Tidak Memenuhi Syarat",
+                "Saldo tidak dapat dicairkan apabila tidak ada pembelian sebelumnya yang sukses. Anda dapat melakukan pembelian produk minimal Rp519.200 untuk mencairkan seluruh saldo Anda ke rekening Anda.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * CEK TRANSAKSI SALDO.
+         *
+         * Saldo utama dan bonus ditahan
+         * menggunakan transaksi Firebase.
+         */
+
+        const reserveResult = await runTransaction(
+            userRef,
+            user=>{
+
+                if(!user) return user;
+
+                const data = {...user};
+
+                /*
+                 * Cegah pengajuan aktif ganda.
+                 */
+
+                if(data.pengajuanBonusAktif){
+                    return;
+                }
+
+                const saldo = Number(data.saldo || 0);
+                const bonus = Number(data.bonusSaldo || 0);
+
+                if(saldo + bonus <= 0){
+                    return;
+                }
+
+                /*
+                 * Simpan jumlah saldo yang ditahan.
+                 */
+
+                data.saldo = 0;
+                data.bonusSaldo = 0;
+
+                data.pengajuanBonusAktif = requestId;
+
+                data.bonusLastRequestAt = waktu;
+
+                return data;
+
+            },
+            {
+                applyLocally:false
+            }
+        );
+
+        if(!reserveResult.committed){
+
+            showNotice(
+                "Pengajuan Tidak Dapat Diproses",
+                "Tidak ada saldo yang dapat diajukan atau masih terdapat pengajuan pencairan yang belum selesai.",
+                "warning"
+            );
+
+            return;
+
+        }
+
+        reserved = true;
+
+        /*
+         * Ambil nilai saldo yang benar-benar
+         * ditahan oleh transaksi.
+         */
+
+        const reservedUser = reserveResult.snapshot.val();
+
+        const originalUser = latestUser;
+
+        const reservedSaldo = Number(
+            originalUser.saldo || 0
+        );
+
+        const reservedBonus = Number(
+            originalUser.bonusSaldo || 0
+        );
+
+        /*
+         * Simpan pengajuan berhasil.
+         */
+
+        await set(
+            ref(
+                db,
+                `pengajuanbonus/${usersid}/${requestId}`
+            ),
+            {
+                usersid:usersid,
+
+                bank:bank,
+                namaRekening:namaRekening,
+                noRekening:noRekening,
+
+                jumlah:reservedSaldo + reservedBonus,
+
+                saldoUtamaDitahan:reservedSaldo,
+                bonusSaldoDitahan:reservedBonus,
+
+                status:"Menunggu",
+
+                refundProcessed:false,
+
+                minimumPembelian:MINIMUM_PEMBELIAN,
+
+                waktuPembelianDiperiksa:waktu,
+
+                dibuatPada:waktu
+
+            }
+        );
+
+        withdrawModal.classList.remove("show");
+
+        event.target.reset();
+
+        showNotice(
+            "Pengajuan Berhasil",
+            "Pengajuan pencairan dana kamu berhasil dikirim. Saldo sedang ditahan sementara dan menunggu pemeriksaan admin.",
+            "success"
+        );
+
+    }catch(error){
+
+        console.error("Pengajuan gagal:",error);
+
+        /*
+         * Jika saldo sudah ditahan tetapi
+         * penyimpanan pengajuan gagal,
+         * kembalikan saldo.
+         */
+
+        if(reserved && requestId){
+
+            try{
+
+                await runTransaction(
+                    userRef,
+                    user=>{
+
+                        if(!user) return user;
+
+                        const data = {...user};
+
+                        const refundIds = {
+                            ...(data.bonusRefundIds || {})
+                        };
+
+                        if(refundIds[requestId]){
+                            return data;
+                        }
+
+                        const latest = latestUserSnapValueFallback(
+                            data,
+                            currentUser
+                        );
+
+                        /*
+                         * Gunakan nilai yang disimpan
+                         * sebelum proses reservasi.
+                         */
+
+                        data.saldo =
+                            Number(data.saldo || 0) +
+                            Number(latest.saldo || 0);
+
+                        data.bonusSaldo =
+                            Number(data.bonusSaldo || 0) +
+                            Number(latest.bonusSaldo || 0);
+
+                        refundIds[requestId] = true;
+
+                        data.bonusRefundIds = refundIds;
+
+                        if(data.pengajuanBonusAktif === requestId){
+                            data.pengajuanBonusAktif = null;
+                        }
+
+                        return data;
+
+                    },
+                    {
+                        applyLocally:false
+                    }
+                );
+
+            }catch(refundError){
+
+                console.error(
+                    "Saldo perlu pemeriksaan admin:",
+                    refundError
+                );
+
+            }
+
+        }
+
+        showNotice(
+            "Pengajuan Gagal",
+            "Terjadi kesalahan ketika menyimpan pengajuan. Silakan coba lagi atau hubungi admin.",
+            "error"
+        );
+
+    }finally{
+
+        submitting = false;
+
+        button.disabled = false;
+
+        button.innerHTML =
+            '<i class="fa-solid fa-paper-plane"></i> TARIK UANG SEKARANG';
+
+    }
+
+};
+
+
+/*
+ * Helper untuk mengambil nilai saldo
+ * sebelum transaksi pengajuan.
+ */
+
+function latestUserSnapValueFallback(data,fallback){
+
+    /*
+     * Nilai ini disediakan dari variabel
+     * sebelum saldo ditahan.
+     */
+
+    return window.__bonusOriginalBalance || fallback || {};
+
+}
+
+
+/* =====================================
+   SIMPAN SALDO SEBELUM PENGAJUAN
+===================================== */
+
+</script>
+
+</body>
+</html>
